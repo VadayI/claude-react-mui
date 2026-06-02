@@ -14,6 +14,13 @@
 @.claude/rules/auth-and-csrf.md
 @.claude/rules/api-error-and-pagination.md
 @.claude/rules/openapi-conventions.md
+@.claude/rules/forms-and-validation.md
+@.claude/rules/performance-budgets.md
+@.claude/rules/observability-and-errors.md
+@.claude/rules/i18n-and-formatting.md
+@.claude/rules/dependencies-and-supply-chain.md
+@.claude/rules/upgrade-policy.md
+@.claude/rules/routing-and-data-loading.md
 
 ## Agent Dispatch (MANDATORY)
 

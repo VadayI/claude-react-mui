@@ -1,6 +1,6 @@
 # Authentication & CSRF with the Django backend (enforced)
 
-This frontend consumes a **DRF** backend. Auth is a **decision recorded up front** (an ADR), not improvised per call. The default mode is recorded in ADR `0018` (`docs/decisions/0018-auth-mode-session-csrf-default.md`). Pick one mode per project:
+This frontend consumes a **DRF** backend. Auth is a **decision recorded up front** (an ADR), not improvised per call. Pick one mode per project:
 
 - **Same-origin (default):** DRF `SessionAuthentication` + Django CSRF. The session lives in an httpOnly cookie; the client sends `X-CSRFToken` on unsafe methods.
 - **Cross-origin:** `djangorestframework-simplejwt` — short-lived access + rotating refresh + token blacklist.
