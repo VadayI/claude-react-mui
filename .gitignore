@@ -36,3 +36,7 @@ test-results/
 # Must not be shared across machines or cloned into derived projects.
 .claude/memory/env-detect.json
 .claude/memory/command-log.jsonl
+
+# WSL/FUSE artifacts
+*.fuse_hidden*
+.__wtest
