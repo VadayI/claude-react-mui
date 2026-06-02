@@ -1,0 +1,89 @@
+openapi: 3.0.3
+info:
+  title: Todo API
+  description: REST API for managing todos, served by the claude-django backend.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000
+    description: Local development server
+paths:
+  /api/v1/todos/:
+    get:
+      operationId: todos_list
+      summary: List all todos
+      description: Returns a list of all todo items for the authenticated user.
+      tags:
+        - todos
+      security:
+        - tokenAuth: []
+      responses:
+        '200':
+          description: A list of todos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Todo'
+        '401':
+          description: Authentication required
+    post:
+      operationId: todos_create
+      summary: Create a todo
+      description: Creates a new todo item for the authenticated user.
+      tags:
+        - todos
+      security:
+        - tokenAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TodoCreate'
+      responses:
+        '201':
+          description: Todo created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Todo'
+        '400':
+          description: Validation error
+        '401':
+          description: Authentication required
+components:
+  schemas:
+    Todo:
+      type: object
+      description: A single todo item.
+      required:
+        - id
+        - title
+        - completed
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          description: Unique identifier
+        title:
+          type: string
+          description: Todo title text
+        completed:
+          type: boolean
+          description: Whether the todo has been completed
+    TodoCreate:
+      type: object
+      description: Payload for creating a new todo.
+      required:
+        - title
+      properties:
+        title:
+          type: string
+          description: Todo title text
+  securitySchemes:
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: "Token-based authentication. Format: Token <your-token>"

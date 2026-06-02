@@ -1,0 +1,11 @@
+[
+  {
+    "path": "/todos",
+    "feature": "todos",
+    "screen": "TodosPage",
+    "auth": "anonymous",
+    "states": ["loading", "success", "empty", "error"],
+    "consumes": ["GET /api/v1/todos/", "POST /api/v1/todos/"],
+    "notes": "Example starter feature: list + create, demonstrates the four UI states and the double-loop TDD."
+  }
+]
