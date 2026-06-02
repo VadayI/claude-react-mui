@@ -11,6 +11,9 @@
 @.claude/rules/preflight.md
 @.claude/rules/verification.md
 @.claude/rules/user-guides.md
+@.claude/rules/auth-and-csrf.md
+@.claude/rules/api-error-and-pagination.md
+@.claude/rules/openapi-conventions.md
 
 ## Agent Dispatch (MANDATORY)
 
@@ -77,4 +80,4 @@ This config is also an **environment configurator**. The expected local environm
 
 ## Project bootstrap & preflight
 
-On a **new project**, the order is: `/doctor` (detects scenario, recommends `/bootstrap`) → `/bootstrap` (Mode A scaffolds the Vite+MUI app from scratch, Mode B PRs missing pieces) → optionally `/synthesize-brief` (PROJECT.md from `docs/**`) → `/preflight` (build-inputs gate, incl. backend OpenAPI contract availability) → first feature via the pipeline. Spec: @.claude/rules/preflight.md.
+On a **new project**, the order is: `/doctor` (detects scenario, recommends `/bootstrap`) → `/bootstrap` (Mode A scaffolds the Vite+M
