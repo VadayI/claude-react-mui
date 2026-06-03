@@ -4,6 +4,24 @@ Cross-machine work history. Updated at the end of every session (`/wrap-up`) and
 
 ---
 
+### 2026-06-03 — Repaired two truncated files (CLAUDE.md, WORKLOG.md) + full integrity audit
+
+**What changed**
+- Restored the truncated tail of `CLAUDE.md` — the *Project bootstrap & preflight* section ended mid-word ("…scaffolds the Vite+M"). Recovered the complete original sentence from commit `19934dc` (intact there, truncated in `9dde1fc`): the `/doctor → /bootstrap → /synthesize-brief → /preflight → first feature` order. File is now 90 lines with a clean trailing newline.
+- Restored `docs/WORKLOG.md` — the working tree was truncated at "- Tests: Vitest", losing the last 10 lines (Decisions + Next of the bootstrap entry). `git diff` showed a pure deletion vs HEAD, so rewrote the working tree from `HEAD:docs/WORKLOG.md` (127 lines, clean ending).
+- Ran a full integrity audit over all 191 tracked files: no NUL bytes; all JSON/JSONL valid; all three YAML files (`frontend-ci.yml` ×2, `openapi.yml`) parse and are complete; zero files left without a trailing newline.
+
+**Notes**
+- Both truncations match the known Edit-on-mount bug (see 2026-06-02 entry): writes via the Windows-path Edit tool silently truncate. Used bash heredoc / redirection writes throughout this session.
+- Hit a stale `.git/index.lock` during restore; restoring `WORKLOG.md` by writing `git show HEAD:…` over the file avoided needing the index. Deleting on the mount required enabling `allow_cowork_file_delete` (also used to clear a leftover `CLAUDE.md.new`).
+- Minor, not corruption: `.__wtest` is a committed 0-byte write-test artifact — candidate for removal.
+
+**Next (next session)**
+- **Fix the file-truncation class of bug** — plan in `docs/plans/fix-file-truncation.md`: standardize on bash writes for `.claude/`/`docs/`/root, add a `scripts/check_truncation.sh` integrity gate (missing trailing newline + NUL bytes) wired into CI + `make gates`, and record the lesson in `docs/lessons.md`.
+- Wire the remaining gates (`check_bundle_size.sh` + Lighthouse CI) and Renovate/Dependabot grouping (carried over).
+
+---
+
 ### 2026-06-02 — Supply-chain Gate 3 + Vite 8 / Vitest 4 upgrade + Node floor 20.19 (ADR 0019)
 
 **What changed**
