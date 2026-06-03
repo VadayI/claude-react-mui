@@ -6,7 +6,7 @@ A **frontend-only** React + MUI SPA (TypeScript, Vite) that consumes a separate 
 
 ## Run it locally
 
-Prerequisites: **Node 18+** on WSL2 / Linux / macOS.
+Prerequisites: **Node 20.19+** on WSL2 / Linux / macOS.
 
 ```bash
 npm ci

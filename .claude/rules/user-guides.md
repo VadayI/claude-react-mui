@@ -20,7 +20,7 @@ These are **narrative onboarding documents**, not a component dump. The contract
 ### `docs/guides/developer.md` (in order)
 
 1. **Overview** — stack, that it's a frontend consuming a separate backend API.
-2. **Run it locally** — prerequisites (Node 18+), `npm ci`, `cp .env.example .env` + which `VITE_*` vars to fill (base API URL, OpenAPI URL), `npm run dev`. Copy-paste runnable; dev URL `http://localhost:5173`.
+2. **Run it locally** — prerequisites (Node 20.19+), `npm ci`, `cp .env.example .env` + which `VITE_*` vars to fill (base API URL, OpenAPI URL), `npm run dev`. Copy-paste runnable; dev URL `http://localhost:5173`.
 3. **The API contract** — how the typed client/types are generated from the backend OpenAPI (`npm run api:pull`, `npm run api:types`), the drift gate, where `openapi.yml`/`schema.d.ts` live, and the link to the backend's Swagger/Redoc.
 4. **Architecture** — feature-sliced layout, routing/guards, server-state (Query) vs client-state (Zustand), the theme.
 5. **Add a feature** — the pipeline in one paragraph (contract → RED tests → GREEN → docs), where files go, the feature README requirement.

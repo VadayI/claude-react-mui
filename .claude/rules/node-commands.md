@@ -2,7 +2,7 @@
 
 > **Shell:** bash (Linux / macOS / WSL2 Ubuntu). PowerShell on Windows native is NOT supported — see ADR `docs/decisions/0005-drop-windows-native-shell.md`. Working from a Windows drive (`/mnt/c`/`/mnt/d`) is fully supported (ADR `0009`); only caveat is slightly slower file watching, and git is best run from the host shell.
 >
-> **Node 18+ is a hard requirement.** It runs the SessionStart env-detection hook, the CI gate helpers, the Vite dev server, Vitest, and Playwright. Install via `nvm` if missing. The `SessionStart` hook writes `.claude/memory/env-detect.json` with the active shell + node version so agents can verify their assumptions.
+> **Node 20.19+ is a hard requirement** (Node 18 dropped, ADR 0019). It runs the SessionStart env-detection hook, the CI gate helpers, the Vite dev server, Vitest, and Playwright. Install via `nvm` if missing. The `SessionStart` hook writes `.claude/memory/env-detect.json` with the active shell + node version so agents can verify their assumptions.
 
 ## Day-to-day (local)
 
@@ -34,6 +34,7 @@ bash scripts/check_types_drift.sh    # types match the committed schema
 bash scripts/check_stubs.sh          # every STUB is logged
 bash scripts/check_file_size.sh      # no src file over 400 lines
 bash scripts/check_feature_readmes.sh # every feature has a README
+npm audit --audit-level=high          # no high/critical advisories
 ```
 
 ## Make wrappers (optional shortcuts)

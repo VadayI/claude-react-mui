@@ -16,14 +16,14 @@ Read `.claude/memory/env-detect.json` (written by the SessionStart hook via `nod
 **HARD STOP — UNSUPPORTED_PLATFORM**: if `platform_supported: false` OR `wrong_runner_suspected: true`, stop immediately with:
 > ERROR: UNSUPPORTED_PLATFORM — the Claude CLI appears to be running as the Windows-native binary (backslashes in paths, `platform: "windows"`). Install the WSL2-native CLI: inside a WSL2 Ubuntu shell run `npm install -g @anthropic-ai/claude-code` and relaunch. See `.claude/rules/environment.md` for the full fix.
 
-**HARD STOP — NO_NODE**: if `node_supported: false` or Node < 18, stop with:
-> ERROR: NO_NODE — Node 18+ is required. Install via nvm: `nvm install --lts`.
+**HARD STOP — NO_NODE**: if `node_supported: false` or Node < 20.19, stop with:
+> ERROR: NO_NODE — Node 20.19+ is required. Install via nvm: `nvm install --lts`.
 
 ### Scope 1 — System tools
 
 Check and report each item (✅ / ❌ / ⚠️):
 
-1. **Node.js ≥ 18** — `node --version`. Source: `env-detect.json` field `node_version`. Must be 18+.
+1. **Node.js ≥ 20.19** — `node --version`. Source: `env-detect.json` field `node_version`. Must be 20.19+.
 2. **npm** — `npm --version`. Must be present.
 3. **git** — `git --version`. Must be present.
 4. **GitHub CLI (gh)** — `gh --version`. On Windows, a Windows-native `gh.exe` is NOT visible in WSL2; install via `apt` or the GitHub CLI Linux instructions.

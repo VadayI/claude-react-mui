@@ -53,7 +53,7 @@ You DO:
 
 - Use the available Skills for React, MUI, TanStack Query, Vitest/RTL TDD, Playwright, a11y, performance, CI.
 - If a Skill applies — prefer it over repeating rules here.
-- **Read `.claude/memory/env-detect.json` once per session** (it is rewritten by the `SessionStart` hook, which runs `scripts/session-start.sh` → `node scripts/detect-env.mjs`). Use its `platform_supported` / `shell` / `is_wsl2` / `node_supported` fields to pick shell-appropriate syntax. On Windows native (no WSL2), `platform_supported: false` — STOP and instruct the user to install WSL2. PowerShell/cmd are not supported. **Node.js 18+ is a hard requirement** — it runs the env-detection hook, the CI gate helpers, and the app itself; if `env-detect.json` is missing, the SessionStart hook failed and the user must install Node 18+.
+- **Read `.claude/memory/env-detect.json` once per session** (it is rewritten by the `SessionStart` hook, which runs `scripts/session-start.sh` → `node scripts/detect-env.mjs`). Use its `platform_supported` / `shell` / `is_wsl2` / `node_supported` fields to pick shell-appropriate syntax. On Windows native (no WSL2), `platform_supported: false` — STOP and instruct the user to install WSL2. PowerShell/cmd are not supported. **Node.js 20.19+ is a hard requirement** (Node 18 is no longer supported, ADR 0019) — it runs the env-detection hook, the CI gate helpers, and the app itself; if `env-detect.json` is missing, the SessionStart hook failed and the user must install Node 20.19+.
 
 ## IMPORTANT
 
@@ -73,7 +73,7 @@ Optional (activate only when relevant, not used in every project): `auditor` (wo
 
 ## Stack
 
-TypeScript 5 · React 18 · Vite 5 · Material UI (MUI) 6 · React Router 6 (data router) · TanStack Query 5 (server-state) · Zustand 5 (client-state) · Vitest + React Testing Library + MSW (unit/component) · Playwright (E2E) · `openapi-typescript` (types from the backend contract) · ESLint + Prettier · GitHub Actions CI. Environment — Node 18+ on WSL2 / Linux / macOS. Staging — VPS (Debian) serving the static build behind nginx.
+TypeScript 5 · React 18 · Vite 8 · Material UI (MUI) 6 · React Router 6 (data router) · TanStack Query 5 (server-state) · Zustand 5 (client-state) · Vitest 4 + React Testing Library + MSW (unit/component) · Playwright (E2E) · `openapi-typescript` (types from the backend contract) · ESLint + Prettier · GitHub Actions CI. Environment — Node 20.19+ (22 LTS recommended) on WSL2 / Linux / macOS. Staging — VPS (Debian) serving the static build behind nginx.
 
 > Version note: the starter app pins **React 18.3** and **MUI 6** for the smoothest MUI + React Testing Library compatibility (React 19 + MUI 6 still has rough edges). Bump to React 19 once MUI fully tracks it — the TDD/contract discipline is version-agnostic.
 

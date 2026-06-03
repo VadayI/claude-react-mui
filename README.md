@@ -5,7 +5,7 @@ A ready-made Claude Code configuration for **React + Material UI** frontend proj
 This is the **frontend counterpart** to [`claude-django`](https://github.com/VadayI/claude-django): that repo owns the REST API and emits the OpenAPI contract; this repo consumes it. They are independent repositories with independent CI and release cycles (ADR `0007` in the backend).
 
 **Stack:** TypeScript 5 · React 18 · Vite 5 · MUI 6 · React Router 6 (data router) · TanStack Query 5 · Zustand 5 · Vitest + React Testing Library + MSW · Playwright · `openapi-typescript` · ESLint + Prettier · GitHub Actions
-**Environment:** Node 18+ on WSL2 (Windows) / Linux / macOS · Staging — Debian VPS serving the static build behind nginx · GitHub as the source of truth
+**Environment:** Node 20.19+ on WSL2 (Windows) / Linux / macOS · Staging — Debian VPS serving the static build behind nginx · GitHub as the source of truth
 
 ---
 

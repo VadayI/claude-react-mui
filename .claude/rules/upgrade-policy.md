@@ -18,7 +18,7 @@ Dependencies rot whether or not you touch them — security advisories land, tra
 
 - Keep runtime libraries within a small window of the latest stable (don't drift majors behind); schedule the migration rather than letting the gap compound.
 - Pinned-for-compatibility choices (React 18.3 + MUI 6, ADR `0015`) are revisited on a cadence and bumped when the ecosystem catches up — the decision is recorded, not forgotten.
-- Node engine and CI runner versions are upgraded deliberately (Node 18+ is the floor, @.claude/rules/environment.md); a bump is its own reviewed PR.
+- Node engine and CI runner versions are upgraded deliberately (Node 20.19+ is the floor, @.claude/rules/environment.md); a bump is its own reviewed PR.
 
 ## Rules
 

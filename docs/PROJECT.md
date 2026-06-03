@@ -29,7 +29,7 @@ Developers (and Claude) building MUI SPAs that consume a Django/DRF (or any Open
 
 ## Constraints
 
-- Node 18+ on WSL2 / Linux / macOS. PR-only. Files in `src/` ≤ 400 lines.
+- Node 20.19+ on WSL2 / Linux / macOS. PR-only. Files in `src/` ≤ 400 lines.
 
 ## Backend API
 
