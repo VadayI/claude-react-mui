@@ -4,6 +4,24 @@ Cross-machine work history. Updated at the end of every session (`/wrap-up`) and
 
 ---
 
+### 2026-06-04 — Scrub /mnt/d hardcode + one-line install.sh seed
+
+**What changed**
+- Removed the personal `/mnt/d/` drive hardcode from the runner-detection heuristic — it contradicted ADR 0009 (working from `/mnt/d` is fully supported) and claude-django only checks `/mnt/c/`. Brought this repo in line.
+  - `scripts/detect-env.mjs` — dropped `/mnt/d/` from `windowsPathLike` (only `/mnt/c/` signals the Windows interop `node.exe`).
+  - `scripts/setup-wsl.sh` — dropped the `/mnt/d/*` exclusion from the `claude`-path check.
+- Added `scripts/install.sh` — a one-line config seed adapted from claude-django (frontend variant: Node, no docker). Clones the template, copies the Claude config + `/bootstrap` inputs (`.claude/`, `CLAUDE.md`, `.mcp.json`, `.gitignore`, `.gitattributes`, `scripts/`, `templates/`, root `Makefile`, `.github/workflows/`), wipes transient memory, refuses to clobber a seeded folder without `--force`. Smoke-tested end-to-end against a local clone.
+- `README.md` — added the "one-line seed" + manual-equivalent block to Quick start.
+
+**Notes**
+- The Edit/Write file tools again silently truncated files on the `/mnt/d` mount (`detect-env.mjs`, `README.md`) — the bug already logged in `docs/lessons.md`. Both were restored from git and re-edited via shell. Avoid the file tools for edits on `/mnt/d`.
+- `README.md` in git already ends mid-word ("…file-siz") — a pre-existing truncation, not from this session; worth patching later.
+
+**Next**
+- Push branch `chore/scrub-template-project-data`, open a PR, merge (PR-only).
+
+---
+
 ### 2026-06-03 — Performance bundle-size gate + Renovate config (perf gate part 1/2)
 
 **What changed**

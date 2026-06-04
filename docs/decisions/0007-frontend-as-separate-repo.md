@@ -4,7 +4,7 @@ Status: accepted · 2026-06-02
 
 ## Context
 
-The backend framework (`claude-django`) is API-first and backend-only; its ADR 0007 chose to keep the production frontend in a **separate** `claude-react-mui` repository rather than a monorepo or an embedded mini-frontend. This repo is that counterpart.
+The backend framework (a Django/DRF service) is API-first and backend-only; its ADR 0007 chose to keep the production frontend in a **separate** `claude-react-mui` repository rather than a monorepo or an embedded mini-frontend. This repo is that counterpart.
 
 ## Decision
 

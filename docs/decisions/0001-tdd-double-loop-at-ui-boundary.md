@@ -4,7 +4,7 @@ Status: accepted · 2026-06-02
 
 ## Context
 
-The backend framework (`claude-django`, ADR 0001) runs an outside-in double loop with the outer loop being a DRF `APIClient` feature test, because the backend's user-facing boundary is the HTTP endpoint. For a React SPA the user-facing boundary is the **rendered UI driven through a browser**, so a literal copy of the backend's outer loop would test the wrong boundary.
+The backend framework (a Django/DRF service, ADR 0001) runs an outside-in double loop with the outer loop being a DRF `APIClient` feature test, because the backend's user-facing boundary is the HTTP endpoint. For a React SPA the user-facing boundary is the **rendered UI driven through a browser**, so a literal copy of the backend's outer loop would test the wrong boundary.
 
 ## Decision
 

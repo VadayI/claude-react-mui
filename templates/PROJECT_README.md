@@ -9,7 +9,7 @@ Consumes the backend REST API contract defined in `src/lib/api/openapi.yml` (aut
 | Layer | Technology |
 |---|---|
 | Language | TypeScript |
-| Framework | React 19 + Vite 6 |
+| Framework | React 18 + Vite 8 |
 | UI | MUI 6 (Material UI) |
 | Routing | React Router 7 |
 | Server state | TanStack Query 5 |

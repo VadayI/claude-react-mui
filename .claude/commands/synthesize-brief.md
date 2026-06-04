@@ -34,7 +34,7 @@ Delegate to `brief-synthesizer` with all gathered inputs. The output `docs/PROJE
 4. **Domain** — key concepts and entities.
 5. **Target users** — who will use this frontend and how.
 6. **Key requirements** — functional requirements distilled from the inputs.
-7. **Stack** — confirm the declared stack (React 19 · Vite 6 · MUI 6 · etc.).
+7. **Stack** — confirm the declared stack (React 18 · Vite 8 · MUI 6 · etc.).
 8. **Backend API** — the OpenAPI schema URL or location; authentication scheme.
 9. **Open questions** — unresolved ambiguities that need stakeholder input before implementation.
 10. **Input sources** — list of documents this synthesis was derived from, with dates.
