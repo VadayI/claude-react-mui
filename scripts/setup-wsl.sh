@@ -93,7 +93,7 @@ step "Step 2 — Claude Code CLI (WSL2-native)"
 
 CLAUDE_PATH="$(command -v claude 2>/dev/null || true)"
 
-if [[ -n "$CLAUDE_PATH" ]] && [[ "$CLAUDE_PATH" != /mnt/c/* ]] && [[ "$CLAUDE_PATH" != /mnt/d/* ]]; then
+if [[ -n "$CLAUDE_PATH" ]] && [[ "$CLAUDE_PATH" != /mnt/c/* ]]; then
   info "Claude Code CLI already installed at: $CLAUDE_PATH"
 else
   if [[ -n "$CLAUDE_PATH" ]]; then

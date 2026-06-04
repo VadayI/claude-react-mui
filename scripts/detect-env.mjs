@@ -95,10 +95,12 @@ const platformSupported = detectedPlatform === 'linux' || detectedPlatform === '
 let wrongRunnerSuspected = false;
 try {
   const execPathLower = execPath.toLowerCase();
+  // Only /mnt/c/ signals the Windows interop binary (node.exe lives under C:\).
+  // A project or a WSL2-native node on /mnt/d (or any other /mnt drive) is a
+  // fully supported setup (ADR 0009) and must NOT be flagged as the wrong runner.
   const windowsPathLike =
     /^[a-z]:[\\\/]/.test(execPathLower) ||   // C:\ or C:/
-    execPathLower.startsWith('/mnt/c/') ||    // WSL2 interop path
-    execPathLower.startsWith('/mnt/d/');
+    execPathLower.startsWith('/mnt/c/');     // WSL2 interop path to Windows node.exe
   if (detectedPlatform === 'windows' && isWsl2) {
     wrongRunnerSuspected = true;
   } else if (isWsl2 && windowsPathLike) {
