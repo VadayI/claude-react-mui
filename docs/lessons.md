@@ -29,3 +29,13 @@ Durable lessons from building this project — patterns that worked, traps to av
 **Lesson:** never use Edit/Write on files under this mount. Write everything via **bash heredoc / redirection** (`cat > file <<'EOF' … EOF`) — proven reliable. After any write, re-check integrity: no NUL bytes, a trailing newline present (the `scripts/check_truncation.sh` gate, once added, automates this).
 
 **Applies to:** every file write to `.claude/**`, `docs/**`, and the repo root on this mount; doubly so for files containing multibyte characters.
+
+---
+
+### The mount also blocks `unlink` and corrupts binary writes (not just text truncation)
+
+**Context:** extending the known Edit/Write truncation lesson. On the Windows-drive FUSE mount, a full characterization showed three distinct failure modes: (1) **text writes** truncate / NUL-pad the tail; (2) **binary writes** are corrupted byte-for-byte — a valid `.git/index` rebuilt in `/tmp` came back with 16771 differing bytes after `cp` onto the mount ("index uses ? extension"); (3) **`unlink`/`rm` is blocked entirely** (EPERM) for every file including freshly created ones, and git cannot create `index.lock`.
+
+**Lesson:** what the mount *can* do reliably is **create new files** and **overwrite existing text files in place** (`cp` / `>`), plus **rename to a new name**. It **cannot** delete files, replace files via rename-over-existing, write binary blobs, or run git ops that take an index lock (commit/add/rm/reset, index rebuild). Do those on the **native Windows shell**. Recovering a broken repo: `.git/HEAD` (tiny ASCII) is safe to rewrite from the sandbox; `.git/index` must be rebuilt natively (`del .git\index && git reset`).
+
+**Applies to:** any file deletion, git index/commit operations, and any binary file under the mount.
