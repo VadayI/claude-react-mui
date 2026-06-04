@@ -39,3 +39,5 @@ gates: ## Run all CI gate scripts locally
 	bash scripts/check_feature_readmes.sh
 	bash scripts/check_types_drift.sh
 	npm audit --audit-level=high
+	npm run build
+	bash scripts/check_bundle_size.sh

@@ -1,0 +1,73 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    ":semanticCommits",
+    ":dependencyDashboard"
+  ],
+  "timezone": "Europe/Kyiv",
+  "schedule": ["before 6am on monday"],
+  "labels": ["dependencies"],
+  "rangeStrategy": "bump",
+  "prConcurrentLimit": 5,
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 6am on monday"]
+  },
+  "vulnerabilityAlerts": {
+    "labels": ["dependencies", "security"],
+    "schedule": ["at any time"],
+    "prCreation": "immediate",
+    "minimumReleaseAge": "0 days"
+  },
+  "packageRules": [
+    {
+      "description": "Dev toolchain (eslint, prettier, vitest, types, build) — batch patch+minor, auto-merge on green CI.",
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "groupName": "dev toolchain",
+      "automerge": true
+    },
+    {
+      "description": "React ecosystem — grouped patch+minor, auto-merge on green CI.",
+      "matchPackageNames": ["react", "react-dom", "@types/react", "@types/react-dom"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "groupName": "react",
+      "automerge": true
+    },
+    {
+      "description": "MUI + Emotion ecosystem — grouped patch+minor, auto-merge on green CI.",
+      "matchPackageNames": ["@mui/**", "@emotion/**"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "groupName": "mui",
+      "automerge": true
+    },
+    {
+      "description": "React Router — patch+minor, auto-merge on green CI.",
+      "matchPackageNames": ["react-router-dom", "react-router"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "groupName": "react-router",
+      "automerge": true
+    },
+    {
+      "description": "TanStack Query — patch+minor, auto-merge on green CI.",
+      "matchPackageNames": ["@tanstack/**"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "groupName": "tanstack-query",
+      "automerge": true
+    },
+    {
+      "description": "Zustand — patch+minor, auto-merge on green CI.",
+      "matchPackageNames": ["zustand"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "groupName": "zustand",
+      "automerge": true
+    },
+    {
+      "description": "Major upgrades are never auto-merged — they need a human + an ADR (upgrade-policy.md). React 18.3 / MUI 6 are pinned by ADR 0015.",
+      "matchUpdateTypes": ["major"],
+      "automerge": false,
+      "addLabels": ["major", "needs-adr"]
+    }
+  ]
+}

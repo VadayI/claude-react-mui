@@ -40,3 +40,6 @@ test-results/
 # WSL/FUSE artifacts
 *.fuse_hidden*
 .__wtest
+
+# TypeScript incremental build info (side effect of `tsc -b`)
+*.tsbuildinfo

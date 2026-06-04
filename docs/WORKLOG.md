@@ -4,6 +4,31 @@ Cross-machine work history. Updated at the end of every session (`/wrap-up`) and
 
 ---
 
+### 2026-06-03 — Performance bundle-size gate + Renovate config (perf gate part 1/2)
+
+**What changed**
+- Added the **bundle-size performance gate** (the lightweight half of the long-carried "wire the remaining gates" item):
+  - `.performance-budget.json` — budgets per `performance-budgets.md` defaults: initial JS ≤180KB gz, total initial transfer ≤350KB gz, lazy chunk ≤120KB gz. The `webVitals` section documents LCP/CLS/INP/TBT + Lighthouse score but is NOT enforced yet (that's Lighthouse CI, deferred).
+  - `scripts/check_bundle_size.sh` — parses `dist/index.html` for the initial load graph (`<script type=module>` + `<link rel=modulepreload>` + stylesheet), sums their gzipped sizes vs the initial-JS / initial-transfer budgets, and checks every other `dist/assets/*.js` lazy chunk individually. Style matches the existing gate scripts (`set -uo pipefail`, `[check_bundle_size] OK|FAIL|SKIP`, exit 0/1). SKIPs cleanly if `dist/` is absent.
+  - Wired into `frontend-ci.yml` (new "Gate — bundle size" step right after Build), `Makefile` `gates:`, and `.claude/rules/node-commands.md`. Mirrored into the bootstrap copies: `templates/.performance-budget.json`, `templates/scripts/check_bundle_size.sh`, `templates/.github/workflows/frontend-ci.yml`, `templates/Makefile`.
+- **Renovate** dependency-automation config (`renovate.json` + `templates/renovate.json`) per `upgrade-policy.md`: dev-toolchain patch/minor batched + auto-merge; runtime libs grouped per-ecosystem (react, mui+emotion, react-router, tanstack-query, zustand) patch/minor + auto-merge; majors never auto-merge + `needs-adr` label; `vulnerabilityAlerts` expedited (immediate PRs); `lockFileMaintenance` weekly.
+- Synced a pre-existing drift: `templates/Makefile` `gates:` was missing the `npm audit` line (added to root Makefile on 2026-06-02 but not the template) — added it alongside the new bundle-size lines.
+- Added `*.tsbuildinfo` to `.gitignore` (side effect of `tsc -b`).
+
+**Notes**
+- All files written via bash heredoc (Edit-on-mount truncation bug — see the truncation plan). Integrity re-checked: no NUL bytes, trailing newlines present, JSON/YAML/bash all parse.
+- Gate logic verified against a synthetic `dist/` (entry + modulepreload + css + lazy chunk): OK (exit 0), FAIL on breach of all three categories (exit 1), SKIP on missing dist (exit 0). A real `npm run build` could NOT run in the Linux sandbox — `node_modules` on the mount was installed for Windows, so the native rollup/rolldown binary is the wrong platform (`MODULE_NOT_FOUND` for `@rollup/rollup-linux-*`). The gate itself is platform-agnostic; it will run in CI (Linux) and on the user's host after a build.
+- Renovate config validated as JSON; the official `renovate-config-validator` could not finish (npx download timed out in the sandbox). Config uses only current Renovate fields (`config:recommended`, `matchPackageNames` with globs, `matchDepTypes`/`matchUpdateTypes`, `lockFileMaintenance`, `vulnerabilityAlerts`, `automerge`).
+- **Renovate requires the Renovate GitHub App installed on the repo** to act on `renovate.json`; the file is inert until then.
+- COMMIT NOT MADE from this session: a stale `.git/index.lock` (held by the Windows side, "Operation not permitted" to unlink) blocks git writes from the sandbox, and the two stray `tsconfig.*.tsbuildinfo` artifacts (from the build attempt) can't be removed from the sandbox either. The user must finish from the host shell — see Next.
+
+**Next (next session)**
+- **Finish the commit from the host (WSL2) shell**: `rm -f .git/index.lock tsconfig.app.tsbuildinfo tsconfig.node.tsbuildinfo`, then `git add -A && git commit -m "chore(ci): bundle-size performance gate + Renovate config"`. Direct-to-main is the template-maintenance precedent (see prior entries); or open a PR if preferred.
+- **Lighthouse CI** (deferred half of the perf gate): add `lighthouserc.json` + `@lhci/cli`, a CI job running `lhci autorun` against `npm run preview`, enforcing the `webVitals` budgets already declared in `.performance-budget.json`.
+- Install the **Renovate GitHub App** on the repo so `renovate.json` becomes active (or switch to Dependabot if the App isn't desired).
+- Still open from earlier: fix the file-truncation class of bug (`docs/plans/fix-file-truncation.md`).
+
+---
 ### 2026-06-03 — Repaired two truncated files (CLAUDE.md, WORKLOG.md) + full integrity audit
 
 **What changed**

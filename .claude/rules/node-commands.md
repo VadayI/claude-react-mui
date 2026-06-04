@@ -35,6 +35,7 @@ bash scripts/check_stubs.sh          # every STUB is logged
 bash scripts/check_file_size.sh      # no src file over 400 lines
 bash scripts/check_feature_readmes.sh # every feature has a README
 npm audit --audit-level=high          # no high/critical advisories
+npm run build && bash scripts/check_bundle_size.sh  # bundle within .performance-budget.json (gzipped)
 ```
 
 ## Make wrappers (optional shortcuts)

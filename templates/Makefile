@@ -45,11 +45,14 @@ typecheck: ## TypeScript type-check (tsc --noEmit).
 types: ## Regenerate src/lib/api/schema.d.ts from committed openapi.yml.
 	npm run api:types
 
-gates: ## Run all four CI gate scripts locally before pushing.
+gates: ## Run all CI gate scripts locally before pushing.
 	bash scripts/check_types_drift.sh
 	bash scripts/check_stubs.sh
 	bash scripts/check_file_size.sh
 	bash scripts/check_feature_readmes.sh
+	npm audit --audit-level=high
+	npm run build
+	bash scripts/check_bundle_size.sh
 
 doctor-deps: ## Quick check that required host tools are present (node, npm, claude, gh).
 	@echo "--- host tool presence check ---"
