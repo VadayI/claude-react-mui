@@ -2,7 +2,7 @@
 
 A ready-made Claude Code configuration for **React + Material UI** frontend projects with **Test-Driven Development** discipline (double-loop, outside-in at the UI boundary), a **contract-first** process (the UI consumes a separate backend's OpenAPI schema, with types generated and locked by a CI drift gate), **mandatory accessibility**, and work done **exclusively through Pull Requests**. This config turns Claude Code into a frontend development team: an orchestrator delegates tasks to specialized agents through a clear pipeline.
 
-This is the **frontend counterpart** to [`claude-django`](https://github.com/VadayI/claude-django): that repo owns the REST API and emits the OpenAPI contract; this repo consumes it. They are independent repositories with independent CI and release cycles (ADR `0007` in the backend).
+This is the **frontend counterpart** to a separate **backend repository** (for example a Django/DRF service): that repo owns the REST API and emits the OpenAPI contract; this repo consumes it. Point this at your own backend repo. They are independent repositories with independent CI and release cycles.
 
 **Stack:** TypeScript 5 · React 18 · Vite 5 · MUI 6 · React Router 6 (data router) · TanStack Query 5 · Zustand 5 · Vitest + React Testing Library + MSW · Playwright · `openapi-typescript` · ESLint + Prettier · GitHub Actions
 **Environment:** Node 20.19+ on WSL2 (Windows) / Linux / macOS · Staging — Debian VPS serving the static build behind nginx · GitHub as the source of truth
@@ -145,4 +145,4 @@ Start a new frontend by using this repo as a GitHub template (or `/bootstrap` in
 
 ## Architecture decisions
 
-See `docs/decisions/` (ADRs 0001–00xx): the frontend double-loop TDD boundary, bash-only shell, frontend-as-separate-repo, `/mnt` support, Node-based env detection, config baseline, file-size limit, and more.
+See `docs/decisions/` (ADRs 0001–00xx): the frontend double-loop TDD boundary, bash-only shell, frontend-as-separate-repo, `/mnt` support, Node-based env detection, config baseline, file-siz

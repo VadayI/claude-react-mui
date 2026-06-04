@@ -1,6 +1,6 @@
 # Typed API client from the backend contract (enforced)
 
-This is a **frontend-only** repository. It does not own the REST API — the backend repository does. The backend ships an **OpenAPI schema** (`drf-spectacular` in the `claude-django` backend) as the single source of truth for the contract. To make sure the frontend can **never silently drift** from that contract, the API types and a thin client are **generated from the schema** and the generation is **locked by a CI gate**, the mirror image of the backend's OpenAPI drift gate.
+This is a **frontend-only** repository. It does not own the REST API — the backend repository does. The backend ships an **OpenAPI schema** (`drf-spectacular` in the Django/DRF backend) as the single source of truth for the contract. To make sure the frontend can **never silently drift** from that contract, the API types and a thin client are **generated from the schema** and the generation is **locked by a CI gate**, the mirror image of the backend's OpenAPI drift gate.
 
 ## What "the contract" means here
 

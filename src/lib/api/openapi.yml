@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Todo API
-  description: REST API for managing todos, served by the claude-django backend.
+  description: REST API for managing todos.
   version: 1.0.0
 servers:
   - url: http://localhost:8000

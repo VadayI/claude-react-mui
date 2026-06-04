@@ -5,7 +5,7 @@
     ":semanticCommits",
     ":dependencyDashboard"
   ],
-  "timezone": "Europe/Kyiv",
+  "timezone": "Etc/UTC",
   "schedule": ["before 6am on monday"],
   "labels": ["dependencies"],
   "rangeStrategy": "bump",
