@@ -4,6 +4,23 @@ Cross-machine work history. Updated at the end of every session (`/wrap-up`) and
 
 ---
 
+### 2026-06-04 — Recover NUL/truncation corruption (git HEAD, index, setup-wsl.sh, README)
+
+**What changed**
+- Integrity sweep of the whole tree (NUL-byte + trailing-newline + truncation scan). Found and fixed, all via in-place overwrite (`cp` / redirect — never Edit/Write):
+  - `.git/HEAD` — held a valid `ref: refs/heads/main` followed by **29 NUL bytes**, which made HEAD unresolvable (`git log`/`branch`/`commit` all failed). Rewrote to clean 21 bytes.
+  - `scripts/setup-wsl.sh` — content intact but **36 trailing NUL bytes**; restored the clean committed version (6837 B, ends with newline).
+  - `README.md` — truncated mid-word ("…file-siz") **in the commit itself** (pre-existing, flagged last session). Reconstructed the final "Architecture decisions" sentence covering ADRs 0001–0019; added the missing trailing newline.
+- `.git/index` was corrupt (`bad sha1 signature`). Rebuilt a valid index via `GIT_INDEX_FILE=/tmp/newindex git read-tree HEAD`, but **the mount corrupted the binary on `cp`-back** (16771 bytes differ; "index uses ? extension"). The index cannot be repaired from the sandbox — must be rebuilt natively on Windows (`del .git/index && git reset`).
+
+**Notes**
+- New characterization of the mount: it permits **create-new** and **in-place overwrite** (`cp`/`>`) and **rename-to-new-name**, but **blocks `unlink`/`rm` for every file** (EPERM, even on a freshly created file) and blocks git lock-file creation (`index.lock`). It also **corrupts binary writes** (not just text-truncation) — confirmed on `.git/index`.
+- Consequence: deletions and any index-locking git op (commit/add/rm/reset, index rebuild) must run on the native Windows shell, not the sandbox.
+- Left undeletable from sandbox (hand-off list): `.__wtest` (empty, tracked), `vitest.config.js` (dup of `.ts`), `.claude/rules/.fuse_hidden0000001000000002` (FUSE temp), stale `.git/index.lock`, and two `__probe_*.txt` files created to characterize the mount.
+
+**Next (run on Windows — see merge sequence)**
+- Rebuild `.git/index`, delete the hand-off files, branch → commit (README + the two deletions) → PR → squash-merge (PR-only).
+
 ### 2026-06-04 — Scrub /mnt/d hardcode + one-line install.sh seed
 
 **What changed**
