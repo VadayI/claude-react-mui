@@ -22,7 +22,7 @@
 
 {TODO: What is currently unfinished? What state is it in?}
 
-- {TODO: e.g. feat/articles-list — tester wrote RED tests, django-developer GREEN in progress}
+- {TODO: e.g. feat/articles-list — tester wrote RED tests, react-developer GREEN in progress}
 
 ## Next steps
 
@@ -31,6 +31,12 @@
 1. {TODO}
 2. {TODO}
 3. {TODO}
+
+## Open questions
+
+{TODO: Unresolved decisions blocking or shaping the work. The auditor surfaces unchecked items here.}
+
+- [ ] {TODO}
 
 ## Open PRs
 

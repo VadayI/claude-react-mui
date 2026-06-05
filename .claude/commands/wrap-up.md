@@ -66,10 +66,14 @@ If new routes were added → update `.claude/memory/routes.json`.
 If lessons were learned → append to `docs/lessons.md`.
 If architectural decisions were made → create ADR in `docs/decisions/`.
 
+
+### 6.5 Regenerate docs/HANDOFF.md
+Refresh `docs/HANDOFF.md` (the rolling snapshot read FIRST on the next machine/session) — same structure `/handoff` writes: `## Next steps` and `## Open questions` headings included, so `auditor` can parse them. Carry the *Next steps* from step 5 and any unresolved items into *Open questions*.
+
 ### 7. Prepare commit
 Stage and commit all documentation and memory updates:
 ```bash
-git add docs/WORKLOG.md docs/lessons.md docs/decisions/ .claude/memory/
+git add docs/HANDOFF.md docs/WORKLOG.md docs/lessons.md docs/decisions/ .claude/memory/
 git commit -m "docs: wrap-up session $(date +%Y-%m-%d) on $(git branch --show-current)"
 ```
 
