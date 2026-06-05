@@ -22,6 +22,7 @@
 @.claude/rules/dependencies-and-supply-chain.md
 @.claude/rules/upgrade-policy.md
 @.claude/rules/routing-and-data-loading.md
+@.claude/rules/living-plan.md
 
 ## Agent Dispatch (MANDATORY)
 
@@ -48,7 +49,7 @@ You DO:
 3. **Pull Requests only.** NEVER commit directly to `main`. Branch → PR → review → merge. Details — @.claude/rules/git-operations.md.
 4. **Accessibility is mandatory, not optional.** Every interactive component meets WCAG 2.1 AA: reachable by keyboard, correct ARIA roles/labels, visible focus, sufficient contrast. Enforced by `jest-axe`/`@axe-core/playwright` in the test suite and by `eslint-plugin-jsx-a11y`. Details — @.claude/rules/accessibility.md.
 5. **The component contract is explicit.** Props are typed; validation/loading/error/empty states are designed up front; MUI theming via the central theme, not inline magic values. Details — @.claude/rules/component-contract.md.
-6. **Context in Git.** At the end of every work session, update `docs/WORKLOG.md` (and, if needed, `docs/lessons.md`, `.claude/memory/`, and ADRs in `docs/decisions/`) so the work history stays in sync across machines.
+6. **Context in Git.** At the end of every work session, refresh the context files so the work history stays in sync across machines: `docs/HANDOFF.md` (the rolling "where we are / what's next" snapshot — read FIRST when joining the project, updated LAST), `docs/WORKLOG.md` (the append-only "what we did" chronicle), and, if needed, `docs/todo.md` (cross-session backlog), `docs/lessons.md` (learnings), `.claude/memory/`, and ADRs in `docs/decisions/`. `/wrap-up` regenerates `HANDOFF.md` and persists the rest; `/handoff` refreshes `HANDOFF.md` alone.
 
 ## Claude-specific behavior
 
@@ -56,6 +57,7 @@ You DO:
 - If a Skill applies — prefer it over repeating rules here.
 - A few rules are **reference docs loaded on demand**, not auto-imported in the block above: @.claude/rules/architecture.md, @.claude/rules/mcp-stack.md, @.claude/rules/testing.md. Agents `@`-reference them where relevant. For test policy, @.claude/rules/tdd.md is canonical — `testing.md` is only the quick where/how index.
 - **Read `.claude/memory/env-detect.json` once per session** (it is rewritten by the `SessionStart` hook, which runs `scripts/session-start.sh` → `node scripts/detect-env.mjs`). Use its `platform_supported` / `shell` / `is_wsl2` / `node_supported` fields to pick shell-appropriate syntax. On Windows native (no WSL2), `platform_supported: false` — STOP and instruct the user to install WSL2. PowerShell/cmd are not supported. **Node.js 20.19+ is a hard requirement** (Node 18 is no longer supported, ADR 0019) — it runs the env-detection hook, the CI gate helpers, and the app itself; if `env-detect.json` is missing, the SessionStart hook failed and the user must install Node 20.19+.
+- **Editing files on a `/mnt` (9p) mount — never via the `Edit`/`Write` tools.** On a 9p/`/mnt` mount these tools can silently truncate the file tail or write NUL bytes; committing such a file lands a 0-byte / corrupt blob on `main`. Safe loop: write via **bash heredoc → scratch in `/dev/shm` → `cp` to destination → verify**, all in **one** bash call (`cmp scratch dest`, `wc -c`, and a no-NUL check `tr -dc '\000' < dest | wc -c` → must be `0`) — scratch dirs do NOT persist between bash calls and `/tmp` can be unavailable during workspace boot. Never trust the write call's return value; read authoritative content via `git show HEAD:<path>` (a working-tree read can be a stale 9p inode cache). Run `git commit`/`push` and final byte-verification from the **host shell**, never the sandbox (9p can corrupt the `.git` index / `multi-pack-index`).
 
 ## IMPORTANT
 
