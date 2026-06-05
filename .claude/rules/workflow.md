@@ -136,7 +136,7 @@ No `tester` for pure infrastructure changes.
 | Need | Agent | Plug into pipeline |
 |------|-------|--------------------|
 | Cross-browser / visual-regression E2E | `qa` | post-deploy smoke on staging |
-| Deep WCAG / a11y audit | `a11y-auditor` | Quality Gate when a feature is interaction-heavy |
+| Deep WCAG / a11y audit | `a11y-auditor` | Quality Gate when a feature is interaction-heavy; on demand via `/a11y-audit` |
 | OAuth / SSO / webhooks / payment widgets / 3rd-party SDKs | `integration-architect` | between `ui-architect` and `react-developer` |
 | Challenge the plan / assumptions | `devil` | planning phase |
 | Re-render perf / hook extraction / decomposition | `react-refactoring-expert` | standalone, under green tests |

@@ -4,6 +4,25 @@ Cross-machine work history. Updated at the end of every session (`/wrap-up`) and
 
 ---
 
+### 2026-06-05 — Config audit: agents · commands · skills (collision sweep)
+
+**What changed** (all via bash heredoc/python — Edit/Write truncate on this mount)
+- Full audit of 22 agents, 20 commands, 12 project skills cross-checked against `CLAUDE.md`, `.claude/rules/**`, `package.json`, `scripts/`, `settings.json`. No name collisions; all referenced scripts exist.
+- Fixed 5 findings:
+  1. `agents/react-developer.md` + `skills/react-specialist/SKILL.md` claimed **React 19 / React Router 7** — corrected to the pinned **React 18 / Router 6**; React-19-only APIs in the skill marked as post-upgrade (ADR 0015), not available on 18.3.
+  2. `VITE_API_URL` → `VITE_API_BASE_URL` (canonical per `.env.example`/`settings.json`) in `agents/devops.md` (x2) and `agents/guide-writer.md` (x1).
+  3. `a11y-auditor` referenced a non-existent `/a11y-audit` command — created `commands/a11y-audit.md` (modeled on `/structure-audit`); added discoverability mentions in `CLAUDE.md` + `rules/workflow.md`.
+  4. `rules/testing.md` deduped against `rules/tdd.md` (now a thin where/how index; tdd.md is the canonical source of truth). Added a CLAUDE.md note that `architecture.md` / `mcp-stack.md` / `testing.md` are on-demand reference rules, not globally imported.
+  5. Unified the `output-language.md` insertion instruction in `CLAUDE.md` (IMPORTANT 0) with `/set-language` ("after the last existing import line").
+
+**Integrity** — all 8 touched files verified: trailing newline present, frontmatter intact (2x `---`), no NUL bytes, no truncation.
+
+**Notes / open**
+- A stale empty `.git/index.lock` is present and CANNOT be removed from the sandbox (`Operation not permitted` — Windows mount perms). This blocked committing the audit. The 7 modified files + 1 new command are still **uncommitted and not in HEAD/origin** (`HEAD == origin/main == 260389c`).
+- **Action on host (WSL2/PowerShell):** `rm -f .git/index.lock`, then branch + commit the audit changes through a PR per `@.claude/rules/git-operations.md` (e.g. `chore/config-audit-fixes`).
+
+---
+
 ### 2026-06-04 — Recover NUL/truncation corruption (git HEAD, index, setup-wsl.sh, README)
 
 **What changed**
