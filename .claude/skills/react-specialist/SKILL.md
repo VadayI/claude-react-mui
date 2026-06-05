@@ -1,9 +1,9 @@
 ---
 name: react-specialist
-description: Modern React 19 patterns — function components, hooks, composition, Suspense, effects — activate when implementing React components or custom hooks.
+description: Modern React 18 patterns — function components, hooks, composition, Suspense, effects — activate when implementing React components or custom hooks.
 ---
 
-# React 19 Patterns
+# React 18 Patterns
 
 ## Core principles
 - Function components only; no class components
@@ -62,7 +62,7 @@ function SearchBox({ onSearch }: { onSearch: (q: string) => void }) {
 </ErrorBoundary>
 ```
 
-- In React 19, `use(promise)` inside a component suspends automatically
+- Suspense for data is driven by the data layer (TanStack Query's `useSuspenseQuery`); `use(promise)` auto-suspend arrives with the React 19 upgrade (ADR 0015)
 - Always pair `<Suspense>` with an `<ErrorBoundary>`
 
 ## Refs
@@ -78,7 +78,7 @@ function SearchBox({ onSearch }: { onSearch: (q: string) => void }) {
 - Return an object (named values) not a tuple when returning 3+ values
 - Hooks compose; keep them single-purpose
 
-## React 19 additions
+## React 19 additions (available only after the React 19 upgrade — ADR 0015; NOT on the pinned React 18.3)
 - `useOptimistic` for optimistic UI (prefer over manual state tricks)
 - `useFormStatus` for form pending state
 - Server Actions integration available but this repo is client-only

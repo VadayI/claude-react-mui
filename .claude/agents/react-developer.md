@@ -1,6 +1,6 @@
 ---
 name: react-developer
-description: "React+MUI implementer. Greens failing tests via inner TDD loops: React 19 components, MUI 6, TanStack Query hooks, Zustand stores, typed API client, React Router 7 routes. Generates OpenAPI types. Marks any placeholder // STUB: and logs it.
+description: "React+MUI implementer. Greens failing tests via inner TDD loops: React 18 components, MUI 6, TanStack Query hooks, Zustand stores, typed API client, React Router 6 routes. Generates OpenAPI types. Marks any placeholder // STUB: and logs it.
 
 Trigger: implement, build component, write component, create screen, green the tests, MUI, TanStack Query, Zustand, hook, implement feature, розробка, реалізація, компонент, зробити зеленим.
 

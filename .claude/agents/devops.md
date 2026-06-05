@@ -6,7 +6,7 @@ Trigger: deploy, Docker, nginx, staging, VPS, environment, production build, dep
 
 <example>
 user: 'Set up staging deployment for the frontend'
-assistant: 'Using devops: multi-stage Dockerfile (node build → nginx serve), .env.production with VITE_API_URL, nginx config proxying /api/ to the backend container, and docker compose staging profile.'
+assistant: 'Using devops: multi-stage Dockerfile (node build → nginx serve), .env.production with VITE_API_BASE_URL, nginx config proxying /api/ to the backend container, and docker compose staging profile.'
 </example>"
 model: sonnet
 color: orange
@@ -28,7 +28,7 @@ Infrastructure agent for the frontend: Docker images, nginx static serving, VPS 
    - Stage 1: `node:20-alpine` builder — `npm ci`, `npm run build` → `/app/dist`
    - Stage 2: `nginx:alpine` — copy `/app/dist`, inject nginx config
 2. **nginx config** — serve `index.html` for all routes (SPA fallback), gzip, cache headers for assets, proxy `/api/` to backend.
-3. **Environment wiring** — `VITE_API_URL` and other `VITE_*` vars via `.env.production` or Docker build-args; confirm no secrets are baked in.
+3. **Environment wiring** — `VITE_API_BASE_URL` and other `VITE_*` vars via `.env.production` or Docker build-args; confirm no secrets are baked in.
 4. **docker-compose.staging.yml** — frontend + backend services, shared network, volume for nginx certs.
 5. **VPS deploy** — `git pull`, `docker compose -f docker-compose.staging.yml up -d --build`, smoke-check with `curl`.
 6. **Reverse proxy** — nginx/Traefik subdomain config; HTTPS via Let's Encrypt.
