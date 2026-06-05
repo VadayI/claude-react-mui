@@ -25,5 +25,9 @@ export default defineConfig({
     command: 'npm run dev',
     url: 'http://localhost:5173',
     reuseExistingServer: !process.env.CI,
+    // Cold Vite + MSW worker registration on CI can exceed the 60s default.
+    timeout: 120_000,
+    // Enable the MSW browser worker so the app serves mocked API responses in E2E.
+    env: { VITE_MSW_ENABLED: 'true' },
   },
 })

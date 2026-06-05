@@ -4,6 +4,23 @@ Cross-machine work history. Updated at the end of every session (`/wrap-up`) and
 
 ---
 
+### 2026-06-05 — Wire MSW browser worker for E2E (fix failing E2E check)
+
+**Why** — PR #4's E2E check failed; root cause was pre-existing, not the audit: the Playwright suite assumed MSW mocked the backend in CI, but the **browser** MSW worker was never wired (only the Node server for Vitest existed). `main.tsx` had no worker bootstrap, `src/mocks/browser.ts` and `public/mockServiceWorker.js` were missing, and `VITE_MSW_ENABLED` was referenced nowhere. So `/todos` hit the real `http://localhost:8000` → no data → the `networkidle`/axe test timed out (~1 min).
+
+**What changed** (branch `fix/e2e-msw-browser`)
+- `src/mocks/browser.ts` (new) — `setupWorker(...handlers)`, sharing the same handlers as `src/test/server.ts` so unit and E2E mocks can't drift.
+- `src/main.tsx` — async `enableMocking()` starts the worker before first render, gated on `import.meta.env.DEV || VITE_MSW_ENABLED === 'true'`; dynamic `import()` keeps MSW out of the production bundle.
+- `public/mockServiceWorker.js` (new) — `msw@2.14.6` service worker (via `npx msw init public/`).
+- `playwright.config.ts` — `webServer.env = { VITE_MSW_ENABLED: 'true' }` + `timeout: 120_000` (cold Vite start safety).
+- `e2e/todos.spec.ts` — refreshed the stale "WRITE-ONLY / VITE_MSW_ENABLED in main.tsx" header to match the real wiring.
+
+**Verified** — `tsc -p tsconfig.app.json --noEmit` clean; `eslint` clean on the changed files; handler URLs match the client's default base URL. Full E2E to be confirmed by CI (sandbox node_modules is Windows-built → rollup native missing, can't run vite/playwright locally).
+
+**Next** — open PR from `fix/e2e-msw-browser`; on green, merge.
+
+---
+
 ### 2026-06-05 — Config audit: agents · commands · skills (collision sweep)
 
 **What changed** (all via bash heredoc/python — Edit/Write truncate on this mount)

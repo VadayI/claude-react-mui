@@ -1,14 +1,15 @@
 /**
  * Playwright E2E tests for the /todos page.
  *
- * These are WRITE-ONLY for now — they will be run on CI once Playwright browsers
- * are installed. They exercise a realistic user journey:
+ * They exercise a realistic user journey:
  * 1. Visit /todos and assert the page loads.
  * 2. Add a todo and assert it appears.
  * 3. Run an axe accessibility check on the page.
  *
- * The backend mock is provided by MSW in service-worker mode (started in main.tsx
- * when VITE_MSW_ENABLED=true). In CI the app runs with mocked API responses.
+ * The backend is mocked by the MSW browser worker (`src/mocks/browser.ts`,
+ * started in `main.tsx`, service worker at `public/mockServiceWorker.js`).
+ * `playwright.config.ts` runs the dev server with `VITE_MSW_ENABLED=true`, so the
+ * app serves mocked API responses — no real backend is needed in CI.
  */
 import { test, expect } from '@playwright/test'
 import AxeBuilder from '@axe-core/playwright'
