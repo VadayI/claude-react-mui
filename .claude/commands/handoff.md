@@ -47,10 +47,13 @@ Write `docs/HANDOFF.md` with this structure:
 ## In-progress work
 <any plans in docs/plans/ that are incomplete>
 
-## Recommended next steps
+## Next steps
 1. <most urgent action>
 2. <second action>
 3. <third action>
+
+## Open questions
+<unresolved decisions the next session must address; use `- [ ]` checkboxes — the auditor surfaces unchecked items>
 
 ## Key file locations
 - Routes: src/routes/index.tsx
