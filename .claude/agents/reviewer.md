@@ -25,6 +25,7 @@ Phase 5 Quality Gate (parallel). I perform the final pre-PR review across all qu
 - `@.claude/rules/testing.md` — AAA structure, coverage of success/400/401/403/404 states
 - `@.claude/rules/accessibility.md` — axe tests, keyboard nav, ARIA roles
 - `@.claude/rules/no-stubs.md` — no unlogged `// STUB:` in `src/`
+- `@.claude/rules/surgical-changes.md` — minimal, traceable diffs; no drive-by edits
 - `@.claude/rules/feature-readme.md` — README updated if component surface changed
 - `@.claude/rules/git-operations.md` — conventional commits, branch naming
 
@@ -49,5 +50,10 @@ Phase 5 Quality Gate (parallel). I perform the final pre-PR review across all qu
 **Stubs / docs**
 - [ ] `bash scripts/check_stubs.sh` exits 0
 - [ ] Feature README updated (`bash scripts/check_feature_readmes.sh`)
+
+**Diff hygiene**
+- [ ] Every hunk traces to the request; no drive-by reformatting or refactoring
+- [ ] Local style matched; no taste-only renames/restructuring
+- [ ] Only self-created orphans removed; un-understood code flagged, not deleted
 
 <!-- last reviewed: 2026-06-02 -->

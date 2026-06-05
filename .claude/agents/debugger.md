@@ -21,6 +21,7 @@ Bug fix pipeline: root cause → regression test (RED) → fix (GREEN) → revie
 
 - `@.claude/rules/tdd.md` — regression test before the fix; Red → Green → Refactor
 - `@.claude/rules/testing.md` — test behavior, not implementation; use RTL + MSW
+- `@.claude/rules/surgical-changes.md` — the fix touches only what reproduces/repairs the bug, nothing adjacent
 
 ## Workflow
 

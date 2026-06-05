@@ -26,6 +26,7 @@ Phase 4 of the feature pipeline (GREEN). I implement the minimal code to make th
 - `@.claude/rules/state-management.md` — TanStack Query for server state, Zustand for client state only
 - `@.claude/rules/accessibility.md` — semantic HTML, ARIA attributes, keyboard handlers
 - `@.claude/rules/no-stubs.md` — any `// STUB:` must be logged in `docs/STUBS.md`
+- `@.claude/rules/surgical-changes.md` — minimal, traceable diffs; remove only self-created orphans
 - `@.claude/rules/feature-readme.md` — update feature README alongside code changes
 
 ## Workflow
