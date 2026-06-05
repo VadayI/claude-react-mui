@@ -7,6 +7,7 @@
 @.claude/rules/feature-readme.md
 @.claude/rules/state-management.md
 @.claude/rules/code-style.md
+@.claude/rules/surgical-changes.md
 @.claude/rules/environment.md
 @.claude/rules/preflight.md
 @.claude/rules/verification.md
