@@ -240,3 +240,12 @@ Cross-machine work history. Updated at the end of every session (`/wrap-up`) and
 **Next**
 - Wire `VITE_OPENAPI_URL` to the real backend and `npm run api:pull` to replace the hand-written `openapi.yml`.
 - Build the first real feature through the pipeline (`ba → ui-architect → tester → react-developer → ...`).
+
+## 2026-06-05 — config-template alignment (claude-django → claude-react-mui)
+### Done
+- Перенесено living-plan, HANDOFF-контекст, 9p-safety (#6); template-sync + brief-synthesizer (#7); HANDOFF wiring (#8).
+- Засіяно живі плани 0001 (done) і 0002 (pending).
+### Gate status
+- docs/config only — код застосунку не змінювався.
+### Next steps
+- див. docs/HANDOFF.md
