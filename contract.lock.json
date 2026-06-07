@@ -1,6 +1,6 @@
 {
   "repo": "VadayI/claude-api-contract",
-  "version": "v0.1.0",
+  "version": "v0.2.0",
   "path": "openapi.yml",
-  "sha256": "556a085bb827a8bcb0b2862bf375459119b762628555c8514bc777917deda959"
+  "sha256": "d9ad3779f189c74a2800582b138a6fac8fd1e333662129209c8d9a88cf5bb1b7"
 }
