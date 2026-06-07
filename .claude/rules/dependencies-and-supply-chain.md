@@ -22,7 +22,7 @@ Before adding a package, weigh and record (in the PR) the following — a heavy 
 - **`npm audit`** runs in CI; **high/critical** advisories fail the PR (resolve, upgrade, or record an accepted-risk exception with an expiry). Moderate/low are triaged, not ignored forever.
 - **Install scripts are suspect** — avoid packages that need `postinstall` to function where possible; CI can run with `--ignore-scripts` for untrusted installs. Lockfile integrity hashes are verified by `npm ci`.
 - **Dev-only stays dev-only** — build/test tooling is in `devDependencies` and must not leak into the shipped bundle.
-- Secrets/tokens are never embedded in a dependency config or committed (@.claude/rules/auth-and-csrf.md, @.claude/rules/code-style.md).
+- Secrets/tokens are never embedded in a dependency config or committed (@.claude/rules/auth.md, @.claude/rules/code-style.md).
 
 ## Rules
 
