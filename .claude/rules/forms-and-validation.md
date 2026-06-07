@@ -1,6 +1,6 @@
 # Forms & validation (schema-first, accessible, enforced)
 
-Forms are where most UX and accessibility bugs live, and where the frontend meets the backend's validation contract. This project keeps validation in **one schema per form**, renders errors **accessibly and associated to their field**, and maps the backend's **400 field errors** back onto the right inputs — never a toast, never scattered `onChange` checks. This is the companion to @.claude/rules/component-contract.md (the *Forms & validation* clause) and @.claude/rules/api-error-and-pagination.md (where field errors come from).
+Forms are where most UX and accessibility bugs live, and where the frontend meets the backend's validation contract. This project keeps validation in **one schema per form**, renders errors **accessibly and associated to their field**, and maps the backend's **400 field errors** back onto the right inputs — never a toast, never scattered `onChange` checks. This is the companion to @.claude/rules/component-contract.md (the _Forms & validation_ clause) and @.claude/rules/api-error-and-pagination.md (where field errors come from).
 
 ## The stack — react-hook-form + Zod
 

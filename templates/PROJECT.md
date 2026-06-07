@@ -19,8 +19,8 @@
 {TODO: Who are the main user personas? What do they care about? What is their technical level?}
 
 | Persona | Description | Key concern |
-|---|---|---|
-| {TODO} | {TODO} | {TODO} |
+| ------- | ----------- | ----------- |
+| {TODO}  | {TODO}      | {TODO}      |
 
 ## Key screens / flows
 
@@ -55,11 +55,11 @@
 
 The backend is a separate repository. This frontend consumes its OpenAPI contract.
 
-| Item | Value |
-|---|---|
-| Backend repo | {BACKEND_REPO_URL} |
-| OpenAPI schema URL | {OPENAPI_URL} |
-| Swagger UI | {SWAGGER_UI_URL} |
+| Item                   | Value                   |
+| ---------------------- | ----------------------- |
+| Backend repo           | {BACKEND_REPO_URL}      |
+| OpenAPI schema URL     | {OPENAPI_URL}           |
+| Swagger UI             | {SWAGGER_UI_URL}        |
 | Local backend base URL | `http://localhost:8000` |
 
 The schema is pulled with `npm run api:pull` and committed as `src/lib/api/openapi.yml`. Generated TypeScript types live in `src/lib/api/schema.d.ts` (not committed — regenerated from the yml on each install).

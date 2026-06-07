@@ -17,8 +17,8 @@ Every feature under `src/features/<feature>/` MUST have a local `README.md` desc
 ## Lifecycle
 
 - A new feature is **born with a README** — newly scaffolded features copy `templates/FEATURE_README.md`. `/bootstrap` Mode A creates the example feature with its README from this template.
-- The README is updated **in the same PR** as component/route/endpoint changes that affect it (the *Routes*, *Consumed endpoints*, and *Components* sections are the most volatile). `reviewer` flags PRs that change a feature's components/routes without touching its README.
-- **After GREEN, before the PR opens:** drop any RED-phase "target surface" framing, and reconcile *Routes* and *Consumed endpoints* against the live code, `.claude/memory/routes.json`, and the OpenAPI schema. The schema/routes registry are the source of truth.
+- The README is updated **in the same PR** as component/route/endpoint changes that affect it (the _Routes_, _Consumed endpoints_, and _Components_ sections are the most volatile). `reviewer` flags PRs that change a feature's components/routes without touching its README.
+- **After GREEN, before the PR opens:** drop any RED-phase "target surface" framing, and reconcile _Routes_ and _Consumed endpoints_ against the live code, `.claude/memory/routes.json`, and the OpenAPI schema. The schema/routes registry are the source of truth.
 
 ## Enforcement (the gate)
 
@@ -27,8 +27,8 @@ Every feature under `src/features/<feature>/` MUST have a local `README.md` desc
 
 ## Binds these agents (rule is auto-loaded)
 
-- `react-developer` — when creating a feature, copies `templates/FEATURE_README.md` and fills *Purpose* + initial *Components* before opening the PR.
-- `ui-architect` — updates *Routes* and *Consumed endpoints* whenever the contract changes.
+- `react-developer` — when creating a feature, copies `templates/FEATURE_README.md` and fills _Purpose_ + initial _Components_ before opening the PR.
+- `ui-architect` — updates _Routes_ and _Consumed endpoints_ whenever the contract changes.
 - `docs-writer` — owns the per-feature README in the docs pipeline; runs the gate locally.
 - `reviewer` — blocks PRs that change a feature's surface without a README update.
 

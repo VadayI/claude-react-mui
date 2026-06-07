@@ -26,17 +26,20 @@ Optional Phase 2.5 — sits between `ui-architect` and `react-developer` when th
 ## What I do
 
 **OAuth / SSO flows**
+
 1. Choose flow: Authorization Code + PKCE (SPA best practice).
 2. Design the redirect: frontend → backend `/auth/<provider>/` → provider → backend callback → frontend `/auth/callback?code=...`.
 3. Define token storage: access token in memory (Zustand auth slice), refresh in httpOnly cookie.
 4. Document the callback route in `.claude/memory/routes.json`.
 
 **Payment widgets (Stripe Elements)**
+
 1. Design the PaymentForm container: fetches `clientSecret` from backend, mounts `<Elements>`.
 2. Never pass raw card data to the backend — Stripe handles tokenization.
 3. Error/loading/success states mapped to the four UI states.
 
 **3rd-party SDK embedding**
+
 1. Load SDKs dynamically (import() or script tag) to avoid blocking the main bundle.
 2. Define the TypeScript wrapper interface so `react-developer` uses typed calls.
 3. Flag any SDK that sets cookies or captures keystrokes for `security-scanner` review.

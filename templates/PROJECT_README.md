@@ -6,19 +6,19 @@ Consumes the backend REST API contract defined in `src/lib/api/openapi.yml` (aut
 
 ## Stack
 
-| Layer | Technology |
-|---|---|
-| Language | TypeScript |
-| Framework | React 18 + Vite 8 |
-| UI | MUI 6 (Material UI) |
-| Routing | React Router 7 |
-| Server state | TanStack Query 5 |
-| Client state | Zustand 5 |
-| API types | openapi-typescript (generated) |
-| Testing | Vitest + React Testing Library + MSW |
-| Accessibility | jest-axe |
-| E2E | Playwright |
-| Lint/Format | ESLint + Prettier |
+| Layer         | Technology                           |
+| ------------- | ------------------------------------ |
+| Language      | TypeScript                           |
+| Framework     | React 18 + Vite 8                    |
+| UI            | MUI 6 (Material UI)                  |
+| Routing       | React Router 7                       |
+| Server state  | TanStack Query 5                     |
+| Client state  | Zustand 5                            |
+| API types     | openapi-typescript (generated)       |
+| Testing       | Vitest + React Testing Library + MSW |
+| Accessibility | jest-axe                             |
+| E2E           | Playwright                           |
+| Lint/Format   | ESLint + Prettier                    |
 
 ## Quick start
 

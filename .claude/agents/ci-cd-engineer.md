@@ -28,15 +28,15 @@ Owns `.github/workflows/frontend-ci.yml` and all gate scripts. The CI must be fa
 ```yaml
 # .github/workflows/frontend-ci.yml
 jobs:
-  typecheck:   npm ci → npm run typecheck
-  lint:        npm ci → npm run lint
-  test:        npm ci → npm run test:cov (Vitest + coverage threshold)
-  build:       npm ci → npm run build
-  e2e:         npm ci → npm run build → npx playwright install → npm run e2e
-  gates:       bash scripts/check_stubs.sh
-               bash scripts/check_file_size.sh
-               bash scripts/check_feature_readmes.sh
-               bash scripts/check_types_drift.sh
+  typecheck: npm ci → npm run typecheck
+  lint: npm ci → npm run lint
+  test: npm ci → npm run test:cov (Vitest + coverage threshold)
+  build: npm ci → npm run build
+  e2e: npm ci → npm run build → npx playwright install → npm run e2e
+  gates: bash scripts/check_stubs.sh
+    bash scripts/check_file_size.sh
+    bash scripts/check_feature_readmes.sh
+    bash scripts/check_types_drift.sh
 ```
 
 ## Key rules

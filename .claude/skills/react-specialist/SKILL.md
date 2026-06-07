@@ -6,6 +6,7 @@ description: Modern React 18 patterns — function components, hooks, compositio
 # React 18 Patterns
 
 ## Core principles
+
 - Function components only; no class components
 - Composition over inheritance — small, focused components composed together
 - Presentational / container (smart / dumb) split: presentational receives props and renders, container fetches data and manages state
@@ -17,17 +18,18 @@ description: Modern React 18 patterns — function components, hooks, compositio
 ```tsx
 // Good: derive state instead of syncing with useEffect
 function UserLabel({ user }: { user: User }) {
-  const displayName = user.nickname ?? user.email; // derived, no effect
-  return <span>{displayName}</span>;
+  const displayName = user.nickname ?? user.email // derived, no effect
+  return <span>{displayName}</span>
 }
 
 // Bad: unnecessary sync
 useEffect(() => {
-  setDisplayName(user.nickname ?? user.email);
-}, [user]);
+  setDisplayName(user.nickname ?? user.email)
+}, [user])
 ```
 
 **When NOT to useEffect:**
+
 - Deriving state from props → compute during render
 - Responding to a user event → put logic in the handler
 - Transforming data for rendering → memo or inline compute
@@ -39,7 +41,7 @@ useEffect(() => {
 
 ```tsx
 function SearchBox({ onSearch }: { onSearch: (q: string) => void }) {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState('')
   return (
     <input
       value={query}
@@ -47,7 +49,7 @@ function SearchBox({ onSearch }: { onSearch: (q: string) => void }) {
       onKeyDown={(e) => e.key === 'Enter' && onSearch(query)}
       aria-label="Search"
     />
-  );
+  )
 }
 ```
 
@@ -66,19 +68,23 @@ function SearchBox({ onSearch }: { onSearch: (q: string) => void }) {
 - Always pair `<Suspense>` with an `<ErrorBoundary>`
 
 ## Refs
+
 - `useRef` for DOM access or stable mutable values that must not trigger re-renders
 - Never read refs during render (snapshot timing is undefined)
 
 ## Keys
+
 - Use stable, unique domain IDs as keys, not array indices
 - Wrong key = lost component state and degraded diffing
 
 ## Custom hooks
+
 - Extract repeated stateful logic into `use<Name>` hooks
 - Return an object (named values) not a tuple when returning 3+ values
 - Hooks compose; keep them single-purpose
 
 ## React 19 additions (available only after the React 19 upgrade — ADR 0015; NOT on the pinned React 18.3)
+
 - `useOptimistic` for optimistic UI (prefer over manual state tricks)
 - `useFormStatus` for form pending state
 - Server Actions integration available but this repo is client-only

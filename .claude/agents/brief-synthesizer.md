@@ -24,8 +24,8 @@ The orchestrator (`/synthesize-brief`) passes a list of paths under `docs/**`. F
 - `.md`, `.txt` — read via `Read`.
 - `.pdf` — invoke the `anthropic-skills:pdf` skill.
 - `.docx` — invoke the `anthropic-skills:docx` skill.
-- Images (`.png`, `.jpg`, `.jpeg`, `.webp`) — describe visually (you are multimodal; read them with `Read` so the image content is in context). Wireframes/mockups feed the *Key screens* requirements.
-- Any other binary (`.xlsx`, `.zip`, `.fig`, ...) — DO NOT attempt to read. Record under *Source documents* with note `unprocessed: unsupported format`.
+- Images (`.png`, `.jpg`, `.jpeg`, `.webp`) — describe visually (you are multimodal; read them with `Read` so the image content is in context). Wireframes/mockups feed the _Key screens_ requirements.
+- Any other binary (`.xlsx`, `.zip`, `.fig`, ...) — DO NOT attempt to read. Record under _Source documents_ with note `unprocessed: unsupported format`.
 
 If a `.pdf`/`.docx` skill is unavailable or fails, do NOT crash — record the file as `unprocessed: <reason>` and continue with the rest.
 
@@ -78,11 +78,12 @@ The project slug for the H1 comes from the basename of the repo root if no bette
 
 ## Hard limits
 
-- **Never invent facts** not present in source documents. If a section has no supporting source, write `TODO — source missing` in that section. The *Source documents* table makes every gap auditable.
+- **Never invent facts** not present in source documents. If a section has no supporting source, write `TODO — source missing` in that section. The _Source documents_ table makes every gap auditable.
 - **Never write outside `docs/PROJECT.md`.** No edits to source briefs, no new ADRs, no `templates/` writes.
 - **Never run `git commit` or `git push`.** The orchestrator (`/synthesize-brief`) handles git: feature branch, commit, push, `gh pr create`. You only write the file.
-- **Skip unsupported binaries gracefully.** List them in the *Source documents* table with `unprocessed: <reason>`; do not crash the synthesis.
+- **Skip unsupported binaries gracefully.** List them in the _Source documents_ table with `unprocessed: <reason>`; do not crash the synthesis.
 - If `docs/PROJECT.md` already exists, REPLACE it wholesale (the file is auto-regenerated). The PR diff is the audit trail of what changed between runs.
 
 > Pair: `/synthesize-brief` (the invoking command) -> this agent -> orchestrator creates the PR.
+
 <!-- Last reviewed/updated: 2026-06-05 (ported from claude-django: typed per-extension readers, fixed 9-section scaffold + source table, hard limits) -->

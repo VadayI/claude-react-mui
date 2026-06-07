@@ -32,26 +32,31 @@ Phase 5 Quality Gate (parallel). I perform the final pre-PR review across all qu
 ## Review checklist
 
 **Architecture**
+
 - [ ] Feature lives under `src/features/<name>/`; no cross-feature direct imports
 - [ ] Container/presentational split respected
 - [ ] No direct `fetch`/`axios` in components — typed API client used
 
 **Types & style**
+
 - [ ] `npm run typecheck` passes
 - [ ] `npm run lint` clean
 - [ ] No file exceeds 400 lines (`bash scripts/check_file_size.sh`)
 
 **Tests**
+
 - [ ] All four UI states covered
 - [ ] Tests use RTL queries (`getByRole`, `getByLabelText`) not implementation details
 - [ ] MSW handlers in `src/mocks/handlers/`
 - [ ] jest-axe assertion present
 
 **Stubs / docs**
+
 - [ ] `bash scripts/check_stubs.sh` exits 0
 - [ ] Feature README updated (`bash scripts/check_feature_readmes.sh`)
 
 **Diff hygiene**
+
 - [ ] Every hunk traces to the request; no drive-by reformatting or refactoring
 - [ ] Local style matched; no taste-only renames/restructuring
 - [ ] Only self-created orphans removed; un-understood code flagged, not deleted

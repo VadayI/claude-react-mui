@@ -40,11 +40,7 @@ export function ArticleList({ items }: ArticleListProps) {
   return (
     <List aria-label="articles list">
       {items.map((article) => (
-        <ListItem
-          key={article.id}
-          divider
-          alignItems="flex-start"
-        >
+        <ListItem key={article.id} divider alignItems="flex-start">
           <ListItemText
             primary={article.title}
             secondaryTypographyProps={{ component: 'div' }}
@@ -64,12 +60,7 @@ export function ArticleList({ items }: ArticleListProps) {
                 >
                   {article.body}
                 </Typography>
-                <Chip
-                  label={article.status}
-                  size="small"
-                  variant="outlined"
-                  sx={{ mt: 0.5 }}
-                />
+                <Chip label={article.status} size="small" variant="outlined" sx={{ mt: 0.5 }} />
               </Box>
             }
           />

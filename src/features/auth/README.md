@@ -10,10 +10,10 @@ lives in `src/lib/auth/` to avoid circular imports with the API client.
 
 ## Public exports
 
-| Export | File | Description |
-|---|---|---|
-| `login` | `authApi.ts` | POST /api/v1/auth/login → stores access+refresh tokens |
-| `logout` | `authApi.ts` | POST /api/v1/auth/logout → clears tokens from store |
+| Export     | File         | Description                                            |
+| ---------- | ------------ | ------------------------------------------------------ |
+| `login`    | `authApi.ts` | POST /api/v1/auth/login → stores access+refresh tokens |
+| `logout`   | `authApi.ts` | POST /api/v1/auth/logout → clears tokens from store    |
 | `register` | `authApi.ts` | POST /api/v1/auth/register → create a new user account |
 
 ## Cross-feature dependencies

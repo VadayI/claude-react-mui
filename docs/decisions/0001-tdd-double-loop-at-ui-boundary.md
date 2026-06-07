@@ -8,7 +8,7 @@ The backend framework (a Django/DRF service, ADR 0001) runs an outside-in double
 
 ## Decision
 
-Adapt Harry Percival's *Obey the Testing Goat* double-loop to React:
+Adapt Harry Percival's _Obey the Testing Goat_ double-loop to React:
 
 - **Outer loop** = a failing **Playwright** test that drives the real app as a user (navigate, type, click, assert on screen). The network is stubbed at the boundary (route interception / MSW worker) for determinism.
 - **Inner loop** = fast **Vitest + React Testing Library** tests with **MSW** mocking the network, so components and TanStack Query hooks run their production code paths — only the HTTP response is faked.
@@ -19,4 +19,4 @@ Adapt Harry Percival's *Obey the Testing Goat* double-loop to React:
 
 - Real "boundary parity" (MSW ≈ the backend's real test DB) without coupling to fetch internals.
 - The four UI states (loading/success/empty/error) and accessibility are testable and mandatory.
-- Browser E2E is the *outer* driver here (unlike the backend, where E2E stays a thin top layer), because the rendered UI is the contract.
+- Browser E2E is the _outer_ driver here (unlike the backend, where E2E stays a thin top layer), because the rendered UI is the contract.

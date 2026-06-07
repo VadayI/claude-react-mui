@@ -14,6 +14,7 @@ References: `@.claude/rules/tdd.md`, `@.claude/rules/testing.md`
 - Write the failing test first; never write production code before a red test
 
 ## RTL query priority (in order)
+
 1. `getByRole` with accessible name — primary; mirrors what assistive tech sees
 2. `getByLabelText` — for form inputs
 3. `getByText` — static text content
@@ -22,72 +23,72 @@ References: `@.claude/rules/tdd.md`, `@.claude/rules/testing.md`
 
 ```tsx
 // Prefer role queries
-const button = screen.getByRole('button', { name: /submit/i });
-const input  = screen.getByLabelText(/email address/i);
-const alert  = screen.getByRole('alert');
+const button = screen.getByRole('button', { name: /submit/i })
+const input = screen.getByLabelText(/email address/i)
+const alert = screen.getByRole('alert')
 ```
 
 ## Async assertions
 
 ```tsx
 // findBy* = waitFor + getBy; use for async renders
-const item = await screen.findByRole('listitem', { name: /article title/i });
+const item = await screen.findByRole('listitem', { name: /article title/i })
 
 // waitFor for non-element assertions
-await waitFor(() => expect(mockFn).toHaveBeenCalledTimes(1));
+await waitFor(() => expect(mockFn).toHaveBeenCalledTimes(1))
 ```
 
 ## MSW setup
 
 ```ts
 // src/mocks/server.ts
-import { setupServer } from 'msw/node';
-import { handlers } from './handlers';
-export const server = setupServer(...handlers);
+import { setupServer } from 'msw/node'
+import { handlers } from './handlers'
+export const server = setupServer(...handlers)
 
 // vitest.setup.ts
-beforeAll(() => server.listen({ onUnhandledRequest: 'error' }));
-afterEach(() => server.resetHandlers());
-afterAll(() => server.close());
+beforeAll(() => server.listen({ onUnhandledRequest: 'error' }))
+afterEach(() => server.resetHandlers())
+afterAll(() => server.close())
 ```
 
 ```ts
 // src/mocks/handlers.ts — typed from generated schema
-import { http, HttpResponse } from 'msw';
-import type { paths } from '@/api/schema.d.ts'; // openapi-typescript output
+import { http, HttpResponse } from 'msw'
+import type { paths } from '@/api/schema.d.ts' // openapi-typescript output
 
 export const handlers = [
   http.get('/api/v1/articles', () =>
-    HttpResponse.json<paths['/api/v1/articles']['get']['responses']['200']['content']['application/json']>(
-      { results: [], count: 0 }
-    )
+    HttpResponse.json<
+      paths['/api/v1/articles']['get']['responses']['200']['content']['application/json']
+    >({ results: [], count: 0 }),
   ),
-];
+]
 ```
 
 ## Four-states triangulation (mandatory for data components)
 
 Test all four UI states so no hardcoded return can stay green:
 
-| State | Trigger | Assertion |
-|-------|---------|-----------|
-| Loading | MSW delays response | skeleton/spinner visible |
-| Empty | MSW returns `{ results: [] }` | empty-state message visible |
-| Populated | MSW returns items | item list rendered |
-| Error | `server.use(http.get(..., () => HttpResponse.error()))` | error message visible |
+| State     | Trigger                                                 | Assertion                   |
+| --------- | ------------------------------------------------------- | --------------------------- |
+| Loading   | MSW delays response                                     | skeleton/spinner visible    |
+| Empty     | MSW returns `{ results: [] }`                           | empty-state message visible |
+| Populated | MSW returns items                                       | item list rendered          |
+| Error     | `server.use(http.get(..., () => HttpResponse.error()))` | error message visible       |
 
 ## RED → GREEN micro-example
 
 ```tsx
 // RED: test written first
 it('shows article titles after load', async () => {
-  render(<ArticleList />, { wrapper: AppProviders });
+  render(<ArticleList />, { wrapper: AppProviders })
   // Loading state
-  expect(screen.getByRole('progressbar')).toBeInTheDocument();
+  expect(screen.getByRole('progressbar')).toBeInTheDocument()
   // Populated state
-  await screen.findByRole('heading', { name: /first article/i });
-  expect(screen.getAllByRole('article')).toHaveLength(2);
-});
+  await screen.findByRole('heading', { name: /first article/i })
+  expect(screen.getAllByRole('article')).toHaveLength(2)
+})
 
 // GREEN: minimal ArticleList that queries /api/v1/articles and renders titles
 ```
@@ -95,14 +96,14 @@ it('shows article titles after load', async () => {
 ## jest-axe (mandatory accessibility assertion)
 
 ```tsx
-import { axe, toHaveNoViolations } from 'jest-axe';
-expect.extend(toHaveNoViolations);
+import { axe, toHaveNoViolations } from 'jest-axe'
+expect.extend(toHaveNoViolations)
 
 it('has no axe violations', async () => {
-  const { container } = render(<ArticleList />, { wrapper: AppProviders });
-  await screen.findByRole('list');
-  expect(await axe(container)).toHaveNoViolations();
-});
+  const { container } = render(<ArticleList />, { wrapper: AppProviders })
+  await screen.findByRole('list')
+  expect(await axe(container)).toHaveNoViolations()
+})
 ```
 
 ## Factories
@@ -117,7 +118,7 @@ export const articleFactory = (overrides = {}) => ({
   body: 'Body text',
   createdAt: new Date().toISOString(),
   ...overrides,
-});
+})
 ```
 
 <!-- last reviewed: 2026-06-02 -->

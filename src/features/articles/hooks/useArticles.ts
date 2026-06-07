@@ -43,6 +43,8 @@ export function useArticles(): UseArticlesResult {
     isLoading: query.isLoading,
     isError: query.isError,
     error: query.error instanceof Error ? query.error : null,
-    refetch: () => { void query.refetch() },
+    refetch: () => {
+      void query.refetch()
+    },
   }
 }

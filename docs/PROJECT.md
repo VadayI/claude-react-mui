@@ -4,7 +4,7 @@
 
 This repository is the **`claude-react-mui` framework** itself: a ready-made Claude Code configuration for building React + Material UI frontends with TDD discipline, a contract-first relationship to a separate backend, mandatory accessibility, and a PR-only workflow. It ships a working **starter app** (the `todos` feature) that demonstrates the conventions end to end.
 
-A *derived* project replaces this brief with its own (via `templates/PROJECT.md` + `/synthesize-brief`).
+A _derived_ project replaces this brief with its own (via `templates/PROJECT.md` + `/synthesize-brief`).
 
 ## Goals
 

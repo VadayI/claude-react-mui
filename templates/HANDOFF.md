@@ -40,9 +40,9 @@
 
 ## Open PRs
 
-| PR | Branch | Status | Blocked by |
-|---|---|---|---|
-| {TODO} | {TODO} | {TODO} | {TODO} |
+| PR     | Branch | Status | Blocked by |
+| ------ | ------ | ------ | ---------- |
+| {TODO} | {TODO} | {TODO} | {TODO}     |
 
 ## Gotchas
 

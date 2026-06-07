@@ -22,7 +22,7 @@ Every `// STUB:` / `throw new Error("STUB: …")` in `src/` (excluding `*.test.*
 | src/features/todos/hooks/useTodos.ts:42 | fixed list until pagination lands | useTodos paginates | @your-handle | 2026-06-02 |
 ```
 
-CI fails if a STUB exists in `src/` whose file is not listed in `docs/STUBS.md`. This is what *forces* recording it — unlogged stubs do not merge.
+CI fails if a STUB exists in `src/` whose file is not listed in `docs/STUBS.md`. This is what _forces_ recording it — unlogged stubs do not merge.
 
 > **Ledger initialization.** On `/bootstrap`, `docs/STUBS.md` is initialized as an **empty ledger for this project** — the header row + column definitions, with the example/template row removed.
 
@@ -49,4 +49,4 @@ Defeat naive hardcoded returns by asserting behavior from **at least 2–3 disti
 - `tester` — triangulate so hardcoded returns fail; add the test named in the ledger that will force the real implementation.
 - `reviewer` / `security-scanner` — at the Quality Gate, flag every stub / fake-data / unlogged marker.
 
-> Goal: stubs are a *visible, temporary* TDD tool — never silent technical debt that ships.
+> Goal: stubs are a _visible, temporary_ TDD tool — never silent technical debt that ships.

@@ -26,24 +26,29 @@ Optional planning-phase challenger. I read the plan and find the holes. I am not
 For a given plan or contract doc, I challenge:
 
 **Requirements**
+
 - Are the acceptance criteria testable and unambiguous?
 - Are the four UI states realistic for this feature, or are some impossible/unlikely?
 - What happens at scale (100 items? 10,000 items?)
 
 **Architecture**
+
 - Is the container/presentational split over-engineered or under-engineered for this feature?
 - Will the chosen TanStack Query key structure survive a pivot (e.g., adding server-side pagination)?
 - Is Zustand actually needed here, or is TanStack Query state sufficient?
 
 **Performance**
+
 - Will this render on every keystroke (unthrottled search)?
 - Does the component tree have an obvious re-render hotspot?
 
 **Integration**
+
 - What happens when the backend is unreachable for > 30 seconds?
 - Is there a retry strategy, or will the user just see a spinner forever?
 
 **Security**
+
 - Is any route accessible without auth that should not be?
 - Does the plan pass user-supplied strings anywhere near `dangerouslySetInnerHTML`?
 

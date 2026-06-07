@@ -1,9 +1,11 @@
 ---
 model: sonnet
 ---
+
 Audit the live machine against `@.claude/rules/environment.md` across four scopes, report a checklist, and propose fixes — applying them only after you confirm. Never auto-fix risky things, never push, never print secrets.
 
 ## Log
+
 ```bash
 node scripts/log-cmd.mjs /doctor "$ARGUMENTS"
 ```
@@ -11,12 +13,15 @@ node scripts/log-cmd.mjs /doctor "$ARGUMENTS"
 ## Steps
 
 ### Pre-check: read env-detect.json
+
 Read `.claude/memory/env-detect.json` (written by the SessionStart hook via `node scripts/detect-env.mjs`). If the file is missing, the hook failed — instruct the user to run `node scripts/detect-env.mjs` manually and verify it writes the file honestly. Never hand-write or patch this file.
 
 **HARD STOP — UNSUPPORTED_PLATFORM**: if `platform_supported: false` OR `wrong_runner_suspected: true`, stop immediately with:
+
 > ERROR: UNSUPPORTED_PLATFORM — the Claude CLI appears to be running as the Windows-native binary (backslashes in paths, `platform: "windows"`). Install the WSL2-native CLI: inside a WSL2 Ubuntu shell run `npm install -g @anthropic-ai/claude-code` and relaunch. See `.claude/rules/environment.md` for the full fix.
 
 **HARD STOP — NO_NODE**: if `node_supported: false` or Node < 20.19, stop with:
+
 > ERROR: NO_NODE — Node 20.19+ is required. Install via nvm: `nvm install --lts`.
 
 ### Scope 1 — System tools
@@ -68,6 +73,7 @@ Then print a **Scenario** line and a **Recommended next command** (e.g., `/boots
 ### Fixes
 
 List proposed fixes. Apply only those the user explicitly confirms. Never:
+
 - commit or push
 - print secret values
 - edit application source code (`src/`)

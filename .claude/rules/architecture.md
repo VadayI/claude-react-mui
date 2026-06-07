@@ -37,15 +37,15 @@ e2e/                        # Playwright specs
 
 ## Layers and boundaries
 
-| Layer | Purpose | Rule |
-|-----|-------------|---------|
-| Pages/routes | compose a screen, wire data | thin; delegate rendering to components |
-| Container components | fetch via hooks, hold local UI state | no presentation details |
-| Presentational components | render props, emit callbacks | pure, no data fetching — easy to test |
-| Hooks | server-state (Query) & reusable logic | one concern per hook |
-| Stores (Zustand) | shared client-state only | no server data (@.claude/rules/state-management.md) |
-| API layer | typed client + mappers | the only place that talks HTTP |
-| Theme | design tokens | no magic values in components |
+| Layer                     | Purpose                               | Rule                                                |
+| ------------------------- | ------------------------------------- | --------------------------------------------------- |
+| Pages/routes              | compose a screen, wire data           | thin; delegate rendering to components              |
+| Container components      | fetch via hooks, hold local UI state  | no presentation details                             |
+| Presentational components | render props, emit callbacks          | pure, no data fetching — easy to test               |
+| Hooks                     | server-state (Query) & reusable logic | one concern per hook                                |
+| Stores (Zustand)          | shared client-state only              | no server data (@.claude/rules/state-management.md) |
+| API layer                 | typed client + mappers                | the only place that talks HTTP                      |
+| Theme                     | design tokens                         | no magic values in components                       |
 
 ## Principles
 

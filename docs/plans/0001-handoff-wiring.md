@@ -7,12 +7,12 @@
 
 ## Status
 
-| Step | State | Owner |
-|---|---|---|
-| 1. Align section names (`## Next steps`, `## Open questions`) across template + /handoff | done | orchestrator |
-| 2. `/wrap-up` regenerates `docs/HANDOFF.md` + commits it | done | orchestrator |
-| 3. `/bootstrap` seeds `docs/HANDOFF.md` + `docs/todo.md` from templates | done | orchestrator |
-| 4. Verify consistency (greps) | done | orchestrator |
+| Step                                                                                     | State | Owner        |
+| ---------------------------------------------------------------------------------------- | ----- | ------------ |
+| 1. Align section names (`## Next steps`, `## Open questions`) across template + /handoff | done  | orchestrator |
+| 2. `/wrap-up` regenerates `docs/HANDOFF.md` + commits it                                 | done  | orchestrator |
+| 3. `/bootstrap` seeds `docs/HANDOFF.md` + `docs/todo.md` from templates                  | done  | orchestrator |
+| 4. Verify consistency (greps)                                                            | done  | orchestrator |
 
 > States: `pending` · `in_progress` · `done` · `blocked`.
 

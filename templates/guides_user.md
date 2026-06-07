@@ -40,10 +40,10 @@
 
 {TODO: Common mistakes and how to recover. Error messages the user might see and what to do. Keyboard shortcuts if any.}
 
-| Situation | What to do |
-|---|---|
+| Situation                      | What to do                                                                              |
+| ------------------------------ | --------------------------------------------------------------------------------------- |
 | {TODO: e.g. "Forgot password"} | {TODO: e.g. "Click 'Forgot password' on the sign-in screen and follow the email link."} |
-| {TODO} | {TODO} |
+| {TODO}                         | {TODO}                                                                                  |
 
 ---
 

@@ -28,6 +28,7 @@ You bring a **derived project** (one bootstrapped from `claude-react-mui`) up to
 Classify every candidate file before touching it:
 
 ### 1. Template-owned — SAFE to overwrite from upstream
+
 - `.claude/agents/*.md`
 - `.claude/commands/*.md`
 - `.claude/skills/**`
@@ -38,12 +39,14 @@ Classify every candidate file before touching it:
 Copy these straight from `$UPSTREAM`. Report each as `updated` (content changed) or `added` (new file) or `unchanged`.
 
 ### 2. Merge-by-hand — NEVER blind-overwrite; show a diff and let the human decide
+
 - `CLAUDE.md` — usually carries project-specific edits (stack, slug, agent list). Run `diff` and propose the **specific** additions the new template introduces (e.g. a new `@.claude/rules/*.md` import line, a new agent in the "Available agents" list) — apply only those, preserving project text.
 - `.claude/settings.json`, `.mcp.json` — may carry project keys/permissions. Show the diff; merge new keys additively, never replace the whole file.
 - Live `.github/workflows/*.yml` — see "New gate scripts".
 - `package.json`, `vite.config.ts`, `eslint.config.js`, `tsconfig*.json`, `playwright.config.ts`, `Makefile` — if the project diverged, diff and propose only the new bits.
 
 ### 3. Project-owned — NEVER touch
+
 - `.claude/memory/**` (env-detect.json, command-log.jsonl, routes.json, template-sync.json)
 - `.claude/rules/output-language.md`
 - `docs/**`, `src/**`, `e2e/**`, `public/**`, `.env`, anything under the project's own source tree.
@@ -60,7 +63,7 @@ Most derived projects deleted `templates/` after bootstrap, so a brand-new gate 
 
 1. Confirm this is a derived project (`.claude/` exists; ideally `src/` too). If it looks like the template repo itself (the `origin` remote is `claude-react-mui` AND `templates/` is present), STOP — you do not sync the template into itself.
 2. For each template-owned file: compare with the project's copy; overwrite when different; collect the change list.
-3. **Stale scan (removed/renamed upstream).** For each template-owned path that exists in the project but has **no** counterpart in `$UPSTREAM` — an agent / command / skill / rule the template dropped or renamed — do **NOT** delete it. Collect it for the **Stale** report section. Also scan `CLAUDE.md`'s `@.claude/rules/*.md` import block and the *Available agents* list for references to files that are no longer present upstream, and flag those as cleanup candidates. The sync never auto-deletes; removal is always the user's call in the PR (a rename shows up as one stale file + one added file).
+3. **Stale scan (removed/renamed upstream).** For each template-owned path that exists in the project but has **no** counterpart in `$UPSTREAM` — an agent / command / skill / rule the template dropped or renamed — do **NOT** delete it. Collect it for the **Stale** report section. Also scan `CLAUDE.md`'s `@.claude/rules/*.md` import block and the _Available agents_ list for references to files that are no longer present upstream, and flag those as cleanup candidates. The sync never auto-deletes; removal is always the user's call in the PR (a rename shows up as one stale file + one added file).
 4. For each merge-by-hand file: `diff` and propose the minimal additive change; apply only with the additions clearly attributable to the new template (new import lines, new agent/command rows, new CI step). Leave genuinely conflicting hunks for the user and list them.
 5. Wire any new gate scripts per above.
 6. Write `.claude/memory/template-sync.json`: `{"upstream": "<url>", "synced_sha": "<HEAD of $UPSTREAM>", "synced_at": "<ISO>", "previous_sha": "<old value or null>"}`.
@@ -100,4 +103,5 @@ Next: open a PR (hand to docs-writer / /create-pr). Do NOT push to main.
 - If `--dry-run` was requested, do all the comparison and produce the report, but make NO file changes.
 
 > Goal: a derived project can adopt newer agents, rules, commands, skills, and gates with one command — gaining template improvements while keeping every project-specific customization intact.
+
 <!-- Last reviewed/updated: 2026-06-05 (ported from claude-django: 3 ownership tiers, merge-by-hand, templates/-deletion gate gotcha, stale-scan, template-sync.json) -->

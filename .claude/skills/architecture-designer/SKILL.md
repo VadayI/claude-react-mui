@@ -50,15 +50,16 @@ features/articles/
 
 ## When to use what for state
 
-| Scenario | Solution |
-|---------|---------|
-| Server data (fetched, async, stale) | TanStack Query — never Zustand |
-| UI-only global state (sidebar, dialogs, notifications) | Zustand store in shared/store/ |
-| Feature-scoped ephemeral UI state | useState / useReducer in the component/hook |
-| Theme / i18n / auth user | React Context (changes infrequently; broad consumption) |
-| Form state | react-hook-form (local to the form component) |
+| Scenario                                               | Solution                                                |
+| ------------------------------------------------------ | ------------------------------------------------------- |
+| Server data (fetched, async, stale)                    | TanStack Query — never Zustand                          |
+| UI-only global state (sidebar, dialogs, notifications) | Zustand store in shared/store/                          |
+| Feature-scoped ephemeral UI state                      | useState / useReducer in the component/hook             |
+| Theme / i18n / auth user                               | React Context (changes infrequently; broad consumption) |
+| Form state                                             | react-hook-form (local to the form component)           |
 
 ## Component contract (props as API)
+
 - Props are the component's public API; treat them like a REST contract
 - Document non-obvious props with JSDoc
 - Prefer discriminated unions over boolean flags for variant props
@@ -67,18 +68,25 @@ features/articles/
 // Good: discriminated union
 type ButtonProps =
   | { variant: 'primary'; loading?: boolean }
-  | { variant: 'danger'; confirmLabel: string };
+  | { variant: 'danger'; confirmLabel: string }
 
 // Avoid: flag soup
-type ButtonProps = { isPrimary?: boolean; isDanger?: boolean; hasConfirm?: boolean; confirmLabel?: string };
+type ButtonProps = {
+  isPrimary?: boolean
+  isDanger?: boolean
+  hasConfirm?: boolean
+  confirmLabel?: string
+}
 ```
 
 ## ADRs — record architectural decisions
+
 - Use `docs/decisions/NNNN-<slug>.md` for any decision that affects the whole codebase
 - Decisions worth recording: state management library choice, auth strategy, folder structure changes, CSP approach, API client library
 - ADR template: Context / Decision / Consequences
 
 ## File size limit (800 lines)
+
 - Same rule as the Django backend: no source file over 800 lines
 - A large component file = multiple responsibilities — split into feature folder
 - CI gate: `scripts/check_file_size.sh`

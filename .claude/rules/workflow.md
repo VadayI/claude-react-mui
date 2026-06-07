@@ -88,14 +88,14 @@ ba → ui-architect → tester (RED) → react-developer (GREEN) → tester (REF
 
 > Phase 6 also emits the **verification handoff** (`docs/verify/<feature>.md`) from `.claude/memory/routes.json` + the component/route contract, per @.claude/rules/verification.md. Regenerate/run on demand with `/verify`. When a feature changes first-run, auth, a top-level route, or a data-loading flow, `guide-writer` also refreshes `docs/guides/{user,developer}.md` per @.claude/rules/user-guides.md (regenerate on demand with `/guides`).
 
-| Phase | Mode | Agent(s) | Output |
-|------|-------|----------|-------|
-| 1. Requirements | sequential | `ba` | User stories, UX scope, screen/route description, the four UI states |
-| 2. UI contract | sequential | `ui-architect` | Routes, component tree + props, UI states, consumed endpoints, query keys / store shape, a11y reqs + routes recorded in `.claude/memory/routes.json` |
-| 3. RED | sequential | `tester` | Failing Playwright journey + failing Vitest/RTL tests with MSW handlers |
-| 4. GREEN | sequential | `react-developer` | Code that greens the tests + eslint/prettier + typecheck |
-| 5. Quality Gate | **parallel** | `reviewer`, `security-scanner`, `state-architect` | Independent reports |
-| 6. Documentation | sequential | `docs-writer`, `guide-writer` | feature README, `docs/verify/<feature>.md`, `docs/guides/{user,developer}.md` (when surface changed), WORKLOG, PR description + `gh pr create` |
+| Phase            | Mode         | Agent(s)                                          | Output                                                                                                                                               |
+| ---------------- | ------------ | ------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1. Requirements  | sequential   | `ba`                                              | User stories, UX scope, screen/route description, the four UI states                                                                                 |
+| 2. UI contract   | sequential   | `ui-architect`                                    | Routes, component tree + props, UI states, consumed endpoints, query keys / store shape, a11y reqs + routes recorded in `.claude/memory/routes.json` |
+| 3. RED           | sequential   | `tester`                                          | Failing Playwright journey + failing Vitest/RTL tests with MSW handlers                                                                              |
+| 4. GREEN         | sequential   | `react-developer`                                 | Code that greens the tests + eslint/prettier + typecheck                                                                                             |
+| 5. Quality Gate  | **parallel** | `reviewer`, `security-scanner`, `state-architect` | Independent reports                                                                                                                                  |
+| 6. Documentation | sequential   | `docs-writer`, `guide-writer`                     | feature README, `docs/verify/<feature>.md`, `docs/guides/{user,developer}.md` (when surface changed), WORKLOG, PR description + `gh pr create`       |
 
 **Quality Gate resolution:** all passed → phase 6. Any 🔴 Critical / 🟡 Important → back to `react-developer` → re-run the gate. Max 2 cycles, then escalate to the user.
 
@@ -117,30 +117,30 @@ No `tester` for pure infrastructure changes.
 
 ## Quick agent routing
 
-| Need | Agent |
-|---------|-------|
-| Business analysis, user stories, UX scope | `ba` |
-| Routes, component tree, props, UI states contract | `ui-architect` |
-| React/MUI implementation | `react-developer` |
-| Vitest/RTL/MSW + Playwright tests / TDD | `tester` |
-| TanStack Query keys, cache, Zustand stores, data layer | `state-architect` |
-| Code review before PR | `reviewer` |
-| Security audit (XSS, token handling, deps, CSP) | `security-scanner` |
-| Bug investigation | `debugger` |
-| Docker / nginx / VPS deploy | `devops` |
-| GitHub Actions CI | `ci-cd-engineer` |
-| README / component docs / ADR | `docs-writer` |
+| Need                                                   | Agent              |
+| ------------------------------------------------------ | ------------------ |
+| Business analysis, user stories, UX scope              | `ba`               |
+| Routes, component tree, props, UI states contract      | `ui-architect`     |
+| React/MUI implementation                               | `react-developer`  |
+| Vitest/RTL/MSW + Playwright tests / TDD                | `tester`           |
+| TanStack Query keys, cache, Zustand stores, data layer | `state-architect`  |
+| Code review before PR                                  | `reviewer`         |
+| Security audit (XSS, token handling, deps, CSP)        | `security-scanner` |
+| Bug investigation                                      | `debugger`         |
+| Docker / nginx / VPS deploy                            | `devops`           |
+| GitHub Actions CI                                      | `ci-cd-engineer`   |
+| README / component docs / ADR                          | `docs-writer`      |
 
 ## Optional agents (opt-in, not every project)
 
-| Need | Agent | Plug into pipeline |
-|------|-------|--------------------|
-| Cross-browser / visual-regression E2E | `qa` | post-deploy smoke on staging |
-| Deep WCAG / a11y audit | `a11y-auditor` | Quality Gate when a feature is interaction-heavy; on demand via `/a11y-audit` |
-| OAuth / SSO / webhooks / payment widgets / 3rd-party SDKs | `integration-architect` | between `ui-architect` and `react-developer` |
-| Challenge the plan / assumptions | `devil` | planning phase |
-| Re-render perf / hook extraction / decomposition | `react-refactoring-expert` | standalone, under green tests |
-| User-facing guides (end-user + developer) | `guide-writer` | Documentation phase when surface changed; on demand via `/guides` |
-| File-size audit + folder-split plan | `code-structure-auditor` | standalone, read-only; on demand via `/structure-audit` |
-| Sync a derived project's config to a newer template version | `template-sync` | standalone; on demand via `/update-from-template` (PR-only) |
-| Complex feature-sliced design | `domain-architect` | after `ba`, before `ui-architect` |
+| Need                                                        | Agent                      | Plug into pipeline                                                            |
+| ----------------------------------------------------------- | -------------------------- | ----------------------------------------------------------------------------- |
+| Cross-browser / visual-regression E2E                       | `qa`                       | post-deploy smoke on staging                                                  |
+| Deep WCAG / a11y audit                                      | `a11y-auditor`             | Quality Gate when a feature is interaction-heavy; on demand via `/a11y-audit` |
+| OAuth / SSO / webhooks / payment widgets / 3rd-party SDKs   | `integration-architect`    | between `ui-architect` and `react-developer`                                  |
+| Challenge the plan / assumptions                            | `devil`                    | planning phase                                                                |
+| Re-render perf / hook extraction / decomposition            | `react-refactoring-expert` | standalone, under green tests                                                 |
+| User-facing guides (end-user + developer)                   | `guide-writer`             | Documentation phase when surface changed; on demand via `/guides`             |
+| File-size audit + folder-split plan                         | `code-structure-auditor`   | standalone, read-only; on demand via `/structure-audit`                       |
+| Sync a derived project's config to a newer template version | `template-sync`            | standalone; on demand via `/update-from-template` (PR-only)                   |
+| Complex feature-sliced design                               | `domain-architect`         | after `ba`, before `ui-architect`                                             |

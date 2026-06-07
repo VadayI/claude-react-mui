@@ -1,9 +1,11 @@
 ---
 model: sonnet
 ---
+
 Scaffold a new Vite+React+TS+MUI project from templates (Mode A) or PR each missing piece into an existing incomplete project (Mode B). Binary command — NOT part of the feature pipeline.
 
 ## Log
+
 ```bash
 node scripts/log-cmd.mjs /bootstrap "$ARGUMENTS"
 ```
@@ -26,7 +28,9 @@ Present the detected mode and ask the user to confirm before proceeding.
 ## Mode A — Fresh scaffold
 
 ### Step 1: Create project skeleton
+
 Copy and instantiate from `templates/`:
+
 - `package.json` with all deps: React 19, Vite 6, MUI 6, React Router 7, TanStack Query 5, Zustand 5, Vitest+RTL+MSW, jest-axe, Playwright, openapi-typescript, ESLint+Prettier, TypeScript.
 - `vite.config.ts`, `tsconfig.json`, `tsconfig.node.json`, `index.html`.
 - `.env.example` with `VITE_API_BASE_URL=`, `VITE_OPENAPI_URL=`.
@@ -34,6 +38,7 @@ Copy and instantiate from `templates/`:
 - `eslint.config.js`, `.prettierrc`.
 
 ### Step 2: Create src/ shell
+
 ```
 src/
   main.tsx
@@ -65,9 +70,11 @@ src/
 ```
 
 ### Step 3: Write the example feature RED→GREEN
+
 Delegate to `tester` to write a failing test for `ExamplePage` (renders heading, accessibility pass with jest-axe), then to `react-developer` to implement the component to green.
 
 ### Step 4: Playwright e2e skeleton
+
 ```
 e2e/
   example.spec.ts    # basic smoke: page loads, heading visible
@@ -75,7 +82,9 @@ playwright.config.ts
 ```
 
 ### Step 5: Gate scripts
+
 Copy from `templates/scripts/`:
+
 - `scripts/check_types_drift.sh`
 - `scripts/check_stubs.sh`
 - `scripts/check_file_size.sh`
@@ -84,9 +93,11 @@ Copy from `templates/scripts/`:
 - `scripts/log-cmd.mjs`
 
 ### Step 6: CI workflow
+
 Copy `templates/.github/workflows/frontend-ci.yml` → `.github/workflows/frontend-ci.yml`. Must run: lint, typecheck, test:run, check_types_drift, check_stubs, check_file_size, check_feature_readmes.
 
 ### Step 7: docs/ skeleton
+
 ```
 docs/
   PROJECT.md          # {TODO: fill via /synthesize-brief}
@@ -106,26 +117,33 @@ docs/
 ```
 
 ### Step 8: CLAUDE.md
+
 Copy `templates/CLAUDE.md`, filling in the project name and repo URL. Append all rule imports.
 
 ### Step 9: Pull backend OpenAPI schema (if configured)
+
 If `VITE_OPENAPI_URL` is set in `.env.example` (or passed as argument):
+
 ```bash
 npm install
 npm run api:pull
 npm run api:types
 ```
+
 Commit the generated `src/lib/api/types.ts`.
 
 ### Step 10: The ONE allowed bootstrap commit
+
 ```bash
 git add -A
 git commit -m "chore: bootstrap claude-react-mui scaffold"
 git push -u origin main
 ```
+
 This is the documented exception in `@.claude/rules/git-operations.md`. After this commit, branch protection is enabled and all future work goes through PRs.
 
 ### Step 11: Enable branch protection
+
 ```bash
 gh api repos/{owner}/{repo}/branches/main/protection \
   --method PUT \
@@ -138,9 +156,11 @@ gh api repos/{owner}/{repo}/branches/main/protection \
 }
 JSON
 ```
+
 Note: on free+private repos the API returns 403 — that is EXPECTED. Keep PR-only by discipline.
 
 ### Step 12: Report
+
 Summarize what was created. Recommend: `/synthesize-brief` (if a brief doc exists in `docs/`) → `/preflight` → first feature via the pipeline.
 
 ## Mode B — Resume / existing-incomplete
@@ -152,6 +172,7 @@ Summarize what was created. Recommend: `/synthesize-brief` (if a brief doc exist
 3. Never push to `main` in Mode B.
 
 ## Constraints
+
 - Never commit secrets or `.env`.
 - Never run `npm run dev` or start a dev server — write files only.
 - Never invent endpoints or components beyond the minimal scaffold.

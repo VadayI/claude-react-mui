@@ -24,9 +24,7 @@ function makeWrapper() {
 
 describe('useArticles', () => {
   it('starts in a loading state', () => {
-    server.use(
-      http.get('http://localhost:8000/api/v1/articles', () => new Promise(() => {})),
-    )
+    server.use(http.get('http://localhost:8000/api/v1/articles', () => new Promise(() => {})))
     const { Wrapper } = makeWrapper()
     const { result } = renderHook(() => useArticles(), { wrapper: Wrapper })
     expect(result.current.isLoading).toBe(true)

@@ -10,7 +10,7 @@
  * - Keep handler paths in sync with docs/api/INDEX.md and routes.json.
  */
 
-import { http, HttpResponse } from 'msw';
+import { http, HttpResponse } from 'msw'
 
 // ---------------------------------------------------------------------------
 // Example: happy-path GET /api/v1/articles/
@@ -30,13 +30,13 @@ export const handlers = [
           created_at: '2024-01-01T00:00:00Z',
         },
       ],
-    });
+    })
   }),
 
   // Example: POST /api/v1/articles/ — returns 201 with the created object
   http.post('/api/v1/articles/', async ({ request }) => {
-    const body = await request.json();
-    return HttpResponse.json({ id: 2, ...(body as object) }, { status: 201 });
+    const body = await request.json()
+    return HttpResponse.json({ id: 2, ...(body as object) }, { status: 201 })
   }),
 
   // ---------------------------------------------------------------------------
@@ -62,4 +62,4 @@ export const handlers = [
   //     results: [],
   //   });
   // }),
-];
+]

@@ -7,12 +7,12 @@
 
 ## Status
 
-| Step | State | Owner |
-|---|---|---|
+| Step                                                  | State   | Owner                                      |
+| ----------------------------------------------------- | ------- | ------------------------------------------ |
 | PR1. Джерело контракту: backend → claude-api-contract | ✅ done | orchestrator → react-developer/docs-writer |
-| PR2. Auth: інверсія на Bearer/JWT (дефолт) | ✅ done | orchestrator → react-developer |
-| PR3. Обробка 429 + Retry-After | pending | orchestrator → react-developer/tester |
-| PR4. Prism mock на ранній стадії | pending | orchestrator → react-developer/docs-writer |
+| PR2. Auth: інверсія на Bearer/JWT (дефолт)            | ✅ done | orchestrator → react-developer             |
+| PR3. Обробка 429 + Retry-After                        | pending | orchestrator → react-developer/tester      |
+| PR4. Prism mock на ранній стадії                      | pending | orchestrator → react-developer/docs-writer |
 
 > States: `pending` · `in_progress` · `done` · `blocked`. Таблиця — це курсор; оновлюється по мірі руху.
 
@@ -21,6 +21,7 @@
 Перевести `claude-react-mui` з моделі «контракт належить backend, frontend його споживає» на **Варіант A**: канонічний `openapi.yml` живе в окремому репо `claude-api-contract`, а frontend — **лише споживач** зовнішнього контракту, пінованого тегом (`CONTRACT_VERSION`). Разом із цим узгодити auth із рішенням №4 контракту (**Bearer/JWT** замість session/CSRF), додати обробку `429`/`Retry-After` (важливо для S2S-профілю, D5) і дати ранній dev-цикл проти **Prism mock** ще до появи backend.
 
 Це закриває розбіжності, перелічені у §9 вимог:
+
 - ADR auth-mode суперечить рішенню №4 (session/CSRF vs Bearer/JWT);
 - `api:pull` тягне з backend-репо, а не з контракту;
 - немає `CONTRACT_VERSION`-піна;

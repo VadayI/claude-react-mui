@@ -34,8 +34,8 @@
 CI: одразу після кроку `Build` у джобі `quality`:
 
 ```yaml
-      - name: Gate — bundle size
-        run: bash scripts/check_bundle_size.sh
+- name: Gate — bundle size
+  run: bash scripts/check_bundle_size.sh
 ```
 
 Правило «регресія > 5%» вимагає збереженого baseline — **відкласти** в окрему ітерацію (потрібен закомічений `.performance-baseline.json` + логіка храповика). Перша версія — лише абсолютні бюджети.
@@ -84,8 +84,8 @@ CI: окремий джоб поряд з `e2e` (`needs: quality`), що роб�
 Крок у джобі `quality` після `npm ci`:
 
 ```yaml
-      - name: Gate — npm audit (high/critical)
-        run: npm audit --audit-level=high
+- name: Gate — npm audit (high/critical)
+  run: npm audit --audit-level=high
 ```
 
 `--audit-level=high` валить лише на high+critical (moderate/low не блокують) — точне відображення правила. Нюанс: `npm audit` ходить у реєстр (можливі мережеві флапи). Механізм винятків з терміном дії (accepted-risk) — за потреби додати пізніше через обгортку `scripts/check_audit.sh`; зараз достатньо inline-кроку.
@@ -109,12 +109,47 @@ CI: окремий джоб поряд з `e2e` (`needs: quality`), що роб�
   "platformAutomerge": true,
   "lockFileMaintenance": { "enabled": true, "schedule": ["before 6am on monday"] },
   "packageRules": [
-    { "matchDepTypes": ["devDependencies"], "matchUpdateTypes": ["patch", "minor"], "groupName": "dev toolchain (patch/minor)", "automerge": true },
-    { "matchPackageNames": ["react", "react-dom", "@types/react", "@types/react-dom"], "groupName": "React", "matchUpdateTypes": ["patch", "minor"], "automerge": true },
-    { "matchPackageNames": ["@mui/material", "@mui/icons-material", "@emotion/react", "@emotion/styled"], "groupName": "MUI", "matchUpdateTypes": ["patch", "minor"], "automerge": true },
-    { "matchPackageNames": ["react-router-dom"], "groupName": "React Router", "matchUpdateTypes": ["patch", "minor"], "automerge": true },
-    { "matchPackageNames": ["@tanstack/react-query"], "groupName": "TanStack Query", "matchUpdateTypes": ["patch", "minor"], "automerge": true },
-    { "matchPackageNames": ["zustand"], "groupName": "Zustand", "matchUpdateTypes": ["patch", "minor"], "automerge": true },
+    {
+      "matchDepTypes": ["devDependencies"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "groupName": "dev toolchain (patch/minor)",
+      "automerge": true
+    },
+    {
+      "matchPackageNames": ["react", "react-dom", "@types/react", "@types/react-dom"],
+      "groupName": "React",
+      "matchUpdateTypes": ["patch", "minor"],
+      "automerge": true
+    },
+    {
+      "matchPackageNames": [
+        "@mui/material",
+        "@mui/icons-material",
+        "@emotion/react",
+        "@emotion/styled"
+      ],
+      "groupName": "MUI",
+      "matchUpdateTypes": ["patch", "minor"],
+      "automerge": true
+    },
+    {
+      "matchPackageNames": ["react-router-dom"],
+      "groupName": "React Router",
+      "matchUpdateTypes": ["patch", "minor"],
+      "automerge": true
+    },
+    {
+      "matchPackageNames": ["@tanstack/react-query"],
+      "groupName": "TanStack Query",
+      "matchUpdateTypes": ["patch", "minor"],
+      "automerge": true
+    },
+    {
+      "matchPackageNames": ["zustand"],
+      "groupName": "Zustand",
+      "matchUpdateTypes": ["patch", "minor"],
+      "automerge": true
+    },
     { "matchUpdateTypes": ["major"], "automerge": false, "addLabels": ["major", "needs-human"] }
   ],
   "vulnerabilityAlerts": { "labels": ["security"], "automerge": true, "schedule": ["at any time"] }

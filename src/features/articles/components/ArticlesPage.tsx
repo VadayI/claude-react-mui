@@ -35,11 +35,7 @@ export function ArticlesPage() {
         Articles
       </Typography>
 
-      <AddArticleForm
-        onAdd={addArticle}
-        error={createError?.message}
-        disabled={isPending}
-      />
+      <AddArticleForm onAdd={addArticle} error={createError?.message} disabled={isPending} />
 
       {isLoading && (
         <Box role="status" aria-label="Loading articles" sx={{ mt: 1 }}>
@@ -63,9 +59,7 @@ export function ArticlesPage() {
         </Alert>
       )}
 
-      {!isLoading && !isError && (
-        <ArticleList items={articles} />
-      )}
+      {!isLoading && !isError && <ArticleList items={articles} />}
     </Box>
   )
 }

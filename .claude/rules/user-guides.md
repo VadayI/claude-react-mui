@@ -1,6 +1,6 @@
 # User-facing guides (mandatory, enforced at the Quality Gate)
 
-The route/component contract and `docs/verify/<feature>.md` prove the UI is correct for a *reviewer*. They do NOT tell a **real user** or an **integrating developer** how to actually use the app. This rule mandates two living guides that grow with the project:
+The route/component contract and `docs/verify/<feature>.md` prove the UI is correct for a _reviewer_. They do NOT tell a **real user** or an **integrating developer** how to actually use the app. This rule mandates two living guides that grow with the project:
 
 1. **`docs/guides/user.md`** — for the **end user** of the app: what the app does, how to sign in, how to perform the main flows, where things are, and how to recover from common errors.
 2. **`docs/guides/developer.md`** — for a **developer working on or integrating with this frontend**: how to run it, environment variables, how the API contract is consumed and refreshed (`api:pull`/`api:types`), how routing/auth/state are structured, how to add a feature, and where the full contract lives (the backend OpenAPI schema / Swagger).
@@ -35,7 +35,7 @@ Keep both copy-paste runnable and **derived from what the project actually ships
 ## Lifecycle (grows with the project)
 
 1. **Born at bootstrap.** `/bootstrap` Mode A copies `templates/guides_user.md` → `docs/guides/user.md` and `templates/guides_developer.md` → `docs/guides/developer.md` as skeletons with `{TODO}` markers.
-2. **Updated in the same PR** as user-visible surface changes (a new flow, a new auth method, a new top-level route, a new env var) — by `guide-writer` in the Documentation phase. Most volatile: *Main flows* (user) and *Run it locally* + *The API contract* (developer).
+2. **Updated in the same PR** as user-visible surface changes (a new flow, a new auth method, a new top-level route, a new env var) — by `guide-writer` in the Documentation phase. Most volatile: _Main flows_ (user) and _Run it locally_ + _The API contract_ (developer).
 3. **Verified on demand** via `/guides`.
 
 ## Enforcement (Quality Gate, not a CI script)
