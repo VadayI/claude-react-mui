@@ -1,11 +1,11 @@
 [
   {
-    "path": "/todos",
-    "feature": "todos",
-    "screen": "TodosPage",
-    "auth": "anonymous",
+    "path": "/articles",
+    "feature": "articles",
+    "screen": "ArticlesPage",
+    "auth": "authenticated",
     "states": ["loading", "success", "empty", "error"],
-    "consumes": ["GET /api/v1/todos/", "POST /api/v1/todos/"],
-    "notes": "Example starter feature: list + create, demonstrates the four UI states and the double-loop TDD."
+    "consumes": ["GET /api/v1/articles", "POST /api/v1/articles"],
+    "notes": "Article list with create form. Auth via Bearer/JWT (middleware). No /login route — auth is API-layer only."
   }
 ]
