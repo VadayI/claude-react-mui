@@ -19,9 +19,9 @@ The default and only mode for this template is **Bearer/JWT user-flow** as speci
 
 A single `onResponse` middleware in `src/lib/api/client.ts` handles 401:
 
-1. If the failing request is itself to `/auth/refresh` → return the 401 (avoid infinite loop).
+1. If the failing request is itself to `/api/v1/auth/refresh` → return the 401 (avoid infinite loop).
 2. If `refreshToken` is absent → return the 401 (caller or route guard redirects to login).
-3. Attempt **one** `POST /auth/refresh` with the stored refresh token.
+3. Attempt **one** `POST /api/v1/auth/refresh` with the stored refresh token.
 4. On success: update store (`setTokens` / `setAccessToken`), clone the original request with the new access token, return the retry response.
 5. On failure (network error or non-2xx): `clearTokens()`, return the original 401.
 
@@ -31,14 +31,14 @@ Route guards (`src/app/guards/`) observe `accessToken` from `useAuthStore` and r
 
 | Method + path | Security | Purpose |
 |---|---|---|
-| `POST /auth/register` | public | create account (optional initial tokens) |
-| `POST /auth/login` | public | credentials → TokenPair stored in authStore |
-| `POST /auth/refresh` | public | refresh token → new access token (handled by middleware) |
-| `POST /auth/logout` | Bearer | revoke refresh token, clear store |
+| `POST /api/v1/auth/register` | public | create account (optional initial tokens) |
+| `POST /api/v1/auth/login` | public | credentials → TokenPair stored in authStore |
+| `POST /api/v1/auth/refresh` | public | refresh token → new access token (handled by middleware) |
+| `POST /api/v1/auth/logout` | Bearer | revoke refresh token, clear store |
 
 ## Service-flow (out of scope for frontend)
 
-`POST /auth/token` (client_credentials) is defined in the contract for service-to-service use. A browser SPA cannot safely hold a client secret, so this endpoint is not used by this frontend.
+`POST /api/v1/auth/token` (client_credentials) is defined in the contract for service-to-service use. A browser SPA cannot safely hold a client secret, so this endpoint is not used by this frontend.
 
 ## Alternative: same-origin session/CSRF
 
