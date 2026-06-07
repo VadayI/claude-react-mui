@@ -287,3 +287,37 @@ Cross-machine work history. Updated at the end of every session (`/wrap-up`) and
 ### Next steps
 
 - див. docs/HANDOFF.md
+
+## 2026-06-07 — contract-v0.2.0-migration
+
+### Done
+
+- Проаналізовано готовність `claude-react-mui` до роботи з `VadayI/claude-api-contract`: contract-first машинерія повна і коректна для v0.1.0; виявлено два дрейфи: застаріла документація (todos) і відставання pin (v0.1.0 vs latest v0.2.0).
+- **PR #14** — виправлено документаційний дрейф: `routes.json` + `docs/api/INDEX.md` оновлено з `todos` → реальний `articles` (маршрут `/articles`, endpoints GET/POST `/api/v1/articles`).
+- **PR #15** — міграція на `claude-api-contract@v0.2.0` (breaking: `/auth/*` → `/api/v1/auth/*`): ADR 0022, pull нового контракту, регенерація типів, TDD RED→GREEN (5 хірургічних замін у 2 файлах), новий `authApi.test.ts` (закрито прогалину покриття login/logout/register), оновлено 5 документаційних файлів, Quality Gate: reviewer+security+state-architect ✅.
+- **PR #16** — prettier reformat 105 файлів; після merge регенеровано `schema.d.ts` (drift gate).
+- Всі три PR змерджені у `main` в тій самій сесії.
+
+### Gate status
+
+- typecheck: ✅
+- lint: ✅ (0 errors; 1 pre-existing warning у `public/mockServiceWorker.js`)
+- tests: ✅ (47 passed, 7 test files)
+- types-drift: ✅ (schema.d.ts регенеровано після prettier)
+- stubs: ✅
+- file-size: ✅
+- feature-readmes: ✅ (2 features: articles, auth)
+
+### Open items
+
+- `.env` потребує ручного оновлення `CONTRACT_VERSION=v0.2.0` (gitignored).
+- `check_contract_sync.sh` потребує оновленого `.env` для зеленого проходження локально.
+- Route guard для `/articles` не реалізований (`routes.json` каже `auth: authenticated`, але `router.tsx` не захищає маршрут).
+- `logout()` не викликає `queryClient.clear()` — pre-existing gap (shared-device scenario).
+
+### Next steps
+
+- Оновити `.env`: `CONTRACT_VERSION=v0.2.0`.
+- Координація з `claude-django`: обидва consumer мають мігрувати на `/api/v1/auth/*` перед спільним деплоєм.
+- Реалізувати route guard для `/articles` (через пайплайн: ba → ui-architect → tester → react-developer).
+- Наступна фіча — через стандартний пайплайн.
