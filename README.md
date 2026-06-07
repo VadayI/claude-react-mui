@@ -124,7 +124,7 @@ Full routing and the optional agents (`a11y-auditor`, `qa`, `integration-archite
 
 ## Slash commands
 
-Environment & project: `/doctor`, `/bootstrap`, `/preflight`, `/synthesize-brief`, `/config`, `/plugins`, `/set-language`, `/handoff`, `/wrap-up`, `/audit`, `/update-from-template`.
+Environment & project: `/doctor`, `/bootstrap`, `/preflight`, `/synthesize-brief`, `/config-check`, `/plugins`, `/set-language`, `/handoff`, `/wrap-up`, `/audit`, `/update-from-template`.
 Feature & quality: `/verify`, `/guides`, `/review-pr`, `/security-check`, `/structure-audit`, `/simplify`, `/update-docs`, `/create-pr`, `/fix-ci`.
 
 Defined in `.claude/commands/`.

@@ -5,7 +5,7 @@ Quick Claude config check — a focused subset of `/doctor` scope 2. Verifies pl
 
 ## Log
 ```bash
-node scripts/log-cmd.mjs /config "$ARGUMENTS"
+node scripts/log-cmd.mjs /config-check "$ARGUMENTS"
 ```
 
 ## Steps
