@@ -1,5 +1,5 @@
 /**
- * Integration tests for the TodosPage container.
+ * Integration tests for the ArticlesPage container.
  *
  * Uses MSW to intercept HTTP calls — no real network requests.
  * Tests the four UI states: loading, success, empty, and error.
@@ -12,62 +12,61 @@ import userEvent from '@testing-library/user-event'
 import { http, HttpResponse } from 'msw'
 import { server } from '../../../test/server'
 import { renderWithProviders } from '../../../test/renderWithProviders'
-import { TodosPage } from './TodosPage'
+import { ArticlesPage } from './ArticlesPage'
 
-describe('TodosPage', () => {
+describe('ArticlesPage', () => {
   describe('loading state', () => {
     it('shows a loading indicator while fetching', () => {
-      // Keep the request pending indefinitely
       server.use(
-        http.get('http://localhost:8000/api/v1/todos/', () => {
+        http.get('http://localhost:8000/api/v1/articles', () => {
           return new Promise(() => {
             // Never resolves — simulates infinite loading
           })
         }),
       )
-      renderWithProviders(<TodosPage />)
+      renderWithProviders(<ArticlesPage />)
       expect(screen.getByRole('status')).toBeInTheDocument()
     })
   })
 
   describe('success state', () => {
-    it('renders the todo titles after loading', async () => {
-      renderWithProviders(<TodosPage />)
-      expect(await screen.findByText('Buy groceries')).toBeInTheDocument()
-      expect(await screen.findByText('Read a book')).toBeInTheDocument()
+    it('renders the article titles after loading', async () => {
+      renderWithProviders(<ArticlesPage />)
+      expect(await screen.findByText('Getting Started with TypeSpec')).toBeInTheDocument()
+      expect(await screen.findByText('OpenAPI 3.1 Deep Dive')).toBeInTheDocument()
     })
 
     it('does not show the loading indicator after data arrives', async () => {
-      renderWithProviders(<TodosPage />)
-      await screen.findByText('Buy groceries')
+      renderWithProviders(<ArticlesPage />)
+      await screen.findByText('Getting Started with TypeSpec')
       expect(screen.queryByRole('status')).not.toBeInTheDocument()
     })
 
     it('renders the page heading', async () => {
-      renderWithProviders(<TodosPage />)
-      expect(await screen.findByRole('heading', { name: /todos/i })).toBeInTheDocument()
+      renderWithProviders(<ArticlesPage />)
+      expect(await screen.findByRole('heading', { name: /articles/i })).toBeInTheDocument()
     })
   })
 
   describe('empty state', () => {
     it('shows the empty state message when the server returns an empty list', async () => {
       server.use(
-        http.get('http://localhost:8000/api/v1/todos/', () => {
-          return HttpResponse.json([])
+        http.get('http://localhost:8000/api/v1/articles', () => {
+          return HttpResponse.json({ count: 0, next: null, previous: null, results: [] })
         }),
       )
-      renderWithProviders(<TodosPage />)
-      expect(await screen.findByTestId('todo-empty-message')).toBeInTheDocument()
+      renderWithProviders(<ArticlesPage />)
+      expect(await screen.findByTestId('article-empty-message')).toBeInTheDocument()
     })
 
-    it('does not show todo items when list is empty', async () => {
+    it('does not show article items when list is empty', async () => {
       server.use(
-        http.get('http://localhost:8000/api/v1/todos/', () => {
-          return HttpResponse.json([])
+        http.get('http://localhost:8000/api/v1/articles', () => {
+          return HttpResponse.json({ count: 0, next: null, previous: null, results: [] })
         }),
       )
-      renderWithProviders(<TodosPage />)
-      await screen.findByTestId('todo-empty-message')
+      renderWithProviders(<ArticlesPage />)
+      await screen.findByTestId('article-empty-message')
       expect(screen.queryByRole('list')).not.toBeInTheDocument()
     })
   })
@@ -75,11 +74,11 @@ describe('TodosPage', () => {
   describe('error state', () => {
     it('shows an error alert when the server returns 500', async () => {
       server.use(
-        http.get('http://localhost:8000/api/v1/todos/', () => {
+        http.get('http://localhost:8000/api/v1/articles', () => {
           return HttpResponse.json({ detail: 'Server error' }, { status: 500 })
         }),
       )
-      renderWithProviders(<TodosPage />)
+      renderWithProviders(<ArticlesPage />)
       await waitFor(() => {
         expect(screen.getByRole('alert')).toBeInTheDocument()
       })
@@ -87,11 +86,11 @@ describe('TodosPage', () => {
 
     it('shows a retry button in the error state', async () => {
       server.use(
-        http.get('http://localhost:8000/api/v1/todos/', () => {
+        http.get('http://localhost:8000/api/v1/articles', () => {
           return HttpResponse.json({ detail: 'Server error' }, { status: 500 })
         }),
       )
-      renderWithProviders(<TodosPage />)
+      renderWithProviders(<ArticlesPage />)
       expect(await screen.findByRole('button', { name: /retry/i })).toBeInTheDocument()
     })
 
@@ -100,41 +99,40 @@ describe('TodosPage', () => {
       let callCount = 0
 
       server.use(
-        http.get('http://localhost:8000/api/v1/todos/', () => {
+        http.get('http://localhost:8000/api/v1/articles', () => {
           callCount++
           if (callCount === 1) {
             return HttpResponse.json({ detail: 'Server error' }, { status: 500 })
           }
-          return HttpResponse.json([])
+          return HttpResponse.json({ count: 0, next: null, previous: null, results: [] })
         }),
       )
 
-      renderWithProviders(<TodosPage />)
+      renderWithProviders(<ArticlesPage />)
       const retryBtn = await screen.findByRole('button', { name: /retry/i })
       await user.click(retryBtn)
 
-      // After retry the empty state or success state appears (not the error)
       await waitFor(() => {
         expect(screen.queryByRole('alert')).not.toBeInTheDocument()
       })
     })
   })
 
-  describe('adding a todo', () => {
-    it('adds a new todo and shows it after submission', async () => {
+  describe('adding an article', () => {
+    it('adds a new article and clears the form after submission', async () => {
       const user = userEvent.setup()
-      renderWithProviders(<TodosPage />)
+      renderWithProviders(<ArticlesPage />)
 
       // Wait for initial load
-      await screen.findByText('Buy groceries')
+      await screen.findByText('Getting Started with TypeSpec')
 
       // Type and submit
-      await user.type(screen.getByLabelText(/new todo/i), 'Walk the dog')
-      await user.click(screen.getByRole('button', { name: /add/i }))
+      await user.type(screen.getByLabelText(/article title/i), 'My new article')
+      await user.click(screen.getByRole('button', { name: /add article/i }))
 
-      // After mutation + invalidation, the list re-fetches (MSW returns DEFAULT_TODOS)
+      // Input should clear after successful submission
       await waitFor(() => {
-        expect(screen.queryByDisplayValue('Walk the dog')).not.toBeInTheDocument()
+        expect(screen.queryByDisplayValue('My new article')).not.toBeInTheDocument()
       })
     })
   })

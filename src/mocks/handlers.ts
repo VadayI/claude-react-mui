@@ -5,32 +5,63 @@
  * specific routes with `server.use(...)` to exercise error / empty states.
  */
 import { http, HttpResponse } from 'msw'
-import type { TodoViewModel } from '../features/todos/api/todosApi'
+import type { ArticleViewModel } from '../features/articles/api/articlesApi'
 
-/** Default todos returned by GET /api/v1/todos/ in tests. */
-export const DEFAULT_TODOS: TodoViewModel[] = [
-  { id: 1, title: 'Buy groceries', completed: false },
-  { id: 2, title: 'Read a book', completed: true },
+/** Default articles returned by GET /api/v1/articles in tests. */
+export const DEFAULT_ARTICLES: ArticleViewModel[] = [
+  {
+    id: '1',
+    title: 'Getting Started with TypeSpec',
+    body: 'TypeSpec is a language for describing APIs.',
+    slug: 'getting-started-with-typespec',
+    status: 'published',
+    author_id: 'author-1',
+    tags: ['typespec', 'api'],
+    created_at: '2026-01-01T00:00:00Z',
+    updated_at: '2026-01-01T00:00:00Z',
+  },
+  {
+    id: '2',
+    title: 'OpenAPI 3.1 Deep Dive',
+    body: 'OpenAPI 3.1 brings many improvements over 3.0.',
+    slug: 'openapi-3-1-deep-dive',
+    status: 'draft',
+    author_id: 'author-1',
+    tags: ['openapi'],
+    created_at: '2026-01-02T00:00:00Z',
+    updated_at: '2026-01-02T00:00:00Z',
+  },
 ]
 
 /**
  * Default MSW handlers.
  *
- * - `GET /api/v1/todos/`   → 200 with DEFAULT_TODOS
- * - `POST /api/v1/todos/`  → 201 with a new todo
+ * - `GET /api/v1/articles`   → 200 with paginated DEFAULT_ARTICLES
+ * - `POST /api/v1/articles`  → 201 with a new article
  */
 export const handlers = [
-  http.get('http://localhost:8000/api/v1/todos/', () => {
-    return HttpResponse.json(DEFAULT_TODOS)
+  http.get('http://localhost:8000/api/v1/articles', () => {
+    return HttpResponse.json({
+      count: DEFAULT_ARTICLES.length,
+      next: null,
+      previous: null,
+      results: DEFAULT_ARTICLES,
+    })
   }),
 
-  http.post('http://localhost:8000/api/v1/todos/', async ({ request }) => {
-    const body = (await request.json()) as { title?: string }
-    const newTodo: TodoViewModel = {
-      id: 99,
-      title: body.title ?? 'New todo',
-      completed: false,
+  http.post('http://localhost:8000/api/v1/articles', async ({ request }) => {
+    const body = (await request.json()) as { title?: string; body?: string }
+    const newArticle: ArticleViewModel = {
+      id: '99',
+      title: body.title ?? 'New article',
+      body: body.body ?? '',
+      slug: 'new-article',
+      status: 'draft',
+      author_id: 'author-1',
+      tags: [],
+      created_at: '2026-06-07T00:00:00Z',
+      updated_at: '2026-06-07T00:00:00Z',
     }
-    return HttpResponse.json(newTodo, { status: 201 })
+    return HttpResponse.json(newArticle, { status: 201 })
   }),
 ]

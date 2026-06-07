@@ -12,7 +12,7 @@
 @.claude/rules/preflight.md
 @.claude/rules/verification.md
 @.claude/rules/user-guides.md
-@.claude/rules/auth-and-csrf.md
+@.claude/rules/auth.md
 @.claude/rules/api-error-and-pagination.md
 @.claude/rules/openapi-conventions.md
 @.claude/rules/forms-and-validation.md
@@ -44,7 +44,7 @@ You DO:
 
 ## Iron principles of this project
 
-1. **Contract-first, consume the API — never invent it.** This is a **frontend-only** repository. The REST API is owned by a **separate backend repository** (e.g. a Django/DRF service) and is the source of truth. The backend's `openapi.yml` (committed here as `src/lib/api/openapi.yml`) is the contract. The typed API client and all request/response types are **generated** from that schema (`openapi-typescript`) and locked by a CI drift gate — the frontend can never silently diverge from the backend. Details — @.claude/rules/api-client.md.
+1. **Contract-first, consume the API — never invent it.** This is a **frontend-only** repository. The REST API contract is owned by the **external `VadayI/claude-api-contract` repository** (Variant A multi-repo model) and is the single source of truth. The contract is vendored here as `src/lib/api/openapi.yml` via `npm run api:pull` (which fetches the pinned `CONTRACT_VERSION` tag from GitHub raw). The typed API client and all request/response types are **generated** from that schema (`openapi-typescript`) and locked by two CI gates: a drift gate and a contract-sync gate. The frontend can never silently diverge from the contract. The backend (`claude-django`) is also a consumer of the contract — it does NOT generate the schema. Details — @.claude/rules/api-client.md.
 2. **TDD in TypeScript, double-loop, outside-in at the UI boundary.** No production code without a failing test first. Outer loop = a Playwright E2E user journey (the real UI boundary); inner loop = Vitest + React Testing Library component/hook tests with the network mocked by MSW. Red → Green → Refactor. **Test behavior, not implementation** (query by role/label, never by class or internal state). Details — @.claude/rules/tdd.md.
 3. **Pull Requests only.** NEVER commit directly to `main`. Branch → PR → review → merge. Details — @.claude/rules/git-operations.md.
 4. **Accessibility is mandatory, not optional.** Every interactive component meets WCAG 2.1 AA: reachable by keyboard, correct ARIA roles/labels, visible focus, sufficient contrast. Enforced by `jest-axe`/`@axe-core/playwright` in the test suite and by `eslint-plugin-jsx-a11y`. Details — @.claude/rules/accessibility.md.
@@ -67,7 +67,7 @@ You DO:
 3. After finishing the pipeline, list edge cases and suggest additional test cases (loading/error/empty/large-list, keyboard-only, mobile breakpoint). The pipeline also emits a **verification handoff** automatically: `docs-writer` generates `docs/verify/<feature>.md` (a manual click-through + Playwright checklist derived from `.claude/memory/routes.json`) so the user can confirm the feature by hand. Regenerate or run it on demand with `/verify`. Details — @.claude/rules/verification.md.
 4. If a task touches more than 3 files — break it into smaller ones, each run through the pipeline separately.
 5. If there is a bug — first write a test (RTL or Playwright) that reproduces it, then fix it.
-6. Interactive checking happens via the **dev server** (`npm run dev`) and **Storybook** (if enabled), plus **Playwright UI mode** (`npm run e2e:ui`) — there is no mock backend baked into production; MSW mocks the network only in dev/test.
+6. Interactive checking happens via the **dev server** (`npm run dev`) and **Storybook** (if enabled), plus **Playwright UI mode** (`npm run e2e:ui`) — there is no mock backend baked into production; MSW mocks the network only in dev/test. During early development the Prism mock (`npm run mock` in `claude-api-contract`) can serve as the API backend.
 
 ## Available agents
 
@@ -77,7 +77,7 @@ Optional (activate only when relevant, not used in every project): `auditor` (wo
 
 ## Stack
 
-TypeScript 5 · React 18 · Vite 8 · Material UI (MUI) 6 · React Router 6 (data router) · TanStack Query 5 (server-state) · Zustand 5 (client-state) · Vitest 4 + React Testing Library + MSW (unit/component) · Playwright (E2E) · `openapi-typescript` (types from the backend contract) · ESLint + Prettier · GitHub Actions CI. Environment — Node 20.19+ (22 LTS recommended) on WSL2 / Linux / macOS. Staging — VPS (Debian) serving the static build behind nginx.
+TypeScript 5 · React 18 · Vite 8 · Material UI (MUI) 6 · React Router 6 (data router) · TanStack Query 5 (server-state) · Zustand 5 (client-state) · Vitest 4 + React Testing Library + MSW (unit/component) · Playwright (E2E) · `openapi-typescript` (types from contract repo `VadayI/claude-api-contract`, NOT backend) · ESLint + Prettier · GitHub Actions CI. Environment — Node 20.19+ (22 LTS recommended) on WSL2 / Linux / macOS. Staging — VPS (Debian) serving the static build behind nginx.
 
 > Version note: the starter app pins **React 18.3** and **MUI 6** for the smoothest MUI + React Testing Library compatibility (React 19 + MUI 6 still has rough edges). Bump to React 19 once MUI fully tracks it — the TDD/contract discipline is version-agnostic.
 
@@ -91,4 +91,4 @@ This config is also an **environment configurator**. The expected local environm
 
 ## Project bootstrap & preflight
 
-On a **new project**, the order is: `/doctor` (detects scenario, recommends `/bootstrap`) → `/bootstrap` (Mode A scaffolds the Vite+MUI app from scratch, Mode B PRs missing pieces) → optionally `/synthesize-brief` (PROJECT.md from `docs/**`) → `/preflight` (build-inputs gate, incl. backend OpenAPI contract availability) → first feature via the pipeline. Spec: @.claude/rules/preflight.md.
+On a **new project**, the order is: `/doctor` (detects scenario, recommends `/bootstrap`) → `/bootstrap` (Mode A scaffolds the Vite+MUI app from scratch, Mode B PRs missing pieces) → optionally `/synthesize-brief` (PROJECT.md from `docs/**`) → `/preflight` (build-inputs gate, incl. contract availability from `VadayI/claude-api-contract`) → first feature via the pipeline. Spec: @.claude/rules/preflight.md.
