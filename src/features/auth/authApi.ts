@@ -27,7 +27,7 @@ const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:4010'
  * @throws Error with the API error message on failure.
  */
 export async function login(credentials: LoginRequest): Promise<TokenPair> {
-  const resp = await fetch(`${BASE_URL}/auth/login`, {
+  const resp = await fetch(`${BASE_URL}/api/v1/auth/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(credentials),
@@ -52,7 +52,7 @@ export async function logout(): Promise<void> {
   const { refreshToken, accessToken, clearTokens } = useAuthStore.getState()
   clearTokens()
   try {
-    await fetch(`${BASE_URL}/auth/logout`, {
+    await fetch(`${BASE_URL}/api/v1/auth/logout`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -73,7 +73,7 @@ export async function logout(): Promise<void> {
  * @throws Error with the API error message on failure.
  */
 export async function register(credentials: RegisterRequest): Promise<RegisterResponse> {
-  const resp = await fetch(`${BASE_URL}/auth/register`, {
+  const resp = await fetch(`${BASE_URL}/api/v1/auth/register`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(credentials),
