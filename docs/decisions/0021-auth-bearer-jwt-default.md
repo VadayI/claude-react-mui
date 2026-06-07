@@ -6,7 +6,7 @@
 
 ## Context
 
-ADR 0018 established session+CSRF as the default auth mode for `claude-react-mui`. The contract inversion (ADR 0020) means the API contract is now owned by the external `VadayI/claude-api-contract` repository, which uses `djangorestframework-simplejwt` (Bearer/JWT) aligned with the external contract. The contract defines `bearerAuth` as the global security scheme and specifies the `/auth/login`, `/auth/refresh`, `/auth/logout`, and `/auth/register` user-flow endpoints. Session-based auth is incompatible with this contract.
+ADR 0018 established session+CSRF as the default auth mode for `claude-react-mui`. The contract inversion (ADR 0020) means the API contract is now owned by the external `VadayI/claude-api-contract` repository, which uses `djangorestframework-simplejwt` (Bearer/JWT) aligned with the external contract. The contract defines `bearerAuth` as the global security scheme and specifies the `/api/v1/auth/login`, `/api/v1/auth/refresh`, `/api/v1/auth/logout`, and `/api/v1/auth/register` user-flow endpoints. Session-based auth is incompatible with this contract.
 
 The backend consumer (`claude-django`) is also a contract consumer and therefore also implements Bearer/JWT — there is no session/CSRF in the shared contract.
 

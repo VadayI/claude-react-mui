@@ -14,11 +14,11 @@
 ## Auth (API-layer only, `src/features/auth` + `src/lib/api/client.ts`)
 
 Auth endpoints are consumed via the auth middleware and `authApi.ts` — there is no
-UI route for login/logout. These will be updated with v0.2.0 paths in the next PR.
+UI route for login/logout. Contract v0.2.0 moved all auth paths to `/api/v1/auth/*`.
 
 | Method | Path | operationId | Used by |
 |--------|------|-------------|---------|
-| POST | /auth/login | loginUser | `authApi.ts` |
-| POST | /auth/logout | logoutUser | `authApi.ts` |
-| POST | /auth/refresh | refreshToken | `client.ts` 401 middleware |
-| POST | /auth/register | registerUser | `authApi.ts` |
+| POST | /api/v1/auth/login | loginUser | `authApi.ts` |
+| POST | /api/v1/auth/logout | logoutUser | `authApi.ts` |
+| POST | /api/v1/auth/refresh | refreshToken | `client.ts` 401 middleware |
+| POST | /api/v1/auth/register | registerUser | `authApi.ts` |

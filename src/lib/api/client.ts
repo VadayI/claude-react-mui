@@ -64,7 +64,7 @@ apiClient.use({
     if (response.status !== 401) return response
 
     // Avoid infinite refresh loop
-    if (request.url.includes('/auth/refresh')) return response
+    if (request.url.includes('/api/v1/auth/refresh')) return response
 
     const { refreshToken, setTokens, setAccessToken, clearTokens } = useAuthStore.getState()
     if (!refreshToken) return response
@@ -72,7 +72,7 @@ apiClient.use({
     let refreshResp: Response
     try {
       refreshResp = await dynamicFetch(
-        new Request(`${BASE_URL}/auth/refresh`, {
+        new Request(`${BASE_URL}/api/v1/auth/refresh`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ refresh: refreshToken }),

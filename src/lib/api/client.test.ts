@@ -59,7 +59,7 @@ describe('apiClient — 401 refresh flow', () => {
         }
         return HttpResponse.json({ count: 0, next: null, previous: null, results: [] })
       }),
-      http.post(`${BASE}/auth/refresh`, () => {
+      http.post(`${BASE}/api/v1/auth/refresh`, () => {
         return HttpResponse.json({ access: 'new-access', refresh: 'new-refresh' })
       }),
     )
@@ -83,7 +83,7 @@ describe('apiClient — 401 refresh flow', () => {
         }
         return HttpResponse.json({ count: 0, next: null, previous: null, results: [] })
       }),
-      http.post(`${BASE}/auth/refresh`, () => {
+      http.post(`${BASE}/api/v1/auth/refresh`, () => {
         return HttpResponse.json({ access: 'new-access' })
       }),
     )
@@ -101,7 +101,7 @@ describe('apiClient — 401 refresh flow', () => {
       http.get(`${BASE}/api/v1/articles`, () => {
         return HttpResponse.json({ detail: 'Unauthorized' }, { status: 401 })
       }),
-      http.post(`${BASE}/auth/refresh`, () => {
+      http.post(`${BASE}/api/v1/auth/refresh`, () => {
         return HttpResponse.json({ detail: 'Token expired' }, { status: 401 })
       }),
     )
@@ -125,7 +125,7 @@ describe('apiClient — 401 refresh flow', () => {
     expect(useAuthStore.getState().refreshToken).toBeNull()
   })
 
-  it('does not loop when /auth/refresh itself returns 401', async () => {
+  it('does not loop when /api/v1/auth/refresh itself returns 401', async () => {
     useAuthStore.getState().setTokens('old-access', 'bad-refresh')
     let refreshCallCount = 0
 
@@ -133,7 +133,7 @@ describe('apiClient — 401 refresh flow', () => {
       http.get(`${BASE}/api/v1/articles`, () => {
         return HttpResponse.json({ detail: 'Unauthorized' }, { status: 401 })
       }),
-      http.post(`${BASE}/auth/refresh`, () => {
+      http.post(`${BASE}/api/v1/auth/refresh`, () => {
         refreshCallCount++
         return HttpResponse.json({ detail: 'Unauthorized' }, { status: 401 })
       }),
