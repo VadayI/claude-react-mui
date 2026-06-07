@@ -18,7 +18,7 @@ Tests prove the app is correct at build time; **observability** is how we know i
 
 ## No PII / no secrets in telemetry (hard rule)
 
-- **Never log tokens, passwords, auth headers, cookies, or full request bodies.** Scrub `Authorization`, `Cookie`, and known sensitive fields in a `beforeSend` hook before anything leaves the browser (ties to @.claude/rules/auth-and-csrf.md — tokens never touch web storage *or* logs).
+- **Never log tokens, passwords, auth headers, cookies, or full request bodies.** Scrub `Authorization`, `Cookie`, and known sensitive fields in a `beforeSend` hook before anything leaves the browser (ties to @.claude/rules/auth.md — tokens never touch web storage *or* logs).
 - **Never put PII in event messages or breadcrumbs** (emails, names, addresses). Log stable ids and error codes, not user content.
 - Console noise is not telemetry — production builds strip debug `console.*`; real signal goes through the reporting client.
 
