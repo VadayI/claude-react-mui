@@ -1,5 +1,5 @@
 /**
- * Unit tests for the useTodos hook.
+ * Unit tests for the useArticles hook.
  *
  * Uses MSW to intercept HTTP calls. Tests loading, success, and error states
  * to triangulate — ensuring a single hardcoded response cannot satisfy all tests.
@@ -10,7 +10,7 @@ import { http, HttpResponse } from 'msw'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactNode } from 'react'
 import { server } from '../../../test/server'
-import { useTodos } from './useTodos'
+import { useArticles } from './useArticles'
 
 function makeWrapper() {
   const queryClient = new QueryClient({
@@ -22,51 +22,51 @@ function makeWrapper() {
   return { Wrapper, queryClient }
 }
 
-describe('useTodos', () => {
+describe('useArticles', () => {
   it('starts in a loading state', () => {
     server.use(
-      http.get('http://localhost:8000/api/v1/todos/', () => new Promise(() => {})),
+      http.get('http://localhost:8000/api/v1/articles', () => new Promise(() => {})),
     )
     const { Wrapper } = makeWrapper()
-    const { result } = renderHook(() => useTodos(), { wrapper: Wrapper })
+    const { result } = renderHook(() => useArticles(), { wrapper: Wrapper })
     expect(result.current.isLoading).toBe(true)
-    expect(result.current.todos).toEqual([])
+    expect(result.current.articles).toEqual([])
   })
 
-  it('returns todos after successful fetch', async () => {
+  it('returns articles after successful fetch', async () => {
     const { Wrapper } = makeWrapper()
-    const { result } = renderHook(() => useTodos(), { wrapper: Wrapper })
+    const { result } = renderHook(() => useArticles(), { wrapper: Wrapper })
 
     await waitFor(() => expect(result.current.isLoading).toBe(false))
 
     expect(result.current.isError).toBe(false)
-    expect(result.current.todos).toHaveLength(2)
-    expect(result.current.todos[0].title).toBe('Buy groceries')
+    expect(result.current.articles).toHaveLength(2)
+    expect(result.current.articles[0].title).toBe('Getting Started with TypeSpec')
   })
 
-  it('returns distinct data for different todos', async () => {
+  it('returns distinct data for different articles', async () => {
     const { Wrapper } = makeWrapper()
-    const { result } = renderHook(() => useTodos(), { wrapper: Wrapper })
+    const { result } = renderHook(() => useArticles(), { wrapper: Wrapper })
 
     await waitFor(() => expect(result.current.isLoading).toBe(false))
 
-    const titles = result.current.todos.map((t) => t.title)
-    expect(titles).toContain('Buy groceries')
-    expect(titles).toContain('Read a book')
+    const titles = result.current.articles.map((a) => a.title)
+    expect(titles).toContain('Getting Started with TypeSpec')
+    expect(titles).toContain('OpenAPI 3.1 Deep Dive')
   })
 
   it('enters error state on server failure', async () => {
     server.use(
-      http.get('http://localhost:8000/api/v1/todos/', () => {
+      http.get('http://localhost:8000/api/v1/articles', () => {
         return HttpResponse.json({ detail: 'fail' }, { status: 500 })
       }),
     )
     const { Wrapper } = makeWrapper()
-    const { result } = renderHook(() => useTodos(), { wrapper: Wrapper })
+    const { result } = renderHook(() => useArticles(), { wrapper: Wrapper })
 
     await waitFor(() => expect(result.current.isError).toBe(true))
 
-    expect(result.current.todos).toEqual([])
+    expect(result.current.articles).toEqual([])
     expect(result.current.error).toBeInstanceOf(Error)
   })
 })

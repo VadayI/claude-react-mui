@@ -29,8 +29,8 @@ export function App() {
           <Button color="inherit" component={RouterLink} to="/">
             Home
           </Button>
-          <Button color="inherit" component={RouterLink} to="/todos">
-            Todos
+          <Button color="inherit" component={RouterLink} to="/articles">
+            Articles
           </Button>
         </Toolbar>
       </AppBar>

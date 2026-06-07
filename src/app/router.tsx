@@ -7,14 +7,14 @@
  */
 import { createBrowserRouter } from 'react-router-dom'
 import { App } from './App'
-import { TodosPage } from '../features/todos/components/TodosPage'
+import { ArticlesPage } from '../features/articles/components/ArticlesPage'
 
 /**
  * The root data router.
  *
  * Routes:
- * - `/`        Home (displayed via App layout)
- * - `/todos`   Todos feature page
+ * - `/`          Home (displayed via App layout)
+ * - `/articles`  Articles feature page
  */
 export const router = createBrowserRouter([
   {
@@ -26,13 +26,13 @@ export const router = createBrowserRouter([
         element: (
           <div style={{ padding: '2rem' }}>
             <h2>Welcome</h2>
-            <p>Navigate to <a href="/todos">/todos</a> to see the Todos feature.</p>
+            <p>Navigate to <a href="/articles">/articles</a> to see the Articles feature.</p>
           </div>
         ),
       },
       {
-        path: 'todos',
-        element: <TodosPage />,
+        path: 'articles',
+        element: <ArticlesPage />,
       },
     ],
   },

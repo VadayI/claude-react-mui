@@ -4,7 +4,7 @@
  */
 
 export interface paths {
-    "/api/v1/todos/": {
+    "/api/v1/articles": {
         parameters: {
             query?: never;
             header?: never;
@@ -12,16 +12,144 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * List all todos
-         * @description Returns a list of all todo items for the authenticated user.
+         * List articles
+         * @description Return a paginated list of articles, optionally filtered by status or search term.
          */
-        get: operations["todos_list"];
+        get: operations["listArticles"];
         put?: never;
         /**
-         * Create a todo
-         * @description Creates a new todo item for the authenticated user.
+         * Create an article
+         * @description Create a new article.
          */
-        post: operations["todos_create"];
+        post: operations["createArticle"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/articles/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get an article
+         * @description Retrieve a single article by its identifier.
+         */
+        get: operations["getArticle"];
+        put?: never;
+        post?: never;
+        /**
+         * Delete an article
+         * @description Delete an existing article.
+         */
+        delete: operations["deleteArticle"];
+        options?: never;
+        head?: never;
+        /**
+         * Update an article
+         * @description Partially update an existing article.
+         */
+        patch: operations["updateArticle"];
+        trace?: never;
+    };
+    "/auth/login": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Log in
+         * @description Exchange user credentials for an access + refresh token pair. Public endpoint.
+         */
+        post: operations["loginUser"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/auth/logout": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Log out
+         * @description Invalidate the current session; optionally revoke the supplied refresh token.
+         */
+        post: operations["logoutUser"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/auth/refresh": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Refresh the access token
+         * @description Exchange a valid refresh token for a new access token. Public endpoint.
+         */
+        post: operations["refreshToken"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/auth/register": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Register a new user
+         * @description Create a new user account. Public endpoint.
+         */
+        post: operations["registerUser"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/auth/token": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Issue a service token
+         * @description Service-to-service client-credentials grant. Returns a scoped access token. Public endpoint.
+         */
+        post: operations["issueServiceToken"];
         delete?: never;
         options?: never;
         head?: never;
@@ -32,19 +160,178 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        /** @description A single todo item. */
-        Todo: {
-            /** @description Unique identifier */
-            readonly id: number;
-            /** @description Todo title text */
-            title: string;
-            /** @description Whether the todo has been completed */
-            completed: boolean;
+        /** @description A renewed access token, optionally with a rotated refresh token. */
+        AccessToken: {
+            /** @description Short-lived JWT access token. */
+            access: string;
+            /** @description Rotated refresh token, if refresh rotation is enabled. */
+            refresh?: string;
         };
-        /** @description Payload for creating a new todo. */
-        TodoCreate: {
-            /** @description Todo title text */
+        /** @description A blog-style article. */
+        Article: {
+            /** @description Unique article identifier. */
+            id: string;
+            /** @description Article title. */
             title: string;
+            /** @description URL-friendly slug. */
+            slug: string;
+            /** @description Article body content. */
+            body: string;
+            /** @description Publication status. */
+            status: components["schemas"]["ArticleStatus"];
+            /** @description Identifier of the author. */
+            author_id: string;
+            /** @description Associated tag labels. */
+            tags: string[];
+            /**
+             * Format: date-time
+             * @description Creation timestamp (UTC).
+             */
+            created_at: string;
+            /**
+             * Format: date-time
+             * @description Last update timestamp (UTC).
+             */
+            updated_at: string;
+        };
+        /** @description Payload to create an article. */
+        ArticleCreate: {
+            /** @description Article title. */
+            title: string;
+            /** @description Article body content. */
+            body: string;
+            /** @description Optional URL-friendly slug; generated from the title if omitted. */
+            slug?: string;
+            /**
+             * @description Publication status; defaults to draft.
+             * @default draft
+             */
+            status: components["schemas"]["ArticleStatus"];
+            /**
+             * @description Associated tag labels.
+             * @default []
+             */
+            tags: string[];
+        };
+        /** @description Standard paginated list envelope (count / next / previous / results). */
+        ArticleList: {
+            /**
+             * Format: int32
+             * @description Total number of items across all pages.
+             */
+            count: number;
+            /** @description URL of the next page of results, or null on the last page. */
+            next: string | null;
+            /** @description URL of the previous page of results, or null on the first page. */
+            previous: string | null;
+            /** @description Items on the current page. */
+            results: components["schemas"]["Article"][];
+        };
+        /**
+         * @description Publication status of an article.
+         * @enum {string}
+         */
+        ArticleStatus: "draft" | "published" | "archived";
+        /** @description Payload to partially update an article; all fields optional. */
+        ArticleUpdate: {
+            /** @description Article title. */
+            title?: string;
+            /** @description URL-friendly slug. */
+            slug?: string;
+            /** @description Article body content. */
+            body?: string;
+            /** @description Publication status. */
+            status?: components["schemas"]["ArticleStatus"];
+            /** @description Associated tag labels. */
+            tags?: string[];
+        };
+        /** @description Simple error envelope with a single human-readable message. */
+        ErrorDetail: {
+            /** @description Human-readable error message. */
+            detail: string;
+        };
+        /** @description A single field-level validation error. */
+        FieldError: {
+            /** @description Name of the field that failed validation. */
+            field: string;
+            /** @description Stable, machine-readable error code (e.g. 'required', 'invalid'). */
+            code: string;
+            /** @description Human-readable explanation of the validation failure. */
+            message: string;
+        };
+        /** @description Login credentials. */
+        LoginRequest: {
+            /** @description User email address. */
+            email: string;
+            /** @description Plain-text password (transport-encrypted). */
+            password: string;
+        };
+        /** @description Refresh token request body. */
+        RefreshRequest: {
+            /** @description The refresh token previously issued. */
+            refresh: string;
+        };
+        /** @description Credentials to register a new user account. */
+        RegisterRequest: {
+            /** @description User email address. */
+            email: string;
+            /** @description Plain-text password (transport-encrypted). */
+            password: string;
+            /** @description Optional display name. */
+            name?: string;
+        };
+        /** @description Result of registering a user (user plus an optional initial token pair). */
+        RegisterResponse: {
+            /** @description The newly created user. */
+            user: components["schemas"]["User"];
+            /** @description Optional initial access + refresh token pair. */
+            tokens?: components["schemas"]["TokenPair"];
+        };
+        /** @description Service-to-service client-credentials token request. */
+        ServiceTokenRequest: {
+            /** @description OAuth2 grant type; must be 'client_credentials'. */
+            grant_type: string;
+            /** @description Service client identifier. */
+            client_id: string;
+            /** @description Service client secret. */
+            client_secret: string;
+            /** @description Optional space-separated list of requested scopes. */
+            scope?: string;
+        };
+        /** @description Service-to-service access token response. */
+        ServiceTokenResponse: {
+            /** @description Short-lived JWT access token. */
+            access: string;
+            /** @description Token type; always 'Bearer'. */
+            token_type: string;
+            /**
+             * Format: int32
+             * @description Token lifetime in seconds.
+             */
+            expires_in: number;
+            /** @description Granted scopes (space-separated). */
+            scope: string;
+        };
+        /** @description Access + refresh token pair. */
+        TokenPair: {
+            /** @description Short-lived JWT access token. */
+            access: string;
+            /** @description Long-lived refresh token (returned in the response body). */
+            refresh: string;
+        };
+        /** @description A registered user account. */
+        User: {
+            /** @description Unique user identifier. */
+            id: string;
+            /** @description User email address. */
+            email: string;
+            /** @description Optional display name. */
+            name?: string;
+        };
+        /** @description Validation error envelope carrying a list of per-field errors. */
+        ValidationErrors: {
+            /** @description List of per-field validation errors. */
+            errors: components["schemas"]["FieldError"][];
         };
     };
     responses: never;
@@ -55,68 +342,779 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
-    todos_list: {
+    listArticles: {
         parameters: {
-            query?: never;
+            query?: {
+                /** @description 1-based page number. */
+                page?: number;
+                /** @description Number of items per page. */
+                page_size?: number;
+                /** @description Filter by publication status. */
+                status?: components["schemas"]["ArticleStatus"];
+                /** @description Full-text search query. */
+                search?: string;
+            };
             header?: never;
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description A list of todos */
+            /** @description The request has succeeded. */
             200: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Todo"][];
+                    /**
+                     * @example {
+                     *       "count": 42,
+                     *       "next": "https://api.example.com/api/v1/articles?page=3",
+                     *       "previous": "https://api.example.com/api/v1/articles?page=1",
+                     *       "results": [
+                     *         {
+                     *           "id": "art_01HZX3K9P2QY",
+                     *           "title": "Designing a Contract-First API",
+                     *           "slug": "designing-a-contract-first-api",
+                     *           "body": "A contract-first workflow lets backend and frontend teams start in parallel by agreeing on the wire shape up front.",
+                     *           "status": "published",
+                     *           "author_id": "usr_01HZX3K9P2",
+                     *           "tags": [
+                     *             "api",
+                     *             "typespec"
+                     *           ],
+                     *           "created_at": "2026-06-01T10:00:00Z",
+                     *           "updated_at": "2026-06-02T08:30:00Z"
+                     *         },
+                     *         {
+                     *           "id": "art_01HZX4M0R3ZB",
+                     *           "title": "Mocking the Contract with Prism",
+                     *           "slug": "mocking-the-contract-with-prism",
+                     *           "body": "Prism turns the OpenAPI document into a live mock so the frontend can build before the backend exists.",
+                     *           "status": "draft",
+                     *           "author_id": "usr_01HZX3K9P2",
+                     *           "tags": [
+                     *             "prism",
+                     *             "mock"
+                     *           ],
+                     *           "created_at": "2026-06-03T09:15:00Z",
+                     *           "updated_at": "2026-06-03T09:15:00Z"
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": components["schemas"]["ArticleList"];
                 };
             };
-            /** @description Authentication required */
+            /** @description 401 — authentication is missing or invalid. */
             401: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    "application/json": components["schemas"]["ErrorDetail"];
+                };
+            };
+            /** @description 403 — authenticated but not permitted (missing scope/permission). */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorDetail"];
+                };
+            };
+            /** @description 429 — rate limit exceeded; retry after the indicated delay. */
+            429: {
+                headers: {
+                    /** @description Seconds to wait before retrying. */
+                    "Retry-After": number;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorDetail"];
+                };
             };
         };
     };
-    todos_create: {
+    createArticle: {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
+        /** @description Article creation payload. */
         requestBody: {
             content: {
-                "application/json": components["schemas"]["TodoCreate"];
+                /**
+                 * @example {
+                 *       "title": "Designing a Contract-First API",
+                 *       "body": "A contract-first workflow lets backend and frontend teams start in parallel by agreeing on the wire shape up front.",
+                 *       "tags": [
+                 *         "api",
+                 *         "typespec"
+                 *       ],
+                 *       "status": "published"
+                 *     }
+                 */
+                "application/json": components["schemas"]["ArticleCreate"];
             };
         };
         responses: {
-            /** @description Todo created */
+            /** @description The request has succeeded and a new resource has been created as a result. */
             201: {
                 headers: {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["Todo"];
+                    /**
+                     * @example {
+                     *       "id": "art_01HZX3K9P2QY",
+                     *       "title": "Designing a Contract-First API",
+                     *       "slug": "designing-a-contract-first-api",
+                     *       "body": "A contract-first workflow lets backend and frontend teams start in parallel by agreeing on the wire shape up front.",
+                     *       "status": "published",
+                     *       "author_id": "usr_01HZX3K9P2",
+                     *       "tags": [
+                     *         "api",
+                     *         "typespec"
+                     *       ],
+                     *       "created_at": "2026-06-01T10:00:00Z",
+                     *       "updated_at": "2026-06-02T08:30:00Z"
+                     *     }
+                     */
+                    "application/json": components["schemas"]["Article"];
                 };
             };
-            /** @description Validation error */
+            /** @description 400 — request body failed validation. */
             400: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content?: never;
+                content: {
+                    /**
+                     * @example {
+                     *       "errors": [
+                     *         {
+                     *           "field": "title",
+                     *           "code": "required",
+                     *           "message": "This field is required."
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": components["schemas"]["ValidationErrors"];
+                };
             };
-            /** @description Authentication required */
+            /** @description 401 — authentication is missing or invalid. */
             401: {
                 headers: {
                     [name: string]: unknown;
                 };
+                content: {
+                    "application/json": components["schemas"]["ErrorDetail"];
+                };
+            };
+            /** @description 403 — authenticated but not permitted (missing scope/permission). */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorDetail"];
+                };
+            };
+            /** @description 409 — the request conflicts with the current state of the resource. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "detail": "An article with this slug already exists."
+                     *     }
+                     */
+                    "application/json": components["schemas"]["ErrorDetail"];
+                };
+            };
+            /** @description 429 — rate limit exceeded; retry after the indicated delay. */
+            429: {
+                headers: {
+                    /** @description Seconds to wait before retrying. */
+                    "Retry-After": number;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorDetail"];
+                };
+            };
+        };
+    };
+    getArticle: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Article identifier. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The request has succeeded. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "id": "art_01HZX3K9P2QY",
+                     *       "title": "Designing a Contract-First API",
+                     *       "slug": "designing-a-contract-first-api",
+                     *       "body": "A contract-first workflow lets backend and frontend teams start in parallel by agreeing on the wire shape up front.",
+                     *       "status": "published",
+                     *       "author_id": "usr_01HZX3K9P2",
+                     *       "tags": [
+                     *         "api",
+                     *         "typespec"
+                     *       ],
+                     *       "created_at": "2026-06-01T10:00:00Z",
+                     *       "updated_at": "2026-06-02T08:30:00Z"
+                     *     }
+                     */
+                    "application/json": components["schemas"]["Article"];
+                };
+            };
+            /** @description 401 — authentication is missing or invalid. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorDetail"];
+                };
+            };
+            /** @description 403 — authenticated but not permitted (missing scope/permission). */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorDetail"];
+                };
+            };
+            /** @description 404 — the requested resource does not exist. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "detail": "Article not found."
+                     *     }
+                     */
+                    "application/json": components["schemas"]["ErrorDetail"];
+                };
+            };
+            /** @description 429 — rate limit exceeded; retry after the indicated delay. */
+            429: {
+                headers: {
+                    /** @description Seconds to wait before retrying. */
+                    "Retry-After": number;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorDetail"];
+                };
+            };
+        };
+    };
+    deleteArticle: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Article identifier. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description There is no content to send for this request, but the headers may be useful. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
                 content?: never;
+            };
+            /** @description 401 — authentication is missing or invalid. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorDetail"];
+                };
+            };
+            /** @description 403 — authenticated but not permitted (missing scope/permission). */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorDetail"];
+                };
+            };
+            /** @description 404 — the requested resource does not exist. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "detail": "Article not found."
+                     *     }
+                     */
+                    "application/json": components["schemas"]["ErrorDetail"];
+                };
+            };
+            /** @description 429 — rate limit exceeded; retry after the indicated delay. */
+            429: {
+                headers: {
+                    /** @description Seconds to wait before retrying. */
+                    "Retry-After": number;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorDetail"];
+                };
+            };
+        };
+    };
+    updateArticle: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Article identifier. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        /** @description Article update payload. */
+        requestBody: {
+            content: {
+                /**
+                 * @example {
+                 *       "status": "archived"
+                 *     }
+                 */
+                "application/json": components["schemas"]["ArticleUpdate"];
+            };
+        };
+        responses: {
+            /** @description The request has succeeded. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "id": "art_01HZX3K9P2QY",
+                     *       "title": "Designing a Contract-First API",
+                     *       "slug": "designing-a-contract-first-api",
+                     *       "body": "A contract-first workflow lets backend and frontend teams start in parallel by agreeing on the wire shape up front.",
+                     *       "status": "archived",
+                     *       "author_id": "usr_01HZX3K9P2",
+                     *       "tags": [
+                     *         "api",
+                     *         "typespec"
+                     *       ],
+                     *       "created_at": "2026-06-01T10:00:00Z",
+                     *       "updated_at": "2026-06-04T11:45:00Z"
+                     *     }
+                     */
+                    "application/json": components["schemas"]["Article"];
+                };
+            };
+            /** @description 400 — request body failed validation. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ValidationErrors"];
+                };
+            };
+            /** @description 401 — authentication is missing or invalid. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorDetail"];
+                };
+            };
+            /** @description 403 — authenticated but not permitted (missing scope/permission). */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorDetail"];
+                };
+            };
+            /** @description 404 — the requested resource does not exist. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "detail": "Article not found."
+                     *     }
+                     */
+                    "application/json": components["schemas"]["ErrorDetail"];
+                };
+            };
+            /** @description 409 — the request conflicts with the current state of the resource. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorDetail"];
+                };
+            };
+            /** @description 429 — rate limit exceeded; retry after the indicated delay. */
+            429: {
+                headers: {
+                    /** @description Seconds to wait before retrying. */
+                    "Retry-After": number;
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorDetail"];
+                };
+            };
+        };
+    };
+    loginUser: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Login credentials. */
+        requestBody: {
+            content: {
+                /**
+                 * @example {
+                 *       "email": "ada@example.com",
+                 *       "password": "S3cure-pass!"
+                 *     }
+                 */
+                "application/json": components["schemas"]["LoginRequest"];
+            };
+        };
+        responses: {
+            /** @description The request has succeeded. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "access": "eyJhbGciOiJIUzI1NiJ9.access",
+                     *       "refresh": "r3fr3sh-tok3n-login"
+                     *     }
+                     */
+                    "application/json": components["schemas"]["TokenPair"];
+                };
+            };
+            /** @description 400 — request body failed validation. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "errors": [
+                     *         {
+                     *           "field": "email",
+                     *           "code": "invalid",
+                     *           "message": "Enter a valid email address."
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": components["schemas"]["ValidationErrors"];
+                };
+            };
+            /** @description 401 — authentication is missing or invalid. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "detail": "Authentication credentials were not provided or are invalid."
+                     *     }
+                     */
+                    "application/json": components["schemas"]["ErrorDetail"];
+                };
+            };
+        };
+    };
+    logoutUser: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Optional refresh token to revoke. */
+        requestBody?: {
+            content: {
+                /**
+                 * @example {
+                 *       "refresh": "r3fr3sh-tok3n-login"
+                 *     }
+                 */
+                "application/json": components["schemas"]["RefreshRequest"];
+            };
+        };
+        responses: {
+            /** @description There is no content to send for this request, but the headers may be useful. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description 401 — authentication is missing or invalid. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ErrorDetail"];
+                };
+            };
+        };
+    };
+    refreshToken: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description The refresh token to exchange. */
+        requestBody: {
+            content: {
+                /**
+                 * @example {
+                 *       "refresh": "r3fr3sh-tok3n-login"
+                 *     }
+                 */
+                "application/json": components["schemas"]["RefreshRequest"];
+            };
+        };
+        responses: {
+            /** @description The request has succeeded. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "access": "eyJhbGciOiJIUzI1NiJ9.access-new",
+                     *       "refresh": "r3fr3sh-rotated-tok3n"
+                     *     }
+                     */
+                    "application/json": components["schemas"]["AccessToken"];
+                };
+            };
+            /** @description 400 — request body failed validation. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ValidationErrors"];
+                };
+            };
+            /** @description 401 — authentication is missing or invalid. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "detail": "Authentication credentials were not provided or are invalid."
+                     *     }
+                     */
+                    "application/json": components["schemas"]["ErrorDetail"];
+                };
+            };
+        };
+    };
+    registerUser: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Registration credentials. */
+        requestBody: {
+            content: {
+                /**
+                 * @example {
+                 *       "email": "ada@example.com",
+                 *       "password": "S3cure-pass!",
+                 *       "name": "Ada Lovelace"
+                 *     }
+                 */
+                "application/json": components["schemas"]["RegisterRequest"];
+            };
+        };
+        responses: {
+            /** @description The request has succeeded and a new resource has been created as a result. */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "user": {
+                     *         "id": "usr_01HZX3K9P2",
+                     *         "email": "ada@example.com",
+                     *         "name": "Ada Lovelace"
+                     *       },
+                     *       "tokens": {
+                     *         "access": "eyJhbGciOiJIUzI1NiJ9.reg-access",
+                     *         "refresh": "r3fr3sh-tok3n-reg"
+                     *       }
+                     *     }
+                     */
+                    "application/json": components["schemas"]["RegisterResponse"];
+                };
+            };
+            /** @description 400 — request body failed validation. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "errors": [
+                     *         {
+                     *           "field": "email",
+                     *           "code": "invalid",
+                     *           "message": "Enter a valid email address."
+                     *         }
+                     *       ]
+                     *     }
+                     */
+                    "application/json": components["schemas"]["ValidationErrors"];
+                };
+            };
+            /** @description 409 — the request conflicts with the current state of the resource. */
+            409: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "detail": "A user with this email already exists."
+                     *     }
+                     */
+                    "application/json": components["schemas"]["ErrorDetail"];
+                };
+            };
+        };
+    };
+    issueServiceToken: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Client-credentials token request. */
+        requestBody: {
+            content: {
+                /**
+                 * @example {
+                 *       "grant_type": "client_credentials",
+                 *       "client_id": "svc_articles_sync",
+                 *       "client_secret": "cs_7f3a9b2e1d6c4805a1f2",
+                 *       "scope": "articles:read articles:write"
+                 *     }
+                 */
+                "application/json": components["schemas"]["ServiceTokenRequest"];
+            };
+        };
+        responses: {
+            /** @description The request has succeeded. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "access": "eyJhbGciOiJIUzI1NiJ9.svc-access",
+                     *       "token_type": "Bearer",
+                     *       "expires_in": 900,
+                     *       "scope": "articles:read articles:write"
+                     *     }
+                     */
+                    "application/json": components["schemas"]["ServiceTokenResponse"];
+                };
+            };
+            /** @description 400 — request body failed validation. */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ValidationErrors"];
+                };
+            };
+            /** @description 401 — authentication is missing or invalid. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /**
+                     * @example {
+                     *       "detail": "Authentication credentials were not provided or are invalid."
+                     *     }
+                     */
+                    "application/json": components["schemas"]["ErrorDetail"];
+                };
             };
         };
     };

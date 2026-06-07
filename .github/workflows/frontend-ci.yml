@@ -43,6 +43,9 @@ jobs:
       - name: Gate — API types drift
         run: bash scripts/check_types_drift.sh
 
+      - name: Gate — contract sync
+        run: bash scripts/check_contract_sync.sh
+
       - name: Test with coverage
         run: npm run test:cov
 
