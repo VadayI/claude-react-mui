@@ -2,7 +2,7 @@
 
 This frontend consumes a **Bearer/JWT** backend (`djangorestframework-simplejwt` on `claude-django`). Auth is a **decision recorded up front** in ADR `0021` (`docs/decisions/0021-auth-bearer-jwt-default.md`), which supersedes ADR `0018`.
 
-The default and only mode for this template is **Bearer/JWT user-flow** as specified in the external contract (`VadayI/claude-api-contract`, `bearerAuth` global security scheme, `/auth/*` endpoints).
+The default and only mode for this template is **Bearer/JWT user-flow** as specified in the external contract (`VadayI/claude-api-contract`, `bearerAuth` global security scheme, `/api/v1/auth/*` endpoints).
 
 ## Token storage (hard rule)
 
