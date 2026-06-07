@@ -6,61 +6,62 @@ Manages the articles list. Provides a full-page UI at `/articles` for viewing an
 
 ## Routes
 
-| Path | Screen | Auth |
-|------|--------|------|
+| Path        | Screen                                          | Auth                         |
+| ----------- | ----------------------------------------------- | ---------------------------- |
 | `/articles` | ArticlesPage — full articles list with add form | Authenticated (Bearer token) |
 
 ## Components
 
-| Component | Type | Description |
-|-----------|------|-------------|
-| `ArticlesPage` | Container | Fetches data via hooks, composes the sub-components, handles all four UI states |
-| `ArticleList` | Presentational | Renders the accessible MUI list; handles empty state |
+| Component        | Type           | Description                                                                            |
+| ---------------- | -------------- | -------------------------------------------------------------------------------------- |
+| `ArticlesPage`   | Container      | Fetches data via hooks, composes the sub-components, handles all four UI states        |
+| `ArticleList`    | Presentational | Renders the accessible MUI list; handles empty state                                   |
 | `AddArticleForm` | Presentational | Controlled title + body inputs; disables when title is empty; accessible error display |
 
 ## Hooks & State
 
-| Hook | Type | Description |
-|------|------|-------------|
-| `useArticles` | TanStack Query | `queryKey: articleKeys.list()` → `getArticles()` |
+| Hook               | Type              | Description                                                                |
+| ------------------ | ----------------- | -------------------------------------------------------------------------- |
+| `useArticles`      | TanStack Query    | `queryKey: articleKeys.list()` → `getArticles()`                           |
 | `useCreateArticle` | TanStack Mutation | `createArticle(title, body)` → invalidates `articleKeys.list()` on success |
 
 `articleKeys` factory ensures consistent invalidation:
+
 - `articleKeys.all` — root; matches every articles query.
 - `articleKeys.list()` — specific to the list endpoint.
 
 ## Consumed Endpoints
 
-| Method | Path | Notes |
-|--------|------|-------|
-| `GET` | `/api/v1/articles` | Returns `ArticleList` envelope (`count/next/previous/results`); mapped to `ArticleViewModel[]` |
-| `POST` | `/api/v1/articles` | Body: `{ title, body }`; returns the created `Article` |
+| Method | Path               | Notes                                                                                          |
+| ------ | ------------------ | ---------------------------------------------------------------------------------------------- |
+| `GET`  | `/api/v1/articles` | Returns `ArticleList` envelope (`count/next/previous/results`); mapped to `ArticleViewModel[]` |
+| `POST` | `/api/v1/articles` | Body: `{ title, body }`; returns the created `Article`                                         |
 
 Full schema in `src/lib/api/openapi.yml` (vendored from `VadayI/claude-api-contract@v0.1.0`).
 Generated types in `src/lib/api/schema.d.ts`.
 
 ## Article Schema
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `id` | `string` | Unique identifier |
-| `title` | `string` | Article title |
-| `body` | `string` | Article body content |
-| `slug` | `string` | URL-friendly slug |
-| `status` | `"draft" \| "published" \| "archived"` | Publication status |
-| `author_id` | `string` | Author identifier |
-| `tags` | `string[]` | Tag labels |
-| `created_at` | `string` (date-time) | Creation timestamp |
-| `updated_at` | `string` (date-time) | Last update timestamp |
+| Field        | Type                                   | Description           |
+| ------------ | -------------------------------------- | --------------------- |
+| `id`         | `string`                               | Unique identifier     |
+| `title`      | `string`                               | Article title         |
+| `body`       | `string`                               | Article body content  |
+| `slug`       | `string`                               | URL-friendly slug     |
+| `status`     | `"draft" \| "published" \| "archived"` | Publication status    |
+| `author_id`  | `string`                               | Author identifier     |
+| `tags`       | `string[]`                             | Tag labels            |
+| `created_at` | `string` (date-time)                   | Creation timestamp    |
+| `updated_at` | `string` (date-time)                   | Last update timestamp |
 
 ## UI States
 
-| State | Trigger | UI |
-|-------|---------|-----|
-| Loading | Initial fetch in flight | `CircularProgress` + `Skeleton` rows, `role="status"` |
-| Error | Query settled with error | `MUI Alert` with severity=error + Retry button |
-| Empty | Query resolved, `results = []` | Empty-state message via `ArticleList` |
-| Success | Query resolved, data present | `ArticleList` + `AddArticleForm` |
+| State   | Trigger                        | UI                                                    |
+| ------- | ------------------------------ | ----------------------------------------------------- |
+| Loading | Initial fetch in flight        | `CircularProgress` + `Skeleton` rows, `role="status"` |
+| Error   | Query settled with error       | `MUI Alert` with severity=error + Retry button        |
+| Empty   | Query resolved, `results = []` | Empty-state message via `ArticleList`                 |
+| Success | Query resolved, data present   | `ArticleList` + `AddArticleForm`                      |
 
 ## Accessibility Notes
 

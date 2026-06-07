@@ -6,6 +6,7 @@ description: MUI 6 theming — central theme, sx prop, styled(), responsive valu
 # MUI 6 Theming
 
 ## Core principles
+
 - All design tokens live in the central theme — never magic values in `sx` or `styled()`
 - Use `sx` for one-off per-instance overrides; use `styled()` for reusable styled variants
 - No hard-coded colours, spacing numbers, or font sizes outside the theme
@@ -15,7 +16,7 @@ description: MUI 6 theming — central theme, sx prop, styled(), responsive valu
 
 ```ts
 // src/theme/index.ts
-import { createTheme } from '@mui/material/styles';
+import { createTheme } from '@mui/material/styles'
 
 const theme = createTheme({
   palette: {
@@ -49,9 +50,9 @@ const theme = createTheme({
       ],
     },
   },
-});
+})
 
-export default theme;
+export default theme
 ```
 
 ## sx prop — instance overrides
@@ -60,9 +61,9 @@ export default theme;
 // Responsive spacing, hiding, colour from theme tokens
 <Box
   sx={{
-    p: { xs: 1, md: 3 },        // theme.spacing(1) / theme.spacing(3)
+    p: { xs: 1, md: 3 }, // theme.spacing(1) / theme.spacing(3)
     display: { xs: 'none', sm: 'flex' },
-    color: 'text.secondary',     // palette alias
+    color: 'text.secondary', // palette alias
     bgcolor: 'background.paper',
   }}
 />
@@ -71,39 +72,43 @@ export default theme;
 ## styled() — reusable variants
 
 ```tsx
-import { styled } from '@mui/material/styles';
+import { styled } from '@mui/material/styles'
 
 const CardRoot = styled('div')(({ theme }) => ({
   padding: theme.spacing(2),
   borderRadius: theme.shape.borderRadius,
   boxShadow: theme.shadows[1],
-}));
+}))
 ```
 
 ## Dark mode with ColorModeContext
 
 ```tsx
-const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
+const ColorModeContext = React.createContext({ toggleColorMode: () => {} })
 
 function App() {
-  const [mode, setMode] = useState<'light' | 'dark'>('light');
-  const theme = useMemo(() => createTheme({ palette: { mode } }), [mode]);
+  const [mode, setMode] = useState<'light' | 'dark'>('light')
+  const theme = useMemo(() => createTheme({ palette: { mode } }), [mode])
   return (
-    <ColorModeContext.Provider value={{ toggleColorMode: () => setMode(m => m === 'light' ? 'dark' : 'light') }}>
+    <ColorModeContext.Provider
+      value={{ toggleColorMode: () => setMode((m) => (m === 'light' ? 'dark' : 'light')) }}
+    >
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Router />
       </ThemeProvider>
     </ColorModeContext.Provider>
-  );
+  )
 }
 ```
 
 ## Density & RTL
+
 - Use `theme.spacing()` everywhere — density scales automatically
 - Set `direction: 'rtl'` in theme + `<CacheProvider>` with RTL emotion cache for RTL support
 
 ## Emotion internals
+
 - MUI 6 uses Emotion by default; avoid mixing `@emotion/styled` imports with MUI's `styled` — use MUI's re-export
 - `GlobalStyles` component for CSS resets instead of plain `<style>` tags
 

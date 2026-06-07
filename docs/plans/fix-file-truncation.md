@@ -9,9 +9,9 @@
 
 ## Докази (цей сеанс)
 
-- `CLAUDE.md` — обрізаний на «…scaffolds the Vite+M» у секції *Project bootstrap & preflight* (з'явилось у `9dde1fc`; у `19934dc` ще ціле).
+- `CLAUDE.md` — обрізаний на «…scaffolds the Vite+M» у секції _Project bootstrap & preflight_ (з'явилось у `9dde1fc`; у `19934dc` ще ціле).
 - `docs/WORKLOG.md` — робоче дерево обрізане на «- Tests: Vitest», втрачено 10 рядків проти HEAD (чисте видалення).
-- Згадка в WORKLOG 2026-06-02: Edit через Windows-шлях уже раз обрізав `frontend-ci.yml` (крок *Upload Playwright report* втратив `with:`).
+- Згадка в WORKLOG 2026-06-02: Edit через Windows-шлях уже раз обрізав `frontend-ci.yml` (крок _Upload Playwright report_ втратив `with:`).
 
 ## Гіпотеза root cause
 

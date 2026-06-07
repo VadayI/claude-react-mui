@@ -6,8 +6,8 @@
 
 Covers the following routes and screens shipped by this feature:
 
-| Route | Screen | Auth required |
-|---|---|---|
+| Route                    | Screen                          | Auth required       |
+| ------------------------ | ------------------------------- | ------------------- |
 | `{TODO: e.g. /articles}` | `{TODO: e.g. ArticlesListPage}` | {TODO: yes/no/role} |
 
 ---
@@ -35,12 +35,12 @@ Covers the following routes and screens shipped by this feature:
 
 #### Four UI states
 
-| State | How to trigger | Expected |
-|---|---|---|
-| **Loading** | {TODO: e.g. "Throttle network to Slow 4G in DevTools and refresh."} | Skeleton / spinner visible; no error shown |
-| **Empty** | {TODO: e.g. "Use MSW to return an empty array: uncomment `handlers/articles-empty.ts` in `src/mocks/`."} | Empty-state illustration + {TODO: CTA label} visible |
-| **Error** | {TODO: e.g. "Use MSW to return a 500: uncomment `handlers/articles-error.ts`."} | Error message displayed; retry button present |
-| **Success** | {TODO: Normal data — default MSW handler or live backend} | {TODO: describe expected data shape on screen} |
+| State       | How to trigger                                                                                           | Expected                                             |
+| ----------- | -------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
+| **Loading** | {TODO: e.g. "Throttle network to Slow 4G in DevTools and refresh."}                                      | Skeleton / spinner visible; no error shown           |
+| **Empty**   | {TODO: e.g. "Use MSW to return an empty array: uncomment `handlers/articles-empty.ts` in `src/mocks/`."} | Empty-state illustration + {TODO: CTA label} visible |
+| **Error**   | {TODO: e.g. "Use MSW to return a 500: uncomment `handlers/articles-error.ts`."}                          | Error message displayed; retry button present        |
+| **Success** | {TODO: Normal data — default MSW handler or live backend}                                                | {TODO: describe expected data shape on screen}       |
 
 #### Keyboard pass
 

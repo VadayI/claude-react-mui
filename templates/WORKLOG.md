@@ -9,12 +9,15 @@ Format: one `### YYYY-MM-DD — <summary>` block per session. Keep entries factu
 ### YYYY-MM-DD — {summary}
 
 **What changed**
+
 - {TODO: bullet list of changes landed in this session}
 
 **Decisions**
+
 - {TODO: any architectural or process decisions made; link ADRs if created}
 
 **Next**
+
 - {TODO: what the next session should start with}
 
 ---

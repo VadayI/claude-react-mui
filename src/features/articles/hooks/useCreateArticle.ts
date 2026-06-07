@@ -32,8 +32,7 @@ export function useCreateArticle(): UseCreateArticleResult {
   const queryClient = useQueryClient()
 
   const mutation = useMutation({
-    mutationFn: ({ title, body }: { title: string; body: string }) =>
-      createArticle(title, body),
+    mutationFn: ({ title, body }: { title: string; body: string }) => createArticle(title, body),
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: articleKeys.list() })
     },

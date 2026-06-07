@@ -6,7 +6,7 @@ Tests prove the app is correct at build time; **observability** is how we know i
 
 - A **top-level error boundary** wraps the app shell and renders an accessible fallback (a `role="alert"` message + a retry/reload affordance), never a blank page or a raw stack trace.
 - **Route-level boundaries** isolate failures to the screen that broke (React Router `errorElement` per route / loader), so one feature crashing does not take down the whole app.
-- Async/data errors are the component's **error state** (@.claude/rules/component-contract.md), not the boundary — boundaries catch *render* crashes; expected API errors (`ApiError`, @.claude/rules/api-error-and-pagination.md) are handled in the UI with a retry.
+- Async/data errors are the component's **error state** (@.claude/rules/component-contract.md), not the boundary — boundaries catch _render_ crashes; expected API errors (`ApiError`, @.claude/rules/api-error-and-pagination.md) are handled in the UI with a retry.
 - The boundary reports the error to the logging sink (below) before showing the fallback.
 
 ## Logging & monitoring
@@ -18,7 +18,7 @@ Tests prove the app is correct at build time; **observability** is how we know i
 
 ## No PII / no secrets in telemetry (hard rule)
 
-- **Never log tokens, passwords, auth headers, cookies, or full request bodies.** Scrub `Authorization`, `Cookie`, and known sensitive fields in a `beforeSend` hook before anything leaves the browser (ties to @.claude/rules/auth.md — tokens never touch web storage *or* logs).
+- **Never log tokens, passwords, auth headers, cookies, or full request bodies.** Scrub `Authorization`, `Cookie`, and known sensitive fields in a `beforeSend` hook before anything leaves the browser (ties to @.claude/rules/auth.md — tokens never touch web storage _or_ logs).
 - **Never put PII in event messages or breadcrumbs** (emails, names, addresses). Log stable ids and error codes, not user content.
 - Console noise is not telemetry — production builds strip debug `console.*`; real signal goes through the reporting client.
 

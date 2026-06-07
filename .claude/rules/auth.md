@@ -29,12 +29,12 @@ Route guards (`src/app/guards/`) observe `accessToken` from `useAuthStore` and r
 
 ## User-flow endpoints
 
-| Method + path | Security | Purpose |
-|---|---|---|
-| `POST /api/v1/auth/register` | public | create account (optional initial tokens) |
-| `POST /api/v1/auth/login` | public | credentials → TokenPair stored in authStore |
-| `POST /api/v1/auth/refresh` | public | refresh token → new access token (handled by middleware) |
-| `POST /api/v1/auth/logout` | Bearer | revoke refresh token, clear store |
+| Method + path                | Security | Purpose                                                  |
+| ---------------------------- | -------- | -------------------------------------------------------- |
+| `POST /api/v1/auth/register` | public   | create account (optional initial tokens)                 |
+| `POST /api/v1/auth/login`    | public   | credentials → TokenPair stored in authStore              |
+| `POST /api/v1/auth/refresh`  | public   | refresh token → new access token (handled by middleware) |
+| `POST /api/v1/auth/logout`   | Bearer   | revoke refresh token, clear store                        |
 
 ## Service-flow (out of scope for frontend)
 

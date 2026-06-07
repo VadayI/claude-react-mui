@@ -9,7 +9,7 @@
 - Prefer composition over configuration; lift state only as far as needed.
 - No "magic values" — colors/spacing/typography come from the theme (@.claude/rules/component-contract.md); other literals become named constants/enums.
 - Secrets/config only via Vite env (`import.meta.env.VITE_*`), never hardcoded; nothing secret in `VITE_` that must stay private (all `VITE_` vars ship to the client).
-- **Every exported component, hook, store, and non-trivial function has a TSDoc comment** — see *TSDoc* below.
+- **Every exported component, hook, store, and non-trivial function has a TSDoc comment** — see _TSDoc_ below.
 - **Every feature has a `README.md`** at `src/features/<feature>/README.md` — see @.claude/rules/feature-readme.md.
 
 ## TSDoc (mandatory for the public surface)
@@ -43,6 +43,6 @@ No source file in `src/` may exceed **400 lines** (React files should be small; 
 
 ## General
 
-- Comments explain *why*, not *what* (names + TSDoc carry *what*).
+- Comments explain _why_, not _what_ (names + TSDoc carry _what_).
 - Small functions/components with a single responsibility.
 - Conventional commits (see @.claude/rules/git-operations.md).

@@ -34,9 +34,7 @@ export async function login(credentials: LoginRequest): Promise<TokenPair> {
   })
   if (!resp.ok) {
     const body = await resp.json().catch(() => null)
-    throw new Error(
-      (body as { detail?: string })?.detail ?? `Login failed (${resp.status})`,
-    )
+    throw new Error((body as { detail?: string })?.detail ?? `Login failed (${resp.status})`)
   }
   const tokens = (await resp.json()) as TokenPair
   useAuthStore.getState().setTokens(tokens.access, tokens.refresh)
@@ -80,9 +78,7 @@ export async function register(credentials: RegisterRequest): Promise<RegisterRe
   })
   if (!resp.ok) {
     const body = await resp.json().catch(() => null)
-    throw new Error(
-      (body as { detail?: string })?.detail ?? `Register failed (${resp.status})`,
-    )
+    throw new Error((body as { detail?: string })?.detail ?? `Register failed (${resp.status})`)
   }
   const result = (await resp.json()) as RegisterResponse
   // Store tokens if the backend issues them on registration (optional per contract)

@@ -24,13 +24,16 @@ On-demand workflow auditor. I read the **command log** (`.claude/memory/command-
 ## Inputs
 
 **Command log** (one JSON object per line):
+
 ```json
-{"ts":"2026-05-27T14:23:11+00:00","cmd":"/preflight","args":""}
+{ "ts": "2026-05-27T14:23:11+00:00", "cmd": "/preflight", "args": "" }
 ```
+
 - If the file is missing, the project hasn't been bootstrapped → suggest `/bootstrap`.
 - For each command, take the most recent invocation.
 
 **Live state** (read-only commands):
+
 ```bash
 git status -sb                               # branch, dirty tree
 git branch --show-current                    # current branch
@@ -55,7 +58,7 @@ test -f docs/HANDOFF.md && {
 ## Suggestion rules (apply in order; the first match is the primary suggestion)
 
 1. **Project not initialized** (no `.claude/memory/`, no `src/`) → `/bootstrap`.
-1a. **`docs/HANDOFF.md` has a concrete `## Next steps`** (a sentence naming a command like `/preflight`, `/fix-ci`, `/review-pr`, `/create-pr`, OR a verb-led instruction not consisting of `{TODO}`) → use it verbatim as the primary suggestion. Rationale: the previous session already decided what comes next; surface that decision before re-deriving one from probes. If the Next steps are `{TODO}` placeholders, skip this rule and fall through to the probe-based ladder.
+   1a. **`docs/HANDOFF.md` has a concrete `## Next steps`** (a sentence naming a command like `/preflight`, `/fix-ci`, `/review-pr`, `/create-pr`, OR a verb-led instruction not consisting of `{TODO}`) → use it verbatim as the primary suggestion. Rationale: the previous session already decided what comes next; surface that decision before re-deriving one from probes. If the Next steps are `{TODO}` placeholders, skip this rule and fall through to the probe-based ladder.
 2. **On `main` with uncommitted changes** → "switch to a feature branch first; never commit on `main`".
 3. **`main` not protected on GitHub** → `gh api -X PUT ...` (and recommend doing it via the UI).
 4. **CI red on the current PR** → `/fix-ci <PR>`.

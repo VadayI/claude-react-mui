@@ -25,24 +25,29 @@ On-demand deep accessibility audit. I go beyond the automated `jest-axe` checks 
 ## Audit scope
 
 **Automated**
+
 - Run `@axe-core/playwright` against all key pages on the running dev server.
 - Check color contrast with axe contrast rule (≥ 4.5:1 normal text, ≥ 3:1 large text).
 
 **Keyboard navigation**
+
 - Tab order follows visual/logical flow; no keyboard traps (except intentional modals).
 - All interactive elements reachable and operable via keyboard alone.
 - Focus visible on all focused elements (`:focus-visible` not suppressed globally).
 
 **Screen-reader semantics**
+
 - Page has `<main>`, `<nav>`, `<header>` landmarks.
 - Form fields have associated `<label>` or `aria-label`.
 - Errors announced via `aria-live="polite"` or `role="alert"`.
 - Images have meaningful `alt` text; decorative images use `alt=""`.
 
 **Motion / reduced motion**
+
 - Animations respect `prefers-reduced-motion: reduce`.
 
 **Forms**
+
 - Error messages reference the field via `aria-describedby`.
 - Required fields marked `aria-required="true"`.
 

@@ -16,7 +16,7 @@ Repeat in small steps. One test → a bit of code → green → refactor.
 
 ## Double-loop TDD — outside-in at the UI boundary
 
-This is our adaptation of Harry Percival's *Obey the Testing Goat* double-loop to a React SPA. We keep his discipline — test-first, Red-Green-Refactor, minimal code, **test behavior not implementation** — and we keep his **outer loop as a real user-facing functional test**. For a React app the user-facing boundary is the **rendered UI driven through the browser**, so:
+This is our adaptation of Harry Percival's _Obey the Testing Goat_ double-loop to a React SPA. We keep his discipline — test-first, Red-Green-Refactor, minimal code, **test behavior not implementation** — and we keep his **outer loop as a real user-facing functional test**. For a React app the user-facing boundary is the **rendered UI driven through the browser**, so:
 
 - **Outer loop (acceptance / functional / E2E):** a failing **Playwright** test that drives the real app in a browser as a user would — navigates a route, types, clicks, and asserts on what the user sees. The network is stubbed at the boundary (Playwright route interception or a running MSW worker) so the test is deterministic and does not need the live backend. It goes green only when the whole vertical slice works end to end: routing, data fetching, rendering, the success state, and the error/empty states.
 - **Inner loop (unit / component):** fast RED → GREEN → REFACTOR cycles with **Vitest + React Testing Library**, mocking the network with **MSW** (Mock Service Worker). These cover a single component's states, a custom hook's behavior, a Zustand store's transitions, a mapper in the API layer, and validation logic — the small steps that make the outer Playwright test pass.
@@ -32,12 +32,13 @@ React Testing Library exists to make you test what the user experiences, not how
 - **Query the way a user (or assistive tech) finds things:** `getByRole`, `getByLabelText`, `getByText`, `getByPlaceholderText`. Reserve `getByTestId` for the rare case with no accessible handle.
 - **Never assert on:** component internal state, a hook's variable names, CSS class names, the number of renders, or which child component was called. These are implementation; they change on refactor and give false failures.
 - **Interact like a user:** drive events with `@testing-library/user-event` (real focus/keyboard/click sequencing), not by calling handlers directly.
-- **Async UI:** wait for the *result the user sees* with `findBy*` / `waitFor` — never `setTimeout`. Assert the spinner appears, then the data row appears, then the spinner is gone.
+- **Async UI:** wait for the _result the user sees_ with `findBy*` / `waitFor` — never `setTimeout`. Assert the spinner appears, then the data row appears, then the spinner is gone.
 - A test that has to import internals to work is testing the wrong thing — rewrite it against the rendered output.
 
 ## What to test / what to skip
 
 **Always test:**
+
 - every interactive component: its loading, success, **empty**, and **error** states (the four states are mandatory for anything that fetches);
 - form validation (invalid input → visible error, submit disabled/enabled), and successful submit (the mutation fires with the right payload);
 - custom hooks (`use*`) and Zustand stores — their transitions and edge cases;
@@ -47,8 +48,9 @@ React Testing Library exists to make you test what the user experiences, not how
 - a Playwright happy-path journey per feature, plus the primary error path.
 
 **Can skip:**
+
 - purely presentational components with no logic and no branching (a styled wrapper) — though an a11y smoke test is cheap and encouraged;
-- third-party library internals (MUI, Router, Query) — test *your* usage, not their code;
+- third-party library internals (MUI, Router, Query) — test _your_ usage, not their code;
 - exact pixel layout (that is visual-regression territory for `qa`, not unit tests).
 
 ## Triangulation

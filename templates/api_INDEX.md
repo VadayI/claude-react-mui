@@ -13,12 +13,12 @@
 
 ## Consumed endpoints
 
-| Method | Path | Consumed by (feature) | Notes |
-|---|---|---|---|
-| `GET` | `/api/v1/{resource}/` | `{feature}` | {TODO: e.g. paginated list, supports ?search=} |
-| `POST` | `/api/v1/{resource}/` | `{feature}` | {TODO: e.g. creates resource, returns 201} |
-| `GET` | `/api/v1/{resource}/{id}/` | `{feature}` | {TODO} |
-| `PATCH` | `/api/v1/{resource}/{id}/` | `{feature}` | {TODO} |
-| `DELETE` | `/api/v1/{resource}/{id}/` | `{feature}` | {TODO: returns 204} |
+| Method   | Path                       | Consumed by (feature) | Notes                                          |
+| -------- | -------------------------- | --------------------- | ---------------------------------------------- |
+| `GET`    | `/api/v1/{resource}/`      | `{feature}`           | {TODO: e.g. paginated list, supports ?search=} |
+| `POST`   | `/api/v1/{resource}/`      | `{feature}`           | {TODO: e.g. creates resource, returns 201}     |
+| `GET`    | `/api/v1/{resource}/{id}/` | `{feature}`           | {TODO}                                         |
+| `PATCH`  | `/api/v1/{resource}/{id}/` | `{feature}`           | {TODO}                                         |
+| `DELETE` | `/api/v1/{resource}/{id}/` | `{feature}`           | {TODO: returns 204}                            |
 
 > Remove the example rows above and replace with real entries as features are built. Do not list endpoints the frontend does not actually call.

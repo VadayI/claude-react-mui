@@ -8,23 +8,23 @@
 
 ## Routes
 
-| Path | Component (page) | Auth required | Notes |
-|---|---|---|---|
-| `{TODO}` | `{TODO}` | {TODO: yes/no/role} | |
+| Path     | Component (page) | Auth required       | Notes |
+| -------- | ---------------- | ------------------- | ----- |
+| `{TODO}` | `{TODO}`         | {TODO: yes/no/role} |       |
 
 ## Components
 
 ### Container components (connected to query/store)
 
 | Component | Responsibility |
-|---|---|
-| `{TODO}` | {TODO} |
+| --------- | -------------- |
+| `{TODO}`  | {TODO}         |
 
 ### Presentational components (props-only)
 
 | Component | Responsibility |
-|---|---|
-| `{TODO}` | {TODO} |
+| --------- | -------------- |
+| `{TODO}`  | {TODO}         |
 
 ## Hooks & state
 
@@ -40,6 +40,7 @@ export const {featureName}Keys = {
 ```
 
 Invalidation triggers:
+
 - {TODO: e.g. After POST /api/v1/resource/ → invalidate `{featureName}Keys.list()`}
 
 ### Zustand store (client state only)
@@ -50,18 +51,18 @@ Invalidation triggers:
 
 The canonical contract is `src/lib/api/openapi.yml`. This table is the human index.
 
-| Method | Path | Purpose | Auth | Key statuses |
-|---|---|---|---|---|
-| {TODO} | {TODO} | {TODO} | {TODO} | {TODO} |
+| Method | Path   | Purpose | Auth   | Key statuses |
+| ------ | ------ | ------- | ------ | ------------ |
+| {TODO} | {TODO} | {TODO}  | {TODO} | {TODO}       |
 
 ## UI states
 
-| State | How triggered | How handled |
-|---|---|---|
-| Loading | Query `isLoading` | Skeleton / spinner |
-| Empty | Query returns `[]` or `null` | Empty-state illustration + CTA |
-| Error | Query `isError` | Error boundary or inline error message |
-| Success | Query `data` populated | Normal render |
+| State   | How triggered                | How handled                            |
+| ------- | ---------------------------- | -------------------------------------- |
+| Loading | Query `isLoading`            | Skeleton / spinner                     |
+| Empty   | Query returns `[]` or `null` | Empty-state illustration + CTA         |
+| Error   | Query `isError`              | Error boundary or inline error message |
+| Success | Query `data` populated       | Normal render                          |
 
 {TODO: Add feature-specific states (e.g. optimistic update pending, form submitting).}
 
@@ -77,9 +78,9 @@ The canonical contract is `src/lib/api/openapi.yml`. This table is the human ind
 
 {TODO: Which other features does this one read state from or navigate to, and why?}
 
-| Depends on | Why |
-|---|---|
-| `{TODO}` | {TODO} |
+| Depends on | Why    |
+| ---------- | ------ |
+| `{TODO}`   | {TODO} |
 
 ## Decisions
 

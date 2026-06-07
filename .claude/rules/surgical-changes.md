@@ -34,8 +34,8 @@ code you write, surgicality governs the lines you touch.
 
 ## Relation to other rules
 
-- **Simplicity First** (@.claude/rules/code-style.md) decides *what code to write*; this rule
-  decides *which lines to touch*. Both must hold.
+- **Simplicity First** (@.claude/rules/code-style.md) decides _what code to write_; this rule
+  decides _which lines to touch_. Both must hold.
 - A deliberately deferred placeholder is still a `// STUB:` with a ledger row
   (@.claude/rules/no-stubs.md) — surgicality is not an excuse to leave silent debt.
 - Unrelated improvements you spot go to `docs/lessons.md` or a follow-up task, never into the

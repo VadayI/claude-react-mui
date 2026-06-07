@@ -26,7 +26,9 @@ export const router = createBrowserRouter([
         element: (
           <div style={{ padding: '2rem' }}>
             <h2>Welcome</h2>
-            <p>Navigate to <a href="/articles">/articles</a> to see the Articles feature.</p>
+            <p>
+              Navigate to <a href="/articles">/articles</a> to see the Articles feature.
+            </p>
           </div>
         ),
       },

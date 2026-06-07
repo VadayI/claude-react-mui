@@ -87,11 +87,7 @@ export function AddArticleForm({ onAdd, error, disabled = false }: AddArticleFor
         autoComplete="off"
       />
       <Box>
-        <Button
-          type="submit"
-          variant="contained"
-          disabled={isTitleBlank || disabled}
-        >
+        <Button type="submit" variant="contained" disabled={isTitleBlank || disabled}>
           Add Article
         </Button>
       </Box>

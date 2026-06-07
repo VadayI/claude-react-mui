@@ -117,11 +117,11 @@ Routes are defined centrally in `src/router/`. Protected routes render an auth g
 
 ### TanStack Query vs Zustand — when to use each
 
-| Concern | Tool |
-|---|---|
-| Server data (API responses, caching, background refetch) | TanStack Query |
-| Client-only UI state (sidebar open, selected tab, wizard step) | Zustand |
-| Auth tokens / session | Zustand (persisted to localStorage via middleware) |
+| Concern                                                        | Tool                                               |
+| -------------------------------------------------------------- | -------------------------------------------------- |
+| Server data (API responses, caching, background refetch)       | TanStack Query                                     |
+| Client-only UI state (sidebar open, selected tab, wizard step) | Zustand                                            |
+| Auth tokens / session                                          | Zustand (persisted to localStorage via middleware) |
 
 Never mirror server data into Zustand manually — let Query own the cache.
 

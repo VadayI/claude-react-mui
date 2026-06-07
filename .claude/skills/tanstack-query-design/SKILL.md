@@ -8,6 +8,7 @@ description: TanStack Query 5 patterns — query-key factories, mutations, inval
 References: `@.claude/rules/state-management.md`, `@.claude/rules/api-client.md`
 
 ## Core principle: server state vs client state
+
 - Query = **server state** (remote, async, may be stale): articles, users, comments
 - Zustand = **client state** (UI-only, synchronous): sidebar open, selected tab, draft form values
 - Never put server data in Zustand; never put UI-only state in Query cache
@@ -17,11 +18,11 @@ References: `@.claude/rules/state-management.md`, `@.claude/rules/api-client.md`
 ```ts
 // src/api/queryKeys.ts
 export const articleKeys = {
-  all:    ()                  => ['articles'] as const,
-  lists:  ()                  => [...articleKeys.all(), 'list'] as const,
-  list:   (filters: Filters)  => [...articleKeys.lists(), filters] as const,
-  detail: (id: string)        => [...articleKeys.all(), 'detail', id] as const,
-};
+  all: () => ['articles'] as const,
+  lists: () => [...articleKeys.all(), 'list'] as const,
+  list: (filters: Filters) => [...articleKeys.lists(), filters] as const,
+  detail: (id: string) => [...articleKeys.all(), 'detail', id] as const,
+}
 ```
 
 ## Query hooks
@@ -33,7 +34,7 @@ export function useArticles(filters: Filters) {
     queryKey: articleKeys.list(filters),
     queryFn: () => apiClient.GET('/api/v1/articles', { params: { query: filters } }),
     staleTime: 30_000,
-  });
+  })
 }
 ```
 
@@ -41,12 +42,11 @@ export function useArticles(filters: Filters) {
 
 ```ts
 export function useCreateArticle() {
-  const qc = useQueryClient();
+  const qc = useQueryClient()
   return useMutation({
     mutationFn: (body: NewArticle) => apiClient.POST('/api/v1/articles', { body }),
-    onSuccess: () =>
-      qc.invalidateQueries({ queryKey: articleKeys.lists() }), // lists only, not details
-  });
+    onSuccess: () => qc.invalidateQueries({ queryKey: articleKeys.lists() }), // lists only, not details
+  })
 }
 ```
 
@@ -54,18 +54,18 @@ export function useCreateArticle() {
 
 ```ts
 useMutation({
-  mutationFn: (patch: Partial<Article>) => apiClient.PATCH(`/api/v1/articles/${patch.id}`, { body: patch }),
+  mutationFn: (patch: Partial<Article>) =>
+    apiClient.PATCH(`/api/v1/articles/${patch.id}`, { body: patch }),
   onMutate: async (patch) => {
-    await qc.cancelQueries({ queryKey: articleKeys.detail(patch.id) });
-    const previous = qc.getQueryData(articleKeys.detail(patch.id));
-    qc.setQueryData(articleKeys.detail(patch.id), (old: Article) => ({ ...old, ...patch }));
-    return { previous };
+    await qc.cancelQueries({ queryKey: articleKeys.detail(patch.id) })
+    const previous = qc.getQueryData(articleKeys.detail(patch.id))
+    qc.setQueryData(articleKeys.detail(patch.id), (old: Article) => ({ ...old, ...patch }))
+    return { previous }
   },
-  onError: (_err, patch, ctx) =>
-    qc.setQueryData(articleKeys.detail(patch.id), ctx?.previous),
+  onError: (_err, patch, ctx) => qc.setQueryData(articleKeys.detail(patch.id), ctx?.previous),
   onSettled: (_data, _err, patch) =>
     qc.invalidateQueries({ queryKey: articleKeys.detail(patch.id) }),
-});
+})
 ```
 
 ## QueryClient defaults
@@ -80,7 +80,7 @@ const queryClient = new QueryClient({
       refetchOnWindowFocus: true,
     },
   },
-});
+})
 ```
 
 ## Suspense option
@@ -92,14 +92,18 @@ const { data } = useSuspenseQuery({ queryKey: articleKeys.detail(id), queryFn: .
 ```
 
 ## Error handling
+
 - `useQuery` returns `isError` + `error`; surface via `<ErrorBoundary>` with `throwOnError: true` or handle inline
 - Normalise API errors in the fetch client, not in every query hook (see `api-client-typing`)
 
 ## Devtools
+
 ```tsx
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 // Add inside <QueryClientProvider> in dev only
-{import.meta.env.DEV && <ReactQueryDevtools initialIsOpen={false} />}
+{
+  import.meta.env.DEV && <ReactQueryDevtools initialIsOpen={false} />
+}
 ```
 
 <!-- last reviewed: 2026-06-02 -->

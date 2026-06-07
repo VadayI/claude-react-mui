@@ -26,26 +26,32 @@ Phase 5 Quality Gate (parallel). I audit the frontend for security vulnerabiliti
 ## Audit checklist
 
 **XSS**
+
 - [ ] No `dangerouslySetInnerHTML` with user-supplied or API-supplied strings
 - [ ] No direct `innerHTML` assignments in effects or event handlers
 - [ ] All user-supplied content rendered as React text nodes (React escapes by default)
 
 **Auth token handling**
+
 - [ ] Tokens stored in `httpOnly` cookies (preferred) or memory — NOT in `localStorage` for sensitive tokens
 - [ ] No auth tokens logged to `console.*` or sent to analytics
 - [ ] Token refresh logic handles 401 uniformly via the API client interceptor
 
 **Environment variables**
+
 - [ ] `VITE_*` vars exposed to the browser contain no secrets (API keys, private tokens)
 - [ ] Private secrets (signing keys, webhook secrets) not present in the frontend repo at all
 
 **Dependencies**
+
 - [ ] `npm audit --audit-level=high` exits 0 (or exceptions documented)
 
 **Routing / redirects**
+
 - [ ] `redirect` targets validated against an allowlist; no `?next=<arbitrary-url>` patterns
 
 **Sensitive data in state/logs**
+
 - [ ] No PII or tokens in Zustand devtools-visible state
 - [ ] No sensitive API response fields stored longer than needed
 

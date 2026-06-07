@@ -26,6 +26,7 @@ On-demand refactoring agent. I improve performance, maintainability, and structu
 ## What I do
 
 **Re-render performance**
+
 1. Profile with React DevTools Profiler (or Vitest render-count assertions).
 2. Apply `React.memo` on stable presentational components (props don't change on parent re-render).
 3. Use `useMemo`/`useCallback` for expensive computations and stable callbacks — only with measurable benefit (premature memoization has a cost too).
@@ -33,13 +34,16 @@ On-demand refactoring agent. I improve performance, maintainability, and structu
 5. Move state down: if only a sub-tree needs a piece of state, localize it.
 
 **Hook extraction**
+
 - Extract repeated `useEffect` + `useState` patterns into named custom hooks in `src/features/<name>/hooks/`.
 
 **Component decomposition**
+
 - Split components over 400 lines following the same `views/` → `views/<sub>/` pattern.
 - Maintain stable public import paths via `index.ts` re-exports.
 
 **Bundle / code splitting**
+
 - `React.lazy` + `Suspense` for route-level components.
 - Dynamic `import()` for heavy third-party libraries.
 - Check `npm run build` output for unexpected large chunks.

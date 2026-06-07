@@ -8,13 +8,13 @@ Configured in `.mcp.json`, enabled in `.claude/settings.json`. Set the env vars 
 
 PR data and review automation. Prefer over scraping or `curl`.
 
-| Tool | When to use |
-|------|-------------|
-| `pull_request_read` | Read PR details (review, fix-ci) |
-| `list_pull_requests` | List open PRs |
-| `pull_request_review_write` | Create/submit a review |
-| `add_comment_to_pending_review` | Post inline review comments |
-| `create_pull_request` | Open a PR (`docs-writer` only) |
+| Tool                            | When to use                      |
+| ------------------------------- | -------------------------------- |
+| `pull_request_read`             | Read PR details (review, fix-ci) |
+| `list_pull_requests`            | List open PRs                    |
+| `pull_request_review_write`     | Create/submit a review           |
+| `add_comment_to_pending_review` | Post inline review comments      |
+| `create_pull_request`           | Open a PR (`docs-writer` only)   |
 
 For GitHub Actions data (run logs, job status) use the `gh` CLI (`gh run list/view`, `gh pr checks`), not the MCP.
 
@@ -22,10 +22,10 @@ For GitHub Actions data (run logs, job status) use the `gh` CLI (`gh run list/vi
 
 Up-to-date library docs. Use before implementing against APIs that may have changed.
 
-| Tool | When to use |
-|------|-------------|
-| `resolve-library-id` | Find the library id first |
-| `query-docs` | Current docs for React, MUI, TanStack Query, React Router, Vitest, Playwright |
+| Tool                 | When to use                                                                   |
+| -------------------- | ----------------------------------------------------------------------------- |
+| `resolve-library-id` | Find the library id first                                                     |
+| `query-docs`         | Current docs for React, MUI, TanStack Query, React Router, Vitest, Playwright |
 
 ## Notes
 

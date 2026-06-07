@@ -40,6 +40,7 @@ Phase 3 (RED) and phase 5 (REFACTOR-check) of the feature pipeline. I write test
 ## Workflow (REFACTOR-check phase)
 
 After `react-developer` goes GREEN:
+
 1. Confirm all tests pass: `npm run test:run && npm run e2e`.
 2. Confirm coverage is adequate: `npm run test:cov`.
 3. Check no tests are testing implementation (no snapshot tests of internal state, no spying on private functions).

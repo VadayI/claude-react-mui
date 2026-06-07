@@ -5,9 +5,7 @@
     "screen": "ArticlesListPage",
     "auth": "authenticated",
     "states": ["loading", "empty", "error", "success"],
-    "consumes": [
-      { "method": "GET", "path": "/api/v1/articles/" }
-    ],
+    "consumes": [{ "method": "GET", "path": "/api/v1/articles/" }],
     "notes": "Paginated list. Supports ?search= and ?ordering= query params."
   }
 ]

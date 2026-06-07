@@ -7,8 +7,8 @@
 
 ## Status
 
-| Step | State | Owner |
-|---|---|---|
+| Step      | State   | Owner   |
+| --------- | ------- | ------- |
 | 1. {step} | pending | {agent} |
 | 2. {step} | pending | {agent} |
 
@@ -37,7 +37,7 @@
 
 ## Execution log
 
-> Append-only. Short confirmations of execution facts as the work runs — e.g. "step N green (vitest)", "outer Playwright journey green", "routes recorded in routes.json", "gate: 1×🟡 → back to react-developer". Never edited retroactively. Distinct from `docs/WORKLOG.md` (cross-session chronicle, owned by `/wrap-up`); this log tracks the course of *one* task.
+> Append-only. Short confirmations of execution facts as the work runs — e.g. "step N green (vitest)", "outer Playwright journey green", "routes recorded in routes.json", "gate: 1×🟡 → back to react-developer". Never edited retroactively. Distinct from `docs/WORKLOG.md` (cross-session chronicle, owned by `/wrap-up`); this log tracks the course of _one_ task.
 
 - {DATE_ISO} — plan seeded.
 

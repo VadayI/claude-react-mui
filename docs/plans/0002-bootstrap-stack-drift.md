@@ -5,10 +5,10 @@
 
 ## Status
 
-| Step | State | Owner |
-|---|---|---|
+| Step                                             | State   | Owner        |
+| ------------------------------------------------ | ------- | ------------ |
 | 1. Узгодити версії в bootstrap.md з package.json | pending | orchestrator |
-| 2. Верифікація (grep + NUL=0) | pending | orchestrator |
+| 2. Верифікація (grep + NUL=0)                    | pending | orchestrator |
 
 ## Goal
 

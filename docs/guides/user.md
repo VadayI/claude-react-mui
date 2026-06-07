@@ -11,15 +11,18 @@ Open the app at its URL (in local development: `http://localhost:5173`). The sta
 ## Main flows
 
 **See your todos**
+
 1. Go to **Todos** (top navigation, or `/todos`).
 2. The list loads (you'll briefly see a loading indicator). If you have no todos yet, you'll see a friendly empty message instead of a blank screen.
 
 **Add a todo**
+
 1. On the Todos screen, type a title in the **"New todo"** field.
 2. Press **Enter** or click **Add**. The submit button stays disabled until the field has text.
 3. The new todo appears in the list.
 
 **Mark a todo complete**
+
 - Click (or focus and press Space) the checkbox on a todo row.
 
 ## Tips & recovery

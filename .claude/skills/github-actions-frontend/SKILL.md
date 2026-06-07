@@ -9,14 +9,14 @@ Reference: `@.claude/rules/node-commands.md`
 
 ## Job overview
 
-| Job | Runs | Blocks merge |
-|-----|------|-------------|
-| `install` | npm ci + cache | all others |
-| `typecheck` | tsc --noEmit | yes |
-| `lint` | eslint (incl. jsx-a11y) + prettier | yes |
-| `test` | vitest --coverage + gate scripts | yes |
-| `build` | vite build | yes |
-| `e2e` | playwright (all browser projects) | yes |
+| Job         | Runs                               | Blocks merge |
+| ----------- | ---------------------------------- | ------------ |
+| `install`   | npm ci + cache                     | all others   |
+| `typecheck` | tsc --noEmit                       | yes          |
+| `lint`      | eslint (incl. jsx-a11y) + prettier | yes          |
+| `test`      | vitest --coverage + gate scripts   | yes          |
+| `build`     | vite build                         | yes          |
+| `e2e`       | playwright (all browser projects)  | yes          |
 
 ## Representative workflow
 

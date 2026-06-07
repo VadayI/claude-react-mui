@@ -1,6 +1,6 @@
 # Testing policy (quick index)
 
-> **Source of truth:** the TDD loop, the full *what-to-test / what-to-skip* matrix, triangulation, and the tool set are defined in @.claude/rules/tdd.md. This file is the quick index for **where tests live** and **how a test is structured**. If anything here ever conflicts with `tdd.md`, **`tdd.md` wins**.
+> **Source of truth:** the TDD loop, the full _what-to-test / what-to-skip_ matrix, triangulation, and the tool set are defined in @.claude/rules/tdd.md. This file is the quick index for **where tests live** and **how a test is structured**. If anything here ever conflicts with `tdd.md`, **`tdd.md` wins**.
 
 ## Stack & locations
 

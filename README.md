@@ -23,7 +23,7 @@ This config is designed for **Claude Code CLI** (the terminal `claude` command) 
 
 ## The core idea — frontend TDD, double-loop
 
-The whole framework is built around one discipline, adapted from *Obey the Testing Goat* to a React SPA:
+The whole framework is built around one discipline, adapted from _Obey the Testing Goat_ to a React SPA:
 
 - **Outer loop** = a failing **Playwright** test that drives the real app in a browser like a user (navigate, type, click, assert what's on screen). The network is stubbed at the boundary so it's deterministic.
 - **Inner loop** = fast **Vitest + React Testing Library** tests, mocking the network with **MSW** so components and TanStack Query hooks run their real code paths — only the HTTP response is faked.
@@ -45,7 +45,7 @@ bash <(curl -fsSL https://raw.githubusercontent.com/VadayI/claude-react-mui/main
 # optional args:  install.sh [TARGET_DIR] [--ref GIT_REF] [--url FORK_URL] [--force]
 ```
 
-It seeds **only** the Claude config + the `/bootstrap` inputs (`.claude/`, `CLAUDE.md`, `.mcp.json`, `.gitignore`, `.gitattributes`, `scripts/`, `templates/`, the root `Makefile`, and `.github/workflows/`); the actual Vite+MUI app is scaffolded later by `/bootstrap` Mode A. To upgrade an *already-seeded* project use `/update-from-template` instead (it preserves your edits).
+It seeds **only** the Claude config + the `/bootstrap` inputs (`.claude/`, `CLAUDE.md`, `.mcp.json`, `.gitignore`, `.gitattributes`, `scripts/`, `templates/`, the root `Makefile`, and `.github/workflows/`); the actual Vite+MUI app is scaffolded later by `/bootstrap` Mode A. To upgrade an _already-seeded_ project use `/update-from-template` instead (it preserves your edits).
 
 **Manual equivalent** (what `install.sh` does, if you prefer to run it by hand):
 
@@ -109,14 +109,14 @@ ba → ui-architect → tester (RED) → react-developer (GREEN) → tester (REF
         → [Quality Gate: reviewer | security-scanner | state-architect] → docs-writer
 ```
 
-| Phase | Agent(s) | Output |
-|------|----------|--------|
-| 1. Requirements | `ba` | user stories, UX scope, the four UI states |
-| 2. UI contract | `ui-architect` | routes, component tree + props, consumed endpoints, query keys, a11y reqs; `routes.json` |
-| 3. RED | `tester` | failing Playwright journey + failing Vitest/RTL tests with MSW |
-| 4. GREEN | `react-developer` | code that greens the tests + lint/typecheck |
-| 5. Quality Gate (parallel) | `reviewer`, `security-scanner`, `state-architect` | independent reports |
-| 6. Docs | `docs-writer`, `guide-writer` | feature README, `docs/verify/<feature>.md`, guides, WORKLOG, PR |
+| Phase                      | Agent(s)                                          | Output                                                                                   |
+| -------------------------- | ------------------------------------------------- | ---------------------------------------------------------------------------------------- |
+| 1. Requirements            | `ba`                                              | user stories, UX scope, the four UI states                                               |
+| 2. UI contract             | `ui-architect`                                    | routes, component tree + props, consumed endpoints, query keys, a11y reqs; `routes.json` |
+| 3. RED                     | `tester`                                          | failing Playwright journey + failing Vitest/RTL tests with MSW                           |
+| 4. GREEN                   | `react-developer`                                 | code that greens the tests + lint/typecheck                                              |
+| 5. Quality Gate (parallel) | `reviewer`, `security-scanner`, `state-architect` | independent reports                                                                      |
+| 6. Docs                    | `docs-writer`, `guide-writer`                     | feature README, `docs/verify/<feature>.md`, guides, WORKLOG, PR                          |
 
 Full routing and the optional agents (`a11y-auditor`, `qa`, `integration-architect`, `react-refactoring-expert`, `code-structure-auditor`, `template-sync`, …) are in `.claude/rules/workflow.md` and `CLAUDE.md`.
 
