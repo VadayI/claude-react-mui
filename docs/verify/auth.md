@@ -28,6 +28,7 @@
 2. Navigate to `http://localhost:5173/login`.
 
 **Expected:** The login form renders with:
+
 - An **Email** text field (labelled "Email").
 - A **Password** text field (labelled "Password").
 - A **Sign in** submit button (enabled).
@@ -35,12 +36,12 @@
 
 ### The four states
 
-| State             | How to trigger                                                                                             | Expected                                                                                                           |
-| ----------------- | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| **Idle**          | Navigate to `/login` anonymously (see above)                                                               | Form rendered; all fields enabled; Sign in button active; no alert text                                            |
-| **Submitting**    | Fill in credentials and click **Sign in** (observe before MSW responds)                                    | Sign in button shows `disabled` + `aria-busy="true"`; fields remain editable                                       |
-| **Error**         | Enter any unrecognised email/password (MSW returns 401 for unknown credentials) and click **Sign in**      | `role="alert"` region announces the error message ("Invalid credentials." or similar); form stays interactive for retry |
-| **Redirect (auth)** | After a successful login, navigate back to `http://localhost:5173/login`                                 | Immediate redirect to `/` (or the last `?next` destination); login form is NOT shown                               |
+| State               | How to trigger                                                                                        | Expected                                                                                                                |
+| ------------------- | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| **Idle**            | Navigate to `/login` anonymously (see above)                                                          | Form rendered; all fields enabled; Sign in button active; no alert text                                                 |
+| **Submitting**      | Fill in credentials and click **Sign in** (observe before MSW responds)                               | Sign in button shows `disabled` + `aria-busy="true"`; fields remain editable                                            |
+| **Error**           | Enter any unrecognised email/password (MSW returns 401 for unknown credentials) and click **Sign in** | `role="alert"` region announces the error message ("Invalid credentials." or similar); form stays interactive for retry |
+| **Redirect (auth)** | After a successful login, navigate back to `http://localhost:5173/login`                              | Immediate redirect to `/` (or the last `?next` destination); login form is NOT shown                                    |
 
 ### Keyboard pass — login form
 
@@ -72,9 +73,9 @@ The login form is displayed. The `?next` param preserves the intended destinatio
 
 ### State (guard redirect)
 
-| State        | How to trigger                               | Expected                                                   |
-| ------------ | -------------------------------------------- | ---------------------------------------------------------- |
-| **Redirect** | Navigate to `/articles` without a token      | Redirected to `/login?next=%2Farticles`; login form shown  |
+| State        | How to trigger                          | Expected                                                  |
+| ------------ | --------------------------------------- | --------------------------------------------------------- |
+| **Redirect** | Navigate to `/articles` without a token | Redirected to `/login?next=%2Farticles`; login form shown |
 
 > The remaining four states for `/articles` (loading/success/empty/error) are covered by
 > `docs/verify/articles.md`. This guide focuses on the auth redirect entry-point.

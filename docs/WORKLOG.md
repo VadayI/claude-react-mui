@@ -544,12 +544,12 @@ Cross-machine work history. Updated at the end of every session (`/wrap-up`) and
 - Дослідити drift: чому `openapi-typescript` дає різний формат.
 - Наступна фіча — через стандартний пайплайн.
 
-
 ## 2026-06-09 — main — Сесія: hygiene + архітектурні рішення
 
 **Context:** Коротка hygiene-сесія після завершення ADR 0021. Ніяких нових фіч чи PR.
 
 **Done:**
+
 - Очищено 6 merged локальних гілок (`chore/contract-*`, `docs/contract-*`, `docs/anonymize-test-project`, `feat/auth-doctrine-and-contract-envelope`).
 - Вирішено 5 відкритих архітектурних питань із `docs/HANDOFF.md` (всі `[ ]` → `[x]`/`[~]`):
   1. `template-sync` — лишити additive-diff + surface-conflicts (не переходити на 3-way merge).
@@ -560,6 +560,7 @@ Cross-machine work history. Updated at the end of every session (`/wrap-up`) and
 - Коміт `3952357` pushed до `origin/main`.
 
 **Decisions:**
+
 - additive-diff у `template-sync` — обраний як безпечніший підхід без ризику затерти локальні кастомізації.
 - `/wrap-up` не авто-комітить — git-операції залишаються свідомими, з хост-шела.
 - SHA-пін на bootstrap — вирішено ТАК, але реалізація відкладена.
@@ -567,6 +568,7 @@ Cross-machine work history. Updated at the end of every session (`/wrap-up`) and
 **Status:** `main` — working tree clean (після пушу `3952357`). Контейнер не запущений (template repo).
 
 **Next steps:**
+
 - Реалізувати seed `.claude/memory/template-sync.json` у `/bootstrap` (вирішено вище).
 - `/doctor` — аудит середовища (відсутній у command-log > 14 днів).
 
