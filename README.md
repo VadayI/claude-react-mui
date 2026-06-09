@@ -92,7 +92,7 @@ Once the app is scaffolded:
 
 ```bash
 npm ci
-cp .env.example .env        # fill VITE_API_BASE_URL and VITE_OPENAPI_URL
+cp .env.example .env        # fill VITE_API_BASE_URL; set VITE_MSW_ENABLED=true to run against MSW mocks
 npm run api:pull            # pull the backend openapi.yml
 npm run api:types           # generate src/lib/api/schema.d.ts
 npm run dev                 # http://localhost:5173
@@ -125,7 +125,7 @@ Full routing and the optional agents (`a11y-auditor`, `qa`, `integration-archite
 ## Slash commands
 
 Environment & project: `/doctor`, `/bootstrap`, `/preflight`, `/synthesize-brief`, `/config-check`, `/plugins`, `/set-language`, `/handoff`, `/wrap-up`, `/audit`, `/update-from-template`.
-Feature & quality: `/verify`, `/guides`, `/review-pr`, `/security-check`, `/structure-audit`, `/simplify`, `/update-docs`, `/create-pr`, `/fix-ci`.
+Feature & quality: `/verify`, `/guides`, `/review-pr`, `/security-check`, `/a11y-audit`, `/structure-audit`, `/simplify`, `/update-docs`, `/create-pr`, `/fix-ci`.
 
 Defined in `.claude/commands/`.
 
