@@ -1,10 +1,10 @@
 # API errors & pagination contract (DRF, enforced)
 
-The DRF backend shapes errors and paginated lists predictably; the frontend normalizes them in **one place** so components never parse raw DRF payloads.
+The contract (`VadayI/claude-api-contract`) defines the error envelope (following DRF/RFC-9457 conventions); the `claude-django` backend implements it. The frontend normalizes errors in **one place** so components never parse raw payloads.
 
 ## Errors — one normalizer
 
-- The backend standardizes errors (recommend **`drf-standardized-errors`**, RFC-9457 style). The API client (@.claude/rules/api-client.md) maps every non-2xx into one typed `ApiError { status, code, detail, fieldErrors? }`.
+- The contract standardizes errors (RFC-9457 style, implemented by `drf-standardized-errors` in the backend). The API client (@.claude/rules/api-client.md) maps every non-2xx into one typed `ApiError { status, code, detail, fieldErrors? }`.
 - **Field (400) errors** map onto form fields via react-hook-form `setError` (@.claude/rules/forms-and-validation.md) — **not** a toast.
 - Non-field errors (401/403/404/409/5xx) surface as the component's **error state** (@.claude/rules/component-contract.md) with a retry affordance.
 
@@ -19,7 +19,7 @@ The DRF backend shapes errors and paginated lists predictably; the frontend norm
 
 ## Schema hygiene (so types stay clean)
 
-- The backend's drf-spectacular schema sets `ENABLE_LIST_MECHANICS_ON_NON_2XX = False` so error responses are not wrongly typed as paginated. `Page<T>` and error types trace to the schema (@.claude/rules/openapi-conventions.md), never hand-written.
+- The contract schema sets `ENABLE_LIST_MECHANICS_ON_NON_2XX = False` so error responses are not wrongly typed as paginated. `Page<T>` and error types trace to the schema (@.claude/rules/openapi-conventions.md), never hand-written.
 
 ## Binds these agents (rule is auto-loaded)
 

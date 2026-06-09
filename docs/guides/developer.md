@@ -2,7 +2,7 @@
 
 ## Overview
 
-A **frontend-only** React + MUI SPA (TypeScript, Vite) that consumes a separate backend's REST API. Server-state via TanStack Query, client-state via Zustand, tested with Vitest + React Testing Library + MSW (inner loop) and Playwright (outer loop).
+A **frontend-only** React + MUI SPA (TypeScript, Vite) that consumes the `VadayI/claude-api-contract` REST API schema. Both this frontend and the `claude-django` backend are consumers of that contract — neither generates the canon. Server-state via TanStack Query, client-state via Zustand, tested with Vitest + React Testing Library + MSW (inner loop) and Playwright (outer loop).
 
 ## Run it locally
 
@@ -10,8 +10,8 @@ Prerequisites: **Node 20.19+** on WSL2 / Linux / macOS.
 
 ```bash
 npm ci
-cp .env.example .env        # set VITE_API_BASE_URL and VITE_OPENAPI_URL
-npm run api:pull            # pull the backend openapi.yml (uses VITE_OPENAPI_URL)
+cp .env.example .env        # set VITE_API_BASE_URL and CONTRACT_VERSION
+npm run api:pull            # pull the contract openapi.yml from VadayI/claude-api-contract
 npm run api:types           # generate src/lib/api/schema.d.ts
 npm run dev                 # http://localhost:5173
 ```
@@ -27,7 +27,7 @@ npm run typecheck && npm run lint
 
 ## The API contract
 
-The backend's OpenAPI schema is the law. It lives at `src/lib/api/openapi.yml`; `npm run api:types` regenerates the typed `src/lib/api/schema.d.ts` (via `openapi-typescript`). `scripts/check_types_drift.sh` (in CI) fails if the committed types don't match the schema, so the UI can never silently drift from the API. Refresh with `npm run api:pull && npm run api:types`; a breaking change is an ADR + a coordinated migration. The full interactive contract is the backend's Swagger/Redoc.
+The `VadayI/claude-api-contract` schema is the law. It lives at `src/lib/api/openapi.yml` (vendored at the pinned `CONTRACT_VERSION` tag by `npm run api:pull`); `npm run api:types` regenerates the typed `src/lib/api/schema.d.ts` (via `openapi-typescript`). `scripts/check_types_drift.sh` (in CI) fails if the committed types don't match the schema, so the UI can never silently drift from the API. Refresh with `npm run api:pull && npm run api:types`; a breaking change is an ADR + a coordinated migration. The full contract lives in `VadayI/claude-api-contract`; `claude-django` exposes a Swagger UI at `/api/schema/swagger/` for convenience.
 
 ## Architecture
 
@@ -39,4 +39,4 @@ Through the pipeline: `ba` (stories) → `ui-architect` (route/component/props c
 
 ## Where to go next
 
-`docs/verify/` (manual smoke tests), `docs/decisions/` (ADRs), the backend repo (the API contract source).
+`docs/verify/` (manual smoke tests), `docs/decisions/` (ADRs), `VadayI/claude-api-contract` (the API contract source).

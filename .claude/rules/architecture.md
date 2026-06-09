@@ -2,12 +2,12 @@
 
 ## Contract-first, frontend-only
 
-This repo is the **frontend**. The REST API contract is owned by a separate backend repo and consumed here via a typed client generated from the backend's OpenAPI schema (@.claude/rules/api-client.md). The UI never invents endpoints; a missing endpoint is a backend task.
+This repo is the **frontend**. The REST API contract is authored in the external `VadayI/claude-api-contract` repository and consumed here via a typed client generated from it. Both this frontend and the `claude-django` backend are fellow consumers — neither generates the canon. See @.claude/rules/api-client.md. The UI never invents endpoints; a missing endpoint is a **contract-repo task** (`VadayI/claude-api-contract`), not a frontend fake.
 
 Order of work on a feature:
 
 1. The UI slice is built test-first: UI contract (routes/components/states) → outer Playwright test (RED) → inner Vitest/RTL tests with MSW (RED) → components/hooks/stores/client (GREEN) → docs.
-2. If the feature needs a new endpoint, that is flagged to the backend; the frontend codes against the schema once it exists (or a `// STUB:` + ledger entry while waiting, never a silent fake).
+2. If the feature needs a new endpoint, that is flagged to the contract repo; the frontend codes against the schema once it exists (or a `// STUB:` + ledger entry while waiting, never a silent fake).
 
 ## Project structure (feature-sliced)
 

@@ -41,7 +41,7 @@ Check and report each item (✅ / ❌ / ⚠️):
 8. **Required plugins** — check `.claude/settings.json` `enabledPlugins` against the baseline: `superpowers@superpowers-marketplace`, `engineering@knowledge-work-plugins`, `playwright@claude-plugins-official`, `github@claude-plugins-official`, `context7@claude-plugins-official`. Report missing plugins and paste-ready `/plugin install` commands.
 9. **GITHUB_PERSONAL_ACCESS_TOKEN** — `[ -n "$GITHUB_PERSONAL_ACCESS_TOKEN" ]`. Must be set. Never print the value. If missing, instruct the user to set it in their shell profile.
 10. **CONTEXT7_API_KEY** — `[ -n "$CONTEXT7_API_KEY" ]`. Must be set. Never print the value.
-11. **VITE_OPENAPI_URL** — `[ -n "$VITE_OPENAPI_URL" ]` (check `.env`). If absent, `npm run api:pull` cannot fetch the backend schema; note as ⚠️ (not a hard stop — offline work is allowed).
+11. **CONTRACT_VERSION** — check `.env` for `CONTRACT_VERSION` (the pinned tag for `VadayI/claude-api-contract`). If absent, `npm run api:pull` cannot fetch the contract schema; note as ⚠️ (not a hard stop — offline work is allowed). Also verify `contract.lock.json` matches the set version.
 12. **gh auth** — `gh auth status`. Must be authenticated. If `GITHUB_TOKEN`/`GITHUB_PERSONAL_ACCESS_TOKEN` is set, `gh auth login` will refuse to store separate creds — that is EXPECTED.
 13. **gh repo reachable** — `gh repo view` (infer owner/repo from `git remote get-url origin`). If 404/403, report credentials or repo-visibility issue.
 
@@ -81,4 +81,4 @@ List proposed fixes. Apply only those the user explicitly confirms. Never:
 
 Delegate deep infrastructure checks to `devops` if the environment is unusual.
 
-<!-- last reviewed: 2026-06-02 -->
+<!-- last reviewed: 2026-06-09 -->
