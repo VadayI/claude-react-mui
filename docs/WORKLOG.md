@@ -605,3 +605,139 @@ Cross-machine work history. Updated at the end of every session (`/wrap-up`) and
 
 - Наступна фіча — через стандартний пайплайн (`ba → ui-architect → ...`).
 - Розглянути `check_contract_sync.sh` виправлення (окремий PR або `.env.example` оновлення).
+
+## 2026-06-09d — feat/articles-route-guard
+
+### Done
+
+- **`/audit`** — виявлено 6 незакомічених файлів на `main`, false-green `typecheck` gate, відсутній route guard.
+- **`fix: typecheck → tsc -b`** (PR #25, змерджено) — root tsconfig мав `files:[]`, `tsc --noEmit` нічого не перевіряв. Замінено на `tsc -b` (project references). Однорядкова зміна.
+- **`feat(auth): RequireAuth guard + LoginPage`** (PR #26, відкрито) — повний pipeline:
+  - `ba`: виявлено відсутність `/login` маршруту та `LoginPage`; scope розширено до guard + мінімальна форма входу.
+  - `ui-architect`: контракт — `RequireAuth`, `LoginPage`, `LoginForm`, `useLogin`; схеми типів з `schema.d.ts`.
+  - `tester` RED: `LoginForm.schema.test.ts`, `LoginForm.test.tsx`, `RequireAuth.test.tsx`, `LoginPage.test.tsx`, `e2e/auth.spec.ts` — всі падали з "Cannot find module".
+  - `react-developer` GREEN: 5 нових файлів + `router.tsx` + `routes.json`; нові залежності: `react-hook-form`, `@hookform/resolvers`, `zod`.
+  - **Quality Gate**: знайдено 3 🔴 Critical — open redirect (`?next=` без валідації), сирий error cast в `useLogin`, умовний `role="alert"` (re-announcement gap). Всі виправлено.
+  - `docs-writer`: `src/features/auth/README.md`, `docs/verify/articles.md`, оновлено `src/features/articles/README.md`.
+- **schema.d.ts drift** — регенеровано перед wrap-up (`npm run api:types`).
+- Всього: 81 тест (13 файлів), усі зелені.
+
+### Gate status
+
+- typecheck: ✅ (`tsc -b` — реально перевіряє `src/`)
+- lint: ✅
+- tests: ✅ (81 passed, 13 test files)
+- types-drift: ✅ (регенеровано)
+- stubs: ✅
+- file-size: ✅
+- feature-readmes: ✅ (2 features: articles, auth)
+
+### Open items
+
+- PR #26 відкрито, не змерджено — потребує рев'ю.
+- `logout()` не викликає `queryClient.clear()` — pre-existing gap (shared-device scenario).
+- `check_contract_sync.sh` потребує `CONTRACT_VERSION=v0.2.0` у `.env` для локального проходження.
+- `schema.d.ts` drift (recurring) — `npm run` vs `npx` генерує різний формат; потребує дослідження.
+
+### Next steps
+
+- Змерджити PR #26 (route guard).
+- Розглянути `logout()` + `queryClient.clear()` (окремий PR).
+- Дослідити drift: чому `openapi-typescript` дає різний формат.
+- Наступна фіча — через стандартний пайплайн.
+
+
+## 2026-06-09 — main — Сесія: hygiene + архітектурні рішення
+
+**Context:** Коротка hygiene-сесія після завершення ADR 0021. Ніяких нових фіч чи PR.
+
+**Done:**
+- Очищено 6 merged локальних гілок (`chore/contract-*`, `docs/contract-*`, `docs/anonymize-test-project`, `feat/auth-doctrine-and-contract-envelope`).
+- Вирішено 5 відкритих архітектурних питань із `docs/HANDOFF.md` (всі `[ ]` → `[x]`/`[~]`):
+  1. `template-sync` — лишити additive-diff + surface-conflicts (не переходити на 3-way merge).
+  2. SHA-пін на `/bootstrap` — **ТАК**: seed `.claude/memory/template-sync.json` (реалізація — окрема задача).
+  3. rulesets vs classic branch protection — **classic як дефолт**; rulesets тільки при Public/Pro/Team.
+  4. `/wrap-up` auto-commit — **ні**: «propose, user commits» — поточна поведінка зберігається.
+  5. CI-гард живого плану — **відкладено** до ручної обкатки (поза скоупом v1).
+- Коміт `3952357` pushed до `origin/main`.
+
+**Decisions:**
+- additive-diff у `template-sync` — обраний як безпечніший підхід без ризику затерти локальні кастомізації.
+- `/wrap-up` не авто-комітить — git-операції залишаються свідомими, з хост-шела.
+- SHA-пін на bootstrap — вирішено ТАК, але реалізація відкладена.
+
+**Status:** `main` — working tree clean (після пушу `3952357`). Контейнер не запущений (template repo).
+
+**Next steps:**
+- Реалізувати seed `.claude/memory/template-sync.json` у `/bootstrap` (вирішено вище).
+- `/doctor` — аудит середовища (відсутній у command-log > 14 днів).
+
+## 2026-06-09 — docs/wrap-up-2026-06-09d (PR #27)
+
+### Done
+
+- **Розслідування `schema.d.ts` drift** — кореневу причину встановлено: working tree містив файл, згенерований не через `npm run api:types`. Після регенерації `check_types_drift.sh` проходить чисто. PR не потрібен.
+- **`fix(auth): queryClient.clear()` після logout** (`src/features/auth/authApi.ts`) — flush кешу TanStack Query при виході, щоб стали дані попереднього користувача не були видні на спільному пристрої.
+- **Тест для `queryClient.clear()`** (`src/features/auth/authApi.test.ts`) — spy на `queryClient.clear`, підтверджує виклик рівно 1 раз при успішному logout.
+- **`docs/verify/auth.md`** — новий файл верифікації: охоплює `/login` (всі 4 стани + keyboard) та `/articles` (RequireAuth redirect → login round-trip, Playwright).
+- **Fix E2E root cause** (`playwright.config.ts`) — `VITE_API_BASE_URL` не передавався у `webServer.env`, тому MSW реєстрував обробник як `'undefined/api/v1/auth/login'` → усі E2E API-запити йшли на `localhost:4010` (connection refused). Додано `VITE_API_BASE_URL: 'http://localhost:5173'`.
+- **Fix E2E articles** (`e2e/articles.spec.ts`) — додано `beforeEach` з login через MSW перед кожним тестом захищеного маршруту. 6 тестів тепер проходять.
+- **Fix a11y + E2E auth** (`src/features/auth/components/LoginPage.tsx`) — додано `<h1>Sign In` heading; `LoginPage.test.tsx` оновлено з відповідним assertion. Axe violations на `/login` усунено.
+- **Усі E2E зелені**: Quality Gates ✅ + E2E Tests ✅ на CI (PR #27).
+
+### Gate status
+
+- typecheck: ✅
+- lint: ✅
+- tests: ✅ (82 passed, 13 test files)
+- types-drift: ✅
+- stubs: ✅
+- file-size: ✅
+- feature-readmes: ✅ (2 features: articles, auth)
+
+### Open items
+
+- `check_contract_sync.sh` потребує `CONTRACT_VERSION=v0.2.0` у `.env` для локального проходження — задокументувати в `.env.example` або перевірити CI-конфіг.
+- `schema.d.ts` drift був відновлений вручну; варто задокументувати канонічну команду генерації у `README.md`.
+- E2E `beforeEach` login в `articles.spec.ts` використовує Playwright `page.route()` — тепер він стає dead code (MSW обробляє першим); можна спростити у наступному PR.
+
+### Next steps
+
+- Наступна фіча — через стандартний пайплайн (`ba → ui-architect → ...`).
+- Розглянути `check_contract_sync.sh` виправлення (окремий PR або `.env.example` оновлення).
+
+## 2026-06-09 — docs/wrap-up-2026-06-09e (PR #30)
+
+### Done
+
+- **`/audit`** × 2 — перевірка стану проекту; підтверджено що PR #28 потребував мержу.
+- **Мерж PR #28** (`docs/wrap-up-2026-06-09d`) — wrap-up попередньої сесії. Виявлено, що uncommitted файли були stale 9p inode cache (реальних змін не було).
+- **Перевірка сумісності `claude-react-mui` ↔ `claude-api-contract`** — аналіз нових релізів (v0.3.0, v0.4.0) контракту:
+  - v0.3.0 і v0.4.0 — template-релізи без openapi.yml у тезі → `api:pull` не можна пінувати на ці версії.
+  - API shape не змінився від v0.2.0 — пін залишається актуальним.
+  - Новий Docker/VPS Prism mock (`/ship-contract`) підтримується через наявний `VITE_API_BASE_URL`.
+- **`fix(docs)`: виправлено `api-error-and-pagination.md`** (PR #29, змержено) — прибрано хибні RFC-9457/drf-standardized-errors посилання; замінено на реальні схеми контракту (`ErrorDetail`, `ValidationErrors`, `FieldError`) з маппінгом на `ApiError`.
+- **Мерж PR #29** — злився чисто, CI ✅.
+- **`chore`: регенерація `schema.d.ts`** — вирівняно форматування під openapi-typescript 7.13.0 (double quotes + semicolons), `check_types_drift.sh` тепер проходить стабільно.
+
+### Gate status
+
+- typecheck: ✅
+- lint: ✅
+- tests: ✅ (82 passed, 13 test files)
+- types-drift: ✅ (після регенерації schema.d.ts)
+- stubs: ✅
+- file-size: ✅
+- feature-readmes: ✅ (2 features: articles, auth)
+
+### Open items
+
+- `check_contract_sync.sh` локально не проходить без `CONTRACT_VERSION=v0.2.0` в `.env` — задокументувати або автоматизувати.
+- v0.3.0/v0.4.0 тегів контракту не містять `openapi.yml` — попередити команду контракту або додати note у `api-client.md`.
+- `articles.spec.ts` — мертвий код `page.route()` у `beforeEach` (MSW обробляє першим); спростити окремим PR.
+- `schema.d.ts` потрібно регенерувати після кожного `api:pull` — команда `npm run api:types` задокументована у node-commands.md, але варто нагадати в README.
+
+### Next steps
+
+- Наступна фіча — через стандартний пайплайн (`ba → ui-architect → ...`).
+- Розглянути додавання note у `.claude/rules/api-client.md` про те, що v0.3.0+/v0.4.0+ тегів контракту не мають openapi.yml.
