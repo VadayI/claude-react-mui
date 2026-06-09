@@ -14,23 +14,23 @@ does **NOT** own registration, logout, or any other domain.
 
 ## Routes
 
-| Path     | Screen      | Auth                                                                   |
-| -------- | ----------- | ---------------------------------------------------------------------- |
+| Path     | Screen      | Auth                                                                    |
+| -------- | ----------- | ----------------------------------------------------------------------- |
 | `/login` | `LoginPage` | Anonymous (authenticated visitors are immediately redirected via ?next) |
 
 ## Components
 
-| Component     | Type           | Location                        | Description                                                                                           |
-| ------------- | -------------- | ------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| `LoginPage`   | Container      | `components/LoginPage.tsx`      | Reads `?next` param, checks auth store; on success stores tokens + navigates; on error surfaces alert |
-| `LoginForm`   | Presentational | `components/LoginForm.tsx`      | Email + password fields with RHF + Zod; `role="alert"` region for server errors (always rendered)     |
+| Component     | Type           | Location                         | Description                                                                                           |
+| ------------- | -------------- | -------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `LoginPage`   | Container      | `components/LoginPage.tsx`       | Reads `?next` param, checks auth store; on success stores tokens + navigates; on error surfaces alert |
+| `LoginForm`   | Presentational | `components/LoginForm.tsx`       | Email + password fields with RHF + Zod; `role="alert"` region for server errors (always rendered)     |
 | `RequireAuth` | Route guard    | `src/app/guards/RequireAuth.tsx` | Layout route; redirects anonymous users to `/login?next=<encoded-path>`                               |
 
 ## Hooks & State
 
-| Hook       | Type              | Description                                                                               |
-| ---------- | ----------------- | ----------------------------------------------------------------------------------------- |
-| `useLogin` | TanStack Mutation | `mutationFn → POST /api/v1/auth/login`; throws normalised `Error` on non-2xx             |
+| Hook       | Type              | Description                                                                  |
+| ---------- | ----------------- | ---------------------------------------------------------------------------- |
+| `useLogin` | TanStack Mutation | `mutationFn → POST /api/v1/auth/login`; throws normalised `Error` on non-2xx |
 
 Auth store (`useAuthStore`, `src/lib/auth/authStore.ts`):
 
@@ -40,21 +40,21 @@ Auth store (`useAuthStore`, `src/lib/auth/authStore.ts`):
 
 ## Consumed Endpoints
 
-| Method | Path                    | Notes                                     |
-| ------ | ----------------------- | ----------------------------------------- |
-| `POST` | `/api/v1/auth/login`    | Body: `LoginRequest`; returns `TokenPair` |
+| Method | Path                 | Notes                                     |
+| ------ | -------------------- | ----------------------------------------- |
+| `POST` | `/api/v1/auth/login` | Body: `LoginRequest`; returns `TokenPair` |
 
 Full schema in `src/lib/api/openapi.yml` (vendored from `VadayI/claude-api-contract@v0.2.0`).
 Generated types in `src/lib/api/schema.d.ts`.
 
 ## UI States
 
-| State       | Trigger                          | UI                                                                                    |
-| ----------- | -------------------------------- | ------------------------------------------------------------------------------------- |
-| Idle        | Page first loads (not authed)    | `LoginForm` rendered; all fields enabled; submit button active                        |
-| Submitting  | Mutation in flight               | Submit button `disabled` + `aria-busy="true"`; fields remain editable                |
-| Error       | Mutation settled with error      | `role="alert"` region announces the error message; form remains interactive for retry |
-| Redirect    | Already authenticated on arrival | Immediate `<Navigate to={sanitizeNext(next)} replace />` — no form shown              |
+| State      | Trigger                          | UI                                                                                    |
+| ---------- | -------------------------------- | ------------------------------------------------------------------------------------- |
+| Idle       | Page first loads (not authed)    | `LoginForm` rendered; all fields enabled; submit button active                        |
+| Submitting | Mutation in flight               | Submit button `disabled` + `aria-busy="true"`; fields remain editable                 |
+| Error      | Mutation settled with error      | `role="alert"` region announces the error message; form remains interactive for retry |
+| Redirect   | Already authenticated on arrival | Immediate `<Navigate to={sanitizeNext(next)} replace />` — no form shown              |
 
 ## Accessibility Notes
 

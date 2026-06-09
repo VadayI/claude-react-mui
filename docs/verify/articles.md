@@ -27,10 +27,10 @@ The login form is displayed. The `?next` param preserves the destination.
 
 ### Triggering the four states (guard path)
 
-| State    | How to trigger                                          | Expected                                          |
-| -------- | ------------------------------------------------------- | ------------------------------------------------- |
-| Redirect | Navigate to `/articles` without a token (see above)     | Redirected to `/login?next=%2Farticles`           |
-| (guarded — the remaining states only apply after login, see Screen 2) | | |
+| State                                                                 | How to trigger                                      | Expected                                |
+| --------------------------------------------------------------------- | --------------------------------------------------- | --------------------------------------- |
+| Redirect                                                              | Navigate to `/articles` without a token (see above) | Redirected to `/login?next=%2Farticles` |
+| (guarded — the remaining states only apply after login, see Screen 2) |                                                     |                                         |
 
 ### Keyboard pass (guard)
 
@@ -54,12 +54,12 @@ browser navigates to `/articles`. The articles list renders (loading → success
 
 ### Triggering the four states
 
-| State   | How to trigger                                                                                   | Expected                                                                              |
-| ------- | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------- |
-| Loading | Any slow-network condition or add a `delay` to the MSW `GET /api/v1/articles` handler           | `CircularProgress` with `aria-label="Loading articles"` visible; `role="status"` box  |
-| Success | MSW returns articles (default dev handler)                                                       | List of articles rendered; `AddArticleForm` visible                                   |
-| Empty   | Modify MSW handler to return `{ count: 0, results: [] }`                                         | Empty-state message in the article list                                               |
-| Error   | Modify MSW handler to return `{ status: 500 }`                                                   | MUI Alert with error message + Retry button                                           |
+| State   | How to trigger                                                                        | Expected                                                                             |
+| ------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| Loading | Any slow-network condition or add a `delay` to the MSW `GET /api/v1/articles` handler | `CircularProgress` with `aria-label="Loading articles"` visible; `role="status"` box |
+| Success | MSW returns articles (default dev handler)                                            | List of articles rendered; `AddArticleForm` visible                                  |
+| Empty   | Modify MSW handler to return `{ count: 0, results: [] }`                              | Empty-state message in the article list                                              |
+| Error   | Modify MSW handler to return `{ status: 500 }`                                        | MUI Alert with error message + Retry button                                          |
 
 ### Keyboard pass (articles)
 

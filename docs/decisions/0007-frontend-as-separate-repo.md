@@ -16,7 +16,6 @@ The backend framework (a Django/DRF service) is API-first and backend-only; its 
 - Breaking contract changes are versioned, coordinated events (ADR-worthy), not silent edits.
 - Mirror gate to the backend's OpenAPI drift gate — symmetry on both sides of the contract.
 
-
 ---
 
 ## Update (2026-06-09): Superseded in part by ADR 0020

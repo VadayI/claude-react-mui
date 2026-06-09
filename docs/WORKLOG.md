@@ -427,7 +427,6 @@ Cross-machine work history. Updated at the end of every session (`/wrap-up`) and
 - Реалізувати route guard для `/articles` (через пайплайн: ba → ui-architect → tester → react-developer).
 - Наступна фіча — через стандартний пайплайн.
 
-
 ## 2026-06-09c — wrap-up-2026-06-09c
 
 ### Done
@@ -463,4 +462,44 @@ Cross-machine work history. Updated at the end of every session (`/wrap-up`) and
 
 - Виправити `npm run typecheck` → `tsc -b` (однорядковий PR).
 - Route guard для `/articles` через пайплайн (ba → ui-architect → tester → react-developer).
+- Наступна фіча — через стандартний пайплайн.
+
+## 2026-06-09d — feat/articles-route-guard
+
+### Done
+
+- **`/audit`** — виявлено 6 незакомічених файлів на `main`, false-green `typecheck` gate, відсутній route guard.
+- **`fix: typecheck → tsc -b`** (PR #25, змерджено) — root tsconfig мав `files:[]`, `tsc --noEmit` нічого не перевіряв. Замінено на `tsc -b` (project references). Однорядкова зміна.
+- **`feat(auth): RequireAuth guard + LoginPage`** (PR #26, відкрито) — повний pipeline:
+  - `ba`: виявлено відсутність `/login` маршруту та `LoginPage`; scope розширено до guard + мінімальна форма входу.
+  - `ui-architect`: контракт — `RequireAuth`, `LoginPage`, `LoginForm`, `useLogin`; схеми типів з `schema.d.ts`.
+  - `tester` RED: `LoginForm.schema.test.ts`, `LoginForm.test.tsx`, `RequireAuth.test.tsx`, `LoginPage.test.tsx`, `e2e/auth.spec.ts` — всі падали з "Cannot find module".
+  - `react-developer` GREEN: 5 нових файлів + `router.tsx` + `routes.json`; нові залежності: `react-hook-form`, `@hookform/resolvers`, `zod`.
+  - **Quality Gate**: знайдено 3 🔴 Critical — open redirect (`?next=` без валідації), сирий error cast в `useLogin`, умовний `role="alert"` (re-announcement gap). Всі виправлено.
+  - `docs-writer`: `src/features/auth/README.md`, `docs/verify/articles.md`, оновлено `src/features/articles/README.md`.
+- **schema.d.ts drift** — регенеровано перед wrap-up (`npm run api:types`).
+- Всього: 81 тест (13 файлів), усі зелені.
+
+### Gate status
+
+- typecheck: ✅ (`tsc -b` — реально перевіряє `src/`)
+- lint: ✅
+- tests: ✅ (81 passed, 13 test files)
+- types-drift: ✅ (регенеровано)
+- stubs: ✅
+- file-size: ✅
+- feature-readmes: ✅ (2 features: articles, auth)
+
+### Open items
+
+- PR #26 відкрито, не змерджено — потребує рев'ю.
+- `logout()` не викликає `queryClient.clear()` — pre-existing gap (shared-device scenario).
+- `check_contract_sync.sh` потребує `CONTRACT_VERSION=v0.2.0` у `.env` для локального проходження.
+- `schema.d.ts` drift (recurring) — `npm run` vs `npx` генерує різний формат; потребує дослідження.
+
+### Next steps
+
+- Змерджити PR #26 (route guard).
+- Розглянути `logout()` + `queryClient.clear()` (окремий PR).
+- Дослідити drift: чому `openapi-typescript` дає різний формат.
 - Наступна фіча — через стандартний пайплайн.
