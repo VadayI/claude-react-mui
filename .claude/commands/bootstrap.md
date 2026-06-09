@@ -86,7 +86,7 @@ src/
   lib/
     api/
       client.ts       # axios/fetch wrapper, base URL from env
-      types.ts        # re-export from generated openapi-typescript types
+      schema.d.ts     # generated TypeScript types from openapi-typescript
     query/
       client.ts       # TanStack QueryClient singleton
   store/
