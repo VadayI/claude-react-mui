@@ -4,6 +4,79 @@ Cross-machine work history. Updated at the end of every session (`/wrap-up`) and
 
 ---
 
+## 2026-06-09 — runtime-api-target-switch
+
+### Done
+
+- Відновлено перервану сесію: гілка `feat/runtime-api-target-switch` була в RED-фазі (два тестові файли без реалізації).
+- **PR #19** — runtime API target switch (merged): новий `src/mocks/enableMocking.ts` (guard `VITE_MSW_ENABLED === 'true'`, без DEV-auto-start); `handlers.ts` читає origin з `VITE_API_BASE_URL`; `vitest.config.ts` тест-URL → `http://test.local`; `.env.example` документує `VITE_MSW_ENABLED`. Виправлено 4 pre-existing тести з хардкодом `:8000`. +7 нових тестів (54 total). Quality Gate ✅.
+- Виявлено і виправлено **pre-existing баг**: `authApi.test.ts` передавав `username` замість контрактного `email` — TS2353, не ловилося `npm run typecheck` (кореневий tsconfig `"files": []` — no-op), ловив CI `tsc -b`.
+- **README аудит + фікс**: `VITE_OPENAPI_URL` → `VITE_API_BASE_URL; VITE_MSW_ENABLED=true for MSW`; додано `/a11y-audit` у список команд.
+- **`schema.d.ts`** регенеровано (drift gate зелений).
+
+### Gate status
+
+- typecheck (root, `npm run typecheck`): ✅ (але no-op — окремий fix)
+- typecheck (app, `tsc -p tsconfig.app.json`): ✅
+- lint: ✅
+- tests: ✅ (54 passed, 9 test files)
+- types-drift: ✅
+- stubs: ✅
+- file-size: ✅
+- feature-readmes: ✅
+
+### Open items
+
+- `npm run typecheck` не перевіряє app-проєкт (кореневий tsconfig `"files": []`). Замінити на `tsc -b`. Окремий PR.
+- E2E a11y: `MuiCircularProgress` у loading-стані `ArticlesPage` без `aria-label` → `aria-progressbar-name` (WCAG 2.1 AA). Pre-existing. Окремий PR.
+- Route guard для `/articles`: `routes.json` → `auth: authenticated`, `router.tsx` не захищає маршрут.
+- `logout()` не викликає `queryClient.clear()` — pre-existing gap.
+
+### Next steps
+
+- Виправити `npm run typecheck` → `tsc -b`.
+- Додати `aria-label` до loading spinner у `ArticlesPage`.
+- Реалізувати route guard для `/articles` через pipeline.
+
+---
+
+## 2026-06-09 — runtime-api-target-switch
+
+### Done
+
+- Відновлено перервану сесію: гілка `feat/runtime-api-target-switch` була в RED-фазі (два тестові файли без реалізації).
+- **PR #19** — runtime API target switch: новий `src/mocks/enableMocking.ts` (guard `VITE_MSW_ENABLED === true`, без DEV-auto-start); `handlers.ts` читає origin з `VITE_API_BASE_URL` замість хардкоду `:8000`; `vitest.config.ts` тест-URL → `http://test.local` (справжній RED для handlers-тестів); `.env.example` документує `VITE_MSW_ENABLED`. +7 нових тестів (54 total). Quality Gate ✅. Змерджено.
+- Виявлено і виправлено **pre-existing баг**: `authApi.test.ts` передавав `username` замість контрактного `email` у login/register — TypeScript TS2353. Не ловилося локально: `npm run typecheck` = `tsc --noEmit` проти кореневого `tsconfig.json` з `"files": []` (no-op); ловив CI `tsc -b` через `tsconfig.app.json`.
+- **README аудит + фікс**: `VITE_OPENAPI_URL` (неіснуюча змінна) → `VITE_API_BASE_URL; VITE_MSW_ENABLED=true for MSW`; додано `/a11y-audit` у список команд.
+- **`schema.d.ts`** регенеровано (drift gate зелений).
+
+### Gate status
+
+- typecheck (root, `npm run typecheck`): ✅ (але фактично no-op — окремий fix)
+- typecheck (app, `tsc -p tsconfig.app.json --noEmit`): ✅
+- lint: ✅
+- tests: ✅ (54 passed, 9 test files)
+- types-drift: ✅
+- stubs: ✅
+- file-size: ✅
+- feature-readmes: ✅
+
+### Open items
+
+- `npm run typecheck` не перевіряє app-проєкт (кореневий tsconfig `"files": []`). Замінити скрипт на `tsc -b`. Окремий PR.
+- E2E a11y: `MuiCircularProgress` у loading-стані `ArticlesPage` не має `aria-label` → порушення `aria-progressbar-name` (WCAG 2.1 AA). Pre-existing. Окремий PR.
+- Route guard для `/articles`: `routes.json` → `auth: authenticated`, `router.tsx` не захищає маршрут.
+- `logout()` не викликає `queryClient.clear()` — pre-existing gap.
+
+### Next steps
+
+- Виправити `npm run typecheck` → `tsc -b`.
+- Додати `aria-label` до loading spinner у `ArticlesPage`.
+- Реалізувати route guard для `/articles` через pipeline.
+
+---
+
+
 ### 2026-06-05 — Wire MSW browser worker for E2E (fix failing E2E check)
 
 **Why** — PR #4's E2E check failed; root cause was pre-existing, not the audit: the Playwright suite assumed MSW mocked the backend in CI, but the **browser** MSW worker was never wired (only the Node server for Vitest existed). `main.tsx` had no worker bootstrap, `src/mocks/browser.ts` and `public/mockServiceWorker.js` were missing, and `VITE_MSW_ENABLED` was referenced nowhere. So `/todos` hit the real `http://localhost:8000` → no data → the `networkidle`/axe test timed out (~1 min).
