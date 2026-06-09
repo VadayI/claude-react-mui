@@ -82,9 +82,10 @@ describe('LoginPage', () => {
   })
 
   describe('when anonymous', () => {
-    it('renders the login form with email and password fields', () => {
+    it('renders the login form with heading, email and password fields', () => {
       const router = buildRouter('/login')
       renderRouter(router)
+      expect(screen.getByRole('heading', { name: /sign in/i })).toBeInTheDocument()
       expect(screen.getByLabelText(/email/i)).toBeInTheDocument()
       expect(screen.getByLabelText(/password/i)).toBeInTheDocument()
       expect(screen.getByRole('button', { name: /sign in/i })).toBeInTheDocument()
