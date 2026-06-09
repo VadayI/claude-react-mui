@@ -25,7 +25,7 @@ describe('login', () => {
       ),
     )
 
-    await login({ username: 'alice', password: 'secret' })
+    await login({ email: 'alice@example.com', password: 'secret' })
 
     const { accessToken, refreshToken } = useAuthStore.getState()
     expect(accessToken).toBe('acc-tok')
@@ -39,7 +39,7 @@ describe('login', () => {
       ),
     )
 
-    await expect(login({ username: 'x', password: 'bad' })).rejects.toThrow()
+    await expect(login({ email: 'x@example.com', password: 'bad' })).rejects.toThrow()
   })
 })
 
@@ -69,7 +69,7 @@ describe('register', () => {
       ),
     )
 
-    await register({ username: 'bob', password: 'pw123', email: 'bob@example.com' })
+    await register({ email: 'bob@example.com', password: 'pw123' })
 
     const { accessToken, refreshToken } = useAuthStore.getState()
     expect(accessToken).toBe('new-acc')
@@ -85,7 +85,7 @@ describe('register', () => {
       ),
     )
 
-    await register({ username: 'carol', password: 'pw', email: 'carol@example.com' })
+    await register({ email: 'carol@example.com', password: 'pw' })
 
     const { accessToken } = useAuthStore.getState()
     expect(accessToken).toBeNull()
