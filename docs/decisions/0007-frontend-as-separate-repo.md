@@ -15,3 +15,10 @@ The backend framework (a Django/DRF service) is API-first and backend-only; its 
 - Backend and frontend evolve and deploy independently; the contract couples them, not a shared build.
 - Breaking contract changes are versioned, coordinated events (ADR-worthy), not silent edits.
 - Mirror gate to the backend's OpenAPI drift gate — symmetry on both sides of the contract.
+
+
+---
+
+## Update (2026-06-09): Superseded in part by ADR 0020
+
+This ADR states "the backend's OpenAPI schema as the single source of truth." This has been superseded by **ADR 0020** (`docs/decisions/0020-external-openapi-contract-variant-a.md`), which moves the contract to a dedicated external repository (`VadayI/claude-api-contract`). Both frontend and backend are now fellow consumers of that contract — neither generates the canon. The rest of this ADR (frontend as a separate repo, PR-only workflow) remains in effect.

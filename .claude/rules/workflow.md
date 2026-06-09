@@ -44,7 +44,7 @@ On a **new project**, the orchestrator's first action depends on detected state 
 1. `/doctor` — detect scenario (`fresh` / `existing-incomplete` / `active` / `no-config`) and recommend the next command.
 2. `/bootstrap` — execute scaffold (Mode A: fresh Vite+MUI app) or PR each missing piece (Mode B: resume). `/bootstrap` is a **binary command, NOT part of the feature pipeline**.
 3. `/synthesize-brief` (optional but recommended) — synthesize `docs/PROJECT.md` from `docs/**`. Run AFTER placing brief/design refs/PDFs into `docs/`, BEFORE `/preflight`.
-4. `/preflight` — build-inputs gate before the first feature (brief, stack, **backend OpenAPI contract reachable**, design references, GitHub access).
+4. `/preflight` — build-inputs gate before the first feature (brief, stack, **OpenAPI contract reachable**, design references, GitHub access).
 5. Standard feature pipeline (`ba → ui-architect → ...`).
 
 ## Plan Mode (default for non-trivial tasks)
@@ -72,7 +72,7 @@ If none apply (typo, config value) — the pipeline can be skipped.
 
 - **Simplicity First**: every change as simple as possible, minimal blast radius.
 - **No Laziness**: find the root cause, no temporary stubs left behind, senior-level standard.
-- **Contract-first**: the UI consumes the backend REST API; the contract is the backend's OpenAPI schema, from which the typed client + types are generated and locked by a CI drift gate. A11y is a first-class requirement, not a nicety.
+- **Contract-first**: the UI consumes the external `VadayI/claude-api-contract` schema, vendored at the pinned tag; from which the typed client + types are generated and locked by two CI gates. A11y is a first-class requirement, not a nicety.
 
 ## Execution model
 

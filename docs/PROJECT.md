@@ -24,7 +24,7 @@ Developers (and Claude) building MUI SPAs that consume a Django/DRF (or any Open
 
 ## Non-goals
 
-- Owning the REST API (that is the backend repo's job — this repo consumes its OpenAPI schema).
+- Owning the REST API contract (that lives in `VadayI/claude-api-contract` — both teams consume it, neither generates it).
 - Server-side rendering (this is a Vite SPA; SSR would be a separate decision).
 
 ## Constraints
@@ -33,4 +33,4 @@ Developers (and Claude) building MUI SPAs that consume a Django/DRF (or any Open
 
 ## Backend API
 
-The contract is the backend's OpenAPI schema, committed at `src/lib/api/openapi.yml` and pulled from `VITE_OPENAPI_URL`. See `docs/api/INDEX.md`.
+The contract is the `VadayI/claude-api-contract` schema, vendored at `src/lib/api/openapi.yml` by `npm run api:pull` using `CONTRACT_REPO` + `CONTRACT_VERSION` from `.env`. See `docs/api/INDEX.md`.

@@ -45,7 +45,7 @@ A root `Makefile` wraps the most common commands so they are identical across ma
 ## Contract refresh (deliberate, reviewed)
 
 ```bash
-npm run api:pull         # pull the backend openapi.yml into src/lib/api/ (URL from VITE_OPENAPI_URL / .env)
+npm run api:pull         # pull the contract openapi.yml from VadayI/claude-api-contract (CONTRACT_REPO + CONTRACT_VERSION in .env)
 npm run api:types        # regenerate types; review the diff for breaking changes
 ```
 

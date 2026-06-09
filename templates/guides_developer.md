@@ -8,7 +8,7 @@
 
 {TODO: One paragraph — what this frontend does, which backend it consumes, and the high-level technical approach.}
 
-This is a **frontend-only** repository. The backend lives in a separate repo and exposes a REST API described by an OpenAPI schema. This repo consumes that schema as its source of truth.
+This is a **frontend-only** repository. Both this frontend and the backend are consumers of the `VadayI/claude-api-contract` REST API schema — neither generates the canon. The contract is vendored at `src/lib/api/openapi.yml` via `npm run api:pull`.
 
 ---
 
@@ -28,7 +28,8 @@ cd {PROJECT_SLUG}
 npm ci
 cp .env.example .env
 # Edit .env: set VITE_API_BASE_URL to your running backend, e.g. http://localhost:8000
-npm run api:pull      # fetch openapi.yml from the backend
+#            set CONTRACT_VERSION to the pinned tag, e.g. v0.2.0
+npm run api:pull      # fetch openapi.yml from VadayI/claude-api-contract
 npm run api:types     # generate src/lib/api/schema.d.ts
 npm run dev           # http://localhost:5173
 ```
@@ -60,7 +61,7 @@ npm run typecheck     # tsc --noEmit
 npm run api:pull      # downloads openapi.yml → src/lib/api/openapi.yml
 ```
 
-`VITE_OPENAPI_URL` in `.env` points to the backend schema endpoint (default: `http://localhost:8000/api/schema/`). The downloaded file is **committed** — it is the locked contract snapshot for this frontend version.
+`CONTRACT_VERSION` in `.env` pins the release tag from `VadayI/claude-api-contract` (e.g. `v0.2.0`). The downloaded file is **committed** — it is the locked contract snapshot for this frontend version. `contract.lock.json` records the sha256 for integrity verification.
 
 ### Generating TypeScript types
 
@@ -68,7 +69,7 @@ npm run api:pull      # downloads openapi.yml → src/lib/api/openapi.yml
 npm run api:types     # runs openapi-typescript → src/lib/api/schema.d.ts
 ```
 
-`schema.d.ts` is **not committed** (gitignored) — regenerated from `openapi.yml` on every install. Never edit it by hand.
+`schema.d.ts` is **committed** and kept in sync with `openapi.yml` by the CI drift gate. Never edit it by hand.
 
 ### Drift gate
 
@@ -78,11 +79,12 @@ bash scripts/check_types_drift.sh
 
 CI fails if `schema.d.ts` is stale relative to the committed `openapi.yml`. Run this locally before pushing.
 
-### Viewing the backend contract
+### Viewing the contract
 
-- **Swagger UI** — {SWAGGER_UI_URL} (requires a running backend)
+- **Full contract** — `VadayI/claude-api-contract` (authoritative source)
 - **Committed snapshot** — `src/lib/api/openapi.yml`
 - **Human index** — `docs/api/INDEX.md`
+- **Swagger UI** — {SWAGGER_UI_URL} (requires a running backend; convenience only, not the canon)
 
 ---
 
@@ -103,7 +105,7 @@ src/
   lib/
     api/
       openapi.yml    # committed schema snapshot
-      schema.d.ts    # generated types (gitignored)
+      schema.d.ts    # generated types (committed, kept in sync by drift gate)
       client.ts      # axios/fetch instance configured with base URL
     query/           # TanStack Query client + global config
   store/             # root Zustand store (composes feature slices)
@@ -121,7 +123,7 @@ Routes are defined centrally in `src/router/`. Protected routes render an auth g
 | -------------------------------------------------------------- | -------------------------------------------------- |
 | Server data (API responses, caching, background refetch)       | TanStack Query                                     |
 | Client-only UI state (sidebar open, selected tab, wizard step) | Zustand                                            |
-| Auth tokens / session                                          | Zustand (persisted to localStorage via middleware) |
+| Auth tokens / session                                          | Zustand (in-memory only — never persist tokens)    |
 
 Never mirror server data into Zustand manually — let Query own the cache.
 

@@ -1,8 +1,8 @@
 # Claude Code configuration for React + MUI frontends
 
-A ready-made Claude Code configuration for **React + Material UI** frontend projects with **Test-Driven Development** discipline (double-loop, outside-in at the UI boundary), a **contract-first** process (the UI consumes a separate backend's OpenAPI schema, with types generated and locked by a CI drift gate), **mandatory accessibility**, and work done **exclusively through Pull Requests**. This config turns Claude Code into a frontend development team: an orchestrator delegates tasks to specialized agents through a clear pipeline.
+A ready-made Claude Code configuration for **React + Material UI** frontend projects with **Test-Driven Development** discipline (double-loop, outside-in at the UI boundary), a **contract-first** process (the UI consumes the external **`VadayI/claude-api-contract`** OpenAPI 3.1 schema, with types generated and locked by two CI gates), **mandatory accessibility**, and work done **exclusively through Pull Requests**. This config turns Claude Code into a frontend development team: an orchestrator delegates tasks to specialized agents through a clear pipeline.
 
-This is the **frontend counterpart** to a separate **backend repository** (for example a Django/DRF service): that repo owns the REST API and emits the OpenAPI contract; this repo consumes it. Point this at your own backend repo. They are independent repositories with independent CI and release cycles.
+The `VadayI/claude-api-contract` repo is the single source of truth for the REST API contract; both this frontend and the `claude-django` backend consume it — neither generates the canon. They are independent repositories with independent CI and release cycles.
 
 **Stack:** TypeScript 5 · React 18 · Vite 8 · MUI 6 · React Router 6 (data router) · TanStack Query 5 · Zustand 5 · Vitest + React Testing Library + MSW · Playwright · `openapi-typescript` · ESLint + Prettier · GitHub Actions
 **Environment:** Node 20.19+ on WSL2 (Windows) / Linux / macOS · Staging — Debian VPS serving the static build behind nginx · GitHub as the source of truth
@@ -84,7 +84,7 @@ export CONTEXT7_API_KEY=...
 claude
 #   /doctor      → audits the machine vs .claude/rules/environment.md, proposes fixes
 #   /bootstrap   → Mode A scaffolds the Vite+MUI app from templates/, or Mode B PRs missing pieces
-#   /preflight   → verifies build inputs (brief, stack, backend OpenAPI contract, GitHub access)
+#   /preflight   → verifies build inputs (brief, stack, OpenAPI contract, GitHub access)
 #   then build the first feature through the pipeline
 ```
 
@@ -92,8 +92,8 @@ Once the app is scaffolded:
 
 ```bash
 npm ci
-cp .env.example .env        # fill VITE_API_BASE_URL; set VITE_MSW_ENABLED=true to run against MSW mocks
-npm run api:pull            # pull the backend openapi.yml
+cp .env.example .env        # fill VITE_API_BASE_URL and CONTRACT_VERSION
+npm run api:pull            # pull the contract openapi.yml from VadayI/claude-api-contract
 npm run api:types           # generate src/lib/api/schema.d.ts
 npm run dev                 # http://localhost:5173
 npm run test                # vitest watch (inner loop)
@@ -125,7 +125,7 @@ Full routing and the optional agents (`a11y-auditor`, `qa`, `integration-archite
 ## Slash commands
 
 Environment & project: `/doctor`, `/bootstrap`, `/preflight`, `/synthesize-brief`, `/config-check`, `/plugins`, `/set-language`, `/handoff`, `/wrap-up`, `/audit`, `/update-from-template`.
-Feature & quality: `/verify`, `/guides`, `/review-pr`, `/security-check`, `/a11y-audit`, `/structure-audit`, `/simplify`, `/update-docs`, `/create-pr`, `/fix-ci`.
+Feature & quality: `/verify`, `/guides`, `/review-pr`, `/security-check`, `/structure-audit`, `/simplify`, `/update-docs`, `/create-pr`, `/fix-ci`.
 
 Defined in `.claude/commands/`.
 
@@ -180,4 +180,4 @@ Start a new frontend by using this repo as a GitHub template (or `/bootstrap` in
 
 ## Architecture decisions
 
-See `docs/decisions/` (ADRs 0001–0019): the frontend double-loop TDD boundary, Node-based env detection, the bootstrap/resume command, bash-only shell, frontend-as-separate-repo, manual repo + fine-grained PAT, `/mnt` working-dir support, the config baseline, the 400-line file-size limit, template sync, the React + MUI + TanStack Query + Zustand stack, mandatory accessibility, the server-vs-client state split, the default session/CSRF auth mode, and the dependency upgrade policy.
+See `docs/decisions/` (ADRs 0001–0021): the frontend double-loop TDD boundary, Node-based env detection, the bootstrap/resume command, bash-only shell, frontend-as-separate-repo, manual repo + fine-grained PAT, `/mnt` working-dir support, the config baseline, the 400-line file-size limit, template sync, the React + MUI + TanStack Query + Zustand stack, mandatory accessibility, the server-vs-client state split, the default Bearer/JWT auth mode, the dependency upgrade policy, and the external contract repo model (Variant A).

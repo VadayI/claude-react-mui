@@ -25,14 +25,14 @@ Confirm a clear statement of what we are building exists: goals, scope, domain, 
 
 Confirm the stack is declared in `CLAUDE.md` and `package.json` with consistent versions: React 19 · Vite 6 · MUI 6 · TypeScript · React Router 7 · TanStack Query 5 · Zustand 5 · Vitest+RTL+MSW · Playwright. If undeclared or contradictory → STOP and confirm with the user.
 
-### 3. Backend OpenAPI contract reachable
+### 3. OpenAPI contract reachable
 
-This frontend consumes a backend API. The OpenAPI contract is the primary design input.
+This frontend consumes the `VadayI/claude-api-contract` schema. The contract is the primary design input.
 
-- Check `VITE_OPENAPI_URL` is set in `.env`.
-- Run `npm run api:pull` (dry-run or real) to confirm the schema URL is reachable.
-- If reachable: run `npm run api:types` and confirm `src/lib/api/types.ts` is in sync (`bash scripts/check_types_drift.sh`).
-- If unreachable: STOP — OR proceed only on explicit user override (noting that API types will be unverified against the current backend contract). Record the override in `docs/WORKLOG.md`.
+- Check `CONTRACT_VERSION` is set in `.env` and `CONTRACT_REPO` is defined (default: `VadayI/claude-api-contract`).
+- Run `npm run api:pull` (dry-run or real) to confirm the contract tag is reachable from GitHub.
+- If reachable: run `npm run api:types` and confirm `src/lib/api/schema.d.ts` is in sync (`bash scripts/check_types_drift.sh`).
+- If unreachable: STOP — OR proceed only on explicit user override (noting that API types will be unverified against the current contract). Record the override in `docs/WORKLOG.md`.
 - ⚠️ Recommended: design tokens / Figma references in `docs/design/`. Not a hard blocker, but note if absent.
 
 ### 4. GitHub project access
@@ -46,4 +46,4 @@ This frontend consumes a backend API. The OpenAPI contract is the primary design
 
 Print a readiness table: Item → Status (✅/❌/⚠️) → Action. If all ✅ → recommend dispatching `ba` to start the first feature. If any ❌ → STOP with the specific blocker and what the user must provide.
 
-<!-- last reviewed: 2026-06-02 -->
+<!-- last reviewed: 2026-06-09 -->

@@ -34,7 +34,7 @@ Check presence (not value) of each:
 
 - `GITHUB_PERSONAL_ACCESS_TOKEN` — required for `gh` CLI and the GitHub MCP.
 - `CONTEXT7_API_KEY` — required for the Context7 MCP (library docs lookup).
-- `VITE_OPENAPI_URL` — required for `npm run api:pull`. Check `.env` and shell env. Note as ⚠️ if absent (not a hard stop).
+- `CONTRACT_VERSION` — required for `npm run api:pull`. Check `.env` and shell env. Note as ⚠️ if absent (not a hard stop).
 
 Never print token values.
 
@@ -50,4 +50,4 @@ Verify that `github` and `context7` are not registered twice (once via plugin an
 
 Print a two-column table: Item → Status. Paste-ready fix commands for any ❌ item.
 
-<!-- last reviewed: 2026-06-02 -->
+<!-- last reviewed: 2026-06-09 -->

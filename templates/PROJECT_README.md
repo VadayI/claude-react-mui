@@ -2,7 +2,7 @@
 
 > React + MUI frontend for [{BACKEND}]({BACKEND_URL}).
 
-Consumes the backend REST API contract defined in `src/lib/api/openapi.yml` (auto-pulled from the backend's OpenAPI schema endpoint). A full production backend lives in a **separate repository**; this repo is **frontend-only**.
+Consumes the REST API contract from `VadayI/claude-api-contract` (vendored at `src/lib/api/openapi.yml` via `npm run api:pull`). Both this frontend and the backend are consumers of that contract — neither generates the canon. A full production backend lives in a **separate repository**; this repo is **frontend-only**.
 
 ## Stack
 
@@ -24,8 +24,8 @@ Consumes the backend REST API contract defined in `src/lib/api/openapi.yml` (aut
 
 ```bash
 npm ci
-cp .env.example .env          # fill VITE_API_BASE_URL (point to running backend)
-npm run api:pull               # download openapi.yml from the backend
+cp .env.example .env          # fill VITE_API_BASE_URL and CONTRACT_VERSION
+npm run api:pull               # download openapi.yml from VadayI/claude-api-contract
 npm run api:types              # generate src/lib/api/schema.d.ts from openapi.yml
 npm run dev                    # http://localhost:5173
 ```
@@ -73,7 +73,7 @@ make gates
 
 ## Environment variables
 
-See `.env.example`. All variables are prefixed `VITE_` — they ship to the client bundle. **Never put secrets here.**
+See `.env.example`. All `VITE_*` variables ship to the client bundle. **Never put secrets here.**
 
 ## Contributing
 
