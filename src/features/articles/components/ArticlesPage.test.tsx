@@ -12,6 +12,7 @@ import userEvent from '@testing-library/user-event'
 import { http, HttpResponse } from 'msw'
 import { server } from '../../../test/server'
 import { renderWithProviders } from '../../../test/renderWithProviders'
+import { axe } from '../../../test/setup'
 import { ArticlesPage } from './ArticlesPage'
 
 const BASE = import.meta.env.VITE_API_BASE_URL as string
@@ -28,6 +29,33 @@ describe('ArticlesPage', () => {
       )
       renderWithProviders(<ArticlesPage />)
       expect(screen.getByRole('status')).toBeInTheDocument()
+    })
+
+    it('progressbar has an accessible name', () => {
+      server.use(
+        http.get(`${BASE}/api/v1/articles`, () => {
+          return new Promise(() => {
+            // Never resolves — simulates infinite loading
+          })
+        }),
+      )
+      renderWithProviders(<ArticlesPage />)
+      expect(
+        screen.getByRole('progressbar', { name: /loading articles/i }),
+      ).toBeInTheDocument()
+    })
+
+    it('has no axe violations in loading state', async () => {
+      server.use(
+        http.get(`${BASE}/api/v1/articles`, () => {
+          return new Promise(() => {
+            // Never resolves — simulates infinite loading
+          })
+        }),
+      )
+      const { container } = renderWithProviders(<ArticlesPage />)
+      const results = await axe(container)
+      expect(results).toHaveNoViolations()
     })
   })
 

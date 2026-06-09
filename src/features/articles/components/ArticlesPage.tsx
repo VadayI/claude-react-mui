@@ -39,7 +39,7 @@ export function ArticlesPage() {
 
       {isLoading && (
         <Box role="status" aria-label="Loading articles" sx={{ mt: 1 }}>
-          <CircularProgress size={20} sx={{ mr: 1 }} />
+          <CircularProgress size={20} aria-label="Loading articles" sx={{ mr: 1 }} />
           {[1, 2, 3].map((i) => (
             <Skeleton key={i} variant="rectangular" height={72} sx={{ mb: 1 }} />
           ))}
