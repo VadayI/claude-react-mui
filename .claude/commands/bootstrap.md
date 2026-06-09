@@ -27,13 +27,51 @@ Present the detected mode and ask the user to confirm before proceeding.
 
 ## Mode A — Fresh scaffold
 
+### Step 0: Contract source
+
+Before creating any files, ask which OpenAPI contract model this frontend will consume. The answer determines what goes into `.env.example` (Step 1) and how `api:pull` works (Step 9).
+
+Use `AskUserQuestion`:
+
+- header: `"Contract source"`
+- question: `"Which API contract source will this frontend consume?"`
+- options:
+  - **`VadayI/claude-api-contract` (Recommended)** — External contract repo, version-pinned tag. Enables the drift gate + contract-sync CI gate out of the box.
+  - **`VadayI/claude-django`** — Django/DRF backend generates the schema. Pulls from the running backend's `/api/schema/` endpoint.
+  - **Custom OpenAPI URL** — Your own backend or schema URL. You supply the full URL.
+
+Record the answer as `CONTRACT_SOURCE` (A / B / C) for use in Steps 1 and 9.
+
+**Variant A — `claude-api-contract`:**
+
+- `.env.example` gets: `CONTRACT_REPO=VadayI/claude-api-contract` + `CONTRACT_VERSION={TODO: pin a tag, e.g. v0.2.0}` + `VITE_API_BASE_URL=http://localhost:4010`
+- `npm run api:pull` works as-is (fetches GitHub raw at the pinned tag).
+- Both CI gates (`check_types_drift.sh` + `check_contract_sync.sh`) apply.
+
+**Variant B — `claude-django`:**
+
+- `.env.example` gets: `VITE_API_BASE_URL=http://localhost:8000` + `VITE_OPENAPI_URL=http://localhost:8000/api/schema/`
+- `npm run api:pull` does **not** support arbitrary URLs. Use instead:
+  `curl -fsSL "$VITE_OPENAPI_URL" -o src/lib/api/openapi.yml && npm run api:types`
+- `check_contract_sync.sh` assumes a GitHub raw source — disable it in CI for this variant or leave as advisory.
+- Create an ADR in `docs/decisions/` noting that the schema source is the live Django backend.
+
+**Variant C — custom URL:**
+
+- `.env.example` gets: `VITE_API_BASE_URL=` + `VITE_OPENAPI_URL={TODO: fill your OpenAPI schema URL}`
+- Same `api:pull` note as Variant B — use `curl` or adapt `scripts/api-pull.mjs`.
+- Disable or adapt `check_contract_sync.sh` in CI.
+
 ### Step 1: Create project skeleton
 
 Copy and instantiate from `templates/`:
 
 - `package.json` with all deps: React 19, Vite 6, MUI 6, React Router 7, TanStack Query 5, Zustand 5, Vitest+RTL+MSW, jest-axe, Playwright, openapi-typescript, ESLint+Prettier, TypeScript.
 - `vite.config.ts`, `tsconfig.json`, `tsconfig.node.json`, `index.html`.
-- `.env.example` with `VITE_API_BASE_URL=`, `VITE_OPENAPI_URL=`.
+- `.env.example` — configured per `CONTRACT_SOURCE` from Step 0:
+  - **Variant A:** `VITE_API_BASE_URL=http://localhost:4010`, `CONTRACT_REPO=VadayI/claude-api-contract`, `CONTRACT_VERSION={TODO: pin a tag, e.g. v0.2.0}`, `VITE_MSW_ENABLED=false`
+  - **Variant B:** `VITE_API_BASE_URL=http://localhost:8000`, `VITE_OPENAPI_URL=http://localhost:8000/api/schema/`, `VITE_MSW_ENABLED=false`
+  - **Variant C:** `VITE_API_BASE_URL=`, `VITE_OPENAPI_URL={TODO: fill your OpenAPI schema URL}`, `VITE_MSW_ENABLED=false`
 - `.gitignore` (node_modules, dist, .env, coverage, playwright-report, .claude/memory/).
 - `eslint.config.js`, `.prettierrc`.
 
@@ -96,6 +134,8 @@ Copy from `templates/scripts/`:
 
 Copy `templates/.github/workflows/frontend-ci.yml` → `.github/workflows/frontend-ci.yml`. Must run: lint, typecheck, test:run, check_types_drift, check_stubs, check_file_size, check_feature_readmes.
 
+For **Variant B or C**: note in the PR that `check_contract_sync.sh` should be disabled or adapted — it validates a GitHub raw source, which does not apply when the schema comes from a running backend.
+
 ### Step 7: docs/ skeleton
 
 ```
@@ -120,17 +160,31 @@ docs/
 
 Copy `templates/CLAUDE.md`, filling in the project name and repo URL. Append all rule imports.
 
-### Step 9: Pull backend OpenAPI schema (if configured)
+### Step 9: Pull backend OpenAPI schema
 
-If `VITE_OPENAPI_URL` is set in `.env.example` (or passed as argument):
+Behaviour depends on `CONTRACT_SOURCE` from Step 0.
+
+**Variant A (`claude-api-contract`)** — if `CONTRACT_VERSION` is set (user filled it in `.env`):
 
 ```bash
 npm install
-npm run api:pull
+npm run api:pull      # fetches GitHub raw at CONTRACT_VERSION tag
 npm run api:types
 ```
 
-Commit the generated `src/lib/api/types.ts`.
+Commit the generated `src/lib/api/openapi.yml` + `src/lib/api/schema.d.ts`.
+
+**Variant B (`claude-django`)** — if `VITE_OPENAPI_URL` is set and the backend is running:
+
+```bash
+npm install
+curl -fsSL "$VITE_OPENAPI_URL" -o src/lib/api/openapi.yml
+npm run api:types
+```
+
+If the backend is not yet running, skip this step and leave `src/lib/api/openapi.yml` as a `{TODO}` placeholder; types cannot be generated until the schema is available.
+
+**Variant C (custom)** — same as Variant B but with the user-supplied `VITE_OPENAPI_URL`. Skip if the URL is not yet available.
 
 ### Step 10: The ONE allowed bootstrap commit
 
@@ -161,7 +215,7 @@ Note: on free+private repos the API returns 403 — that is EXPECTED. Keep PR-on
 
 ### Step 12: Report
 
-Summarize what was created. Recommend: `/synthesize-brief` (if a brief doc exists in `docs/`) → `/preflight` → first feature via the pipeline.
+Summarize what was created, including the chosen contract variant (A / B / C) and any manual steps remaining (schema pull, `CONTRACT_VERSION` to fill). For Variant B / C, note the manual schema-pull command and the CI gate advisory. Recommend: `/synthesize-brief` (if a brief doc exists in `docs/`) → `/preflight` → first feature via the pipeline.
 
 ## Mode B — Resume / existing-incomplete
 
@@ -177,4 +231,4 @@ Summarize what was created. Recommend: `/synthesize-brief` (if a brief doc exist
 - Never run `npm run dev` or start a dev server — write files only.
 - Never invent endpoints or components beyond the minimal scaffold.
 
-<!-- last reviewed: 2026-06-02 -->
+<!-- last reviewed: 2026-06-09 -->
