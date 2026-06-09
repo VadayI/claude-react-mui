@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   define: {
-    'import.meta.env.VITE_API_BASE_URL': JSON.stringify('http://localhost:8000'),
+    'import.meta.env.VITE_API_BASE_URL': JSON.stringify('http://test.local'),
   },
   test: {
     globals: true,
@@ -14,7 +14,7 @@ export default defineConfig({
     // Unit/component tests live under src/; Playwright E2E specs in e2e/ run via `npm run e2e`.
     include: ['src/**/*.{test,spec}.{ts,tsx}'],
     env: {
-      VITE_API_BASE_URL: 'http://localhost:8000',
+      VITE_API_BASE_URL: 'http://test.local',
     },
   },
 })

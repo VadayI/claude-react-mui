@@ -5,7 +5,7 @@
  * `dynamicFetch` which always delegates to globalThis.fetch at call time,
  * so MSW handlers are picked up correctly.
  *
- * URL: http://localhost:8000 (set by vitest.config.ts → define → VITE_API_BASE_URL).
+ * URL: driven by VITE_API_BASE_URL (set by vitest.config.ts → define + test.env).
  */
 import { describe, it, expect, beforeEach } from 'vitest'
 import { http, HttpResponse } from 'msw'
@@ -13,7 +13,7 @@ import { server } from '../../test/server'
 import { useAuthStore } from '../auth/authStore'
 import { apiClient, normaliseError } from './client'
 
-const BASE = 'http://localhost:8000'
+const BASE = import.meta.env.VITE_API_BASE_URL as string
 
 describe('apiClient — Bearer injection', () => {
   beforeEach(() => useAuthStore.getState().clearTokens())

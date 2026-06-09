@@ -7,6 +7,9 @@
 import { http, HttpResponse } from 'msw'
 import type { ArticleViewModel } from '../features/articles/api/articlesApi'
 
+/** API origin, read from VITE_API_BASE_URL. */
+const BASE_URL = import.meta.env.VITE_API_BASE_URL
+
 /** Default articles returned by GET /api/v1/articles in tests. */
 export const DEFAULT_ARTICLES: ArticleViewModel[] = [
   {
@@ -40,7 +43,7 @@ export const DEFAULT_ARTICLES: ArticleViewModel[] = [
  * - `POST /api/v1/articles`  → 201 with a new article
  */
 export const handlers = [
-  http.get('http://localhost:8000/api/v1/articles', () => {
+  http.get(`${BASE_URL}/api/v1/articles`, () => {
     return HttpResponse.json({
       count: DEFAULT_ARTICLES.length,
       next: null,
@@ -49,7 +52,7 @@ export const handlers = [
     })
   }),
 
-  http.post('http://localhost:8000/api/v1/articles', async ({ request }) => {
+  http.post(`${BASE_URL}/api/v1/articles`, async ({ request }) => {
     const body = (await request.json()) as { title?: string; body?: string }
     const newArticle: ArticleViewModel = {
       id: '99',

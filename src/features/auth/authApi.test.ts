@@ -4,7 +4,7 @@ import { server } from '../../test/server'
 import { login, logout, register } from './authApi'
 import { useAuthStore } from '../../lib/auth/authStore'
 
-const BASE = 'http://localhost:8000'
+const BASE = import.meta.env.VITE_API_BASE_URL as string
 
 /**
  * MSW handlers use the v0.2.0 contract paths: /api/v1/auth/*.
@@ -25,7 +25,7 @@ describe('login', () => {
       ),
     )
 
-    await login({ username: 'alice', password: 'secret' })
+    await login({ email: 'alice@example.com', password: 'secret' })
 
     const { accessToken, refreshToken } = useAuthStore.getState()
     expect(accessToken).toBe('acc-tok')
@@ -39,7 +39,7 @@ describe('login', () => {
       ),
     )
 
-    await expect(login({ username: 'x', password: 'bad' })).rejects.toThrow()
+    await expect(login({ email: 'x@example.com', password: 'bad' })).rejects.toThrow()
   })
 })
 
@@ -69,7 +69,7 @@ describe('register', () => {
       ),
     )
 
-    await register({ username: 'bob', password: 'pw123', email: 'bob@example.com' })
+    await register({ email: 'bob@example.com', password: 'pw123' })
 
     const { accessToken, refreshToken } = useAuthStore.getState()
     expect(accessToken).toBe('new-acc')
@@ -85,7 +85,7 @@ describe('register', () => {
       ),
     )
 
-    await register({ username: 'carol', password: 'pw', email: 'carol@example.com' })
+    await register({ email: 'carol@example.com', password: 'pw' })
 
     const { accessToken } = useAuthStore.getState()
     expect(accessToken).toBeNull()
