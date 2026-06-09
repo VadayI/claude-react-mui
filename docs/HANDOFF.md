@@ -31,6 +31,7 @@
 Немає активних планів у `docs/plans/` — усі попередні закриті або є legacy-нотатками.
 
 Архівні плани (не активні):
+
 - `0001-handoff-wiring.md`, `0002-bootstrap-stack-drift.md`, `0003-api-contract-inversion.md`
 - `ci-gates-plan.md`, `fix-file-truncation.md`
 
