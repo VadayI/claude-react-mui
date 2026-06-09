@@ -4,7 +4,7 @@ import { server } from '../../test/server'
 import { login, logout, register } from './authApi'
 import { useAuthStore } from '../../lib/auth/authStore'
 
-const BASE = 'http://localhost:8000'
+const BASE = import.meta.env.VITE_API_BASE_URL as string
 
 /**
  * MSW handlers use the v0.2.0 contract paths: /api/v1/auth/*.

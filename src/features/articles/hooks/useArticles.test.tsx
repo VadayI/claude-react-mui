@@ -12,6 +12,8 @@ import { ReactNode } from 'react'
 import { server } from '../../../test/server'
 import { useArticles } from './useArticles'
 
+const BASE = import.meta.env.VITE_API_BASE_URL as string
+
 function makeWrapper() {
   const queryClient = new QueryClient({
     defaultOptions: { queries: { retry: false } },
@@ -24,7 +26,7 @@ function makeWrapper() {
 
 describe('useArticles', () => {
   it('starts in a loading state', () => {
-    server.use(http.get('http://localhost:8000/api/v1/articles', () => new Promise(() => {})))
+    server.use(http.get(`${BASE}/api/v1/articles`, () => new Promise(() => {})))
     const { Wrapper } = makeWrapper()
     const { result } = renderHook(() => useArticles(), { wrapper: Wrapper })
     expect(result.current.isLoading).toBe(true)
@@ -55,7 +57,7 @@ describe('useArticles', () => {
 
   it('enters error state on server failure', async () => {
     server.use(
-      http.get('http://localhost:8000/api/v1/articles', () => {
+      http.get(`${BASE}/api/v1/articles`, () => {
         return HttpResponse.json({ detail: 'fail' }, { status: 500 })
       }),
     )

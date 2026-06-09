@@ -14,11 +14,13 @@ import { server } from '../../../test/server'
 import { renderWithProviders } from '../../../test/renderWithProviders'
 import { ArticlesPage } from './ArticlesPage'
 
+const BASE = import.meta.env.VITE_API_BASE_URL as string
+
 describe('ArticlesPage', () => {
   describe('loading state', () => {
     it('shows a loading indicator while fetching', () => {
       server.use(
-        http.get('http://localhost:8000/api/v1/articles', () => {
+        http.get(`${BASE}/api/v1/articles`, () => {
           return new Promise(() => {
             // Never resolves — simulates infinite loading
           })
@@ -51,7 +53,7 @@ describe('ArticlesPage', () => {
   describe('empty state', () => {
     it('shows the empty state message when the server returns an empty list', async () => {
       server.use(
-        http.get('http://localhost:8000/api/v1/articles', () => {
+        http.get(`${BASE}/api/v1/articles`, () => {
           return HttpResponse.json({ count: 0, next: null, previous: null, results: [] })
         }),
       )
@@ -61,7 +63,7 @@ describe('ArticlesPage', () => {
 
     it('does not show article items when list is empty', async () => {
       server.use(
-        http.get('http://localhost:8000/api/v1/articles', () => {
+        http.get(`${BASE}/api/v1/articles`, () => {
           return HttpResponse.json({ count: 0, next: null, previous: null, results: [] })
         }),
       )
@@ -74,7 +76,7 @@ describe('ArticlesPage', () => {
   describe('error state', () => {
     it('shows an error alert when the server returns 500', async () => {
       server.use(
-        http.get('http://localhost:8000/api/v1/articles', () => {
+        http.get(`${BASE}/api/v1/articles`, () => {
           return HttpResponse.json({ detail: 'Server error' }, { status: 500 })
         }),
       )
@@ -86,7 +88,7 @@ describe('ArticlesPage', () => {
 
     it('shows a retry button in the error state', async () => {
       server.use(
-        http.get('http://localhost:8000/api/v1/articles', () => {
+        http.get(`${BASE}/api/v1/articles`, () => {
           return HttpResponse.json({ detail: 'Server error' }, { status: 500 })
         }),
       )
@@ -99,7 +101,7 @@ describe('ArticlesPage', () => {
       let callCount = 0
 
       server.use(
-        http.get('http://localhost:8000/api/v1/articles', () => {
+        http.get(`${BASE}/api/v1/articles`, () => {
           callCount++
           if (callCount === 1) {
             return HttpResponse.json({ detail: 'Server error' }, { status: 500 })
