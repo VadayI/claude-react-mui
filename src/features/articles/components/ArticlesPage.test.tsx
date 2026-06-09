@@ -40,9 +40,7 @@ describe('ArticlesPage', () => {
         }),
       )
       renderWithProviders(<ArticlesPage />)
-      expect(
-        screen.getByRole('progressbar', { name: /loading articles/i }),
-      ).toBeInTheDocument()
+      expect(screen.getByRole('progressbar', { name: /loading articles/i })).toBeInTheDocument()
     })
 
     it('has no axe violations in loading state', async () => {
