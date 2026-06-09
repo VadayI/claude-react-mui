@@ -38,7 +38,10 @@ test.describe('Articles page', () => {
     await page.getByLabel(/password/i).fill('secret123')
     await page.getByRole('button', { name: /sign in/i }).click()
 
-    await expect(page).toHaveURL(/\/articles/)
+    // After login, LoginPage calls navigate(next) and React re-renders RequireAuth.
+    // On CI the full React state-update + router navigation cycle can exceed the
+    // default 5000ms expect timeout — use a generous limit here.
+    await expect(page).toHaveURL(/\/articles/, { timeout: 10000 })
   })
 
   test('loads the articles page with the heading', async ({ page }) => {
