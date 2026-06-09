@@ -28,6 +28,6 @@ export default defineConfig({
     // Cold Vite + MSW worker registration on CI can exceed the 60s default.
     timeout: 120_000,
     // Enable the MSW browser worker so the app serves mocked API responses in E2E.
-    env: { VITE_MSW_ENABLED: 'true' },
+    env: { VITE_MSW_ENABLED: 'true', VITE_API_BASE_URL: 'http://localhost:5173' },
   },
 })

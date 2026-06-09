@@ -1,8 +1,9 @@
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { http, HttpResponse } from 'msw'
 import { server } from '../../test/server'
 import { login, logout, register } from './authApi'
 import { useAuthStore } from '../../lib/auth/authStore'
+import { queryClient } from '../../lib/query/queryClient'
 
 const BASE = import.meta.env.VITE_API_BASE_URL as string
 
@@ -55,6 +56,20 @@ describe('logout', () => {
     const { accessToken, refreshToken } = useAuthStore.getState()
     expect(accessToken).toBeNull()
     expect(refreshToken).toBeNull()
+  })
+
+  it('clears the TanStack Query cache after successful logout (security: no stale data on shared device)', async () => {
+    useAuthStore.setState({ accessToken: 'acc', refreshToken: 'ref' })
+    server.use(
+      http.post(`${BASE}/api/v1/auth/logout`, () => new HttpResponse(null, { status: 204 })),
+    )
+    const clearSpy = vi.spyOn(queryClient, 'clear')
+
+    await logout()
+
+    expect(clearSpy).toHaveBeenCalledOnce()
+
+    clearSpy.mockRestore()
   })
 })
 

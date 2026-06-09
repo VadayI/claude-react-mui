@@ -13,6 +13,7 @@
  */
 import type { components } from '../../lib/api/schema.d.ts'
 import { useAuthStore } from '../../lib/auth/authStore'
+import { queryClient } from '../../lib/query/queryClient'
 
 type LoginRequest = components['schemas']['LoginRequest']
 type TokenPair = components['schemas']['TokenPair']
@@ -42,13 +43,16 @@ export async function login(credentials: LoginRequest): Promise<TokenPair> {
 }
 
 /**
- * Invalidate the current session; clears tokens from the auth store.
+ * Invalidate the current session; clears tokens and the Query cache.
  *
- * Best-effort: tokens are cleared locally even if the server call fails.
+ * Best-effort: tokens and cache are cleared locally even if the server call fails.
+ * Clearing the cache prevents stale user data from being visible on a shared device
+ * after sign-out.
  */
 export async function logout(): Promise<void> {
   const { refreshToken, accessToken, clearTokens } = useAuthStore.getState()
   clearTokens()
+  queryClient.clear()
   try {
     await fetch(`${BASE_URL}/api/v1/auth/logout`, {
       method: 'POST',
@@ -59,7 +63,7 @@ export async function logout(): Promise<void> {
       body: JSON.stringify(refreshToken ? { refresh: refreshToken } : {}),
     })
   } catch {
-    // Best-effort; tokens already cleared locally
+    // Best-effort; tokens and cache already cleared locally
   }
 }
 

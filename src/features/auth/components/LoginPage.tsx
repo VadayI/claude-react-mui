@@ -10,6 +10,8 @@
  */
 import { useState } from 'react'
 import { Navigate, useNavigate, useSearchParams } from 'react-router-dom'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
 import { useAuthStore } from '../../../lib/auth/authStore'
 import { useLogin } from '../hooks/useLogin'
 import { LoginForm } from './LoginForm'
@@ -44,5 +46,12 @@ export function LoginPage() {
     })
   }
 
-  return <LoginForm onSubmit={handleSubmit} isSubmitting={isPending} serverError={serverError} />
+  return (
+    <Box sx={{ maxWidth: 400, mx: 'auto', mt: 4 }}>
+      <Typography variant="h4" component="h1" gutterBottom>
+        Sign In
+      </Typography>
+      <LoginForm onSubmit={handleSubmit} isSubmitting={isPending} serverError={serverError} />
+    </Box>
+  )
 }
