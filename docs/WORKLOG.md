@@ -4,6 +4,40 @@ Cross-machine work history. Updated at the end of every session (`/wrap-up`) and
 
 ---
 
+## 2026-06-09 — bootstrap-contract-source-question
+
+### Done
+
+- Проаналізовано команду `/bootstrap`: виявлено, що вона мовчки assumes Variant A (`VadayI/claude-api-contract`) для всіх проєктів без жодного питання.
+- **PR #21** — `feat/bootstrap/ask-contract-source-before-scaffold`: доданий Step 0 у Mode A — `AskUserQuestion` з трьома варіантами (A / B / C). Step 1 (`.env.example`) і Step 9 (`api:pull` vs `curl`) тепер variant-aware. Step 6 та Step 12 отримали variant-specific нотатки. Змерджено.
+- `scripts/api-pull.mjs` не змінювався — він коректний для Variant A; для B/C задокументовано `curl`.
+
+### Gate status
+
+- typecheck (`tsc -b`): ✅
+- lint: ✅
+- tests: ✅ (54 passed, 9 test files)
+- types-drift: ✅
+- stubs: ✅
+- file-size: ✅
+- feature-readmes: ✅
+
+### Open items
+
+- `npm run typecheck` є no-op (кореневий tsconfig `"files": []`). Замінити на `tsc -b`. Окремий PR.
+- E2E a11y: `MuiCircularProgress` у loading-стані `ArticlesPage` без `aria-label` → `aria-progressbar-name` (WCAG 2.1 AA). Pre-existing. Окремий PR.
+- Route guard для `/articles`: `routes.json` → `auth: authenticated`, `router.tsx` без guard.
+- `logout()` не викликає `queryClient.clear()` — pre-existing gap.
+
+### Next steps
+
+- Виправити `npm run typecheck` → `tsc -b` у `package.json`.
+- Додати `aria-label` до loading spinner у `ArticlesPage`.
+- Реалізувати route guard для `/articles` через pipeline.
+
+---
+
+
 ## 2026-06-09 — runtime-api-target-switch
 
 ### Done
