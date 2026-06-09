@@ -56,19 +56,19 @@ Generated types in `src/lib/api/schema.d.ts`.
 
 ## UI States
 
-| State   | Trigger                        | UI                                                    |
-| ------- | ------------------------------ | ----------------------------------------------------- |
-| Loading | Initial fetch in flight        | `CircularProgress` + `Skeleton` rows, `role="status"` |
-| Error   | Query settled with error       | `MUI Alert` with severity=error + Retry button        |
-| Empty   | Query resolved, `results = []` | Empty-state message via `ArticleList`                 |
-| Success | Query resolved, data present   | `ArticleList` + `AddArticleForm`                      |
+| State   | Trigger                        | UI                                                                                         |
+| ------- | ------------------------------ | ------------------------------------------------------------------------------------------ |
+| Loading | Initial fetch in flight        | `CircularProgress` (`aria-label="Loading articles"`) + `Skeleton` rows, `role="status"` wrapper |
+| Error   | Query settled with error       | `MUI Alert` with severity=error + Retry button                                             |
+| Empty   | Query resolved, `results = []` | Empty-state message via `ArticleList`                                                      |
+| Success | Query resolved, data present   | `ArticleList` + `AddArticleForm`                                                           |
 
 ## Accessibility Notes
 
 - `ArticleList` uses `<List aria-label="articles list">`.
 - `AddArticleForm` uses labelled TextFields and links error text via `aria-describedby`.
-- `ArticlesPage` loading state includes `role="status"` for screen readers.
-- Both components pass jest-axe in unit tests.
+- `ArticlesPage` loading state: `<Box role="status">` announces the live region; `<CircularProgress aria-label="Loading articles">` names the progressbar directly (WCAG 2.1 AA, rule `aria-progressbar-name`).
+- All components pass jest-axe in unit tests (all four states covered).
 
 ## Cross-Feature Dependencies
 
