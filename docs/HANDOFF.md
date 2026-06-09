@@ -5,28 +5,24 @@
 
 ## Branch
 
-`main` — PR #19 merged (runtime-api-target-switch). README fix + schema.d.ts regen pending commit on `docs/wrap-up-2026-06-09`.
+`main` — PR #21 merged (bootstrap-contract-source-question). Clean working tree.
 
 ## Last work done
 
-**Session 2026-06-09 — runtime API target switch + README fix**
+**Session 2026-06-09b — bootstrap contract source question**
 
-Resumed interrupted session: branch `feat/runtime-api-target-switch` was in RED phase with two untracked test files and no implementation.
+Short session focused on `/bootstrap` UX improvement:
 
-1. **PR #19** — runtime API target switch (merged):
-   - New `src/mocks/enableMocking.ts` — `enableMocking()` starts MSW ONLY when `VITE_MSW_ENABLED === 'true'`; removed DEV-coupled logic from `main.tsx`.
-   - `src/mocks/handlers.ts` — base URL from `import.meta.env.VITE_API_BASE_URL` (was hardcoded `:8000`).
-   - `vitest.config.ts` — test `VITE_API_BASE_URL` → `http://test.local` (makes handlers.test.ts a genuine regression guard).
-   - `.env.example` — `VITE_MSW_ENABLED` documented.
-   - Fixed 4 pre-existing tests that hardcoded `:8000`; fixed pre-existing TS bug in `authApi.test.ts` (`username` → `email`).
-   - 54/54 tests green; Quality Gate ✅ reviewer+refactor pass.
-2. **Discovered gap**: `npm run typecheck` = `tsc --noEmit` on root `tsconfig.json` (`"files": []`) is a no-op — doesn't check the app project. CI `tsc -b` catches errors; local script does not. Needs a fix.
-3. **README audit**: fixed stale `VITE_OPENAPI_URL` reference; added `/a11y-audit` to slash commands list.
-4. **schema.d.ts** regenerated; drift gate green.
+1. Reviewed `/bootstrap` command — found it silently assumed `VadayI/claude-api-contract` (Variant A) for all projects, no user question asked.
+2. **PR #21** — added `Step 0` to Mode A: `AskUserQuestion` asks which OpenAPI contract model to use:
+   - **A) `VadayI/claude-api-contract`** (Recommended) — external contract repo, version-pinned; full drift + contract-sync gates.
+   - **B) `VadayI/claude-django`** — Django/DRF backend generates schema at `/api/schema/`; `curl`-based pull; `check_contract_sync.sh` advisory-only.
+   - **C) Custom OpenAPI URL** — arbitrary endpoint; same `curl` approach.
+     Steps 1, 6, 9, 12 now variant-aware. `api-pull.mjs` unchanged.
 
 ## Next steps
 
-1. **Fix `npm run typecheck`**: change script to `tsc -b` (or `tsc -p tsconfig.app.json --noEmit`) so local typecheck matches CI. Simple 1-line change in `package.json` + docs update. Separate PR.
+1. **Fix `npm run typecheck`**: change script to `tsc -b` in `package.json` so local typecheck matches CI. Simple 1-line change + docs update. Separate PR.
 2. **E2E a11y**: `MuiCircularProgress` in `ArticlesPage` loading state has no `aria-label` → `aria-progressbar-name` violation (WCAG 2.1 AA). Add accessible label to the spinner. Separate PR.
 3. **Route guard for `/articles`**: `routes.json` marks it `auth: authenticated` but `router.tsx` has no guard — implement via pipeline (ba → ui-architect → tester → react-developer).
 4. **Next feature**: standard pipeline (ba → ui-architect → tester → react-developer → quality gate → docs-writer).
@@ -36,6 +32,7 @@ Resumed interrupted session: branch `feat/runtime-api-target-switch` was in RED 
 - [ ] When will `claude-django` migrate to contract v0.2.0? (blocks shared deployment)
 - [ ] Should `logout()` call `queryClient.clear()`? (shared-device cache leak; low priority)
 - [ ] Is `CONTRACT_VERSION=v0.2.0` now set in live `.env`? (gitignored — cannot verify)
+- [ ] Should `scripts/api-pull.mjs` be extended to support arbitrary `VITE_OPENAPI_URL` (for bootstrap Variants B/C)? Currently requires GitHub raw format.
 
 ## Stack snapshot
 
@@ -49,18 +46,19 @@ TypeScript 5 · React 18.3 · Vite 8 · MUI 6 · React Router 6 (data router) ·
 
 ## Key files
 
-| Purpose | Path |
-|---|---|
-| Contract | `src/lib/api/openapi.yml` (vendored from `VadayI/claude-api-contract@v0.2.0`) |
-| Generated types | `src/lib/api/schema.d.ts` |
-| API client | `src/lib/api/client.ts` |
-| MSW startup | `src/mocks/enableMocking.ts` |
-| MSW handlers | `src/mocks/handlers.ts` |
-| Auth store | `src/lib/auth/authStore.ts` |
-| Auth API | `src/features/auth/authApi.ts` |
-| Route registry | `.claude/memory/routes.json` |
-| Contract lock | `contract.lock.json` |
-| ADR: contract | `docs/decisions/0020-external-openapi-contract-variant-a.md` |
-| ADR: auth | `docs/decisions/0021-auth-bearer-jwt-default.md` |
-| ADR: v0.2.0 bump | `docs/decisions/0022-bump-contract-v0.2.0-auth-path-rename.md` |
-| CI | `.github/workflows/frontend-ci.yml` |
+| Purpose           | Path                                                                          |
+| ----------------- | ----------------------------------------------------------------------------- |
+| Contract          | `src/lib/api/openapi.yml` (vendored from `VadayI/claude-api-contract@v0.2.0`) |
+| Generated types   | `src/lib/api/schema.d.ts`                                                     |
+| API client        | `src/lib/api/client.ts`                                                       |
+| MSW startup       | `src/mocks/enableMocking.ts`                                                  |
+| MSW handlers      | `src/mocks/handlers.ts`                                                       |
+| Auth store        | `src/lib/auth/authStore.ts`                                                   |
+| Auth API          | `src/features/auth/authApi.ts`                                                |
+| Route registry    | `.claude/memory/routes.json`                                                  |
+| Contract lock     | `contract.lock.json`                                                          |
+| Bootstrap command | `.claude/commands/bootstrap.md`                                               |
+| ADR: contract     | `docs/decisions/0020-external-openapi-contract-variant-a.md`                  |
+| ADR: auth         | `docs/decisions/0021-auth-bearer-jwt-default.md`                              |
+| ADR: v0.2.0 bump  | `docs/decisions/0022-bump-contract-v0.2.0-auth-path-rename.md`                |
+| CI                | `.github/workflows/frontend-ci.yml`                                           |
