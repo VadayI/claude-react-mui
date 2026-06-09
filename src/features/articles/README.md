@@ -10,6 +10,10 @@ Manages the articles list. Provides a full-page UI at `/articles` for viewing an
 | ----------- | ----------------------------------------------- | ---------------------------- |
 | `/articles` | ArticlesPage — full articles list with add form | Authenticated (Bearer token) |
 
+`/articles` is wrapped in a `RequireAuth` layout route guard (`src/app/guards/RequireAuth.tsx`).
+Anonymous users are redirected to `/login?next=%2Farticles`; they are returned here after a
+successful login.
+
 ## Components
 
 | Component        | Type           | Description                                                                            |
@@ -56,12 +60,12 @@ Generated types in `src/lib/api/schema.d.ts`.
 
 ## UI States
 
-| State   | Trigger                        | UI                                                                                         |
-| ------- | ------------------------------ | ------------------------------------------------------------------------------------------ |
+| State   | Trigger                        | UI                                                                                              |
+| ------- | ------------------------------ | ----------------------------------------------------------------------------------------------- |
 | Loading | Initial fetch in flight        | `CircularProgress` (`aria-label="Loading articles"`) + `Skeleton` rows, `role="status"` wrapper |
-| Error   | Query settled with error       | `MUI Alert` with severity=error + Retry button                                             |
-| Empty   | Query resolved, `results = []` | Empty-state message via `ArticleList`                                                      |
-| Success | Query resolved, data present   | `ArticleList` + `AddArticleForm`                                                           |
+| Error   | Query settled with error       | `MUI Alert` with severity=error + Retry button                                                  |
+| Empty   | Query resolved, `results = []` | Empty-state message via `ArticleList`                                                           |
+| Success | Query resolved, data present   | `ArticleList` + `AddArticleForm`                                                                |
 
 ## Accessibility Notes
 
@@ -75,6 +79,7 @@ Generated types in `src/lib/api/schema.d.ts`.
 - `src/lib/api/client.ts` — typed HTTP client (shared).
 - `src/lib/query/queryClient.ts` — QueryClient singleton (shared).
 - `src/theme/theme.ts` — MUI theme (shared via `ThemeProvider`).
+- `src/app/guards/RequireAuth.tsx` — layout route guard protecting `/articles`.
 - No other feature dependencies.
 
 ## Decisions

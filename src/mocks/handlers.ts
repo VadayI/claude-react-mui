@@ -39,8 +39,9 @@ export const DEFAULT_ARTICLES: ArticleViewModel[] = [
 /**
  * Default MSW handlers.
  *
- * - `GET /api/v1/articles`   → 200 with paginated DEFAULT_ARTICLES
- * - `POST /api/v1/articles`  → 201 with a new article
+ * - `GET /api/v1/articles`      → 200 with paginated DEFAULT_ARTICLES
+ * - `POST /api/v1/articles`     → 201 with a new article
+ * - `POST /api/v1/auth/login`   → 200 with a token pair (default success scenario)
  */
 export const handlers = [
   http.get(`${BASE_URL}/api/v1/articles`, () => {
@@ -66,5 +67,15 @@ export const handlers = [
       updated_at: '2026-06-07T00:00:00Z',
     }
     return HttpResponse.json(newArticle, { status: 201 })
+  }),
+
+  http.post(`${BASE_URL}/api/v1/auth/login`, async ({ request }) => {
+    const body = (await request.json()) as { email?: string; password?: string }
+    // Default handler returns a success response; tests override this with server.use(...)
+    // to exercise 401 / 400 scenarios.
+    if (!body.email || !body.password) {
+      return HttpResponse.json({ detail: 'Email and password are required.' }, { status: 400 })
+    }
+    return HttpResponse.json({ access: 'default-acc-token', refresh: 'default-ref-token' })
   }),
 ]

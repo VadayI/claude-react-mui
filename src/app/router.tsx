@@ -8,13 +8,16 @@
 import { createBrowserRouter } from 'react-router-dom'
 import { App } from './App'
 import { ArticlesPage } from '../features/articles/components/ArticlesPage'
+import { LoginPage } from '../features/auth/components/LoginPage'
+import { RequireAuth } from './guards/RequireAuth'
 
 /**
  * The root data router.
  *
  * Routes:
  * - `/`          Home (displayed via App layout)
- * - `/articles`  Articles feature page
+ * - `/login`     Login page (public)
+ * - `/articles`  Articles feature page (protected by RequireAuth)
  */
 export const router = createBrowserRouter([
   {
@@ -32,10 +35,15 @@ export const router = createBrowserRouter([
           </div>
         ),
       },
+
+      // Protected routes — wrapped in RequireAuth layout route
       {
-        path: 'articles',
-        element: <ArticlesPage />,
+        element: <RequireAuth />,
+        children: [{ path: 'articles', element: <ArticlesPage /> }],
       },
+
+      // Auth routes (public)
+      { path: 'login', element: <LoginPage /> },
     ],
   },
 ])

@@ -5,7 +5,16 @@
     "screen": "ArticlesPage",
     "auth": "authenticated",
     "states": ["loading", "success", "empty", "error"],
-    "consumes": ["GET /api/v1/articles", "POST /api/v1/articles"],
-    "notes": "Article list with create form. Auth via Bearer/JWT (middleware). No /login route — auth is API-layer only."
+    "consumes": ["GET /api/v1/articles"],
+    "notes": "Protected by RequireAuth layout route. Anonymous → /login?next=%2Farticles."
+  },
+  {
+    "path": "/login",
+    "feature": "auth",
+    "screen": "LoginPage",
+    "auth": "anonymous",
+    "states": ["idle", "submitting", "error"],
+    "consumes": ["POST /api/v1/auth/login"],
+    "notes": "Authenticated visitors redirect to next ?? '/'. On success: setTokens → navigate(next ?? '/')."
   }
 ]
