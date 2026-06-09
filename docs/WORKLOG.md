@@ -426,3 +426,41 @@ Cross-machine work history. Updated at the end of every session (`/wrap-up`) and
 - Координація з `claude-django`: обидва consumer мають мігрувати на `/api/v1/auth/*` перед спільним деплоєм.
 - Реалізувати route guard для `/articles` (через пайплайн: ba → ui-architect → tester → react-developer).
 - Наступна фіча — через стандартний пайплайн.
+
+
+## 2026-06-09c — wrap-up-2026-06-09c
+
+### Done
+
+- **/audit** — виявлено незакомічені зміни (HANDOFF.md, WORKLOG.md, schema.d.ts) + два відкритих PR (#22, #18).
+- **PR #22** (`docs/wrap-up-2026-06-09b`) — виправлено drift `schema.d.ts` (конфлікт форматів 2-пробільний vs 4-пробільний), змерджено.
+- **PR #18** (`docs/contract-variant-a-sync`) — rebase на поточний `main`, conflict resolution у `bootstrap.md` + `README.md`. Вирівнює документацію до Variant A contract model (16 файлів). Змерджено.
+- **fix(a11y): aria-progressbar-name** — виправлено pre-existing E2E a11y failure (`MuiCircularProgress` без `aria-label`):
+  - TDD RED: 2 нових тести (`progressbar has accessible name` + `axe clean in loading state`) підтверджено падіння.
+  - GREEN: `aria-label="Loading articles"` на `<CircularProgress>` в `ArticlesPage.tsx` (1 рядок).
+  - Оновлено `ArticlesPage.test.tsx` + `src/features/articles/README.md`.
+  - **PR #23** — Quality Gates ✅ + E2E ✅ (вперше зелений!), змерджено.
+- Загалом змерджено 3 PR за сесію; всі 56 тестів зелені.
+
+### Gate status
+
+- typecheck: ✅
+- lint: ✅
+- tests: ✅ (56 passed, 9 test files)
+- types-drift: ✅
+- stubs: ✅
+- file-size: ✅
+- feature-readmes: ✅
+
+### Open items
+
+- `npm run typecheck` → root tsconfig `files:[]` — не перевіряє `src/`; потрібна зміна на `tsc -b` в `package.json`.
+- Route guard для `/articles` — не реалізований (`routes.json`: auth=authenticated, `router.tsx`: guard відсутній).
+- `logout()` не викликає `queryClient.clear()` — pre-existing gap (shared-device scenario).
+- `check_contract_sync.sh` потребує `CONTRACT_VERSION=v0.2.0` у `.env` для локального проходження.
+
+### Next steps
+
+- Виправити `npm run typecheck` → `tsc -b` (однорядковий PR).
+- Route guard для `/articles` через пайплайн (ba → ui-architect → tester → react-developer).
+- Наступна фіча — через стандартний пайплайн.
