@@ -18,7 +18,7 @@ Short session focused on `/bootstrap` UX improvement:
    - **A) `VadayI/claude-api-contract`** (Recommended) — external contract repo, version-pinned; full drift + contract-sync gates.
    - **B) `VadayI/claude-django`** — Django/DRF backend generates schema at `/api/schema/`; `curl`-based pull; `check_contract_sync.sh` advisory-only.
    - **C) Custom OpenAPI URL** — arbitrary endpoint; same `curl` approach.
-   Steps 1, 6, 9, 12 now variant-aware. `api-pull.mjs` unchanged.
+     Steps 1, 6, 9, 12 now variant-aware. `api-pull.mjs` unchanged.
 
 ## Next steps
 
@@ -46,19 +46,19 @@ TypeScript 5 · React 18.3 · Vite 8 · MUI 6 · React Router 6 (data router) ·
 
 ## Key files
 
-| Purpose | Path |
-|---|---|
-| Contract | `src/lib/api/openapi.yml` (vendored from `VadayI/claude-api-contract@v0.2.0`) |
-| Generated types | `src/lib/api/schema.d.ts` |
-| API client | `src/lib/api/client.ts` |
-| MSW startup | `src/mocks/enableMocking.ts` |
-| MSW handlers | `src/mocks/handlers.ts` |
-| Auth store | `src/lib/auth/authStore.ts` |
-| Auth API | `src/features/auth/authApi.ts` |
-| Route registry | `.claude/memory/routes.json` |
-| Contract lock | `contract.lock.json` |
-| Bootstrap command | `.claude/commands/bootstrap.md` |
-| ADR: contract | `docs/decisions/0020-external-openapi-contract-variant-a.md` |
-| ADR: auth | `docs/decisions/0021-auth-bearer-jwt-default.md` |
-| ADR: v0.2.0 bump | `docs/decisions/0022-bump-contract-v0.2.0-auth-path-rename.md` |
-| CI | `.github/workflows/frontend-ci.yml` |
+| Purpose           | Path                                                                          |
+| ----------------- | ----------------------------------------------------------------------------- |
+| Contract          | `src/lib/api/openapi.yml` (vendored from `VadayI/claude-api-contract@v0.2.0`) |
+| Generated types   | `src/lib/api/schema.d.ts`                                                     |
+| API client        | `src/lib/api/client.ts`                                                       |
+| MSW startup       | `src/mocks/enableMocking.ts`                                                  |
+| MSW handlers      | `src/mocks/handlers.ts`                                                       |
+| Auth store        | `src/lib/auth/authStore.ts`                                                   |
+| Auth API          | `src/features/auth/authApi.ts`                                                |
+| Route registry    | `.claude/memory/routes.json`                                                  |
+| Contract lock     | `contract.lock.json`                                                          |
+| Bootstrap command | `.claude/commands/bootstrap.md`                                               |
+| ADR: contract     | `docs/decisions/0020-external-openapi-contract-variant-a.md`                  |
+| ADR: auth         | `docs/decisions/0021-auth-bearer-jwt-default.md`                              |
+| ADR: v0.2.0 bump  | `docs/decisions/0022-bump-contract-v0.2.0-auth-path-rename.md`                |
+| CI                | `.github/workflows/frontend-ci.yml`                                           |

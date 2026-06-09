@@ -37,7 +37,6 @@ Cross-machine work history. Updated at the end of every session (`/wrap-up`) and
 
 ---
 
-
 ## 2026-06-09 — runtime-api-target-switch
 
 ### Done
@@ -109,7 +108,6 @@ Cross-machine work history. Updated at the end of every session (`/wrap-up`) and
 - Реалізувати route guard для `/articles` через pipeline.
 
 ---
-
 
 ### 2026-06-05 — Wire MSW browser worker for E2E (fix failing E2E check)
 
