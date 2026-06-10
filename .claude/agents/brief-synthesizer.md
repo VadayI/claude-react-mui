@@ -29,7 +29,19 @@ The orchestrator (`/synthesize-brief`) passes a list of paths under `docs/**`. F
 
 If a `.pdf`/`.docx` skill is unavailable or fails, do NOT crash — record the file as `unprocessed: <reason>` and continue with the rest.
 
-## Output: `docs/PROJECT.md` (fixed structure, 9 sections + source table)
+### Design folder (first-class input)
+
+If the orchestrator passes a `design_folder` path, read its contents in full:
+
+- **CSS custom properties / design tokens** — any `.css` files or inline `<style>` blocks containing `--variable` declarations; extract palette, typography scale, spacing, radius, and shadow values.
+- **`ui-kit.jsx`** (or similarly named file) — enumerate component atoms and their variants; note visual properties (size, colour usage, border radius, shadow).
+- **`screen-*.jsx`** files (or named equivalently) — for each screen: name, layout structure, components used, data displayed, interactive states visible.
+- **`app-data.jsx`** (or similar) — list entities and their fields.
+- **`api-*.md`** files — read as API assumptions (endpoints, request/response shapes, auth).
+
+Describe the **design intent**, not the implementation. Do NOT reproduce inline styles or Babel-specific patterns verbatim. Summarise token values as MUI theme intent (e.g. "`--c-accent: #0a8a3f` → `palette.primary.main: '#0a8a3f'`"). If `design_folder` is `null` or not provided, skip this section.
+
+## Output: `docs/PROJECT.md` (fixed structure, 11 sections + source table)
 
 Write exactly this scaffold, filled from sources:
 
@@ -62,6 +74,21 @@ Write exactly this scaffold, filled from sources:
 ## Stakeholders
 <roles + concerns; one line each>
 
+## Design reference
+<If a design folder was provided: path to docs/design/<name>/ + concise summary of:
+  - Tokens: palette entries (primary, secondary, background, text colours), typography scale, spacing, radius values
+  - Component inventory: list of atoms/molecules in ui-kit (e.g. Button variants, Card, Badge, Input, Nav)
+  - Screen inventory: list of screens with one-line purpose each
+  - API assumptions: endpoints and shapes from api-*.md files
+  End with: "Status: very strong UI source of truth — reproduced faithfully adapted to React 18 + MUI 6 + TypeScript (tokens → src/theme/, primitives → MUI components, screens → routes + component tree). See @.claude/rules/design-reference.md."
+>
+<If no design folder: none.>
+
+## Design deviations
+<Bulleted list of intentional differences from the design reference, each with a reason.
+  Sourced from user input during /synthesize-brief Step 1.5 and any conflict-resolutions noted by ui-architect.>
+<none recorded yet — if the list is empty.>
+
 ## Open questions
 <things the source documents do NOT answer — what `ba` will need to clarify with the user (e.g. missing API schema, undeclared auth flow, no wireframe for a listed screen)>
 
@@ -71,6 +98,7 @@ Write exactly this scaffold, filled from sources:
 | docs/briefs/v1.md | md | 2026-05-20 | primary brief |
 | docs/spec.pdf | pdf | 2026-05-22 | full spec, extracted via pdf skill |
 | docs/wireframes/home.png | png | 2026-05-21 | home screen mockup |
+| docs/design/my-prototype/ | dir | 2026-05-23 | Claude-design prototype (4 screens, 12 tokens) |
 | docs/legacy.xlsx | xlsx | 2026-05-15 | unprocessed: unsupported format |
 ```
 
@@ -79,6 +107,7 @@ The project slug for the H1 comes from the basename of the repo root if no bette
 ## Hard limits
 
 - **Never invent facts** not present in source documents. If a section has no supporting source, write `TODO — source missing` in that section. The _Source documents_ table makes every gap auditable.
+- **Describe design intent, not implementation.** When reading a Claude-design prototype, extract token values and describe screen layouts and component inventory. Never reproduce inline styles, Babel transforms, or prototype-specific code patterns into PROJECT.md.
 - **Never write outside `docs/PROJECT.md`.** No edits to source briefs, no new ADRs, no `templates/` writes.
 - **Never run `git commit` or `git push`.** The orchestrator (`/synthesize-brief`) handles git: feature branch, commit, push, `gh pr create`. You only write the file.
 - **Skip unsupported binaries gracefully.** List them in the _Source documents_ table with `unprocessed: <reason>`; do not crash the synthesis.
@@ -86,4 +115,4 @@ The project slug for the H1 comes from the basename of the repo root if no bette
 
 > Pair: `/synthesize-brief` (the invoking command) -> this agent -> orchestrator creates the PR.
 
-<!-- Last reviewed/updated: 2026-06-05 (ported from claude-django: typed per-extension readers, fixed 9-section scaffold + source table, hard limits) -->
+<!-- Last reviewed/updated: 2026-06-10 -->

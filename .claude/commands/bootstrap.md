@@ -29,28 +29,36 @@ Present the detected mode and ask the user to confirm before proceeding.
 
 ### Step 0: Contract source
 
-Before creating any files, ask which OpenAPI contract model this frontend will consume. The answer determines what goes into `.env.example` (Step 1) and how `api:pull` works (Step 9).
+Before creating any files, ask how THIS project gets its OpenAPI contract.
+
+> Note: `VadayI/claude-api-contract` and `VadayI/claude-django` are **reference templates** — examples of how to structure a contract repo or a Django/DRF backend. For a real project you point at your **own** repo or backend, structured like those templates.
 
 Use `AskUserQuestion`:
 
 - header: `"Contract source"`
-- question: `"Which API contract source will this frontend consume?"`
+- question: `"How does THIS project get its OpenAPI contract? (claude-api-contract and claude-django are reference templates — for a real project, provide your OWN contract repo or backend URL structured like them.)"`
 - options:
-  - **`VadayI/claude-api-contract` (Recommended)** — External contract repo, version-pinned tag. Enables the drift gate + contract-sync CI gate out of the box.
-  - **`VadayI/claude-django`** — Django/DRF backend generates the schema. Pulls from the running backend's `/api/schema/` endpoint.
-  - **Custom OpenAPI URL** — Your own backend or schema URL. You supply the full URL.
+  - **Own contract repo (like `claude-api-contract`) (Recommended)** — Your own versioned OpenAPI repo (structured like `VadayI/claude-api-contract`). Enables the drift gate + contract-sync CI gates out of the box. You'll provide `OWNER/REPO` + a pinned tag.
+  - **Own Django/DRF backend (like `claude-django`)** — Your own Django/DRF backend (structured like `VadayI/claude-django`) serving the schema at `/api/schema/`. You'll provide the OpenAPI URL.
+  - **Custom OpenAPI URL** — Any other OpenAPI schema accessible by URL.
 
 Record the answer as `CONTRACT_SOURCE` (A / B / C) for use in Steps 1 and 9.
 
-**Variant A — `claude-api-contract`:**
+**After the choice, collect the real values:**
 
-- `.env.example` gets: `CONTRACT_REPO=VadayI/claude-api-contract` + `CONTRACT_VERSION={TODO: pin a tag, e.g. v0.2.0}` + `VITE_API_BASE_URL=http://localhost:4010`
-- `npm run api:pull` works as-is (fetches GitHub raw at the pinned tag).
+- **Variant A:** Ask for `CONTRACT_REPO` (format: `OWNER/REPO`, e.g. `your-org/your-api-contract`) and `CONTRACT_VERSION` (a pinned tag, e.g. `v0.1.0`). If the contract repo does not exist yet — record both as `{TODO}` and defer `api:pull`/`api:types` to Step 9.
+- **Variant B:** Ask for `VITE_OPENAPI_URL` (the Django `/api/schema/` endpoint). If the backend is not yet running — record as `{TODO}`.
+- **Variant C:** Ask for the full OpenAPI schema URL. If not yet available — record as `{TODO}`.
+
+**Variant A — own contract repo:**
+
+- `.env.example` gets: `CONTRACT_REPO=<user-provided OWNER/REPO or {TODO}>` + `CONTRACT_VERSION=<user-provided tag or {TODO}>` + `VITE_API_BASE_URL=http://localhost:4010`
+- `npm run api:pull` works as-is once `CONTRACT_REPO`/`CONTRACT_VERSION` are filled in (fetches GitHub raw at the pinned tag).
 - Both CI gates (`check_types_drift.sh` + `check_contract_sync.sh`) apply.
 
-**Variant B — `claude-django`:**
+**Variant B — own Django/DRF backend:**
 
-- `.env.example` gets: `VITE_API_BASE_URL=http://localhost:8000` + `VITE_OPENAPI_URL=http://localhost:8000/api/schema/`
+- `.env.example` gets: `VITE_API_BASE_URL=http://localhost:8000` + `VITE_OPENAPI_URL=<user-provided URL or {TODO}>`
 - `npm run api:pull` does **not** support arbitrary URLs. Use instead:
   `curl -fsSL "$VITE_OPENAPI_URL" -o src/lib/api/openapi.yml && npm run api:types`
 - `check_contract_sync.sh` assumes a GitHub raw source — disable it in CI for this variant or leave as advisory.
@@ -58,7 +66,7 @@ Record the answer as `CONTRACT_SOURCE` (A / B / C) for use in Steps 1 and 9.
 
 **Variant C — custom URL:**
 
-- `.env.example` gets: `VITE_API_BASE_URL=` + `VITE_OPENAPI_URL={TODO: fill your OpenAPI schema URL}`
+- `.env.example` gets: `VITE_API_BASE_URL=` + `VITE_OPENAPI_URL=<user-provided URL or {TODO}>`
 - Same `api:pull` note as Variant B — use `curl` or adapt `scripts/api-pull.mjs`.
 - Disable or adapt `check_contract_sync.sh` in CI.
 
@@ -69,9 +77,9 @@ Copy and instantiate from `templates/`:
 - `package.json` with all deps: React 19, Vite 6, MUI 6, React Router 7, TanStack Query 5, Zustand 5, Vitest+RTL+MSW, jest-axe, Playwright, openapi-typescript, ESLint+Prettier, TypeScript.
 - `vite.config.ts`, `tsconfig.json`, `tsconfig.node.json`, `index.html`.
 - `.env.example` — configured per `CONTRACT_SOURCE` from Step 0:
-  - **Variant A:** `VITE_API_BASE_URL=http://localhost:4010`, `CONTRACT_REPO=VadayI/claude-api-contract`, `CONTRACT_VERSION={TODO: pin a tag, e.g. v0.2.0}`, `VITE_MSW_ENABLED=false`
-  - **Variant B:** `VITE_API_BASE_URL=http://localhost:8000`, `VITE_OPENAPI_URL=http://localhost:8000/api/schema/`, `VITE_MSW_ENABLED=false`
-  - **Variant C:** `VITE_API_BASE_URL=`, `VITE_OPENAPI_URL={TODO: fill your OpenAPI schema URL}`, `VITE_MSW_ENABLED=false`
+  - **Variant A:** `VITE_API_BASE_URL=http://localhost:4010`, `CONTRACT_REPO=<user value or {TODO}>`, `CONTRACT_VERSION=<user tag or {TODO}>`, `VITE_MSW_ENABLED=false`
+  - **Variant B:** `VITE_API_BASE_URL=http://localhost:8000`, `VITE_OPENAPI_URL=<user URL or {TODO}>`, `VITE_MSW_ENABLED=false`
+  - **Variant C:** `VITE_API_BASE_URL=`, `VITE_OPENAPI_URL=<user URL or {TODO}>`, `VITE_MSW_ENABLED=false`
 - `.gitignore` (node_modules, dist, .env, coverage, playwright-report, .claude/memory/).
 - `eslint.config.js`, `.prettierrc`.
 
@@ -164,7 +172,7 @@ Copy `templates/CLAUDE.md`, filling in the project name and repo URL. Append all
 
 Behaviour depends on `CONTRACT_SOURCE` from Step 0.
 
-**Variant A (`claude-api-contract`)** — if `CONTRACT_VERSION` is set (user filled it in `.env`):
+**Variant A (own contract repo)** — if `CONTRACT_REPO` and `CONTRACT_VERSION` are filled in (not `{TODO}`):
 
 ```bash
 npm install
@@ -174,7 +182,9 @@ npm run api:types
 
 Commit the generated `src/lib/api/openapi.yml` + `src/lib/api/schema.d.ts`.
 
-**Variant B (`claude-django`)** — if `VITE_OPENAPI_URL` is set and the backend is running:
+If either value is still `{TODO}`, skip this step — run `api:pull`/`api:types` once the contract repo exists and both values are filled in `.env`.
+
+**Variant B (own Django/DRF backend)** — if `VITE_OPENAPI_URL` is set and the backend is running:
 
 ```bash
 npm install
@@ -215,7 +225,7 @@ Note: on free+private repos the API returns 403 — that is EXPECTED. Keep PR-on
 
 ### Step 12: Report
 
-Summarize what was created, including the chosen contract variant (A / B / C) and any manual steps remaining (schema pull, `CONTRACT_VERSION` to fill). For Variant B / C, note the manual schema-pull command and the CI gate advisory. Recommend: `/synthesize-brief` (if a brief doc exists in `docs/`) → `/preflight` → first feature via the pipeline.
+Summarize what was created, including the chosen contract variant (A / B / C) and any manual steps remaining. For Variant A with `{TODO}` placeholders: fill `CONTRACT_REPO` and `CONTRACT_VERSION` in `.env`, then run `npm run api:pull && npm run api:types`. For Variant B / C, note the manual schema-pull command and the CI gate advisory. Recommend: `/synthesize-brief` (if a brief doc exists in `docs/`) → `/preflight` → first feature via the pipeline.
 
 ## Mode B — Resume / existing-incomplete
 
@@ -231,4 +241,4 @@ Summarize what was created, including the chosen contract variant (A / B / C) an
 - Never run `npm run dev` or start a dev server — write files only.
 - Never invent endpoints or components beyond the minimal scaffold.
 
-<!-- last reviewed: 2026-06-09 -->
+<!-- last reviewed: 2026-06-10 -->

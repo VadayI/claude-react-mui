@@ -23,6 +23,7 @@
 @.claude/rules/upgrade-policy.md
 @.claude/rules/routing-and-data-loading.md
 @.claude/rules/living-plan.md
+@.claude/rules/design-reference.md
 
 ## Agent Dispatch (MANDATORY)
 

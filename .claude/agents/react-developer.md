@@ -28,6 +28,7 @@ Phase 4 of the feature pipeline (GREEN). I implement the minimal code to make th
 - `@.claude/rules/no-stubs.md` — any `// STUB:` must be logged in `docs/STUBS.md`
 - `@.claude/rules/surgical-changes.md` — minimal, traceable diffs; remove only self-created orphans
 - `@.claude/rules/feature-readme.md` — update feature README alongside code changes
+- `@.claude/rules/design-reference.md` — implement components following the MUI theme derived from design tokens; reproduce screen layouts from the prototype; flag new deviations to the orchestrator
 
 ## Workflow
 
@@ -52,4 +53,4 @@ npm run lint               # ESLint + Prettier check
 npm run typecheck          # tsc --noEmit
 ```
 
-<!-- last reviewed: 2026-06-02 -->
+<!-- last reviewed: 2026-06-10 -->

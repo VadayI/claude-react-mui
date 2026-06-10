@@ -9,6 +9,7 @@
 **Last PR merged:** #29 — `fix(docs): align api-error-and-pagination rule with actual contract envelopes`
 
 The app is a fully working React + MUI frontend with:
+
 - JWT auth (login/logout with QueryCache flush, RequireAuth guard)
 - Articles CRUD (list + protected routes)
 - Full test suite: 82 Vitest tests (13 files) + Playwright E2E (6 tests)
@@ -38,15 +39,15 @@ The app is a fully working React + MUI frontend with:
 
 ## Gate status (last run)
 
-| Gate | Status |
-|------|--------|
-| typecheck | ✅ |
-| lint | ✅ |
-| tests | ✅ 82 passed |
-| types-drift | ✅ |
-| stubs | ✅ |
-| file-size | ✅ |
-| feature-readmes | ✅ |
+| Gate            | Status       |
+| --------------- | ------------ |
+| typecheck       | ✅           |
+| lint            | ✅           |
+| tests           | ✅ 82 passed |
+| types-drift     | ✅           |
+| stubs           | ✅           |
+| file-size       | ✅           |
+| feature-readmes | ✅           |
 
 ## Key files
 
