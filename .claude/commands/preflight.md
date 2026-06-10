@@ -27,9 +27,9 @@ Confirm the stack is declared in `CLAUDE.md` and `package.json` with consistent 
 
 ### 3. OpenAPI contract reachable
 
-This frontend consumes the `VadayI/claude-api-contract` schema. The contract is the primary design input.
+This frontend consumes its own OpenAPI contract (`CONTRACT_REPO` in `.env`, structured like `VadayI/claude-api-contract`). The contract is the primary design input.
 
-- Check `CONTRACT_VERSION` is set in `.env` and `CONTRACT_REPO` is defined (default: `VadayI/claude-api-contract`).
+- Check both `CONTRACT_VERSION` and `CONTRACT_REPO` are set in `.env` (configured during `/bootstrap` Step 0 — there is no fallback default).
 - Run `npm run api:pull` (dry-run or real) to confirm the contract tag is reachable from GitHub.
 - If reachable: run `npm run api:types` and confirm `src/lib/api/schema.d.ts` is in sync (`bash scripts/check_types_drift.sh`).
 - If unreachable: STOP — OR proceed only on explicit user override (noting that API types will be unverified against the current contract). Record the override in `docs/WORKLOG.md`.
@@ -46,4 +46,4 @@ This frontend consumes the `VadayI/claude-api-contract` schema. The contract is 
 
 Print a readiness table: Item → Status (✅/❌/⚠️) → Action. If all ✅ → recommend dispatching `ba` to start the first feature. If any ❌ → STOP with the specific blocker and what the user must provide.
 
-<!-- last reviewed: 2026-06-09 -->
+<!-- last reviewed: 2026-06-10 -->

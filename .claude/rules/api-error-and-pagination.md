@@ -10,6 +10,7 @@ The contract defines two error shapes (see `schema.d.ts` — `ErrorDetail`, `Val
 - **Validation errors** (400) — `ValidationErrors { errors: FieldError[] }` where `FieldError { field: string, code: string, message: string }`.
 
 The API client (@.claude/rules/api-client.md) maps every non-2xx into one typed `ApiError { status, code, detail, fieldErrors? }`:
+
 - `ErrorDetail.detail` → `ApiError.detail`
 - `ValidationErrors.errors` → `ApiError.fieldErrors`
 
