@@ -4,6 +4,45 @@ Cross-machine work history. Updated at the end of every session (`/wrap-up`) and
 
 ---
 
+## 2026-06-10 — bootstrap-contract-source-and-design-reference
+
+### Done
+
+- **PR #31** — `chore(config): bootstrap contract-source fix + design-reference rule` — дві конфіг-зміни:
+  - `/bootstrap` Step 0 тепер питає реальний `OWNER/REPO` контракту; ніколи не підставляє `VadayI/claude-api-contract` мовчки; завжди `{TODO}` якщо немає свого
+  - `.env.example` `CONTRACT_REPO` / `CONTRACT_VERSION` — тепер порожні з пояснювальними коментарями
+  - `/preflight` (команда + rule) оновлено — видалено посилання на template-repo
+- **Новий rule** `.claude/rules/design-reference.md` (auto-loaded через CLAUDE.md): визначає Claude-design прототипи під `docs/design/<name>/`, статус «дуже сильна рекомендація», правило відхилень (project-memory + PROJECT.md), пріоритет a11y/контракту над дизайном
+- **`/synthesize-brief`** оновлено: скан `docs/design/` → Step 1.5 (AskUserQuestion + збір відхилень у project-memory) → передача `design_folder` + `design_deviations` до brief-synthesizer; секції 9 та 10 у виході PROJECT.md
+- **`brief-synthesizer`** агент: дизайн-папка як першокласний вхід (токени, ui-kit, screen-*, app-data, api-*.md); дві нові секції у фіксованому scaffold
+- **`ui-architect`** агент: `design-reference.md` у Standards + новий крок 2 (токени → MUI theme, екрани → дерево, шанує deviations)
+- **`react-developer`** агент: `design-reference.md` додано до Standards
+- `schema.d.ts` регенеровано під стабільний формат openapi-typescript 7.13.0 (подвійні лапки + крапки з комою)
+
+### Gate status
+
+- typecheck: ✅
+- lint: ✅
+- tests: ✅ (82 passed, 13 test files)
+- types-drift: ✅
+- contract-sync: ✅
+- stubs: ✅
+- file-size: ✅
+- feature-readmes: ✅
+
+### Open items
+
+- `api-client.md`: варто додати нотатку про теги v0.3.0+/v0.4.0+ у `claude-api-contract` без `openapi.yml`
+- Dead `page.route()` у `e2e/articles.spec.ts` — pre-existing; прибрати окремим PR
+
+### Next steps
+
+- Наступна фіча → стандартний pipeline (`ba → ui-architect → tester → react-developer → ...`)
+- Додати нотатку в `api-client.md` про теги без openapi.yml
+
+---
+
+
 ## 2026-06-09 — bootstrap-contract-source-question
 
 ### Done
