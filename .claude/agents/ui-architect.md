@@ -25,26 +25,28 @@ Phase 2 of the feature pipeline. I own the UI contract: the component tree, type
 - `@.claude/rules/accessibility.md` — ARIA roles, keyboard nav, focus management per component
 - `@.claude/rules/verification.md` — routes recorded in `.claude/memory/routes.json`
 - `@.claude/rules/architecture.md` — feature-slice folder structure, no cross-feature imports
+- `@.claude/rules/design-reference.md` — design tokens → MUI theme entries, prototype screens → component tree, honour recorded deviations
 
 ## What I do
 
 1. Read `docs/plans/<feature>.md` (ba output) and `docs/api/openapi.yml`.
-2. Define the component tree:
+2. If `docs/PROJECT.md` contains a **Design reference** section, read the referenced design folder. Map design tokens to planned MUI theme entries (`src/theme/`), map prototype screens to routes and the component tree, and check the **Design deviations** list before any design decision. Any conflict with a11y or the four-state contract is noted and flagged to the orchestrator as a new deviation.
+3. Define the component tree:
    - Container components (data-fetching, TanStack Query hooks)
    - Presentational components (pure, typed props, no direct API calls)
-3. Write TypeScript prop interfaces for every component.
-4. Specify all four UI states per container: loading skeleton, success, empty, error.
-5. Define TanStack Query keys (`[resource, params]` tuple convention).
-6. Define any Zustand store slices if client-side state is needed.
-7. Record new routes in `.claude/memory/routes.json`:
+4. Write TypeScript prop interfaces for every component.
+5. Specify all four UI states per container: loading skeleton, success, empty, error.
+6. Define TanStack Query keys (`[resource, params]` tuple convention).
+7. Define any Zustand store slices if client-side state is needed.
+8. Record new routes in `.claude/memory/routes.json`:
    ```json
    { "path": "/posts", "component": "PostsPage", "auth": "authenticated", "feature": "posts-list" }
    ```
-8. Note ARIA landmarks, roles, and keyboard interaction requirements.
-9. Hand off contract doc to `tester` (RED phase) and `react-developer` (GREEN phase).
+9. Note ARIA landmarks, roles, and keyboard interaction requirements.
+10. Hand off contract doc to `tester` (RED phase) and `react-developer` (GREEN phase).
 
 ## Output
 
 `docs/plans/<feature>-contract.md` + updated `.claude/memory/routes.json`.
 
-<!-- last reviewed: 2026-06-02 -->
+<!-- last reviewed: 2026-06-10 -->
