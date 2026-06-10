@@ -1,12 +1,12 @@
 # HANDOFF — claude-react-mui
 
 > Read this first when joining the project. Updated by `/wrap-up` at end of each session.
-> Last updated: 2026-06-10 (session — bootstrap-contract-source-and-design-reference)
+> Last updated: 2026-06-10 (session — template-v1-complete)
 
 ## Current state
 
 **Branch:** `main`
-**Last PR merged:** #31 — `chore(config): bootstrap contract-source fix + design-reference rule`
+**Last PR merged:** #33 — `docs: minor WORKLOG cleanup`
 
 The app is a fully working React + MUI frontend with:
 
@@ -16,36 +16,38 @@ The app is a fully working React + MUI frontend with:
 - All CI gates passing
 - Claude Code config: design-reference rule wired into /synthesize-brief and UI agents
 
+**Template status: v1 COMPLETE** — шаблон вважається стабільним і завершеним у поточній версії. Подальша робота — або новий проєкт на базі шаблону, або нова версія шаблону.
+
 ## What was done this session
 
-1. **PR #31 merged** — two config improvements to the Claude Code orchestration layer:
-   - `/bootstrap` no longer silently defaults to `VadayI/claude-api-contract`; asks for the real `OWNER/REPO`, uses `{TODO}` when none exists; `.env.example` blanked with guidance comments
-   - New `.claude/rules/design-reference.md`: Claude-design prototypes as first-class UI source of truth; `/synthesize-brief` Step 1.5 + `brief-synthesizer` + `ui-architect` + `react-developer` all wired
-2. `schema.d.ts` regenerated to stable openapi-typescript 7.13.0 format (double-quotes + semicolons)
+1. **`/audit`** — виявлено phantom diff `schema.d.ts` (9p inode cache). Після регенерації `npm run api:types` файл збігся з HEAD — реальних змін не було.
+2. **PR #33 змержено** — мінорна косметика WORKLOG.
+3. **`/preflight`** — всі критичні пункти ✅: brief, stack, contract (`v0.2.0`), GitHub, Context7. DX-нотатка: `api:pull` потребує env vars у shell.
+4. **Оголошено завершення роботи над версією шаблону.**
 
 ## Next steps
 
-- Next feature → standard pipeline (`ba → ui-architect → tester → react-developer → ...`)
-- Consider adding a note in `.claude/rules/api-client.md` about v0.3.0+/v0.4.0+ tags not containing `openapi.yml`
-- Clean up dead `page.route()` code in `e2e/articles.spec.ts` (small PR)
+- Використати шаблон для нового проєкту: `bash <(curl -fsSL .../install.sh)` → `/bootstrap` Mode A
+- Або відкрити нову версію шаблону (React 19 / MUI 7 bump тощо)
 
 ## Open questions
 
-- Should we add a `contract-tags-without-schema` note to `api-client.md` as a guard for future maintainers?
-- When will `claude-api-contract` publish a tag with a changed openapi.yml (triggering an actual frontend pin bump)?
+- Чи варто додати `api:pull` auto-load `.env` у скрипт (або нотатку у `docs/guides/developer.md`)?
+- Чи варто додати нотатку в `api-client.md` про теги контракту без `openapi.yml` (v0.3+/v0.4+)?
+- Коли `claude-api-contract` опублікує тег з реальними змінами в `openapi.yml` (тригер для pin bump)?
 
 ## Gate status (last run)
 
-| Gate            | Status        |
-| --------------- | ------------- |
-| typecheck       | ✅            |
-| lint            | ✅            |
-| tests           | ✅ 82 passed  |
-| types-drift     | ✅            |
-| contract-sync   | ✅            |
-| stubs           | ✅            |
-| file-size       | ✅            |
-| feature-readmes | ✅            |
+| Gate            | Status       |
+| --------------- | ------------ |
+| typecheck       | ✅           |
+| lint            | ✅           |
+| tests           | ✅ 82 passed |
+| types-drift     | ✅           |
+| contract-sync   | ✅           |
+| stubs           | ✅           |
+| file-size       | ✅           |
+| feature-readmes | ✅           |
 
 ## Key files
 
@@ -53,6 +55,6 @@ The app is a fully working React + MUI frontend with:
 - `src/features/auth/` — login, logout, RequireAuth guard, authStore
 - `src/features/articles/` — articles list, API hooks
 - `e2e/` — Playwright specs (auth + articles)
-- `.claude/rules/design-reference.md` — NEW: Claude-design prototype as UI source of truth
-- `.claude/commands/synthesize-brief.md` — updated: scans docs/design/, Step 1.5, design_folder dispatch
-- `docs/verify/auth.md` — manual verification checklist for auth feature
+- `.claude/rules/design-reference.md` — Claude-design prototype as UI source of truth
+- `.claude/commands/synthesize-brief.md` — scans docs/design/, Step 1.5, design_folder dispatch
+- `docs/verify/auth.md` + `docs/verify/articles.md` — manual verification checklists

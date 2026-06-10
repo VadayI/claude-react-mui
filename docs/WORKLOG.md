@@ -4,6 +4,40 @@ Cross-machine work history. Updated at the end of every session (`/wrap-up`) and
 
 ---
 
+## 2026-06-10b — template-v1-complete
+
+### Done
+
+- **`/audit`** — перевірка стану після сесії. Виявлено phantom diff `schema.d.ts` (9p inode cache). Після `npm run api:types` файл збігся з HEAD — реальних змін не було.
+- **PR #33 змержено** — `docs/wrap-up-*` (мінорна косметика WORKLOG: escape `*` → `_`, видалення зайвого рядка).
+- **`/preflight`** — повний audit build-inputs: brief ✅, stack ✅, contract (`VadayI/claude-api-contract@v0.2.0`) ✅, GitHub ✅, Context7 ✅. `docs/design/` відсутній (не блокер). DX-нотатка задокументована: `api:pull` потребує `CONTRACT_VERSION` + `CONTRACT_REPO` в shell env (не тільки в `.env`).
+- **Оголошено завершення роботи над цією версією шаблону** — `claude-react-mui` v1 вважається стабільним і завершеним.
+
+### Gate status
+
+- typecheck: ✅
+- lint: ✅
+- tests: ✅ (82 passed, 13 test files)
+- types-drift: ✅
+- contract-sync: ✅
+- stubs: ✅
+- file-size: ✅
+- feature-readmes: ✅
+
+### Open items
+
+- `api-client.md`: нотатка про теги v0.3.0+/v0.4.0+ у `claude-api-contract` без `openapi.yml` (низький пріоритет, документаційне)
+- Dead `page.route()` у `e2e/articles.spec.ts` (pre-existing, низький пріоритет)
+- `api:pull` вимагає env vars у shell — розглянути auto-load `.env` у скрипті або нотатку в `docs/guides/developer.md`
+
+### Next steps
+
+- Шаблон завершено. Наступний крок — використати його для нового проєкту: `bash <(curl -fsSL .../install.sh)` + `/bootstrap` Mode A
+- Або: відкрити нову версію шаблону (React 19 bump, MUI 7, тощо) у новій гілці
+
+---
+
+
 ## 2026-06-10 — bootstrap-contract-source-and-design-reference
 
 ### Done
