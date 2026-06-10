@@ -14,7 +14,7 @@ Cross-machine work history. Updated at the end of every session (`/wrap-up`) and
   - `/preflight` (команда + rule) оновлено — видалено посилання на template-repo
 - **Новий rule** `.claude/rules/design-reference.md` (auto-loaded через CLAUDE.md): визначає Claude-design прототипи під `docs/design/<name>/`, статус «дуже сильна рекомендація», правило відхилень (project-memory + PROJECT.md), пріоритет a11y/контракту над дизайном
 - **`/synthesize-brief`** оновлено: скан `docs/design/` → Step 1.5 (AskUserQuestion + збір відхилень у project-memory) → передача `design_folder` + `design_deviations` до brief-synthesizer; секції 9 та 10 у виході PROJECT.md
-- **`brief-synthesizer`** агент: дизайн-папка як першокласний вхід (токени, ui-kit, screen-*, app-data, api-*.md); дві нові секції у фіксованому scaffold
+- **`brief-synthesizer`** агент: дизайн-папка як першокласний вхід (токени, ui-kit, screen-_, app-data, api-_.md); дві нові секції у фіксованому scaffold
 - **`ui-architect`** агент: `design-reference.md` у Standards + новий крок 2 (токени → MUI theme, екрани → дерево, шанує deviations)
 - **`react-developer`** агент: `design-reference.md` додано до Standards
 - `schema.d.ts` регенеровано під стабільний формат openapi-typescript 7.13.0 (подвійні лапки + крапки з комою)
@@ -41,7 +41,6 @@ Cross-machine work history. Updated at the end of every session (`/wrap-up`) and
 - Додати нотатку в `api-client.md` про теги без openapi.yml
 
 ---
-
 
 ## 2026-06-09 — bootstrap-contract-source-question
 
