@@ -25,7 +25,7 @@ Infrastructure agent for the frontend: Docker images, nginx static serving, VPS 
 ## What I do
 
 1. **Docker multi-stage build**:
-   - Stage 1: `node:20-alpine` builder — `npm ci`, `npm run build` → `/app/dist`
+   - Stage 1: `node:24-alpine` builder — `npm ci`, `npm run build` → `/app/dist`
    - Stage 2: `nginx:alpine` — copy `/app/dist`, inject nginx config
 2. **nginx config** — serve `index.html` for all routes (SPA fallback), gzip, cache headers for assets, proxy `/api/` to backend.
 3. **Environment wiring** — `VITE_API_BASE_URL` and other `VITE_*` vars via `.env.production` or Docker build-args; confirm no secrets are baked in.

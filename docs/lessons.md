@@ -39,3 +39,21 @@ Durable lessons from building this project — patterns that worked, traps to av
 **Lesson:** what the mount _can_ do reliably is **create new files** and **overwrite existing text files in place** (`cp` / `>`), plus **rename to a new name**. It **cannot** delete files, replace files via rename-over-existing, write binary blobs, or run git ops that take an index lock (commit/add/rm/reset, index rebuild). Do those on the **native Windows shell**. Recovering a broken repo: `.git/HEAD` (tiny ASCII) is safe to rewrite from the sandbox; `.git/index` must be rebuilt natively (`del .git\index && git reset`).
 
 **Applies to:** any file deletion, git index/commit operations, and any binary file under the mount.
+
+---
+
+### PR A (ADR 0023) — time-boxed tooling peer-dep known-risks
+
+**Context (PR A — TypeScript 6 / Node 24 / ESLint 10 staged upgrade):**
+
+Two peer-dependency gaps exist at the time of PR A and are resolved via `.npmrc legacy-peer-deps=true` (committed, affects `npm install` and `npm ci` equally):
+
+1. **`openapi-typescript@^7.13.0`** declares peer `typescript ^5.x` but the project now runs TypeScript 6. Installed via `legacy-peer-deps=true` and verified working (`npm run api:types` regenerates `schema.d.ts`, drift gate green). Revisit and remove the allowance once openapi-typescript publishes a TS-6 peer range. (ADR 0023)
+
+2. **`eslint-plugin-jsx-a11y@6.10.2`** peer-caps at `eslint ^9`; ESLint 10 is forced via the same `.npmrc legacy-peer-deps=true`. Revisit once jsx-a11y declares an eslint-10 peer.
+
+**Wider consequences:** `legacy-peer-deps=true` is tree-wide — it affects PRs B–E as well as local `npm install`. Plan to **REMOVE** it in the final sweep (PR E) once both peers are published. Two moderate `js-yaml` advisories (via dev-only `@redocly/openapi-core`) are currently accepted — `npm audit --audit-level=high` is clean. Recheck at PR E.
+
+**Lesson:** when a tooling-level peer gap blocks a coordinated upgrade, a committed `.npmrc legacy-peer-deps=true` is the correct npm mechanism (overrides cannot relax declared peers). Record the time-box here in `docs/lessons.md` (not in `docs/api/CONTRACT_ISSUES.md`, which is reserved for API-schema deviations in the two-way contract loop with the contract repo). Track the two peer releases and remove `legacy-peer-deps` as soon as both are available.
+
+**Applies to:** `.npmrc`, `package.json` devDependencies (`openapi-typescript`, `eslint-plugin-jsx-a11y`), PRs B–E.
