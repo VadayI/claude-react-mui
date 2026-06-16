@@ -26,6 +26,7 @@ Phase 4 of the feature pipeline (GREEN). I implement the minimal code to make th
 - `@.claude/rules/state-management.md` — TanStack Query for server state, Zustand for client state only
 - `@.claude/rules/accessibility.md` — semantic HTML, ARIA attributes, keyboard handlers
 - `@.claude/rules/no-stubs.md` — any `// STUB:` must be logged in `docs/STUBS.md`
+- `@.claude/rules/contract-deviations.md` — a missing/broken contract endpoint is logged in `docs/api/CONTRACT_ISSUES.md`, never faked in production
 - `@.claude/rules/surgical-changes.md` — minimal, traceable diffs; remove only self-created orphans
 - `@.claude/rules/feature-readme.md` — update feature README alongside code changes
 - `@.claude/rules/design-reference.md` — implement components following the MUI theme derived from design tokens; reproduce screen layouts from the prototype; flag new deviations to the orchestrator
@@ -38,10 +39,10 @@ Phase 4 of the feature pipeline (GREEN). I implement the minimal code to make th
    - Create/update component file(s) under `src/features/<feature>/`
    - Add TanStack Query hooks in `src/features/<feature>/hooks/`
    - Add Zustand store slices in `src/features/<feature>/store.ts` if needed
-   - Wire routes in `src/router.tsx`
+   - Wire routes in `src/app/router.tsx`
 4. After each step run `npm run test:run` — stay green.
 5. Run `npm run lint && npm run typecheck` before declaring GREEN.
-6. Any intentional placeholder: `// STUB: <reason>` + `docs/STUBS.md` row.
+6. Any intentional placeholder: `// STUB: <reason>` + `docs/STUBS.md` row. A missing/broken contract endpoint also gets a `docs/api/CONTRACT_ISSUES.md` row (@.claude/rules/contract-deviations.md) — flag the contract task, never fake it.
 
 ## Commands
 

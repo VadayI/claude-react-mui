@@ -37,7 +37,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
       - run: npm ci
 
@@ -47,7 +47,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with: { node-version: '20', cache: 'npm' }
+        with: { node-version: '22', cache: 'npm' }
       - run: npm ci
       - run: npx tsc --noEmit
 
@@ -57,7 +57,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with: { node-version: '20', cache: 'npm' }
+        with: { node-version: '22', cache: 'npm' }
       - run: npm ci
       - run: npx eslint . --max-warnings=0
       - run: npx prettier --check .
@@ -68,7 +68,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with: { node-version: '20', cache: 'npm' }
+        with: { node-version: '22', cache: 'npm' }
       - run: npm ci
       - run: npx vitest run --coverage
       - run: bash scripts/check_stubs.sh
@@ -87,7 +87,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with: { node-version: '20', cache: 'npm' }
+        with: { node-version: '22', cache: 'npm' }
       - run: npm ci
       - run: npm run build
 
@@ -97,7 +97,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with: { node-version: '20', cache: 'npm' }
+        with: { node-version: '22', cache: 'npm' }
       - run: npm ci
       - run: npx playwright install --with-deps chromium firefox
       - run: npx playwright test
@@ -111,10 +111,13 @@ jobs:
 ## Gate scripts (check before pushing)
 
 ```bash
-bash scripts/check_stubs.sh          # no STUB: markers in src/ outside tests
-bash scripts/check_file_size.sh      # no src/ .ts/.tsx file over 800 lines
+npm audit --audit-level=high          # fail on high/critical advisories
+bash scripts/check_stubs.sh           # no // STUB: markers in src/ outside tests (must be logged in docs/STUBS.md)
+bash scripts/check_file_size.sh       # no src/ .ts/.tsx file over 400 lines (schema.d.ts exempt)
 bash scripts/check_feature_readmes.sh # every src/features/<name>/ has README.md
-bash scripts/check_types_drift.sh    # regenerate schema.d.ts and diff — fail on drift
+bash scripts/check_types_drift.sh     # regenerate schema.d.ts and diff — fail on drift
+bash scripts/check_contract_sync.sh   # vendored openapi.yml matches the pinned contract tag (sha256)
+bash scripts/check_bundle_size.sh     # bundle within .performance-budget.json (after build)
 ```
 
 ## Local commands
@@ -136,7 +139,7 @@ npm run build           # vite build
 coverage: {
   provider: 'v8',
   thresholds: { lines: 80, functions: 80, branches: 70, statements: 80 },
-  exclude: ['src/api/schema.d.ts', '**/*.stories.*', 'src/mocks/**'],
+  exclude: ['src/lib/api/schema.d.ts', '**/*.stories.*', 'src/mocks/**'],
 }
 ```
 

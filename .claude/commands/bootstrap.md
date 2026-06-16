@@ -15,7 +15,7 @@ node scripts/log-cmd.mjs /bootstrap "$ARGUMENTS"
 Before doing ANYTHING:
 
 1. Read `.claude/memory/env-detect.json`. If `platform_supported: false` or `wrong_runner_suspected: true` → **HARD STOP: UNSUPPORTED_PLATFORM**. Instruct the user to run WSL2-native Claude CLI.
-2. If `node_supported: false` or Node < 18 → **HARD STOP: NO_NODE**. Instruct `nvm install --lts`.
+2. If `node_supported: false` or Node < 20.19 → **HARD STOP: NO_NODE**. Instruct `nvm install --lts`.
 3. Run `gh repo view` to confirm GitHub access. If it fails → HARD STOP and ask the user to fix credentials.
 
 ## Mode detection
@@ -72,9 +72,9 @@ Record the answer as `CONTRACT_SOURCE` (A / B / C) for use in Steps 1 and 9.
 
 ### Step 1: Create project skeleton
 
-Copy and instantiate from `templates/`:
+Author the project config inline (these files are **not** in `templates/` — generate them for the pinned stack):
 
-- `package.json` with all deps: React 19, Vite 6, MUI 6, React Router 7, TanStack Query 5, Zustand 5, Vitest+RTL+MSW, jest-axe, Playwright, openapi-typescript, ESLint+Prettier, TypeScript.
+- `package.json` with all deps: React 18.3, Vite 8, MUI 6, React Router 6 (data router), TanStack Query 5, Zustand 5, Vitest+RTL+MSW, jest-axe, Playwright, openapi-typescript, openapi-fetch, react-hook-form, zod, ESLint+Prettier, TypeScript.
 - `vite.config.ts`, `tsconfig.json`, `tsconfig.node.json`, `index.html`.
 - `.env.example` — configured per `CONTRACT_SOURCE` from Step 0:
   - **Variant A:** `VITE_API_BASE_URL=http://localhost:4010`, `CONTRACT_REPO=<user value or {TODO}>`, `CONTRACT_VERSION=<user tag or {TODO}>`, `VITE_MSW_ENABLED=false`
@@ -82,37 +82,40 @@ Copy and instantiate from `templates/`:
   - **Variant C:** `VITE_API_BASE_URL=`, `VITE_OPENAPI_URL=<user URL or {TODO}>`, `VITE_MSW_ENABLED=false`
 - `.gitignore` (node_modules, dist, .env, coverage, playwright-report, .claude/memory/).
 - `eslint.config.js`, `.prettierrc`.
+- `README.md` — project README seeded from `templates/PROJECT_README.md` (fill `{PROJECT_NAME}` / backend).
 
 ### Step 2: Create src/ shell
 
 ```
 src/
   main.tsx
-  App.tsx
+  app/
+    App.tsx
+    router.tsx        # React Router 6 data router (createBrowserRouter)
+    providers/        # QueryClientProvider, ThemeProvider, etc.
+    guards/           # route guards (auth/role)
   theme/
-    index.ts          # MUI createTheme
+    theme.ts          # MUI createTheme
   lib/
     api/
-      client.ts       # axios/fetch wrapper, base URL from env
+      client.ts       # openapi-fetch client, base URL from env, auth injection
       schema.d.ts     # generated TypeScript types from openapi-typescript
     query/
-      client.ts       # TanStack QueryClient singleton
-  store/
-    index.ts          # Zustand store bootstrap
+      queryClient.ts  # TanStack QueryClient singleton + defaults
+    auth/
+      authStore.ts    # Zustand auth store (in-memory tokens)
+  components/         # shared, generic presentational components
   features/
     example/
       ExamplePage.tsx
       ExamplePage.test.tsx  # RED test first
       index.ts
-  components/
-    layout/
-      AppShell.tsx
-  routes/
-    index.tsx         # React Router 7 router definition
   mocks/
     handlers.ts       # MSW handlers
-    browser.ts        # MSW browser setup
-    server.ts         # MSW node setup (for Vitest)
+    browser.ts        # MSW browser worker
+  test/
+    server.ts         # MSW node server (Vitest)
+    setup.ts          # test setup
 ```
 
 ### Step 3: Write the example feature RED→GREEN
@@ -129,18 +132,25 @@ playwright.config.ts
 
 ### Step 5: Gate scripts
 
-Copy from `templates/scripts/`:
+Copy the gate + helper scripts from the template root `scripts/` (the template ships them there; `scripts/install.sh` seeds the full set into a new project):
 
 - `scripts/check_types_drift.sh`
+- `scripts/check_contract_sync.sh`
 - `scripts/check_stubs.sh`
 - `scripts/check_file_size.sh`
 - `scripts/check_feature_readmes.sh`
+- `scripts/check_bundle_size.sh`
+- `scripts/check_plan_sync.sh`
+- `scripts/check_routes_registry.sh`
+- `scripts/check_guides_sync.sh`
 - `scripts/detect-env.mjs`
 - `scripts/log-cmd.mjs`
+- `scripts/session-start.sh`
+- `scripts/api-pull.mjs`
 
 ### Step 6: CI workflow
 
-Copy `templates/.github/workflows/frontend-ci.yml` → `.github/workflows/frontend-ci.yml`. Must run: lint, typecheck, test:run, check_types_drift, check_stubs, check_file_size, check_feature_readmes.
+Copy `templates/.github/workflows/frontend-ci.yml` → `.github/workflows/frontend-ci.yml`. Must run: npm audit (high), typecheck, lint, check_file_size, check_stubs, check_feature_readmes, check_types_drift, check_contract_sync, check_plan_sync, check_routes_registry, check_guides_sync, test:cov, build, check_bundle_size, then Playwright e2e.
 
 For **Variant B or C**: note in the PR that `check_contract_sync.sh` should be disabled or adapted — it validates a GitHub raw source, which does not apply when the schema comes from a running backend.
 
@@ -154,19 +164,20 @@ docs/
   HANDOFF.md          # copied from templates/HANDOFF.md (seed snapshot; refreshed by /handoff & /wrap-up)
   todo.md             # copied from templates/todo.md (cross-session backlog)
   api/
-    INDEX.md          # endpoint index (empty until first feature)
+    INDEX.md          # endpoint index, seeded from templates/api_INDEX.md (empty until first feature)
+    CONTRACT_ISSUES.md # contract bug/proposal ledger (empty until needed)
   verify/             # (empty until first feature)
   guides/
     user.md           # copied from templates/guides_user.md with {TODO} markers
     developer.md      # copied from templates/guides_developer.md with {TODO} markers
   decisions/
-    0001-stack.md     # ADR: why React 19 + MUI + TanStack Query
+    0001-stack.md     # ADR: why React 18 + MUI + TanStack Query
   plans/              # (empty)
 ```
 
 ### Step 8: CLAUDE.md
 
-Copy `templates/CLAUDE.md`, filling in the project name and repo URL. Append all rule imports.
+Seed `CLAUDE.md` from the template root (`scripts/install.sh` copies it), filling in the project name and repo URL. Ensure all rule imports are present.
 
 ### Step 9: Pull backend OpenAPI schema
 

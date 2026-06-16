@@ -20,7 +20,7 @@ On-demand guide maintainer. I own the two human onboarding documents: `docs/guid
 ## Standards
 
 - `@.claude/rules/user-guides.md` — required sections, reconciliation against live routes/scripts/schema, never invent commands
-- `@.claude/rules/api-client.md` — developer guide auth section must match the real auth flow in `docs/api/openapi.yml`
+- `@.claude/rules/api-client.md` — developer guide auth section must match the real auth flow in `src/lib/api/openapi.yml`
 
 ## docs/guides/user.md — required sections
 
@@ -41,6 +41,6 @@ On-demand guide maintainer. I own the two human onboarding documents: `docs/guid
 
 ## Reconciliation rule
 
-Every command in both guides must match a real `package.json` script or npm binary. Every route or endpoint named must exist in `.claude/memory/routes.json` or `docs/api/openapi.yml`. Invented commands or stale routes are blocked.
+Every command in both guides must match a real `package.json` script or npm binary. Every route or endpoint named must exist in `.claude/memory/routes.json` or `src/lib/api/openapi.yml`. Invented commands or stale routes are blocked.
 
 <!-- last reviewed: 2026-06-02 -->

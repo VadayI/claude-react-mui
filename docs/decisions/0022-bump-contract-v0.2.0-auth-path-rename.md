@@ -90,3 +90,13 @@ Docs updated:
 - **Bump only to v0.1.1 (non-breaking):** A valid intermediate step, but since v0.2.0 is
   already stable and intentionally breaking, deferring only increases the gap. Decided to
   migrate in one PR.
+
+## Note (2026-06-16) — `v0.2.0` is the last tag that ships a tracked `openapi.yml`
+
+The contract repo has since released v0.3.0 and v0.4.0, but those tags **drop `openapi.yml` from the
+tracked tree** (it is a generated working artifact, gitignored at HEAD). Only `v0.1.0` / `v0.1.1` /
+`v0.2.0` carry a committed `openapi.yml` at the tag. Therefore `v0.2.0` is the last tag from which
+`npm run api:pull` (raw GitHub fetch) and `scripts/check_contract_sync.sh` can succeed — this template
+intentionally stays pinned at `v0.2.0` as a **frozen demo**. Do NOT naively bump `CONTRACT_VERSION` to
+v0.3.0+ until the contract repo commits `openapi.yml` at its release tags. A real derived project points
+`CONTRACT_REPO` / `CONTRACT_VERSION` at its own contract repo (see `/bootstrap` Step 0).

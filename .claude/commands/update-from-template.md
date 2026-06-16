@@ -22,7 +22,7 @@ git checkout -b chore/update-from-template
 
 ### 2. Identify template source
 
-If `$ARGUMENTS` contains a GitHub URL or path, use it as the template source. Otherwise use the default: `https://github.com/anthropics/claude-react-mui` (or the value in `.claude/memory/template-origin.json` if present).
+If `$ARGUMENTS` contains a GitHub URL or path, use it as the template source. Otherwise use the default: `https://github.com/VadayI/claude-react-mui` (or the value in `.claude/memory/template-origin.json` if present).
 
 Fetch the latest template:
 

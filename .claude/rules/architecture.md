@@ -53,3 +53,5 @@ e2e/                        # Playwright specs
 - **Presentational/container split** so rendering is testable in isolation.
 - **Every screen — with tests (RTL + Playwright), the four states, and a feature README entry.**
 - **Server-state in Query, client-state in Zustand/local** — never blurred.
+
+> **Skill:** activate the `architecture-designer` skill for layer-boundary and feature-folder recipes.

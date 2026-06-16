@@ -38,9 +38,9 @@ Keep both copy-paste runnable and **derived from what the project actually ships
 2. **Updated in the same PR** as user-visible surface changes (a new flow, a new auth method, a new top-level route, a new env var) — by `guide-writer` in the Documentation phase. Most volatile: _Main flows_ (user) and _Run it locally_ + _The API contract_ (developer).
 3. **Verified on demand** via `/guides`.
 
-## Enforcement (Quality Gate, not a CI script)
+## Enforcement (CI gate + Quality Gate)
 
-No standalone shell gate; quality is narrative, judged by `reviewer` at the Quality Gate plus `guide-writer` in the docs phase:
+**CI gate `scripts/check_guides_sync.sh`** — on a PR, if a top-level route (`src/app/router.tsx`) or the auth flow (`src/lib/auth/**`) changes, `docs/guides/user.md` and/or `docs/guides/developer.md` must be updated in the same PR. Narrative quality remains a Quality-Gate judgement by `reviewer` at the Quality Gate plus `guide-writer` in the docs phase:
 
 - `reviewer` blocks a PR that changes user-visible surface — a new/changed **auth flow**, **top-level route**, **first-run step**, or a new **env var** — without updating the relevant guide. A stale "Run it locally" or "Main flows" section is 🟡 Important.
 - `guide-writer` runs the reconciliation (every route/command/endpoint the guide names traces to code/schema) before declaring the PR ready.

@@ -71,8 +71,8 @@ Write `docs/HANDOFF.md` with this structure:
 
 ## Key file locations
 
-- Routes: src/routes/index.tsx
-- API types: src/lib/api/types.ts
+- Routes: src/app/router.tsx
+- API types: src/lib/api/schema.d.ts
 - Feature list: src/features/
 - Verification docs: docs/verify/
 - Guides: docs/guides/
@@ -81,11 +81,14 @@ Write `docs/HANDOFF.md` with this structure:
 ### 3. Commit the handoff doc
 
 ```bash
+# PR-only: never commit on main (@.claude/rules/git-operations.md)
+branch=$(git branch --show-current)
+if [ "$branch" = "main" ]; then git checkout -b "docs/handoff-$(date +%Y-%m-%d)"; fi
 git add docs/HANDOFF.md
 git commit -m "docs: update handoff snapshot $(date +%Y-%m-%d)"
 ```
 
-If on `main`, commit directly (this is a docs-only snapshot, not code). Otherwise commit on the current branch.
+Never commit on `main` — PR-only (@.claude/rules/git-operations.md). The block above switches to a `docs/handoff-*` branch when needed; the snapshot reaches `main` via a PR (or is carried by the next feature / `/wrap-up` PR).
 
 Report the path to `docs/HANDOFF.md`.
 

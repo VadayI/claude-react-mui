@@ -37,7 +37,6 @@ Cross-machine work history. Updated at the end of every session (`/wrap-up`) and
 
 ---
 
-
 ## 2026-06-10 — bootstrap-contract-source-and-design-reference
 
 ### Done

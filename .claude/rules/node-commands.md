@@ -34,6 +34,10 @@ bash scripts/check_types_drift.sh    # types match the committed schema
 bash scripts/check_stubs.sh          # every STUB is logged
 bash scripts/check_file_size.sh      # no src file over 400 lines
 bash scripts/check_feature_readmes.sh # every feature has a README
+bash scripts/check_contract_sync.sh  # vendored openapi.yml matches the pinned tag
+bash scripts/check_plan_sync.sh       # non-trivial PR has an updated living plan
+bash scripts/check_routes_registry.sh # router change reconciled with routes.json + docs/verify
+bash scripts/check_guides_sync.sh     # route/auth change updates docs/guides
 npm audit --audit-level=high          # no high/critical advisories
 npm run build && bash scripts/check_bundle_size.sh  # bundle within .performance-budget.json (gzipped)
 ```

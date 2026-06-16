@@ -21,8 +21,8 @@ git diff --name-only main..HEAD
 If `$ARGUMENTS` specifies a feature or file scope, narrow to that. Classify changed files:
 
 - `src/features/<name>/` — feature README may need updating.
-- `src/routes/` — `docs/api/INDEX.md` route list and guides may need updating.
-- `src/lib/api/types.ts` — API surface changed; `docs/api/INDEX.md` needs reconciliation.
+- `src/app/router.tsx` — `docs/api/INDEX.md` route list and guides may need updating.
+- `src/lib/api/schema.d.ts` — API surface changed; `docs/api/INDEX.md` needs reconciliation.
 - Any auth-related file — `docs/guides/developer.md` Authentication section.
 
 ### 2. Dispatch docs-writer
@@ -33,11 +33,11 @@ Delegate to `docs-writer` with the change list:
 
 - Run `bash scripts/check_feature_readmes.sh` to find missing READMEs.
 - For changed features: update Purpose, Component surface, Routes, State management, API dependencies, Decisions sections.
-- Reconcile the feature's exposed routes against `src/routes/index.tsx`.
+- Reconcile the feature's exposed routes against `src/app/router.tsx`.
 
 **`docs/api/INDEX.md`**:
 
-- Update the route index to match `src/routes/index.tsx`.
+- Update the route index to match `src/app/router.tsx`.
 - Each route entry: method-equivalent (GET navigation), path, feature, auth requirement, notes.
 - Remove entries for deleted routes; add entries for new ones.
 
@@ -47,7 +47,7 @@ Only if any of these changed: routes, auth flow, first-start steps, npm scripts.
 
 Instruct `guide-writer` to run the reconciliation from `@.claude/rules/user-guides.md`:
 
-- Every route in `docs/guides/user.md` must exist in `src/routes/`.
+- Every route in `docs/guides/user.md` must exist in `src/app/router.tsx`.
 - Every command in `docs/guides/developer.md` must exist in `package.json` scripts.
 
 ### 4. Commit

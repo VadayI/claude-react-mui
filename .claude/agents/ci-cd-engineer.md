@@ -63,3 +63,5 @@ bash scripts/check_feature_readmes.sh
 ```
 
 <!-- last reviewed: 2026-06-02 -->
+
+> **Skill:** activate the `github-actions-frontend` skill for the CI workflow recipe.

@@ -9,27 +9,33 @@ Reference: `@.claude/rules/api-client.md`
 
 ## Core rule: never hand-write a DTO type
 
-All request/response types are derived from the backend's `openapi.yml`.
+All request/response types are derived from the **vendored contract** `src/lib/api/openapi.yml`,
+pulled from the external contract repo `VadayI/claude-api-contract` at the pinned tag — **NOT** from
+the backend, which is a fellow consumer and generates nothing (@.claude/rules/api-client.md).
 Hand-written DTOs drift from the contract — the generator catches renames and removals at build time.
 
 ## Workflow
 
 ```bash
-# 1. Pull the backend schema (committed or fetched)
-curl -o docs/api/openapi.yml http://localhost:8000/api/schema/
+# 1. Pull the contract from the external contract repo (CONTRACT_REPO + CONTRACT_VERSION in .env)
+npm run api:pull          # vendors src/lib/api/openapi.yml at the pinned tag
 
 # 2. Generate TypeScript types
-npx openapi-typescript docs/api/openapi.yml -o src/api/schema.d.ts
+npm run api:types         # openapi-typescript src/lib/api/openapi.yml -o src/lib/api/schema.d.ts
 
 # 3. Drift gate (run in CI): regenerate and diff
-npx openapi-typescript docs/api/openapi.yml -o /tmp/schema.d.ts
-diff src/api/schema.d.ts /tmp/schema.d.ts || (echo "schema drift!" && exit 1)
+bash scripts/check_types_drift.sh
+# and the contract-sync gate (vendor file vs pinned tag sha256):
+bash scripts/check_contract_sync.sh
 ```
+
+> Bumping `CONTRACT_VERSION` is a deliberate, reviewed PR — never an automatic drift.
+> A missing/ambiguous endpoint is a **contract-repo task**, not a frontend fake (@.claude/rules/no-stubs.md).
 
 ## Typed fetch client with openapi-fetch
 
 ```ts
-// src/api/client.ts
+// src/lib/api/client.ts
 import createClient from 'openapi-fetch'
 import type { paths } from './schema.d.ts'
 
@@ -41,12 +47,12 @@ export const apiClient = createClient<paths>({
 ## Auth header injection
 
 ```ts
-// src/api/client.ts
-import { useAuthStore } from '@/store/authStore'
+// src/lib/api/client.ts
+import { useAuthStore } from '@/lib/auth/authStore'
 
 apiClient.use({
   onRequest({ request }) {
-    const token = useAuthStore.getState().token
+    const token = useAuthStore.getState().accessToken
     if (token) request.headers.set('Authorization', `Bearer ${token}`)
     return request
   },
@@ -70,8 +76,8 @@ const { data, error } = await apiClient.GET('/api/v1/articles', {
 Keep mapping logic in a dedicated layer, not scattered across components:
 
 ```ts
-// src/api/mappers/article.ts
-import type { paths } from '../schema.d.ts'
+// src/features/articles/api/mappers.ts
+import type { paths } from '@/lib/api/schema.d.ts'
 
 type ArticleDTO =
   paths['/api/v1/articles/{id}']['get']['responses']['200']['content']['application/json']
@@ -96,7 +102,7 @@ export function mapArticle(dto: ArticleDTO): ArticleViewModel {
 ## Error normalisation
 
 ```ts
-// src/api/errors.ts
+// src/lib/api/errors.ts
 export interface ApiError {
   status: number
   message: string
@@ -115,7 +121,7 @@ export function normaliseError(error: unknown): ApiError {
 
 ```ts
 // Handlers use the same generated types
-import type { paths } from '@/api/schema.d.ts'
+import type { paths } from '@/lib/api/schema.d.ts'
 type ArticleListResponse =
   paths['/api/v1/articles']['get']['responses']['200']['content']['application/json']
 
@@ -124,4 +130,4 @@ http.get('/api/v1/articles', () =>
 )
 ```
 
-<!-- last reviewed: 2026-06-02 -->
+<!-- last reviewed: 2026-06-16 -->

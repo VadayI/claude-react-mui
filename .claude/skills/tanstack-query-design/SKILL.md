@@ -16,7 +16,7 @@ References: `@.claude/rules/state-management.md`, `@.claude/rules/api-client.md`
 ## Query key factories — centralise, never inline
 
 ```ts
-// src/api/queryKeys.ts
+// src/features/<feature>/api/keys.ts
 export const articleKeys = {
   all: () => ['articles'] as const,
   lists: () => [...articleKeys.all(), 'list'] as const,

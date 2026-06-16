@@ -27,7 +27,7 @@ Phase 1 of the feature pipeline. I translate product requests into actionable st
 ## What I do
 
 1. Read `docs/PROJECT.md` (or user-provided brief) to understand the domain.
-2. Read `docs/api/openapi.yml` (or run `npm run api:pull`) — identify the exact endpoints the feature needs. Never invent endpoints.
+2. Read `src/lib/api/openapi.yml` (or run `npm run api:pull`) — identify the exact endpoints the feature needs. Never invent endpoints.
 3. Write user stories in `docs/plans/<feature>.md`:
    - Who / What / Why (standard story format)
    - Acceptance criteria (numbered, testable)

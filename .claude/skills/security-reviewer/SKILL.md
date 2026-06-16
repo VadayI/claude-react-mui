@@ -5,7 +5,7 @@ description: Frontend security checklist — XSS, auth token storage, CSRF, CSP,
 
 # Frontend Security Review
 
-References: `@.claude/rules/mcp-stack.md`, `@.claude/rules/api-client.md`
+References: `@.claude/rules/auth.md`, `@.claude/rules/api-client.md`, `@.claude/rules/mcp-stack.md`
 
 ## XSS prevention
 
@@ -34,10 +34,12 @@ import DOMPurify from 'dompurify';
 | Memory (Zustand)  | low — not persistent  | none                    | good for SPAs; lost on refresh           |
 | `httpOnly` cookie | none — JS cannot read | HIGH without CSRF token | best for sessions; needs CSRF mitigation |
 
-- For SPAs with Bearer auth: store token in memory (Zustand store), refresh via a `httpOnly` refresh-token cookie flow
+- This template's default (ADR 0021, @.claude/rules/auth.md): store BOTH access and refresh tokens in memory (Zustand `useAuthStore`); the refresh token arrives in the response body, NOT a cookie
 - Never log tokens, never put tokens in URL params or query strings
 
-## CSRF for cookie-based auth
+## CSRF for cookie-based auth (alternative mode only)
+
+> Not the default. Applies only under the documented same-origin session/CSRF alternative, which **supersedes ADR 0021** with a project-specific ADR (@.claude/rules/auth.md). The default Bearer/JWT flow uses in-memory tokens and needs no CSRF token.
 
 - Include `X-CSRFToken` header for state-changing requests when using cookie auth
 - The Django backend sets the CSRF cookie; read it and send it back in the header

@@ -57,9 +57,9 @@ function VirtualList({ items }: { items: Article[] }) {
 ## Code splitting — lazy routes
 
 ```tsx
-// src/router.tsx — split every route-level component
-const ArticleList = lazy(() => import('@/pages/ArticleList'))
-const ArticleDetail = lazy(() => import('@/pages/ArticleDetail'))
+// src/app/router.tsx — split every route-level component
+const ArticleList = lazy(() => import('@/features/articles/components/ArticleListPage'))
+const ArticleDetail = lazy(() => import('@/features/articles/components/ArticleDetailPage'))
 
 // Wrap in Suspense with a skeleton fallback
 ;<Suspense fallback={<PageSkeleton />}>
