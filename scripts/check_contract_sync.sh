@@ -20,6 +20,19 @@ for envfile in .env .env.example; do
   fi
 done
 
+# Fallback: read repo/version from contract.lock.json when env vars are still unset
+if { [ -z "${CONTRACT_VERSION:-}" ] || [ -z "${CONTRACT_REPO:-}" ]; } && [ -f "$LOCK_FILE" ]; then
+  if command -v jq >/dev/null 2>&1; then
+    LOCK_VERSION=$(jq -r '.version // empty' "$LOCK_FILE")
+    LOCK_REPO=$(jq -r '.repo // empty' "$LOCK_FILE")
+  else
+    LOCK_VERSION=$(node -e "const l=JSON.parse(require('fs').readFileSync('$LOCK_FILE','utf8')); process.stdout.write(l.version ?? '')")
+    LOCK_REPO=$(node -e "const l=JSON.parse(require('fs').readFileSync('$LOCK_FILE','utf8')); process.stdout.write(l.repo ?? '')")
+  fi
+  [ -z "${CONTRACT_VERSION:-}" ] && [ -n "$LOCK_VERSION" ] && CONTRACT_VERSION="$LOCK_VERSION"
+  [ -z "${CONTRACT_REPO:-}" ]    && [ -n "$LOCK_REPO"    ] && CONTRACT_REPO="$LOCK_REPO"
+fi
+
 REPO="${CONTRACT_REPO:-VadayI/claude-api-contract}"
 VERSION="${CONTRACT_VERSION:-}"
 
