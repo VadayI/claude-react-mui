@@ -123,9 +123,8 @@ const shell = shellEnv ? shellEnv.split('/').pop() : 'unknown'
 // ---------------------------------------------------------------------------
 const nodeParts = version.replace('v', '').split('.')
 const nodeMajor = parseInt(nodeParts[0], 10)
-const nodeMinor = parseInt(nodeParts[1] || '0', 10)
-// Floor: Node 20.19+ (or any 22+) — required by Vite 8 / Vitest 4 (ADR 0019).
-const nodeSupported = nodeMajor > 20 || (nodeMajor === 20 && nodeMinor >= 19)
+// Floor: Node 24+ — required by the upgraded stack (ADR 0023).
+const nodeSupported = nodeMajor >= 24
 
 // ---------------------------------------------------------------------------
 // Tool presence + versions
@@ -239,7 +238,7 @@ try {
 // Human summary (one line)
 // ---------------------------------------------------------------------------
 const supportedStr = platformSupported ? 'SUPPORTED' : 'NOT SUPPORTED (install WSL2)'
-const nodeStr = nodeSupported ? `Node ${version} OK` : `Node ${version} TOO OLD (need 20.19+)`
+const nodeStr = nodeSupported ? `Node ${version} OK` : `Node ${version} TOO OLD (need 24+)`
 const wslStr = isWsl2 ? ' [WSL2]' : ''
 const wrongStr = wrongRunnerSuspected ? ' ⚠ WRONG RUNNER SUSPECTED' : ''
 console.log(

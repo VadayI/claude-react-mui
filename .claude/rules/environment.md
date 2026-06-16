@@ -10,13 +10,13 @@ The Check column gives bash (Linux / macOS / WSL2 Ubuntu) commands. Windows nati
 
 | Requirement                       | Expected                                                                                                                                                                                       | Check (bash)                                                                                                                                          |
 | --------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Node.js (HARD REQUIREMENT)**    | 20.19+ (22 LTS recommended) on PATH as `node`                                                                                                                                                  | `node --version`. Runs the SessionStart hook (`scripts/detect-env.mjs`), the CI gate helpers, Vite, Vitest, Playwright. Install via `nvm` if missing. |
+| **Node.js (HARD REQUIREMENT)**    | 24+ on PATH as `node` (ADR 0023)                                                                                                                                                               | `node --version`. Runs the SessionStart hook (`scripts/detect-env.mjs`), the CI gate helpers, Vite, Vitest, Playwright. Install via `nvm` if missing. |
 | **npm (HARD REQUIREMENT)**        | bundled with Node, on PATH                                                                                                                                                                     | `npm --version`. Must resolve to a Linux path, NOT `/mnt/c/...` (the Windows npm).                                                                    |
 | OS shell                          | WSL2 (Ubuntu) on Windows is REQUIRED — PowerShell/cmd not supported. Linux / macOS bash or zsh fine natively.                                                                                  | `uname -a` reports Linux (or Darwin); if `platform_supported: false` in env-detect.json — STOP and instruct user to switch to WSL2.                   |
 | Working dir                       | Any path, **including `/mnt/c`/`/mnt/d` — fully supported (ADR `0009`); `/doctor` must NOT suggest moving**. Caveat: slightly slower file-watching/HMR; run git from the host shell on `/mnt`. | `pwd`                                                                                                                                                 |
 | git                               | present                                                                                                                                                                                        | `git --version`                                                                                                                                       |
 | GitHub CLI                        | present in WSL2 (a Windows `gh.exe` is NOT visible inside WSL2; install via `apt`/official Linux instructions)                                                                                 | `gh --version`                                                                                                                                        |
-| **Claude Code CLI (WSL2-native)** | `claude` installed via npm, resolving to a Linux path                                                                                                                                          | `which claude` → `/home/...` or `/usr/...`, NEVER `/mnt/c/...`. Install: `npm install -g @anthropic-ai/claude-code` (needs Node 20.19+).              |
+| **Claude Code CLI (WSL2-native)** | `claude` installed via npm, resolving to a Linux path                                                                                                                                          | `which claude` → `/home/...` or `/usr/...`, NEVER `/mnt/c/...`. Install: `npm install -g @anthropic-ai/claude-code` (needs Node 24+).              |
 | Playwright browsers               | installed when E2E runs                                                                                                                                                                        | `npx playwright install --with-deps` (first run / CI)                                                                                                 |
 | Docker (OPTIONAL)                 | only for building/serving the static image or staging parity — NOT required for local dev (Vite runs on the host)                                                                              | `docker info` (optional)                                                                                                                              |
 
@@ -30,7 +30,7 @@ The fix is to install and launch the **Linux-native** CLI from inside WSL2:
 
 ```bash
 # inside a real WSL2 Ubuntu shell
-node --version                              # need Node 20.19+ (install via nvm if missing)
+node --version                              # need Node 24+ (install via nvm if missing)
 npm install -g @anthropic-ai/claude-code
 hash -r
 which claude                                # must be /home/... or /usr/..., NOT /mnt/c/...
@@ -53,7 +53,7 @@ Working from `/mnt/...` is fully supported (ADR `0009`) — a WSL2-native `claud
 
 ### env-detect.json integrity (hard rule)
 
-`.claude/memory/env-detect.json` is the source of truth for `platform_supported`, `node_supported`, `gh.*`, and tool availability. It is rewritten by `scripts/detect-env.mjs` via the `SessionStart` hook on every session. **Never hand-write or "patch" this file** to skip a blocker — its fields drive `/bootstrap` and `/doctor` hard gates. If it is missing: run `node scripts/detect-env.mjs` manually; if that fails, fix the underlying problem (install Node 20.19+ / fix PATH), do NOT fabricate JSON.
+`.claude/memory/env-detect.json` is the source of truth for `platform_supported`, `node_supported`, `gh.*`, and tool availability. It is rewritten by `scripts/detect-env.mjs` via the `SessionStart` hook on every session. **Never hand-write or "patch" this file** to skip a blocker — its fields drive `/bootstrap` and `/doctor` hard gates. If it is missing: run `node scripts/detect-env.mjs` manually; if that fails, fix the underlying problem (install Node 24+ / fix PATH), do NOT fabricate JSON.
 
 ## Scope 2 — Claude config & access
 

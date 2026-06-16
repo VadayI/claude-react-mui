@@ -814,3 +814,35 @@ Cross-machine work history. Updated at the end of every session (`/wrap-up`) and
 
 - Наступна фіча — через стандартний пайплайн (`ba → ui-architect → ...`).
 - Розглянути додавання note у `.claude/rules/api-client.md` про те, що v0.3.0+/v0.4.0+ тегів контракту не мають openapi.yml.
+
+## 2026-06-16 — Stack upgrade PR A — tooling (TypeScript 6 / Node 24 / ESLint 10)
+
+### Done
+
+- **Stack upgrade PR A — tooling layer** (branch `chore/stack-upgrade-pr-a`):
+  - TypeScript `^5.6` → `^6.0.3`; ESLint `^9` → `^10.5.0`; `@eslint/js ^10`; `typescript-eslint ^8.61.1`; `eslint-plugin-react-hooks ^7.1.1` (flat-config `recommended-latest` API); `eslint-plugin-jsx-a11y ^6.10.2`; `prettier ^3.8.4`.
+  - Supporting bumps: `vitest ^4.1.9` / `@vitest/coverage-v8 ^4.1.9` / `jsdom ^29.1.1` (patches within the Vitest 4 major established by ADR 0019).
+  - `engines.node` raised `>=20.19.0` → `>=24`; CI (`frontend-ci.yml` ×2) updated to Node 24; `scripts/detect-env.mjs` + `scripts/setup-wsl.sh` floor updated to 24.
+  - ESLint 10 peer-dep gap: `eslint-plugin-jsx-a11y` (peer `eslint ^9`) and `openapi-typescript` (peer `typescript ^5`) not yet updated — resolved via committed `.npmrc` `legacy-peer-deps=true`; `@testing-library/dom` and `@eslint/js` added as explicit devDeps (no longer auto-installed as peers).
+  - `tsconfig.json` — no migration needed (`moduleResolution: bundler` already set).
+  - No `src/` logic changes required; `schema.d.ts` regenerated from `openapi.yml`.
+- **ADR 0023** (`docs/decisions/0023-upgrade-ts6-node24-eslint10.md`) written and indexed in `docs/decisions/README.md`.
+- **Living plan** `docs/plans/0004-stack-upgrade-latest-versions.md` Execution log updated.
+- **Doc version strings** updated: TypeScript 5→6, Node 20.19+→Node 24+ across `CLAUDE.md`, `README.md`, `.claude/rules/{code-style,environment,node-commands,upgrade-policy}.md`, `.claude/commands/bootstrap.md`, `.claude/agents/devops.md`, `.claude/skills/github-actions-frontend/SKILL.md`.
+- React / MUI / React Router unchanged (deferred to PRs B–D per plan).
+
+### Gate status (local, pre-PR)
+
+- typecheck: ✅
+- lint: ✅ (ESLint 10, 17 react-hooks rules)
+- tests: ✅ (82 passed, 13 test files)
+- build: ✅ (169.8 KB gzipped, within bundle budget)
+- check_stubs/file_size/feature_readmes/types_drift/bundle_size: ✅
+- npm audit (high): ✅ (2 moderate only)
+- check_contract_sync: deferred to CI (sandbox proxy 403 on GitHub raw)
+- check_plan_sync / check_routes_registry / check_guides_sync: validated by CI (git-dependent gates)
+
+### Next steps
+
+- Open PR A for review → merge → then PR B (React 18→19) on the PR A baseline.
+- Remove `legacy-peer-deps=true` from `.npmrc` once `eslint-plugin-jsx-a11y` and `openapi-typescript` publish ESLint 10 / TS 6 peers.

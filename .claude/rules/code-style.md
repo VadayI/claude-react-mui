@@ -2,7 +2,7 @@
 
 ## TypeScript / React
 
-- TypeScript 5, `strict` on. **No `any`** (use `unknown` + narrowing); no non-null `!` to silence the compiler. Linter — **ESLint** (typescript-eslint, react, react-hooks, jsx-a11y), formatter — **Prettier**.
+- TypeScript 6, `strict` on. **No `any`** (use `unknown` + narrowing); no non-null `!` to silence the compiler. Linter — **ESLint** (typescript-eslint, react, react-hooks, jsx-a11y), formatter — **Prettier**.
 - Imports ordered and de-duplicated (eslint import/order). No unused imports/vars.
 - Naming: `camelCase` for variables/functions, `PascalCase` for components/types, `UPPER_CASE` for constants, hooks start with `use`, event handlers `handleX`, boolean props read positively.
 - **Function components only**, with hooks. No class components. Keep components small and single-purpose.

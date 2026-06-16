@@ -1,0 +1,65 @@
+# Plan 0004 — Stack upgrade to latest (React 19 / MUI 9 / React Router 7 / TS 6 / Node 24 / ESLint 10)
+
+> Status: 🟡 IN PROGRESS · seeded 2026-06-16 · Driver: staged stack-upgrade initiative — bring the template to current stable across runtime + tooling.
+> Type: infra / config-template change (dependency + tooling bumps, CI, env scripts). PR A involves no production-logic changes beyond minimal TS6/ESLint10 fallout fixes.
+>
+> **Living plan** — discipline in `.claude/rules/living-plan.md`. The orchestrator seeds this file at the start of a non-trivial task and keeps the **Status table** + **Execution log** current as the pipeline runs. Body decisions are never rewritten in place — a changed decision goes to **Amendments** with an inline pointer next to the original.
+
+## Status
+
+| Step                                                              | State       | Owner        |
+| ----------------------------------------------------------------- | ----------- | ------------ |
+| PR A — Tooling (TypeScript 6 · Node 24 floor · ESLint 10 + bumps) | in_progress | orchestrator |
+| PR B — React 18.3 → 19 (+ react-dom, @types/react\*)              | pending     | orchestrator |
+| PR C — MUI 6 → 9 (@mui/material, @mui/icons-material, emotion)    | pending     | orchestrator |
+| PR D — React Router 6 → 7 (data router migration)                 | pending     | orchestrator |
+| PR E — TanStack Query / Zustand + final sweep                     | pending     | orchestrator |
+
+> States: `pending` · `in_progress` · `done` · `blocked`. This table is the cursor — update it as steps move.
+
+## Goal
+
+Move `claude-react-mui` from its current pins to the latest stable stack, in five independent, individually-reviewable PRs so that each major migration carries its own tests, changelog read, and (where needed) ADR. PR A lands the **tooling foundation** first — TypeScript 6, the Node 24 engine floor, ESLint 10 and the supporting lint/test toolchain — so the later framework PRs build on a current compiler and linter.
+
+## Approach
+
+Sequence the upgrade by blast radius, tooling first:
+
+- **PR A (this PR) — tooling only.** Bump TypeScript → 6, ESLint → 10 and its plugin ecosystem (typescript-eslint, react-hooks, jsx-a11y, prettier), Vitest/coverage/jsdom/plugin-react, and Vite. Raise `engines.node` to `>=24` and update CI (`frontend-ci.yml` ×2) + env scripts (`detect-env.mjs`, `setup-wsl.sh`) to the Node 24 floor. React, react-dom, @mui/\*, react-router-dom, @tanstack/\*, and zustand are LEFT UNTOUCHED. ESLint 10 has a transient peer-dep gap with some plugins → resolve via a committed npm mechanism that also satisfies CI `npm ci`.
+- **PR B–E** then migrate the runtime frameworks one ecosystem at a time, each on the green PR-A tooling baseline, each with its own changelog read and ADR where the major bump warrants one (React 18→19, MUI 6→9, Router 6→7).
+
+Edits on this 9p/`/mnt` mount go through `/dev/shm` scratch + `cp` + re-read verification (never the Edit/Write tools, which truncate here). Git is owned by the user in a separate shell — this plan body is the only durable record the orchestrator writes.
+
+## Steps
+
+1. Bump tooling devDependencies + `engines.node` in `package.json`.
+2. Resolve the ESLint 10 peer conflict so both `npm install` and `npm ci` succeed.
+3. `npm install`; confirm `package-lock.json` regenerated.
+4. tsconfig migration for TS 6 (moduleResolution already `bundler`; add stopgaps only if deprecations error).
+5. ESLint flat-config migration to the react-hooks 7.x API.
+6. Run the full local gate suite to GREEN; fix TS6/ESLint10 fallout in `src/` minimally.
+7. CI + scripts Node 22 → 24 (`frontend-ci.yml` ×2 identical; `detect-env.mjs`; `setup-wsl.sh`).
+8. Final grep verification of stale tooling tokens.
+
+## Verification
+
+`npm run typecheck`, `npm run lint`, `npm run test:run`, `npm run build`, and the CI gate scripts (`check_stubs`, `check_file_size`, `check_feature_readmes`, `check_contract_sync`, `check_types_drift`, `check_bundle_size`), plus `npm audit --audit-level=high`. PR-aware / git-dependent gates (`check_plan_sync`, `check_routes_registry`, `check_guides_sync`, and `check_types_drift`'s git-diff path) are validated authoritatively by CI, not the stale sandbox git. File integrity confirmed by re-reading each edited file (NUL=0, JSON parses).
+
+## Open questions
+
+- [x] ESLint 10 peer-dep mechanism (legacy-peer-deps vs overrides) — finalize and record the supply-chain tradeoff in the upgrade ADR. (Resolved: `.npmrc legacy-peer-deps=true` committed; ADR 0023 records the tradeoff.)
+- [x] Whether any TS 6 deprecation needs `ignoreDeprecations: "6.0"` as a documented stopgap. (Resolved: not needed — `moduleResolution: "bundler"` was already set; no TS-6 deprecation errors encountered.)
+
+## Execution log
+
+- 2026-06-16 — plan seeded; PR A started — tooling (TS6 / Node24 / ESLint10).
+
+- 2026-06-16 — PR A engineering green: package.json tooling bumped (TS6 / ESLint10 / vitest4.1.9 / jsdom29.1.1); .npmrc legacy-peer-deps added (eslint-plugin-jsx-a11y / openapi-typescript peer gaps); @testing-library/dom@^10.4.1 declared (peer no longer auto-installed); eslint.config.js → reactHooks.configs['recommended-latest'].
+- 2026-06-16 — gates: typecheck PASS · lint PASS (17 react-hooks rules) · tests PASS (13 files / 82 tests, run in batches — full-suite wall-clock blocked only by slow 9p jsdom startup) · build PASS (tsc -b + vite build to alt out-dir; in-place dist blocked by 9p EPERM on stale dist) · check_stubs/file_size/feature_readmes/types_drift/bundle_size PASS · npm audit (high) PASS (2 moderate only) · check_contract_sync SKIPPED (sandbox proxy 403 on GitHub raw) · plan/routes/guides git-gates trivially OK (stale sandbox git). tsconfig needed NO migration (already moduleResolution: bundler). No src/ logic changes required; schema.d.ts regenerated from openapi.yml (was a truncated 9p artifact).
+- 2026-06-16 — PR A docs + ADR 0023 written; doc version strings (TS/Node/ESLint) updated across CLAUDE.md, README.md, .claude/rules, .claude/commands, .claude/agents, .claude/skills, docs/decisions/README.md, docs/WORKLOG.md; docs/plans/0004 Execution log current.
+- 2026-06-16 — PR A gates green locally: typecheck/lint/test 82/build/bundle 169.8 KB/audit; contract-sync + PR-aware gates (plan-sync, routes-registry, guides-sync) deferred to CI (git-dependent, stale sandbox git).
+- 2026-06-16 — Quality gate: 2×🟡 fixed (detect-env ADR ref 0019 → 0023; openapi-ts/TS6 + jsx-a11y/eslint10 peer risks logged in docs/lessons.md). Gate PASS.
+
+## Amendments
+
+_(none yet)_

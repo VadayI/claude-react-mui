@@ -15,7 +15,7 @@ node scripts/log-cmd.mjs /bootstrap "$ARGUMENTS"
 Before doing ANYTHING:
 
 1. Read `.claude/memory/env-detect.json`. If `platform_supported: false` or `wrong_runner_suspected: true` → **HARD STOP: UNSUPPORTED_PLATFORM**. Instruct the user to run WSL2-native Claude CLI.
-2. If `node_supported: false` or Node < 20.19 → **HARD STOP: NO_NODE**. Instruct `nvm install --lts`.
+2. If `node_supported: false` or Node < 24 → **HARD STOP: NO_NODE**. Instruct `nvm install --lts`.
 3. Run `gh repo view` to confirm GitHub access. If it fails → HARD STOP and ask the user to fix credentials.
 
 ## Mode detection

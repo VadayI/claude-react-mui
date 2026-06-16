@@ -37,7 +37,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '24'
           cache: 'npm'
       - run: npm ci
 
@@ -47,7 +47,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with: { node-version: '22', cache: 'npm' }
+        with: { node-version: '24', cache: 'npm' }
       - run: npm ci
       - run: npx tsc --noEmit
 
@@ -57,7 +57,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with: { node-version: '22', cache: 'npm' }
+        with: { node-version: '24', cache: 'npm' }
       - run: npm ci
       - run: npx eslint . --max-warnings=0
       - run: npx prettier --check .
@@ -68,7 +68,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with: { node-version: '22', cache: 'npm' }
+        with: { node-version: '24', cache: 'npm' }
       - run: npm ci
       - run: npx vitest run --coverage
       - run: bash scripts/check_stubs.sh
@@ -87,7 +87,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with: { node-version: '22', cache: 'npm' }
+        with: { node-version: '24', cache: 'npm' }
       - run: npm ci
       - run: npm run build
 
@@ -97,7 +97,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with: { node-version: '22', cache: 'npm' }
+        with: { node-version: '24', cache: 'npm' }
       - run: npm ci
       - run: npx playwright install --with-deps chromium firefox
       - run: npx playwright test

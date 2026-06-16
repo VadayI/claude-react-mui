@@ -35,7 +35,7 @@ if [[ "$(uname -s)" != "Linux" ]]; then
   exit 1
 fi
 
-step "Step 1 — nvm + Node LTS"
+step "Step 1 — nvm + Node 24"
 
 NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
 
@@ -54,12 +54,12 @@ else
 fi
 
 # Install Node LTS if not already managed by nvm
-if ! command -v node >/dev/null 2>&1 || [[ "$(node --version 2>/dev/null | sed 's/v//' | cut -d. -f1)" -lt 18 ]]; then
-  info "Installing Node LTS via nvm..."
-  nvm install --lts
-  nvm use --lts
-  nvm alias default 'lts/*'
-  info "Node LTS installed: $(node --version)"
+if ! command -v node >/dev/null 2>&1 || [[ "$(node --version 2>/dev/null | sed 's/v//' | cut -d. -f1)" -lt 24 ]]; then
+  info "Installing Node 24 via nvm..."
+  nvm install 24
+  nvm use 24
+  nvm alias default 24
+  info "Node 24 installed: $(node --version)"
 else
   info "Node already installed: $(node --version)"
 fi
@@ -80,7 +80,7 @@ if $windows_path; then
   echo ""
   echo "  export NVM_DIR=\"\$HOME/.nvm\""
   echo "  [ -s \"\$NVM_DIR/nvm.sh\" ] && source \"\$NVM_DIR/nvm.sh\""
-  echo "  nvm install --lts && hash -r"
+  echo "  nvm install 24 && hash -r"
   echo ""
   echo "Then re-run this script."
   exit 1
