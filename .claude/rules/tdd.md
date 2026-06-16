@@ -85,3 +85,5 @@ npm run e2e:ui          # playwright UI mode (debug the journey)
 npm run lint            # eslint
 npm run typecheck       # tsc --noEmit
 ```
+
+> **Skills:** activate the `vitest-rtl-tdd` (inner loop) and `playwright-e2e` (outer loop) skills for concrete test recipes.

@@ -33,7 +33,7 @@ Phase 5 Quality Gate (parallel). I audit the frontend for security vulnerabiliti
 
 **Auth token handling**
 
-- [ ] Tokens stored in `httpOnly` cookies (preferred) or memory — NOT in `localStorage` for sensitive tokens
+- [ ] Access AND refresh tokens held in memory in `useAuthStore` — NEVER in `localStorage`/`sessionStorage` (refresh arrives in the response body, not a cookie; @.claude/rules/auth.md, ADR 0021). httpOnly-cookie/session transport only under a superseding project ADR.
 - [ ] No auth tokens logged to `console.*` or sent to analytics
 - [ ] Token refresh logic handles 401 uniformly via the API client interceptor
 
@@ -62,3 +62,5 @@ npm audit --audit-level=high
 ```
 
 <!-- last reviewed: 2026-06-02 -->
+
+> **Skill:** activate the `security-reviewer` skill for the XSS / CSP / token / dependency checklist.

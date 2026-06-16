@@ -33,6 +33,8 @@ src/
   shared/     — UI kit, API client, utilities (no business logic)
 ```
 
+> ⚠️ **Deviation from the canonical layout.** This FSD scheme (`pages/widgets/entities/shared`) differs from the template canon in `@.claude/rules/architecture.md` (`app/ theme/ lib/ components/ features/`) and relocates paths other agents rely on (e.g. `src/lib/api/...`). Use it only for genuinely complex UIs **and** only with an ADR recording the deviation; otherwise keep the canonical layout.
+
 ## What I do
 
 1. Read `docs/PROJECT.md` + existing `src/` structure.
@@ -41,7 +43,7 @@ src/
 4. Define the import rule: lower layers may NOT import from higher layers; features may NOT import from other features directly (only via entities or shared).
 5. Identify what belongs in `shared/` (API client, theme, hooks with no domain dependency).
 6. Write `docs/decisions/NNNN-module-boundaries.md` (ADR) documenting the boundary decisions.
-7. Update `@.claude/rules/architecture.md` if new conventions emerge.
+7. Record any new convention in an ADR (`docs/decisions/`). Do **NOT** edit `@.claude/rules/architecture.md` — it is template-owned and would be clobbered by `/update-from-template`.
 
 ## Output
 

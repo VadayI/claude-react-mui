@@ -23,9 +23,9 @@ Detect `--run` flag in `$ARGUMENTS` to determine if Playwright execution is requ
 Delegate to `docs-writer` with:
 
 - `.claude/memory/routes.json` — the route registry (updated by `ui-architect` at contract phase).
-- `src/routes/index.tsx` — live router definition (source of truth).
+- `src/app/router.tsx` — live router definition (source of truth).
 - `src/features/<feature>/` — component surface.
-- `docs/api/openapi.yml` — backend contract (for any API calls the feature makes).
+- `src/lib/api/openapi.yml` — backend contract (for any API calls the feature makes).
 - Existing `docs/verify/<feature>.md` if present (refresh case).
 
 ### 3. Three-way reconciliation
@@ -33,10 +33,10 @@ Delegate to `docs-writer` with:
 Before generating, `docs-writer` MUST reconcile:
 
 ```
-.claude/memory/routes.json  <->  src/routes/index.tsx  <->  docs/api/INDEX.md
+.claude/memory/routes.json  <->  src/app/router.tsx  <->  docs/api/INDEX.md
 ```
 
-`src/routes/index.tsx` is the source of truth. If `routes.json` or `INDEX.md` disagree (renamed path, removed route), correct them to match. Remove stale entries.
+`src/app/router.tsx` is the source of truth. If `routes.json` or `INDEX.md` disagree (renamed path, removed route), correct them to match. Remove stale entries.
 
 ### 4. Generate docs/verify/<feature>.md
 

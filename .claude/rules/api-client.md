@@ -50,7 +50,7 @@ Bumping `CONTRACT_VERSION` is a **deliberate PR** — not an automatic drift.
 
 1. `ui-architect` reads the contract and declares which endpoints the feature consumes (method + path from the schema), and records the routes in `.claude/memory/routes.json`.
 2. `tester` writes MSW handlers whose response shapes are taken **from the schema types**, so the mock cannot drift from the real API; tests fail RED.
-3. `react-developer` implements the query/mutation against the typed client until GREEN; if a new endpoint is needed that the schema lacks, that is a **contract-repo** task — STOP and flag it, do not fake the endpoint in production code (an inline fake is a `// STUB:` per @.claude/rules/no-stubs.md).
+3. `react-developer` implements the query/mutation against the typed client until GREEN; if a new endpoint is needed that the schema lacks, that is a **contract-repo** task — STOP and flag it, do not fake the endpoint in production code (an inline fake is a `// STUB:` per @.claude/rules/no-stubs.md), and record it in `docs/api/CONTRACT_ISSUES.md` (@.claude/rules/contract-deviations.md).
 4. **Before opening the PR**: run `bash scripts/check_types_drift.sh` and `bash scripts/check_contract_sync.sh` locally. Both must pass.
 5. `docs-writer` keeps `docs/api/INDEX.md` (the consumed-endpoints index) in sync with the schema and `routes.json`.
 
@@ -71,3 +71,5 @@ Bumping `CONTRACT_VERSION` is a **deliberate PR** — not an automatic drift.
 - `reviewer` — blocks PRs where a hand-written DTO duplicates the schema, or where the schema/types diff suggests an un-migrated breaking change.
 
 > Goal: the contract repo is the law; the frontend's types are re-derived from it on every build, so the UI is never coded against an imagined API.
+
+> **Skill:** activate the `api-client-typing` skill for the openapi-typescript workflow and typed-client recipes.

@@ -50,3 +50,5 @@ A feature is not "done" until all four are implemented and tested.
 ## Testing (mandatory)
 
 Per component: render in each of the four states; assert by role/label; drive interaction with `user-event`; assert the mutation/callback fires with the right payload; `jest-axe` clean. Per route: allowed and denied guard paths. See @.claude/rules/testing.md.
+
+> **Skill:** activate the `mui-theming` skill for theme-token and MUI styling recipes.

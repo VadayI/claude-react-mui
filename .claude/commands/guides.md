@@ -16,9 +16,9 @@ node scripts/log-cmd.mjs /guides "$ARGUMENTS"
 
 Collect the authoritative inputs that the guides must reflect:
 
-- **Live routes**: `src/routes/index.tsx` (or wherever React Router routes are defined).
+- **Live routes**: `src/app/router.tsx` (or wherever React Router routes are defined).
 - **npm scripts**: `package.json` `scripts` section.
-- **API schema**: `docs/api/openapi.yml` (committed) and `src/lib/api/types.ts` (generated).
+- **API schema**: `src/lib/api/openapi.yml` (committed) and `src/lib/api/schema.d.ts` (generated).
 - **Existing guides**: `docs/guides/user.md`, `docs/guides/developer.md`.
 - **Feature READMEs**: `src/features/*/README.md`.
 - **Verification docs**: `docs/verify/*.md`.
@@ -48,9 +48,9 @@ Delegate to `guide-writer` with all gathered sources. Instructions:
 
 Before declaring guides ready, `guide-writer` MUST verify:
 
-- Every route mentioned in `user.md` exists in `src/routes/`.
+- Every route mentioned in `user.md` exists in `src/app/router.tsx`.
 - Every npm script mentioned in `developer.md` exists in `package.json`.
-- Every API endpoint mentioned traces to `docs/api/openapi.yml`.
+- Every API endpoint mentioned traces to `src/lib/api/openapi.yml`.
 - No invented commands or routes.
 
 ### 4. Commit

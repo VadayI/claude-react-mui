@@ -31,3 +31,5 @@ Every interactive feature must meet WCAG 2.1 AA. In practice:
 - `reviewer` — blocks PRs that introduce inaccessible controls.
 
 > Goal: the app is fully usable by keyboard and assistive technology at every commit — accessibility is designed in, tested, and gated, never bolted on.
+
+> **Skill:** activate the `accessibility-reviewer` skill for the WCAG / jest-axe checklist.

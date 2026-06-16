@@ -29,7 +29,7 @@ Use the GitHub MCP:
 - `pull_request_read` — get description, changed files, diff.
 - `list_pull_requests` — confirm open state.
 
-Also read: `docs/api/openapi.yml`, `src/lib/api/types.ts`, relevant feature READMEs.
+Also read: `src/lib/api/openapi.yml`, `src/lib/api/schema.d.ts`, relevant feature READMEs.
 
 ### 3. Parallel review dispatch
 

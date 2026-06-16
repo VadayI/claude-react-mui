@@ -41,6 +41,8 @@ Generated from a machine-readable route registry so it always matches the real a
 
 After GREEN, before the PR opens, `docs-writer` reconciles routes across: `.claude/memory/routes.json` ↔ the live router (`src/app/router.tsx`) ↔ `docs/api/INDEX.md` (consumed endpoints) ↔ the OpenAPI schema. The live router + schema are the source of truth; stale registry entries are corrected/removed.
 
+**CI gate `scripts/check_routes_registry.sh`** enforces this on a PR: if `src/app/router.tsx` changes, both `.claude/memory/routes.json` and a `docs/verify/*.md` must be updated in the same PR, and `routes.json` must be valid JSON.
+
 ## Lifecycle (per feature)
 
 1. **Phase 2 — contract.** `ui-architect` appends/updates the feature's routes in `.claude/memory/routes.json`.

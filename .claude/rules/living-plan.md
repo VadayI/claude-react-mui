@@ -30,9 +30,11 @@ Each `docs/plans/NNNN-*.md` carries three managed sections on top of the ordinar
 - `ba`, `ui-architect`, `react-developer`, `tester`, `docs-writer` — append an Execution log confirmation at the end of their phase (need `Edit` to append).
 - `reviewer`, `security-scanner`, `state-architect` — never edit the plan; report the gate result to the orchestrator.
 
-## Out of scope (v1)
+## Enforcement
 
-- A CI gate "plan updated in the same PR" (like `check_feature_readmes.sh`) — only after the discipline is hand-proven. Tracked in HANDOFF open questions.
+- **CI gate `scripts/check_plan_sync.sh`** — on a PR, if more than 2 files under `src/`/`e2e/` change, a `docs/plans/*.md` must be updated in the same PR (Status table / Execution log kept current). Enforces on `pull_request`; skips on direct push and on trivial (≤2-file) changes.
+
+## Out of scope (v1)
 - A machine-readable Status format (JSON) — markdown tables suffice for now (Simplicity First).
 
 > Goal: at any point in a non-trivial task, the plan shows where we are (Status), what has actually run (Execution log), and why decisions changed (Amendments) — without drifting from reality or duplicating WORKLOG.

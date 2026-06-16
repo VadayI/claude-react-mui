@@ -14,8 +14,10 @@ Never put server data (fetched from API) in Zustand — that belongs in TanStack
 
 ## Typed store
 
+> Shared client stores live under `src/lib/` (the real one is `src/lib/auth/authStore.ts`); feature-local stores live in `src/features/<feature>/store/`. There is no top-level `src/store/`.
+
 ```ts
-// src/store/uiStore.ts
+// src/lib/ui/uiStore.ts
 import { create } from 'zustand'
 
 interface UIState {
@@ -51,7 +53,7 @@ const openSidebar = useUIStore((s) => s.openSidebar)
 ## Slices pattern for large stores
 
 ```ts
-// src/store/slices/notificationsSlice.ts
+// src/lib/ui/slices/notificationsSlice.ts
 import type { StateCreator } from 'zustand'
 
 export interface NotificationsSlice {
@@ -67,7 +69,7 @@ export const createNotificationsSlice: StateCreator<NotificationsSlice> = (set) 
     set((s) => ({ notifications: s.notifications.filter((n) => n.id !== id) })),
 })
 
-// src/store/rootStore.ts
+// src/lib/ui/rootStore.ts
 export const useRootStore = create<UISlice & NotificationsSlice>()((...a) => ({
   ...createUISlice(...a),
   ...createNotificationsSlice(...a),

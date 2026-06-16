@@ -32,7 +32,7 @@ Delegate to `code-structure-auditor` with:
 
 Audit criteria:
 
-- **Hard limit**: any `.ts` / `.tsx` file over 400 lines (excluding auto-generated files like `src/lib/api/types.ts`).
+- **Hard limit**: any `.ts` / `.tsx` file over 400 lines (excluding auto-generated files like `src/lib/api/schema.d.ts`).
 - **Approaching limit**: files between 300-400 lines — flag as ⚠️.
 - **Responsibility cohesion**: does each file have a single clear responsibility? Flag files that mix concerns (e.g., a component file that also contains business logic, API calls, and local state management).
 - **Feature structure**: each `src/features/<name>/` should have a `README.md`. Flag missing ones.

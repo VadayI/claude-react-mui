@@ -49,7 +49,7 @@ Report ✅ / ❌ per gate. If any gate fails → the user must fix before the PR
 ### 4. Report residual STUBs
 
 ```bash
-grep -rn "# STUB:" src/ || echo "No stubs found"
+bash scripts/check_stubs.sh || true   # greps // STUB: and throw new Error("STUB and checks docs/STUBS.md ledger
 ```
 
 Cross-reference against `docs/STUBS.md`. Any stub in `src/` not in `docs/STUBS.md` → 🔴 unlogged stub. Report all stubs with their ledger status.

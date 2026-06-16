@@ -11,7 +11,7 @@ The typed client and all DTO types are generated from the **external contract** 
 
 ## Frontend handling
 
-- If the schema is missing or ambiguous for an endpoint the UI needs, that is a **contract-repo task** (`VadayI/claude-api-contract`) — STOP and flag it; do not hand-write the DTO (a hand-written type duplicating the schema is forbidden, @.claude/rules/api-client.md). An inline fake is a `// STUB:` (@.claude/rules/no-stubs.md).
+- If the schema is missing or ambiguous for an endpoint the UI needs, that is a **contract-repo task** (`VadayI/claude-api-contract`) — STOP and flag it; do not hand-write the DTO (a hand-written type duplicating the schema is forbidden, @.claude/rules/api-client.md). An inline fake is a `// STUB:` (@.claude/rules/no-stubs.md) and gets a row in `docs/api/CONTRACT_ISSUES.md` (@.claude/rules/contract-deviations.md).
 - A defective schema is fixed in the **contract repo** (`VadayI/claude-api-contract`), then `npm run api:pull` + `npm run api:types`; the change is reflected in `docs/api/INDEX.md` and locked by the drift gate.
 
 ## Binds these agents (rule is auto-loaded)

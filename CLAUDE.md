@@ -2,6 +2,7 @@
 @.claude/rules/tdd.md
 @.claude/rules/no-stubs.md
 @.claude/rules/api-client.md
+@.claude/rules/contract-deviations.md
 @.claude/rules/component-contract.md
 @.claude/rules/accessibility.md
 @.claude/rules/feature-readme.md

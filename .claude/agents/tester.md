@@ -31,7 +31,7 @@ Phase 3 (RED) and phase 5 (REFACTOR-check) of the feature pipeline. I write test
 3. Write **inner Vitest+RTL tests** (`src/features/<feature>/**/*.test.tsx`):
    - One test file per significant component.
    - Cover all **four UI states**: loading skeleton, success, empty, error.
-   - Mock the API layer with **MSW handlers** in `src/mocks/handlers/`.
+   - Mock the API layer with **MSW handlers** in `src/mocks/handlers.ts` (scaffold: `templates/msw-handlers.ts`).
    - Include a `jest-axe` assertion (`expect(await axe(container)).toHaveNoViolations()`).
    - Test keyboard navigation for interactive components.
    - Triangulate: at least 2-3 distinct data inputs → different outputs (no hardcoded-return stub can stay green).

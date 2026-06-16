@@ -10,25 +10,21 @@ References: `@.claude/rules/architecture.md`, `@.claude/rules/component-contract
 ## Layer boundaries (strict, top-to-bottom imports only)
 
 ```
-pages/          — route-level containers; compose features; no direct API calls
-features/       — self-contained feature slices (see below)
+app/            — application shell: App.tsx, router.tsx, providers/, guards/
+theme/          — central MUI theme (palette, typography, components slot)
+lib/            — cross-cutting: api/ (openapi.yml, schema.d.ts, client.ts), query/ (QueryClient), auth/ (authStore)
+components/     — shared, generic presentational components
+features/       — domain features (one folder per feature)
   <feature>/
-    components/ — presentational UI for this feature
-    hooks/      — feature-specific hooks (query wrappers, local logic)
-    store/      — feature-scoped Zustand slice (if needed)
-    api/        — query key factory + typed query/mutation hooks
-    mappers/    — DTO → view-model
-    index.ts    — public surface (re-exports only what pages need)
-shared/
-  components/   — truly reusable UI (Button wrappers, Layout, etc.)
-  hooks/        — shared custom hooks
-  store/        — global UI state (sidebar, notifications, auth)
-  api/          — generated schema + base client
-  theme/        — MUI theme
+    api/        — endpoint wrappers, query keys (keys.ts), DTO → view-model mappers
+    hooks/      — use<Feature> query/mutation hooks
+    components/ — feature components (container + presentational)
+    store/      — feature-local Zustand store (if any)
+    README.md   — feature primer
 ```
 
-- Pages import from features; features do NOT import from other features (no horizontal coupling)
-- Features import from shared; shared does NOT import from features
+- `app/` and route containers import from `features/`; features do NOT import from other features (no horizontal coupling)
+- Features import from `lib/` and `components/`; `lib/`/`components/` do NOT import from features
 - Circular imports are a design smell — refactor to shared or extract a new feature
 
 ## Feature folder example
@@ -85,9 +81,9 @@ type ButtonProps = {
 - Decisions worth recording: state management library choice, auth strategy, folder structure changes, CSP approach, API client library
 - ADR template: Context / Decision / Consequences
 
-## File size limit (800 lines)
+## File size limit (400 lines)
 
-- Same rule as the Django backend: no source file over 800 lines
+- No source file over 400 lines (CI gate; `src/lib/api/schema.d.ts` is exempt as generated)
 - A large component file = multiple responsibilities — split into feature folder
 - CI gate: `scripts/check_file_size.sh`
 

@@ -33,3 +33,5 @@ A React SPA degrades silently — one stray dependency or an un-split route, and
 - `reviewer` — blocks PRs that breach a budget or add an unjustified heavy dependency.
 
 > Goal: bundle weight and Core Web Vitals are explicit numbers checked on every build, so performance can only get better — a regression fails CI instead of shipping unnoticed.
+
+> **Skill:** activate the `performance-optimization` skill for code-splitting and render-cost recipes.

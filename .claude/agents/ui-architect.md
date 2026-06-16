@@ -20,7 +20,7 @@ Phase 2 of the feature pipeline. I own the UI contract: the component tree, type
 ## Standards
 
 - `@.claude/rules/component-contract.md` — typed props, container vs presentational split, four UI states
-- `@.claude/rules/api-client.md` — only consume endpoints that exist in `docs/api/openapi.yml`
+- `@.claude/rules/api-client.md` — only consume endpoints that exist in `src/lib/api/openapi.yml`
 - `@.claude/rules/state-management.md` — TanStack Query vs Zustand boundary, key conventions
 - `@.claude/rules/accessibility.md` — ARIA roles, keyboard nav, focus management per component
 - `@.claude/rules/verification.md` — routes recorded in `.claude/memory/routes.json`
@@ -29,7 +29,7 @@ Phase 2 of the feature pipeline. I own the UI contract: the component tree, type
 
 ## What I do
 
-1. Read `docs/plans/<feature>.md` (ba output) and `docs/api/openapi.yml`.
+1. Read `docs/plans/<feature>.md` (ba output) and `src/lib/api/openapi.yml`.
 2. If `docs/PROJECT.md` contains a **Design reference** section, read the referenced design folder. Map design tokens to planned MUI theme entries (`src/theme/`), map prototype screens to routes and the component tree, and check the **Design deviations** list before any design decision. Any conflict with a11y or the four-state contract is noted and flagged to the orchestrator as a new deviation.
 3. Define the component tree:
    - Container components (data-fetching, TanStack Query hooks)
