@@ -79,7 +79,7 @@ Optional (activate only when relevant, not used in every project): `auditor` (wo
 
 ## Stack
 
-TypeScript 6 · React 19 · Vite 8 · Material UI (MUI) 9 · React Router 6 (data router) · TanStack Query 5 (server-state) · Zustand 5 (client-state) · Vitest 4 + React Testing Library + MSW (unit/component) · Playwright (E2E) · `openapi-typescript` (types from contract repo `VadayI/claude-api-contract`, NOT backend) · ESLint + Prettier · GitHub Actions CI. Environment — Node 24+ on WSL2 / Linux / macOS. Staging — VPS (Debian) serving the static build behind nginx.
+TypeScript 6 · React 19 · Vite 8 · Material UI (MUI) 9 · React Router 7 (data router) · TanStack Query 5 (server-state) · Zustand 5 (client-state) · Vitest 4 + React Testing Library + MSW (unit/component) · Playwright (E2E) · `openapi-typescript` (types from contract repo `VadayI/claude-api-contract`, NOT backend) · ESLint + Prettier · GitHub Actions CI. Environment — Node 24+ on WSL2 / Linux / macOS. Staging — VPS (Debian) serving the static build behind nginx.
 
 > Version note: **React 19** is now adopted (ADR 0024) and **MUI 9** is now adopted (ADR 0025, supersedes the MUI-6 pin in ADR 0015). MUI 9 officially supports React 19 as a peer; the MUI 6→9 codemod migration (slotProps, sx system props) landed in PR C. The TDD/contract discipline is version-agnostic.
 

@@ -74,7 +74,7 @@ Record the answer as `CONTRACT_SOURCE` (A / B / C) for use in Steps 1 and 9.
 
 Author the project config inline (these files are **not** in `templates/` — generate them for the pinned stack):
 
-- `package.json` with all deps: React 19, Vite 8, MUI 9, React Router 6 (data router), TanStack Query 5, Zustand 5, Vitest+RTL+MSW, jest-axe, Playwright, openapi-typescript, openapi-fetch, react-hook-form, zod, ESLint+Prettier, TypeScript.
+- `package.json` with all deps: React 19, Vite 8, MUI 9, React Router 7 (data router), TanStack Query 5, Zustand 5, Vitest+RTL+MSW, jest-axe, Playwright, openapi-typescript, openapi-fetch, react-hook-form, zod, ESLint+Prettier, TypeScript.
 - `vite.config.ts`, `tsconfig.json`, `tsconfig.node.json`, `index.html`.
 - `.env.example` — configured per `CONTRACT_SOURCE` from Step 0:
   - **Variant A:** `VITE_API_BASE_URL=http://localhost:4010`, `CONTRACT_REPO=<user value or {TODO}>`, `CONTRACT_VERSION=<user tag or {TODO}>`, `VITE_MSW_ENABLED=false`
@@ -91,7 +91,7 @@ src/
   main.tsx
   app/
     App.tsx
-    router.tsx        # React Router 6 data router (createBrowserRouter)
+    router.tsx        # React Router 7 data router (createBrowserRouter)
     providers/        # QueryClientProvider, ThemeProvider, etc.
     guards/           # route guards (auth/role)
   theme/

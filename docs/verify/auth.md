@@ -17,6 +17,10 @@
 5. MSW test credentials (handled by the default dev MSW handler):
    - Email: `user@example.com`
    - Password: `password123`
+6. **Route-level loading (PR D):** `LoginPage` is lazy-loaded via `React.lazy`. On the
+   **very first navigation** to `/login`, `RouteFallback` renders briefly (`role="status"`,
+   `aria-label="Loading"`) before the login form mounts. This is expected and accessible; on
+   repeat visits the chunk is cached — the fallback is not shown again.
 
 ---
 

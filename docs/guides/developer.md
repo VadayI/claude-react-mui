@@ -6,7 +6,7 @@ A **frontend-only** React + MUI SPA (TypeScript, Vite) that consumes the `VadayI
 
 ## Run it locally
 
-Prerequisites: **Node 20.19+** on WSL2 / Linux / macOS.
+Prerequisites: **Node 24+** on WSL2 / Linux / macOS.
 
 ```bash
 npm ci
@@ -31,7 +31,7 @@ The `VadayI/claude-api-contract` schema is the law. It lives at `src/lib/api/ope
 
 ## Architecture
 
-Feature-sliced (`src/features/<feature>/` with `api/`, `hooks/`, `components/`, `store/`, `README.md`). Routing/guards in `src/app/`; the central MUI theme in `src/theme/`; the typed client + query client in `src/lib/`. **Server-state → TanStack Query, client-state → Zustand/local** — never blurred. See `.claude/rules/architecture.md` and `state-management.md`.
+Feature-sliced (`src/features/<feature>/` with `api/`, `hooks/`, `components/`, `store/`, `README.md`). Routing/guards in `src/app/`; the central MUI theme in `src/theme/`; the typed client + query client in `src/lib/`. **Server-state → TanStack Query, client-state → Zustand/local** — never blurred. Routing uses **React Router 7** (single `react-router` package; `react-router-dom` removed); `ArticlesPage` and `LoginPage` are code-split via `React.lazy` + `<Suspense>` with an accessible `RouteFallback`. See `.claude/rules/architecture.md`, `state-management.md`, and `routing-and-data-loading.md`.
 
 ## Add a feature
 

@@ -1,6 +1,8 @@
 # Routing & data loading (data router, Query owns server-state)
 
-React Router 6's data router adds loaders, actions, and `errorElement` — powerful, but easy to misuse by turning loaders into a second, competing data layer next to TanStack Query. This project draws the line: **TanStack Query owns server-state**, the **router owns navigation, gating, URL-state, and error/pending boundaries**. Routes are split, guarded, and each declares its states — the routing companion to @.claude/rules/state-management.md and @.claude/rules/component-contract.md.
+React Router 7's data router adds loaders, actions, and `errorElement` — powerful, but easy to misuse by turning loaders into a second, competing data layer next to TanStack Query. This project draws the line: **TanStack Query owns server-state**, the **router owns navigation, gating, URL-state, and error/pending boundaries**. Routes are split, guarded, and each declares its states — the routing companion to @.claude/rules/state-management.md and @.claude/rules/component-contract.md.
+
+> **Package note (ADR 0026):** React Router 7 ships as a single consolidated package (`react-router`); the separate `react-router-dom` package is no longer published. The app entry (`src/main.tsx`) imports `RouterProvider` from `react-router/dom` (the real-DOM sub-path); all other files — including Vitest test helpers — import from the top-level `react-router`. Route elements are `React.lazy` + `<Suspense fallback={<RouteFallback />}>` (accessible `role="status"` fallback); the shell, index route, and `RequireAuth` guard remain synchronous.
 
 ## The data router is the routing source of truth
 

@@ -12,7 +12,7 @@
  */
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { RouterProvider } from 'react-router-dom'
+import { RouterProvider } from 'react-router/dom'
 import { AppProviders } from './app/providers/AppProviders'
 import { router } from './app/router'
 import { enableMocking } from './mocks/enableMocking'

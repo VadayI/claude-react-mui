@@ -29,6 +29,7 @@ Open the app at its URL (in local development: `http://localhost:5173`). The sta
 
 - **Empty list:** that's expected before you add anything — use the field at the top.
 - **"Couldn't load todos" error:** the backend may be unreachable; press **Retry**.
+- **Brief loading spinner on first visit:** when you navigate to a screen for the first time, a short loading indicator may appear while the page code downloads. This is normal and only happens once per session; subsequent visits are instant.
 - **Keyboard:** Tab moves between the field, Add button, and each todo; Enter submits; Space toggles a checkbox. The focused element always shows a visible outline.
 
 ## Where to go next
