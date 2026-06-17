@@ -18,6 +18,10 @@ does **NOT** own registration, logout, or any other domain.
 | -------- | ----------- | ----------------------------------------------------------------------- |
 | `/login` | `LoginPage` | Anonymous (authenticated visitors are immediately redirected via ?next) |
 
+`LoginPage` is **lazy-loaded** (`React.lazy`) at the route boundary; the router
+wraps it in `<Suspense fallback={<RouteFallback />}>` so the chunk is fetched
+only on first navigation to `/login`.
+
 ## Components
 
 | Component     | Type           | Location                         | Description                                                                                           |
@@ -49,12 +53,13 @@ Generated types in `src/lib/api/schema.d.ts`.
 
 ## UI States
 
-| State      | Trigger                          | UI                                                                                    |
-| ---------- | -------------------------------- | ------------------------------------------------------------------------------------- |
-| Idle       | Page first loads (not authed)    | `LoginForm` rendered; all fields enabled; submit button active                        |
-| Submitting | Mutation in flight               | Submit button `disabled` + `aria-busy="true"`; fields remain editable                 |
-| Error      | Mutation settled with error      | `role="alert"` region announces the error message; form remains interactive for retry |
-| Redirect   | Already authenticated on arrival | Immediate `<Navigate to={sanitizeNext(next)} replace />` — no form shown              |
+| State               | Trigger                                                     | UI                                                                                                    |
+| ------------------- | ----------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| Route-level loading | First navigation to `/login` while the lazy chunk downloads | `<Suspense>` shows `RouteFallback` (`role="status"`) with a centered spinner; cached on repeat visits |
+| Idle                | Page first loads (not authed)                               | `LoginForm` rendered; all fields enabled; submit button active                                        |
+| Submitting          | Mutation in flight                                          | Submit button `disabled` + `aria-busy="true"`; fields remain editable                                 |
+| Error               | Mutation settled with error                                 | `role="alert"` region announces the error message; form remains interactive for retry                 |
+| Redirect            | Already authenticated on arrival                           | Immediate `<Navigate to={sanitizeNext(next)} replace />` — no form shown                              |
 
 ## Accessibility Notes
 

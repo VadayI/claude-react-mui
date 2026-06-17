@@ -7,7 +7,7 @@
  *
  * @returns <Outlet /> when authenticated; <Navigate /> to /login otherwise.
  */
-import { Navigate, Outlet, useLocation } from 'react-router-dom'
+import { Navigate, Outlet, useLocation } from 'react-router'
 import { useAuthStore } from '../../lib/auth/authStore'
 
 export function RequireAuth() {

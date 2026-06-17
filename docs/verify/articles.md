@@ -12,6 +12,11 @@
 3. MSW is active in dev mode (see `src/mocks/browser.ts`) — no real backend needed.
 4. The browser's dev-tools Application → Local Storage should show **no tokens** (tokens
    are in-memory only; a page refresh clears them — that is the intended behavior).
+5. **Route-level loading (PR D):** `ArticlesPage` and `LoginPage` are lazy-loaded via `React.lazy`.
+   On the **very first navigation** to `/articles` or `/login`, the browser must download the lazy
+   chunk; during that moment `RouteFallback` renders (a `CircularProgress` with `role="status"` and
+   `aria-label="Loading"`). This is distinct from the in-page "Loading articles" spinner; it appears
+   before the screen component mounts. On repeat visits the chunk is cached — no fallback shown.
 
 ---
 

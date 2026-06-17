@@ -4,17 +4,31 @@
     "feature": "articles",
     "screen": "ArticlesPage",
     "auth": "authenticated",
-    "states": ["loading", "success", "empty", "error"],
-    "consumes": ["GET /api/v1/articles"],
-    "notes": "Protected by RequireAuth layout route. Anonymous → /login?next=%2Farticles."
+    "states": [
+      "loading",
+      "success",
+      "empty",
+      "error"
+    ],
+    "consumes": [
+      "GET /api/v1/articles"
+    ],
+    "notes": "Protected by RequireAuth layout route. Anonymous → /login?next=%2Farticles. Lazy-loaded (React.lazy); RouteFallback (role=\"status\") shown by Suspense during initial chunk load."
   },
   {
     "path": "/login",
     "feature": "auth",
     "screen": "LoginPage",
     "auth": "anonymous",
-    "states": ["idle", "submitting", "error"],
-    "consumes": ["POST /api/v1/auth/login"],
-    "notes": "Authenticated visitors redirect to next ?? '/'. On success: setTokens → navigate(next ?? '/')."
+    "states": [
+      "loading",
+      "idle",
+      "submitting",
+      "error"
+    ],
+    "consumes": [
+      "POST /api/v1/auth/login"
+    ],
+    "notes": "Authenticated visitors redirect to next ?? '/'. On success: setTokens → navigate(next ?? '/'). Lazy-loaded (React.lazy); RouteFallback (role=\"status\") shown by Suspense during initial chunk load."
   }
 ]

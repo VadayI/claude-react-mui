@@ -9,7 +9,7 @@
  * relative paths (starts with `/` but not `//`).
  */
 import { useState } from 'react'
-import { Navigate, useNavigate, useSearchParams } from 'react-router-dom'
+import { Navigate, useNavigate, useSearchParams } from 'react-router'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import { useAuthStore } from '../../../lib/auth/authStore'

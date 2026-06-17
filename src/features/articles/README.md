@@ -14,6 +14,10 @@ Manages the articles list. Provides a full-page UI at `/articles` for viewing an
 Anonymous users are redirected to `/login?next=%2Farticles`; they are returned here after a
 successful login.
 
+`ArticlesPage` is **lazy-loaded** (`React.lazy`) at the route boundary; the router wraps it
+in `<Suspense fallback={<RouteFallback />}>` so the chunk is fetched only on first navigation
+to `/articles`.
+
 ## Components
 
 | Component        | Type           | Description                                                                            |
@@ -60,12 +64,18 @@ Generated types in `src/lib/api/schema.d.ts`.
 
 ## UI States
 
-| State   | Trigger                        | UI                                                                                              |
-| ------- | ------------------------------ | ----------------------------------------------------------------------------------------------- |
-| Loading | Initial fetch in flight        | `CircularProgress` (`aria-label="Loading articles"`) + `Skeleton` rows, `role="status"` wrapper |
-| Error   | Query settled with error       | `MUI Alert` with severity=error + Retry button                                                  |
-| Empty   | Query resolved, `results = []` | Empty-state message via `ArticleList`                                                           |
-| Success | Query resolved, data present   | `ArticleList` + `AddArticleForm`                                                                |
+| State               | Trigger                                                        | UI                                                                                                                            |
+| ------------------- | -------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| Route-level loading | First navigation to `/articles` while the lazy chunk downloads | `<Suspense>` shows `RouteFallback` (`role="status"`) with a centered spinner; cached on repeat visits. **Distinct from the in-page data-fetch loading below.** |
+| Loading             | Initial data fetch in flight (chunk already loaded)           | `CircularProgress` (`aria-label="Loading articles"`) + `Skeleton` rows, `role="status"` wrapper                               |
+| Error               | Query settled with error                                       | `MUI Alert` with severity=error + Retry button                                                                                |
+| Empty               | Query resolved, `results = []`                                 | Empty-state message via `ArticleList`                                                                                         |
+| Success             | Query resolved, data present                                   | `ArticleList` + `AddArticleForm`                                                                                              |
+
+> **Two distinct loading states:** "Route-level loading" is triggered by the JS chunk download
+> (handled by `<Suspense>` + `RouteFallback`, shown once then cached). "Loading" is triggered by
+> the in-page data fetch from `useArticles` (handled by `ArticlesPage`, shown on every hard
+> refresh or cache miss).
 
 ## Accessibility Notes
 

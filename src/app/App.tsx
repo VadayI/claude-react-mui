@@ -4,19 +4,25 @@
  * Renders the top-level layout: an AppBar with navigation links and an Outlet
  * for the active child route. The AppBar is thin and delegates rendering to
  * MUI components; it owns no data fetching.
+ *
+ * Child routes are code-split (`React.lazy`, see the router), so the Outlet is
+ * wrapped in a `<Suspense>` boundary that shows the accessible
+ * {@link RouteFallback} while a route chunk loads.
  */
+import { Suspense } from 'react'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
-import { Outlet, Link as RouterLink } from 'react-router-dom'
+import { Outlet, Link as RouterLink } from 'react-router'
+import { RouteFallback } from '../components/RouteFallback'
 
 /**
  * Root application layout with navigation.
  *
- * Child routes are rendered via `<Outlet />`.
+ * Child routes are rendered via `<Outlet />` inside a `<Suspense>` boundary.
  */
 export function App() {
   return (
@@ -35,7 +41,9 @@ export function App() {
         </Toolbar>
       </AppBar>
       <Container component="main" sx={{ mt: 3, mb: 3, flex: 1 }}>
-        <Outlet />
+        <Suspense fallback={<RouteFallback />}>
+          <Outlet />
+        </Suspense>
       </Container>
     </Box>
   )

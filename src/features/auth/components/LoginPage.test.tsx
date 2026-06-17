@@ -17,7 +17,7 @@
 import { describe, it, expect, afterEach } from 'vitest'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { createMemoryRouter, RouterProvider } from 'react-router-dom'
+import { createMemoryRouter, RouterProvider } from 'react-router'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ThemeProvider } from '@mui/material/styles'
 import { http, HttpResponse } from 'msw'

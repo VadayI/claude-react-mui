@@ -15,7 +15,7 @@
  */
 import { describe, it, expect, afterEach } from 'vitest'
 import { render, screen, act } from '@testing-library/react'
-import { createMemoryRouter, RouterProvider } from 'react-router-dom'
+import { createMemoryRouter, RouterProvider } from 'react-router'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ThemeProvider } from '@mui/material/styles'
 import { theme } from '../../theme/theme'

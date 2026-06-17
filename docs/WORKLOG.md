@@ -913,3 +913,49 @@ Cross-machine work history. Updated at the end of every session (`/wrap-up`) and
 - Open PR C for review → merge → then PR D (React Router 6→7) on the PR C baseline.
 - Route code-splitting performance task: return initial JS to <180 KB gz.
 - Remove `legacy-peer-deps=true` from `.npmrc` in PR E once peer-dep gaps are resolved.
+
+
+## 2026-06-17 — Stack upgrade PR D — React Router 6 → 7 (+ route-level code-splitting)
+
+### Done
+
+- **Stack upgrade PR D — React Router ecosystem** (branch `chore/stack-upgrade-pr-d`):
+  - `react-router-dom ^6.28.0` (locked 6.30.4) removed entirely; zero lock-file references remain.
+  - `react-router ^7.18.0` added as the consolidated single package (latest 7.x stable).
+  - **8 import sites rewritten:**
+    - `src/main.tsx` — `RouterProvider` from `react-router/dom` (real-DOM sub-path; wires React DOM `flushSync`).
+    - Remaining 7 files (components, guards, hooks, two test files) — from top-level `react-router` (correct for jsdom/Vitest and for non-DOM render contexts).
+  - **Future-flag de-risk:** all v7 future flags enabled on v6 (tests green), then bumped to v7 and flags removed (v7 defaults). Key discovery: `v7_startTransition` is a component-level flag; data-router flags go on `createBrowserRouter`/`createMemoryRouter`. All removed post-bump.
+  - `json()` / `defer()` / `useLoaderData` — not used in the app; data-router API surface unchanged. Routes remain `/`, `/login`, `/articles`.
+  - **Route-level code-splitting added:**
+    - New `src/components/RouteFallback.tsx` — accessible loading fallback (`role="status"`, `aria-label="Loading"`, theme-driven MUI `CircularProgress`, TSDoc).
+    - New `src/components/RouteFallback.test.tsx` — renders fallback, asserts `role="status"`, jest-axe clean.
+    - `ArticlesPage` and `LoginPage` — module-scope `React.lazy` (not inside component).
+    - `src/app/App.tsx` — `<Suspense fallback={<RouteFallback />}>` wraps `<Outlet />`.
+    - Shell, index Welcome route, `RequireAuth` guard — remain synchronous.
+  - **Bundle:** pre-lazy monolithic = 198.46 KB gz (would breach 190 KB budget); post-lazy initial = **137.29 KB gz** (−31%). Lazy chunks: ArticlesPage ~11 KB gz, LoginPage ~25.8 KB gz, shared TextField ~27.5 KB gz.
+  - **Performance budget ratcheted down:** `initialJsGzipKb` 190 → **145** (≈7.7 KB headroom). `.performance-budget.json` updated.
+  - 84/84 tests green (+2 RouteFallback tests; was 82); zero future-flag console warnings.
+- **ADR 0026** (`docs/decisions/0026-upgrade-react-router-7.md`) written and indexed in `docs/decisions/README.md` (0015's Router-pin row annotated "superseded by 0026").
+- **Doc version strings** updated: React Router 6→7 across `CLAUDE.md`, `README.md`, `templates/PROJECT_README.md`, `.claude/commands/{preflight,bootstrap}.md`, `.claude/agents/react-developer.md`, `.claude/rules/routing-and-data-loading.md` (+ package consolidation note added).
+- **routes.json** updated: `/login` states include `loading`; both entries note route-lazy + RouteFallback in `notes` field.
+- **docs/verify/{articles,auth}.md** updated: prerequisites section notes route-level loading (RouteFallback) on first visit.
+- **docs/guides/developer.md** updated: Node prerequisite 20.19+→24+; Architecture section notes React Router 7 + `React.lazy` + RouteFallback.
+- **docs/guides/user.md** updated: Tips section notes brief loading spinner on first route visit.
+- **Living plan** `docs/plans/0004-stack-upgrade-latest-versions.md`: PR D row `pending`→`done`; Execution log entry appended.
+
+### Gate status (local, pre-PR)
+
+- typecheck: ✅
+- lint: ✅
+- tests: ✅ (84 passed, 15 test files; +2 RouteFallback)
+- build: ✅ (137.29 KB gzipped initial, within 145 KB budget)
+- check_stubs/file_size/feature_readmes/types_drift/bundle_size: ✅
+- npm audit (high): ✅ (2 moderate only)
+- check_contract_sync: deferred to CI (sandbox proxy 403 on GitHub raw)
+- check_plan_sync / check_routes_registry / check_guides_sync: validated by CI (git-dependent gates)
+
+### Next steps
+
+- Open PR D (`chore/stack-upgrade-pr-d`) for review → quality gate → merge.
+- Start PR E: TanStack Query / Zustand minor sweep + remove `.npmrc legacy-peer-deps` (once peer gaps resolved).
