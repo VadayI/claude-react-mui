@@ -4,7 +4,7 @@ A ready-made Claude Code configuration for **React + Material UI** frontend proj
 
 The `VadayI/claude-api-contract` repo is the single source of truth for the REST API contract; both this frontend and the `claude-django` backend consume it — neither generates the canon. They are independent repositories with independent CI and release cycles.
 
-**Stack:** TypeScript 6 · React 19 · Vite 8 · MUI 6 · React Router 6 (data router) · TanStack Query 5 · Zustand 5 · Vitest + React Testing Library + MSW · Playwright · `openapi-typescript` · ESLint + Prettier · GitHub Actions
+**Stack:** TypeScript 6 · React 19 · Vite 8 · MUI 9 · React Router 6 (data router) · TanStack Query 5 · Zustand 5 · Vitest + React Testing Library + MSW · Playwright · `openapi-typescript` · ESLint + Prettier · GitHub Actions
 **Environment:** Node 24+ on WSL2 (Windows) / Linux / macOS · Staging — Debian VPS serving the static build behind nginx · GitHub as the source of truth
 
 ---
@@ -180,4 +180,4 @@ Start a new frontend by using this repo as a GitHub template (or `/bootstrap` in
 
 ## Architecture decisions
 
-See `docs/decisions/` (ADRs 0001–0022): the frontend double-loop TDD boundary, Node-based env detection, the bootstrap/resume command, bash-only shell, frontend-as-separate-repo, manual repo + fine-grained PAT, `/mnt` working-dir support, the config baseline, the 400-line file-size limit, template sync, the React + MUI + TanStack Query + Zustand stack, mandatory accessibility, the server-vs-client state split, the default Bearer/JWT auth mode, the dependency upgrade policy, the external contract repo model (Variant A), and the v0.2.0 contract pin with the auth-path rename.
+See `docs/decisions/` (ADRs 0001–0025): the frontend double-loop TDD boundary, Node-based env detection, the bootstrap/resume command, bash-only shell, frontend-as-separate-repo, manual repo + fine-grained PAT, `/mnt` working-dir support, the config baseline, the 400-line file-size limit, template sync, the React + MUI + TanStack Query + Zustand stack, mandatory accessibility, the server-vs-client state split, the default Bearer/JWT auth mode, the dependency upgrade policy, the external contract repo model (Variant A), and the v0.2.0 contract pin with the auth-path rename.

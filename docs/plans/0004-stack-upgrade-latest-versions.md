@@ -11,7 +11,7 @@
 | ----------------------------------------------------------------- | ----------- | ------------ |
 | PR A — Tooling (TypeScript 6 · Node 24 floor · ESLint 10 + bumps) | done        | orchestrator |
 | PR B — React 18.3 → 19 (+ react-dom, @types/react\*)              | done        | orchestrator |
-| PR C — MUI 6 → 9 (@mui/material, @mui/icons-material, emotion)    | pending     | orchestrator |
+| PR C — MUI 6 → 9 (@mui/material, @mui/icons-material, emotion)    | done        | orchestrator |
 | PR D — React Router 6 → 7 (data router migration)                 | pending     | orchestrator |
 | PR E — TanStack Query / Zustand + final sweep                     | pending     | orchestrator |
 
@@ -64,6 +64,11 @@ Edits on this 9p/`/mnt` mount go through `/dev/shm` scratch + `cp` + re-read ver
 - 2026-06-16 — PR B: 82/82 tests green; bundle 183.53 KB gz; budget raised 180→188 KB (ADR 0024; React 19 runtime ~3.5 KB gz); docs + ADR 0024 written.
 
 - 2026-06-16 — PR B quality gate: PASS with nits — fixed 6 stale 'React 18' doc strings + upgrade-policy React line + ADR 0024 version text; probe*.test.tsx and dist2/ to be removed by user in WSL (9p EPERM).
+
+- 2026-06-17 — PR C: @mui/material + @mui/icons-material ^6.1.6 → ^9.1.1; emotion unchanged (peer satisfied by ^11.13.3/^11.13.0). Codemod-driven changes: AddArticleForm.tsx inputProps→slotProps.htmlInput; ArticleList.tsx system color→sx + secondaryTypographyProps→slotProps.secondary (3 real changes, rest no-op).
+- 2026-06-17 — PR C: vitest.config.ts server.deps.inline added (/@mui\// + react-transition-group) for MUI 9 ESM extensionless resolution; no test assertion changes required.
+- 2026-06-17 — PR C: 82/82 tests green; bundle 188.38 KB gz; budget raised 188→190 KB (ADR 0025; MUI 9 single-bundle initial JS = 188.38 KB; code-splitting deferred as structural perf task). Typecheck/lint/build/audit (0 high)/stubs/file-size/feature-readmes/types-drift all green.
+- 2026-06-17 — PR C: ADR 0025 written (docs/decisions/0025-upgrade-mui-9.md); decisions/README.md updated; doc version strings updated (MUI 6→9) across CLAUDE.md, README.md, templates/PROJECT_README.md, templates/PROJECT.md, .claude/commands/{preflight,bootstrap,synthesize-brief}.md, .claude/agents/{react-developer,brief-synthesizer}.md, .claude/rules/upgrade-policy.md, .claude/skills/mui-theming/SKILL.md, renovate.json, templates/renovate.json; .performance-budget.json initialJsGzipKb 188→190.
 
 ## Amendments
 

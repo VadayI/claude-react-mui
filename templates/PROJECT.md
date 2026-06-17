@@ -49,7 +49,7 @@
 {TODO: Links to Figma files, design system docs, brand guidelines, or screenshots.}
 
 - Figma: {TODO}
-- Design system: MUI 6 default theme, customized in `src/theme/`
+- Design system: MUI 9 default theme, customized in `src/theme/`
 
 ## Backend API
 

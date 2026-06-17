@@ -1,7 +1,7 @@
 {
   "$comment": "Performance budgets for claude-react-mui. The 'bundle' section is enforced by scripts/check_bundle_size.sh (gzipped, after `vite build`). The 'webVitals' section documents the Core Web Vitals / Lighthouse targets enforced by Lighthouse CI (not yet wired — see .claude/rules/performance-budgets.md). Tune per project; budgets ratchet DOWN, never silently up.",
   "bundle": {
-    "initialJsGzipKb": 188,
+    "initialJsGzipKb": 190,
     "totalInitialTransferGzipKb": 350,
     "lazyChunkGzipKb": 120
   },

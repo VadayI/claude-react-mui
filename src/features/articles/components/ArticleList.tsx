@@ -28,8 +28,7 @@ export function ArticleList({ items }: ArticleListProps) {
     return (
       <Typography
         variant="body2"
-        color="text.secondary"
-        sx={{ py: 4, textAlign: 'center' }}
+        sx={{ color: 'text.secondary', py: 4, textAlign: 'center' }}
         data-testid="article-empty-message"
       >
         No articles yet. Add one above!
@@ -43,14 +42,14 @@ export function ArticleList({ items }: ArticleListProps) {
         <ListItem key={article.id} divider alignItems="flex-start">
           <ListItemText
             primary={article.title}
-            secondaryTypographyProps={{ component: 'div' }}
+            slotProps={{ secondary: { component: 'div' } }}
             secondary={
               <Box>
                 <Typography
                   component="div"
                   variant="body2"
-                  color="text.secondary"
                   sx={{
+                    color: 'text.secondary',
                     display: '-webkit-box',
                     WebkitLineClamp: 2,
                     WebkitBoxOrient: 'vertical',

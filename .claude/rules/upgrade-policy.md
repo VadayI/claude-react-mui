@@ -12,12 +12,12 @@ Dependencies rot whether or not you touch them — security advisories land, tra
 
 - **Patch & minor** on a **green CI** (tests + typecheck + lint + a11y + bundle budget all pass, @.claude/rules/performance-budgets.md) may auto-merge — the gate is the proof.
 - **Security advisories** are expedited (high/critical jump the queue) but still go through CI.
-- **Major / breaking** bumps are **never auto-merged**: they need a human, a read of the changelog/migration guide, and — for a framework-level change — an **ADR** (e.g. React 18→19, MUI 6→7 track ADR `0015`). The migration and its tests land in the same/linked PR.
+- **Major / breaking** bumps are **never auto-merged**: they need a human, a read of the changelog/migration guide, and — for a framework-level change — an **ADR** (e.g. React 18→19 via ADR 0024; MUI 6→9 via ADR 0025). The migration and its tests land in the same/linked PR.
 
 ## Stay current, on purpose
 
 - Keep runtime libraries within a small window of the latest stable (don't drift majors behind); schedule the migration rather than letting the gap compound.
-- Pinned-for-compatibility choices (MUI 6, ADR `0015`; React was promoted to 19 by ADR 0024) are revisited on a cadence and bumped when the ecosystem catches up — the decision is recorded, not forgotten.
+- MUI 9 (ADR 0025) and React 19 (ADR 0024) are the current baselines; next major migrations (Router 7 — PR D, TanStack Query / Zustand sweep — PR E) follow the same pattern. Pinned choices are revisited on a cadence and bumped when the ecosystem catches up — the decision is recorded, not forgotten.
 - Node engine and CI runner versions are upgraded deliberately (Node 24+ is the floor, @.claude/rules/environment.md); a bump is its own reviewed PR.
 
 ## Rules
