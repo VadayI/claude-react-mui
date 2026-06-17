@@ -80,7 +80,7 @@ Write exactly this scaffold, filled from sources:
   - Component inventory: list of atoms/molecules in ui-kit (e.g. Button variants, Card, Badge, Input, Nav)
   - Screen inventory: list of screens with one-line purpose each
   - API assumptions: endpoints and shapes from api-*.md files
-  End with: "Status: very strong UI source of truth — reproduced faithfully React 19 + MUI 6 + TypeScript (tokens → src/theme/, primitives → MUI components, screens → routes + component tree). See @.claude/rules/design-reference.md."
+  End with: "Status: very strong UI source of truth — reproduced faithfully React 19 + MUI 9 + TypeScript (tokens → src/theme/, primitives → MUI components, screens → routes + component tree). See @.claude/rules/design-reference.md."
 >
 <If no design folder: none.>
 

@@ -62,8 +62,10 @@ export function AddArticleForm({ onAdd, error, disabled = false }: AddArticleFor
           label="Article title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          inputProps={{
-            'aria-describedby': error ? HELPER_ID : undefined,
+          slotProps={{
+            htmlInput: {
+              'aria-describedby': error ? HELPER_ID : undefined,
+            },
           }}
           error={!!error}
           disabled={disabled}

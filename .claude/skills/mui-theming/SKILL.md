@@ -1,9 +1,9 @@
 ---
 name: mui-theming
-description: MUI 6 theming — central theme, sx prop, styled(), responsive values, dark mode — activate for any styling or theming work.
+description: MUI 9 theming — central theme, sx prop, styled(), responsive values, dark mode — activate for any styling or theming work.
 ---
 
-# MUI 6 Theming
+# MUI 9 Theming
 
 ## Core principles
 
@@ -109,7 +109,7 @@ function App() {
 
 ## Emotion internals
 
-- MUI 6 uses Emotion by default; avoid mixing `@emotion/styled` imports with MUI's `styled` — use MUI's re-export
+- MUI 9 uses Emotion by default; avoid mixing `@emotion/styled` imports with MUI's `styled` — use MUI's re-export
 - `GlobalStyles` component for CSS resets instead of plain `<style>` tags
 
 <!-- last reviewed: 2026-06-02 -->

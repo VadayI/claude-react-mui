@@ -10,7 +10,7 @@ Consumes the REST API contract from `VadayI/claude-api-contract` (vendored at `s
 | ------------- | ------------------------------------ |
 | Language      | TypeScript                           |
 | Framework     | React 19 + Vite 8                    |
-| UI            | MUI 6 (Material UI)                  |
+| UI            | MUI 9 (Material UI)                  |
 | Routing       | React Router 6                       |
 | Server state  | TanStack Query 5                     |
 | Client state  | Zustand 5                            |
