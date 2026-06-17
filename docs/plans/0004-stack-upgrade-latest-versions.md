@@ -13,7 +13,7 @@
 | PR B — React 18.3 → 19 (+ react-dom, @types/react\*)              | done        | orchestrator |
 | PR C — MUI 6 → 9 (@mui/material, @mui/icons-material, emotion)    | done        | orchestrator |
 | PR D — React Router 6 → 7 (data router migration)                 | done        | orchestrator |
-| PR E — TanStack Query / Zustand + final sweep                     | pending     | orchestrator |
+| PR E — TanStack Query / Zustand + final sweep                     | done        | orchestrator |
 
 > States: `pending` · `in_progress` · `done` · `blocked`. This table is the cursor — update it as steps move.
 
@@ -71,6 +71,8 @@ Edits on this 9p/`/mnt` mount go through `/dev/shm` scratch + `cp` + re-read ver
 - 2026-06-17 — PR C: ADR 0025 written (docs/decisions/0025-upgrade-mui-9.md); decisions/README.md updated; doc version strings updated (MUI 6→9) across CLAUDE.md, README.md, templates/PROJECT_README.md, templates/PROJECT.md, .claude/commands/{preflight,bootstrap,synthesize-brief}.md, .claude/agents/{react-developer,brief-synthesizer}.md, .claude/rules/upgrade-policy.md, .claude/skills/mui-theming/SKILL.md, renovate.json, templates/renovate.json; .performance-budget.json initialJsGzipKb 188→190.
 
 - 2026-06-17 — PR D: react-router-dom 6.30.4 removed; react-router ^7.18.0 added (single consolidated package). 8 import sites rewritten: src/main.tsx → react-router/dom (DOM renderer); remaining 7 (including test files) → react-router. Future-flag de-risk applied on v6 then removed post-bump (v7 defaults). No json()/defer()/useLoaderData usage; routes unchanged (/,/login,/articles). Route-lazy added: RouteFallback.tsx (role="status", accessible, TSDoc + test); ArticlesPage + LoginPage now React.lazy at module scope; <Suspense> wraps <Outlet> in App.tsx. Bundle: 198.46 KB gz (pre-lazy) → 137.29 KB gz (−31%); budget ratcheted 190→145. 84 tests green (+2 RouteFallback); zero future-flag warnings. ADR 0026 written.
+
+- 2026-06-17 — PR E (final sweep) engineering green: bumped @playwright/test ^1.48.2→^1.61.0; jest-axe ^9.0.0→^10.0.0; openapi-fetch ^0.12.2→^0.17.0; @tanstack/react-query ^5.59.19→^5.101.0; openapi-typescript ^7.4.1→7.13.0 (exact pin, no caret); floor hygiene zustand ^5.0.14, msw ^2.14.6. @rollup/rollup-linux-x64-gnu moved dependencies→devDependencies (^4.61.1). GH Actions: checkout v4→v5, setup-node v4→v6, upload-artifact v4→v7. renovate.json + templates/renovate.json: removed ghost react-router-dom from react-router group. .npmrc: legacy-peer-deps=true KEPT (re-verified — eslint-plugin-jsx-a11y@6.10.2 peer ^3..^9, openapi-typescript@7.13.0 peer ^5.x; both still exclude new majors); plan-reference comment corrected 0005→0004. openapi-fetch 0.17 + jest-axe 10 required ZERO src/ changes. 84/84 tests green; bundle 137.3 KB gz ≤ 145 KB budget; types-drift NO DRIFT (schema.d.ts unchanged, CONTRACT_VERSION stays v0.2.0); npm audit: 2 pre-existing moderate js-yaml only, no new. No ADR (no framework-level major). ✅ Staged stack upgrade PR A–E COMPLETE.
 
 ## Amendments
 

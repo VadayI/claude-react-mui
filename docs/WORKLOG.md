@@ -959,3 +959,42 @@ Cross-machine work history. Updated at the end of every session (`/wrap-up`) and
 
 - Open PR D (`chore/stack-upgrade-pr-d`) for review → quality gate → merge.
 - Start PR E: TanStack Query / Zustand minor sweep + remove `.npmrc legacy-peer-deps` (once peer gaps resolved).
+
+
+## 2026-06-17 — Stack upgrade PR E — final dependency sweep + cleanup
+
+### Done
+
+- **Stack upgrade PR E — final sweep** (branch `chore/stack-upgrade-pr-e`):
+  - **Dependency bumps (devDependencies, no src/ changes):**
+    - `@playwright/test` ^1.48.2 → ^1.61.0
+    - `jest-axe` ^9.0.0 → ^10.0.0 (`@types/jest-axe` kept — jest-axe 10 ships no own types)
+    - `openapi-fetch` ^0.12.2 → ^0.17.0 (verified: no changes to `client.ts` or tests required)
+    - `@tanstack/react-query` ^5.59.19 → ^5.101.0
+    - `openapi-typescript` ^7.4.1 → `7.13.0` (exact pin, no caret — intentional)
+    - Floor hygiene: `zustand` ^5.0.14, `msw` ^2.14.6
+  - `@rollup/rollup-linux-x64-gnu ^4.61.1` moved from `dependencies` → `devDependencies`.
+  - **GitHub Actions bumps:** `actions/checkout` v4→v5, `actions/setup-node` v4→v6, `actions/upload-artifact` v4→v7 (in `frontend-ci.yml`).
+  - **`renovate.json` + `templates/renovate.json`:** removed ghost `react-router-dom` entry from the react-router group (package removed in PR D).
+  - **`.npmrc`:** `legacy-peer-deps=true` KEPT — re-verified still required: `eslint-plugin-jsx-a11y@6.10.2` peer `^3..^9` (no ESLint 10), `openapi-typescript@7.13.0` peer `^5.x` (no TS 6). Plan-reference comment corrected `plan 0005` → `plan 0004`.
+  - **ZERO `src/` changes** — openapi-fetch 0.17 and jest-axe 10 were drop-in compatible.
+
+### Gate status (local, pre-PR)
+
+- typecheck: ✅
+- lint: ✅
+- tests: ✅ (84 passed, 15 test files — unchanged from PR D)
+- build: ✅ (137.3 KB gzipped initial, within 145 KB budget)
+- check_stubs/file_size/feature_readmes: ✅
+- types-drift: ✅ NO DRIFT (schema.d.ts unchanged; CONTRACT_VERSION stays v0.2.0)
+- bundle_size: ✅ (137.3 KB ≤ 145 KB)
+- npm audit (high): ✅ (2 pre-existing moderate js-yaml only, no new advisories)
+- check_contract_sync: deferred to CI (sandbox proxy 403 on GitHub raw)
+- check_plan_sync / check_routes_registry / check_guides_sync: validated by CI (git-dependent gates)
+
+### Notes
+
+- No ADR created — no framework-level major bump in PR E.
+- `@types/jest-axe` dependency remains because jest-axe 10 does not ship its own TypeScript types.
+- **Deferred follow-up (non-blocker):** remove `.npmrc legacy-peer-deps=true` once both `eslint-plugin-jsx-a11y` (ESLint 10 peer) and `openapi-typescript` (TypeScript 6 peer) publish updated peer ranges.
+- **✅ This PR completes the staged stack upgrade (PR A–E).** The template is now fully current: React 19 · Vite 8 · TS 6 · MUI 9 · React Router 7 · TanStack Query 5.101 · Zustand 5 · MSW 2.14 · Playwright 1.61 · Vitest 4.
