@@ -40,7 +40,7 @@
     },
     {
       "description": "React Router — patch+minor, auto-merge on green CI.",
-      "matchPackageNames": ["react-router-dom", "react-router"],
+      "matchPackageNames": ["react-router"],
       "matchUpdateTypes": ["patch", "minor"],
       "groupName": "react-router",
       "automerge": true
