@@ -4,7 +4,7 @@ A ready-made Claude Code configuration for **React + Material UI** frontend proj
 
 The `VadayI/claude-api-contract` repo is the single source of truth for the REST API contract; both this frontend and the `claude-django` backend consume it — neither generates the canon. They are independent repositories with independent CI and release cycles.
 
-**Stack:** TypeScript 6 · React 18 · Vite 8 · MUI 6 · React Router 6 (data router) · TanStack Query 5 · Zustand 5 · Vitest + React Testing Library + MSW · Playwright · `openapi-typescript` · ESLint + Prettier · GitHub Actions
+**Stack:** TypeScript 6 · React 19 · Vite 8 · MUI 6 · React Router 6 (data router) · TanStack Query 5 · Zustand 5 · Vitest + React Testing Library + MSW · Playwright · `openapi-typescript` · ESLint + Prettier · GitHub Actions
 **Environment:** Node 24+ on WSL2 (Windows) / Linux / macOS · Staging — Debian VPS serving the static build behind nginx · GitHub as the source of truth
 
 ---

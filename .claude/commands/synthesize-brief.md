@@ -72,9 +72,9 @@ The output `docs/PROJECT.md` must contain:
 4. **Domain** — key concepts and entities.
 5. **Target users** — who will use this frontend and how.
 6. **Key requirements** — functional requirements distilled from the inputs.
-7. **Stack** — confirm the declared stack (React 18 · Vite 8 · MUI 6 · etc.).
+7. **Stack** — confirm the declared stack (React 19 · Vite 8 · MUI 6 · etc.).
 8. **Backend API** — the OpenAPI schema URL or location; authentication scheme.
-9. **Design reference** — path to the confirmed design folder + concise summary of extracted tokens (palette, typography, spacing), component inventory (atoms and variants), screen inventory (screen names and purpose), and API assumptions; note that this is a very strong UI source of truth, adapted to the React 18 + MUI 6 + TS stack. Write `none` if no design reference was chosen.
+9. **Design reference** — path to the confirmed design folder + concise summary of extracted tokens (palette, typography, spacing), component inventory (atoms and variants), screen inventory (screen names and purpose), and API assumptions; note that this is a very strong UI source of truth, React 19 + MUI 6 + TS stack. Write `none` if no design reference was chosen.
 10. **Design deviations** — bulleted list of intentional differences from the design reference, each with a reason. Write `none recorded yet` if the list is empty.
 11. **Open questions** — unresolved ambiguities that need stakeholder input before implementation.
 12. **Input sources** — list of documents this synthesis was derived from, with dates.

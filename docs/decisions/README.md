@@ -23,7 +23,7 @@ the highest existing one.
 | 0011 | Config baseline (plugins / MCP) |
 | 0013 | File-size limit 400 |
 | 0014 | Update-from-template |
-| 0015 | Stack: React + MUI + TanStack Query + Zustand |
+| 0015 | Stack: React + MUI + TanStack Query + Zustand (React pin superseded by 0024) |
 | 0016 | Accessibility mandatory |
 | 0017 | Server- vs client-state |
 | 0018 | Auth mode session/CSRF (superseded by 0021) |
@@ -32,5 +32,6 @@ the highest existing one.
 | 0021 | Auth Bearer/JWT default (supersedes 0018) |
 | 0022 | Bump contract pin to v0.2.0 (auth path rename) |
 | 0023 | Upgrade TS 6 / Node 24 floor / ESLint 10 |
+| 0024 | Upgrade React 18.3 → 19 |
 
 > Index added in the 2026-06-16 template audit. Keep in sync when adding an ADR.

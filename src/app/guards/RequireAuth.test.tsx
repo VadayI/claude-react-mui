@@ -4,13 +4,17 @@
  * Uses createMemoryRouter so that Navigate, Outlet, and useLocation
  * work correctly in test — MemoryRouter cannot handle data-router guards.
  *
+ * Auth-store mutations (setState/clearTokens) are wrapped in `act(...)`: the
+ * guard subscribes to useAuthStore, so under React 19 a store change made
+ * outside act triggers an unwrapped subscriber update and a console warning.
+ *
  * Tests:
  * - Authenticated user sees the protected child (Outlet rendered)
  * - Anonymous user is redirected to /login?next=%2Farticles
  * - jest-axe on the authenticated state
  */
 import { describe, it, expect, afterEach } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { render, screen, act } from '@testing-library/react'
 import { createMemoryRouter, RouterProvider } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ThemeProvider } from '@mui/material/styles'
@@ -20,7 +24,9 @@ import { RequireAuth } from './RequireAuth'
 import { axe } from '../../test/setup'
 
 afterEach(() => {
-  useAuthStore.getState().clearTokens()
+  act(() => {
+    useAuthStore.getState().clearTokens()
+  })
 })
 
 function buildRouter(initialEntry = '/articles') {
@@ -52,14 +58,18 @@ function renderRouter(router: ReturnType<typeof buildRouter>) {
 describe('RequireAuth', () => {
   describe('when authenticated', () => {
     it('renders the protected child (Outlet)', () => {
-      useAuthStore.setState({ accessToken: 'valid-token' })
+      act(() => {
+        useAuthStore.setState({ accessToken: 'valid-token' })
+      })
       const router = buildRouter()
       renderRouter(router)
       expect(screen.getByText('Protected articles content')).toBeInTheDocument()
     })
 
     it('has no accessibility violations', async () => {
-      useAuthStore.setState({ accessToken: 'valid-token' })
+      act(() => {
+        useAuthStore.setState({ accessToken: 'valid-token' })
+      })
       const router = buildRouter()
       const { container } = renderRouter(router)
       expect(await axe(container)).toHaveNoViolations()

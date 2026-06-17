@@ -86,7 +86,7 @@ const queryClient = new QueryClient({
 ## Suspense option
 
 ```tsx
-// Enable per-query for Suspense + ErrorBoundary integration (React 19)
+// Enable per-query for Suspense + ErrorBoundary integration (React 19 baseline — ADR 0024)
 const { data } = useSuspenseQuery({ queryKey: articleKeys.detail(id), queryFn: ... });
 // Component suspends while loading; no isLoading check needed
 ```

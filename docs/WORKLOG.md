@@ -846,3 +846,34 @@ Cross-machine work history. Updated at the end of every session (`/wrap-up`) and
 
 - Open PR A for review → merge → then PR B (React 18→19) on the PR A baseline.
 - Remove `legacy-peer-deps=true` from `.npmrc` once `eslint-plugin-jsx-a11y` and `openapi-typescript` publish ESLint 10 / TS 6 peers.
+
+## 2026-06-16 — Stack upgrade PR B — React 18.3 → 19
+
+### Done
+
+- **Stack upgrade PR B — React ecosystem** (branch `chore/stack-upgrade-pr-b`):
+  - `react` and `react-dom` `^18.3.x` → `^19.2.7` (locked together).
+  - `@types/react` and `@types/react-dom` `^18` → `^19`.
+  - `@testing-library/react` `^14.x` → `^16.3.2` (React 18‖19 peer; `@testing-library/dom ^10` already present from PR A).
+  - Codemods (`types-react-codemod preset-19`, `react/19` migration recipe) run — **codebase was already React-19-clean: 0 source-file changes required**.
+  - One test fix: `RequireAuth.test.tsx` — Zustand store mutations in test callbacks wrapped in `act()` to satisfy React 19's stricter act() enforcement.
+  - 82/82 tests green; bundle 183.53 KB gz (up ~3.5 KB from React 19 runtime; within the raised 188 KB budget).
+- **ADR 0024** (`docs/decisions/0024-upgrade-react-19.md`) written and indexed in `docs/decisions/README.md` (0015's React-pin row annotated "superseded by 0024").
+- **Performance budget** raised: `initialJsGzipKb` 180 → 188 (React 19 runtime; code-splitting deferred as separate perf task). Both `.performance-budget.json` and `templates/.performance-budget.json` updated.
+- **Doc version strings** updated: React 18→19 across `CLAUDE.md` (Stack line + Version note), `README.md`, `templates/PROJECT_README.md`, `.claude/commands/{preflight,bootstrap}.md`, `.claude/agents/react-developer.md`, `.claude/skills/react-specialist/SKILL.md` (un-gated React 19 additions section), `.claude/skills/tanstack-query-design/SKILL.md` (useSuspenseQuery caveat normalized), `renovate.json`, `templates/renovate.json`.
+- MUI 6 / React Router 6 unchanged (deferred to PRs C and D per plan).
+
+### Gate status (local, pre-PR)
+
+- typecheck: ✅
+- lint: ✅
+- tests: ✅ (82 passed, 13 test files)
+- build: ✅ (183.53 KB gzipped, within 188 KB budget)
+- check_stubs/file_size/feature_readmes/types_drift/bundle_size: ✅
+- npm audit (high): ✅
+- check_contract_sync: deferred to CI (sandbox proxy 403 on GitHub raw)
+- check_plan_sync / check_routes_registry / check_guides_sync: validated by CI (git-dependent gates)
+
+### Next steps
+
+- Open PR B for review → merge → then PR C (MUI 6→9) on the PR B baseline.
