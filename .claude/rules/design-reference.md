@@ -26,7 +26,7 @@ The design reference is a **very strong source of truth for UI decisions** — n
 
 - **Translate tokens → MUI theme.** CSS custom properties become `palette`, `typography`, `spacing`, and `shape` entries in `src/theme/`. The theme is the single source of design-token truth in production; no inline styles copying the prototype's CSS variables approach.
 - **Translate ui-kit primitives → MUI components.** Prototype atoms (button variants, card structures, badge shapes) are realised through MUI component composition and `styleOverrides` in the theme — not by porting JSX verbatim.
-- **Translate screens → routes + component tree.** Each screen maps to a route/screen in `src/features/<feature>/` with the same layout, content hierarchy, and interactive states — built with React 18 + TypeScript + TanStack Query + Zustand, following the feature-sliced structure in `@.claude/rules/architecture.md`.
+- **Translate screens → routes + component tree.** Each screen maps to a route/screen in `src/features/<feature>/` with the same layout, content hierarchy, and interactive states — built with React 19 + TypeScript + TanStack Query + Zustand, following the feature-sliced structure in `@.claude/rules/architecture.md`.
 - **Reproduce density, layout rhythm, and interaction states** as closely as the stack allows (loading skeletons, empty states, hover/active/focus styles from the prototype's intent, not literal CSS).
 
 The prototype's **in-browser Babel / inline-style implementation is not copied**. Reproduce the _design intent_, not the implementation approach.

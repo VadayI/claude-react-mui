@@ -79,9 +79,9 @@ Optional (activate only when relevant, not used in every project): `auditor` (wo
 
 ## Stack
 
-TypeScript 6 · React 18 · Vite 8 · Material UI (MUI) 6 · React Router 6 (data router) · TanStack Query 5 (server-state) · Zustand 5 (client-state) · Vitest 4 + React Testing Library + MSW (unit/component) · Playwright (E2E) · `openapi-typescript` (types from contract repo `VadayI/claude-api-contract`, NOT backend) · ESLint + Prettier · GitHub Actions CI. Environment — Node 24+ on WSL2 / Linux / macOS. Staging — VPS (Debian) serving the static build behind nginx.
+TypeScript 6 · React 19 · Vite 8 · Material UI (MUI) 6 · React Router 6 (data router) · TanStack Query 5 (server-state) · Zustand 5 (client-state) · Vitest 4 + React Testing Library + MSW (unit/component) · Playwright (E2E) · `openapi-typescript` (types from contract repo `VadayI/claude-api-contract`, NOT backend) · ESLint + Prettier · GitHub Actions CI. Environment — Node 24+ on WSL2 / Linux / macOS. Staging — VPS (Debian) serving the static build behind nginx.
 
-> Version note: the starter app pins **React 18.3** and **MUI 6** for the smoothest MUI + React Testing Library compatibility (React 19 + MUI 6 still has rough edges). Bump to React 19 once MUI fully tracks it — the TDD/contract discipline is version-agnostic.
+> Version note: **React 19** is now adopted (ADR 0024) — MUI 6 supports React 19 as a peer, and the codebase was already React-19-clean. **MUI 6** remains pinned pending the MUI 9 upgrade (PR C, ADR TBD) — the TDD/contract discipline is version-agnostic.
 
 ## Setup
 

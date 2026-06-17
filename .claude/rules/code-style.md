@@ -47,4 +47,4 @@ No source file in `src/` may exceed **400 lines** (React files should be small; 
 - Small functions/components with a single responsibility.
 - Conventional commits (see @.claude/rules/git-operations.md).
 
-> **Skill:** activate the `react-specialist` skill for React 18 component, hook, and composition patterns.
+> **Skill:** activate the `react-specialist` skill for React 19 component, hook, and composition patterns.

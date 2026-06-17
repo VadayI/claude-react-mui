@@ -1,9 +1,9 @@
 ---
 name: react-specialist
-description: Modern React 18 patterns — function components, hooks, composition, Suspense, effects — activate when implementing React components or custom hooks.
+description: Modern React 19 patterns — function components, hooks, composition, Suspense, effects — activate when implementing React components or custom hooks.
 ---
 
-# React 18 Patterns
+# React 19 Patterns
 
 ## Core principles
 
@@ -64,7 +64,7 @@ function SearchBox({ onSearch }: { onSearch: (q: string) => void }) {
 </ErrorBoundary>
 ```
 
-- Suspense for data is driven by the data layer (TanStack Query's `useSuspenseQuery`); `use(promise)` auto-suspend arrives with the React 19 upgrade (ADR 0015)
+- Suspense for data is driven by the data layer (TanStack Query's `useSuspenseQuery`); `use(promise)` auto-suspends (React 19, ADR 0024)
 - Always pair `<Suspense>` with an `<ErrorBoundary>`
 
 ## Refs
@@ -83,10 +83,18 @@ function SearchBox({ onSearch }: { onSearch: (q: string) => void }) {
 - Return an object (named values) not a tuple when returning 3+ values
 - Hooks compose; keep them single-purpose
 
-## React 19 additions (available only after the React 19 upgrade — ADR 0015; NOT on the pinned React 18.3)
+## React 19 additions
 
-- `useOptimistic` for optimistic UI (prefer over manual state tricks)
-- `useFormStatus` for form pending state
-- Server Actions integration available but this repo is client-only
+React 19 is the current baseline (ADR 0024). The following APIs are available now:
 
-<!-- last reviewed: 2026-06-02 -->
+- **`use(promise)`** — read a promise or context inside render; auto-suspends; replaces most `useEffect`-based async patterns
+- **`useActionState`** — manage form/action state (pending, result, error) tied to an async action function
+- **`useFormStatus`** — read the pending state of the nearest parent `<form>` submission; use inside form child components
+- **`useOptimistic`** — apply an optimistic update during an async transition, auto-reverts on error (prefer over manual state tricks)
+- **`<form action>`** — pass an async function directly as the `action` prop; React manages the pending/error lifecycle
+- **Ref as prop** — function components can now accept `ref` as a regular prop (no `forwardRef` wrapper needed in most cases)
+- **`React.FC` no longer includes implicit `children`** — declare `children: React.ReactNode` explicitly when needed
+- **`useEffectEvent`** (19.2) — stable callback identity without stale-closure bugs; replaces `useCallback` + ref tricks for event handlers
+- **`<Activity>`** (19.2) — keep a subtree mounted but hidden/deferred; useful for preloading background routes
+
+<!-- last reviewed: 2026-06-16 -->

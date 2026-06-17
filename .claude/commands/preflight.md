@@ -23,7 +23,7 @@ Confirm a clear statement of what we are building exists: goals, scope, domain, 
 
 ### 2. Tech stack declared
 
-Confirm the stack is declared in `CLAUDE.md` and `package.json` with consistent versions: React 18 · Vite 8 · MUI 6 · TypeScript · React Router 6 · TanStack Query 5 · Zustand 5 · Vitest+RTL+MSW · Playwright. If undeclared or contradictory → STOP and confirm with the user.
+Confirm the stack is declared in `CLAUDE.md` and `package.json` with consistent versions: React 19 · Vite 8 · MUI 6 · TypeScript · React Router 6 · TanStack Query 5 · Zustand 5 · Vitest+RTL+MSW · Playwright. If undeclared or contradictory → STOP and confirm with the user.
 
 ### 3. OpenAPI contract reachable
 

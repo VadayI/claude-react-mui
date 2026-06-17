@@ -60,7 +60,7 @@
       "automerge": true
     },
     {
-      "description": "Major upgrades are never auto-merged — they need a human + an ADR (upgrade-policy.md). React 18.3 / MUI 6 are pinned by ADR 0015.",
+      "description": "Major upgrades are never auto-merged — they need a human + an ADR (upgrade-policy.md). MUI 6 remains pinned by ADR 0015 (React upgraded to 19 by ADR 0024).",
       "matchUpdateTypes": ["major"],
       "automerge": false,
       "addLabels": ["major", "needs-adr"]

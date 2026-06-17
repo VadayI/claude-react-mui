@@ -9,8 +9,8 @@
 
 | Step                                                              | State       | Owner        |
 | ----------------------------------------------------------------- | ----------- | ------------ |
-| PR A — Tooling (TypeScript 6 · Node 24 floor · ESLint 10 + bumps) | in_progress | orchestrator |
-| PR B — React 18.3 → 19 (+ react-dom, @types/react\*)              | pending     | orchestrator |
+| PR A — Tooling (TypeScript 6 · Node 24 floor · ESLint 10 + bumps) | done        | orchestrator |
+| PR B — React 18.3 → 19 (+ react-dom, @types/react\*)              | done        | orchestrator |
 | PR C — MUI 6 → 9 (@mui/material, @mui/icons-material, emotion)    | pending     | orchestrator |
 | PR D — React Router 6 → 7 (data router migration)                 | pending     | orchestrator |
 | PR E — TanStack Query / Zustand + final sweep                     | pending     | orchestrator |
@@ -59,6 +59,11 @@ Edits on this 9p/`/mnt` mount go through `/dev/shm` scratch + `cp` + re-read ver
 - 2026-06-16 — PR A docs + ADR 0023 written; doc version strings (TS/Node/ESLint) updated across CLAUDE.md, README.md, .claude/rules, .claude/commands, .claude/agents, .claude/skills, docs/decisions/README.md, docs/WORKLOG.md; docs/plans/0004 Execution log current.
 - 2026-06-16 — PR A gates green locally: typecheck/lint/test 82/build/bundle 169.8 KB/audit; contract-sync + PR-aware gates (plan-sync, routes-registry, guides-sync) deferred to CI (git-dependent, stale sandbox git).
 - 2026-06-16 — Quality gate: 2×🟡 fixed (detect-env ADR ref 0019 → 0023; openapi-ts/TS6 + jsx-a11y/eslint10 peer risks logged in docs/lessons.md). Gate PASS.
+
+- 2026-06-16 — PR B: react 19.2.7 / react-dom 19.2.7 / @types/react 19 / @types/react-dom 19 installed; @testing-library/react 16.3.2; codebase was already React-19-clean (0 src changes required); RequireAuth.test.tsx act() fix applied.
+- 2026-06-16 — PR B: 82/82 tests green; bundle 183.53 KB gz; budget raised 180→188 KB (ADR 0024; React 19 runtime ~3.5 KB gz); docs + ADR 0024 written.
+
+- 2026-06-16 — PR B quality gate: PASS with nits — fixed 6 stale 'React 18' doc strings + upgrade-policy React line + ADR 0024 version text; probe*.test.tsx and dist2/ to be removed by user in WSL (9p EPERM).
 
 ## Amendments
 
