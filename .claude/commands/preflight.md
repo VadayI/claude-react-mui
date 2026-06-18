@@ -1,49 +1,28 @@
----
-model: sonnet
----
+# Project kickoff preflight (hard gate)
 
-Build-inputs gate per `@.claude/rules/preflight.md` — verify that all inputs needed to build correctly are present before the first feature pipeline runs. Hard gate: if any critical item is missing, do NOT start coding.
+Before agents start work on a (new) project — and before the first feature pipeline — verify that the inputs and access needed to build correctly are present. This is a **hard gate**: if a critical item is missing, agents do NOT start coding; the orchestrator stops and either asks the user or fixes access. Runs automatically at project kickoff and on demand via `/preflight`.
 
-## Log
+## What to verify (all CRITICAL)
 
-```bash
-node scripts/log-cmd.mjs /preflight "$ARGUMENTS"
-```
+1. **Project brief / description.** A clear statement of what we are building: goals, scope, target users, key screens/flows. Source: `docs/PROJECT.md`, a README brief, or a description the user provided. If absent or vague → STOP and ask — `ba` cannot write meaningful user stories without it.
+2. **Tech stack.** Declared (CLAUDE.md / README: React · Vite · TypeScript · MUI · TanStack Query · Zustand · Vitest/RTL/MSW · Playwright) and dependencies resolvable (`package.json` present; versions consistent). If undeclared or contradictory → STOP and confirm.
+3. **Contract available.** Both `CONTRACT_REPO` and `CONTRACT_VERSION` are set (in `.env` or environment) and `src/lib/api/openapi.yml` is present. The contract is vendored from the project's own contract repo (`CONTRACT_REPO`, structured like `VadayI/claude-api-contract`) at the pinned tag — run `npm run api:pull` to fetch it, then `npm run api:types` to regenerate types. The contract-sync gate (`scripts/check_contract_sync.sh`) must be GREEN before any feature pipeline starts. If the contract is missing or either variable is unset → STOP: the UI would be coded against an imagined API. (@.claude/rules/api-client.md.)
+4. **Design references (recommended).** A prototype folder in `docs/design/`, a **running design URL** (opened in a browser via the `playwright` MCP), Figma/brand/theme tokens, or at least a description of look & feel — recorded in `docs/PROJECT.md` § Design reference together with the **fidelity level** (L1–L4, default L3), so `ui-architect` and the theme are grounded. If a running design URL is declared, verify it is reachable and the `playwright` plugin is enabled (declared-but-unreachable → ⚠️, fall back to folder/brief). If absent entirely, note that the UI will follow MUI defaults and proceed. (@.claude/rules/design-reference.md)
+5. **Library docs access — Context7.** The `context7` MCP is reachable so agents can check current React/MUI/Query APIs before implementing. If down → STOP, or proceed only on explicit user override (noting APIs will be unverified against current docs).
+6. **GitHub project access.** `gh auth status` authenticated AND repo reachable (`gh repo view`), so PRs, CI, and history work. `GITHUB_PERSONAL_ACCESS_TOKEN` set. If no access → STOP.
 
-## Steps
+## Gate behavior
 
-Delegate access checks (Context7, GitHub, OpenAPI schema) to `devops` and brief/stack comprehension to `ba`. All four items are CRITICAL blockers.
+- Items 1, 2, 3, 5, 6 are blockers. Item 4 is a strong recommendation (proceed with MUI defaults if absent). If any blocker is ❌ → report the readiness checklist and STOP before dispatching `ba` / the feature pipeline.
+- Context7 may be waived only on **explicit** user override; record that implementation relies on training knowledge, not current docs.
+- Never start writing components, hooks, or the API client while a CRITICAL item is ❌.
 
-### 1. Project brief
+## Who runs it
 
-Confirm a clear statement of what we are building exists: goals, scope, domain, key requirements. Check `docs/PROJECT.md`, any design docs/PDFs in `docs/`, or a description the user provided in this session.
+- The **orchestrator** runs preflight at project kickoff, delegating access checks (Context7, GitHub, contract availability, stack deps) to `devops` and brief/stack comprehension to `ba`.
+- `ba` confirms it has a usable brief + an unambiguous declared stack BEFORE producing user stories.
+- The `/preflight` command runs the same check on demand.
 
-- ✅ Present and clear → proceed.
-- ❌ Absent or vague → STOP and ask the user for a brief before dispatching `ba`. Without it `ba` cannot write meaningful user stories or component contracts.
+## Relation to `/doctor`
 
-### 2. Tech stack declared
-
-Confirm the stack is declared in `CLAUDE.md` and `package.json` with consistent versions: React 19 · Vite 8 · MUI 9 · TypeScript · React Router 7 · TanStack Query 5 · Zustand 5 · Vitest+RTL+MSW · Playwright. If undeclared or contradictory → STOP and confirm with the user.
-
-### 3. OpenAPI contract reachable
-
-This frontend consumes its own OpenAPI contract (`CONTRACT_REPO` in `.env`, structured like `VadayI/claude-api-contract`). The contract is the primary design input.
-
-- Check both `CONTRACT_VERSION` and `CONTRACT_REPO` are set in `.env` (configured during `/bootstrap` Step 0 — there is no fallback default).
-- Run `npm run api:pull` (dry-run or real) to confirm the contract tag is reachable from GitHub.
-- If reachable: run `npm run api:types` and confirm `src/lib/api/schema.d.ts` is in sync (`bash scripts/check_types_drift.sh`).
-- If unreachable: STOP — OR proceed only on explicit user override (noting that API types will be unverified against the current contract). Record the override in `docs/WORKLOG.md`.
-- ⚠️ Recommended: design tokens / Figma references in `docs/design/`. Not a hard blocker, but note if absent.
-
-### 4. GitHub project access
-
-- `gh auth status` authenticated.
-- `gh repo view` (infer from `git remote get-url origin`) reachable.
-- `GITHUB_PERSONAL_ACCESS_TOKEN` env var set (for MCP and `gh` CLI).
-- If no access → STOP.
-
-### Report
-
-Print a readiness table: Item → Status (✅/❌/⚠️) → Action. If all ✅ → recommend dispatching `ba` to start the first feature. If any ❌ → STOP with the specific blocker and what the user must provide.
-
-<!-- last reviewed: 2026-06-10 -->
+`/doctor` checks the **environment** (tools, services, git hygiene). Preflight checks the **inputs to build** (brief, stack, contract pin, design refs, docs/GitHub access). On a fresh machine run `/doctor` first, then preflight before the first feature.

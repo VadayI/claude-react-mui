@@ -49,6 +49,7 @@ Delegate to `auditor` with all gathered data and these audit dimensions per scop
 - Are feature READMEs up to date? (`check_feature_readmes.sh`)
 - Is `docs/WORKLOG.md` up to date with today's work?
 - Is `docs/verify/` populated for shipped features?
+- **Design reference**: does `docs/PROJECT.md` § Design reference declare a source + fidelity level (L1–L4)? If a running design URL is declared, is it reachable and is the `playwright` plugin enabled so agents can open it? (@.claude/rules/design-reference.md)
 
 **workflow scope:**
 

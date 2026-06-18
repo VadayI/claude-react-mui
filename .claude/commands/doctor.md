@@ -56,6 +56,7 @@ Detect scenario and report as one of: `fresh` (no package.json/src) / `existing-
 18. **Generated types in sync** — `bash scripts/check_types_drift.sh`. If drift detected, regenerate with `npm run api:types`.
 19. **Tests green** — `npm run test:run -- --reporter=verbose 2>&1 | tail -5`. Report pass/fail count.
 20. **Lint + typecheck clean** — `npm run lint && npm run typecheck`. Report errors.
+20a. **Design reference (if declared)** — if `docs/PROJECT.md` § Design reference names a **running design URL**, probe it (a `node` fetch, or the `playwright` MCP `browser_navigate`) and confirm the `playwright` plugin is enabled so agents can open it. Reachable → ✅; declared-but-down → ⚠️ (agents fall back to the prototype folder/brief); none declared → n/a. (@.claude/rules/design-reference.md)
 
 ### Scope 4 — Git hygiene
 
