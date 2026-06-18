@@ -29,7 +29,7 @@ Phase 4 of the feature pipeline (GREEN). I implement the minimal code to make th
 - `@.claude/rules/contract-deviations.md` — a missing/broken contract endpoint is logged in `docs/api/CONTRACT_ISSUES.md`, never faked in production
 - `@.claude/rules/surgical-changes.md` — minimal, traceable diffs; remove only self-created orphans
 - `@.claude/rules/feature-readme.md` — update feature README alongside code changes
-- `@.claude/rules/design-reference.md` — implement components following the MUI theme derived from design tokens; reproduce screen layouts from the prototype; flag new deviations to the orchestrator
+- `@.claude/rules/design-reference.md` — implement through the MUI theme + components, never copying prototype styles; at **L1/L2** open the running design URL (Playwright MCP) and match measured/exact tokens, at **L3/L4** reproduce close/loose; flag new deviations to the orchestrator
 
 ## Workflow
 

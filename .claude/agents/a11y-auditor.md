@@ -21,6 +21,7 @@ On-demand deep accessibility audit. I go beyond the automated `jest-axe` checks 
 
 - `@.claude/rules/accessibility.md` — full WCAG 2.1 AA requirement, keyboard nav, ARIA usage
 - `@.claude/rules/testing.md` — test behavior via keyboard and screen-reader flows
+- `@.claude/rules/design-reference.md` — the accessible realization wins over the design and stays **in-stack** (MUI theme + components); record each such departure in `docs/PROJECT.md` § Design deviations
 
 ## Audit scope
 

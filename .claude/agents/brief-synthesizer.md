@@ -29,9 +29,9 @@ The orchestrator (`/synthesize-brief`) passes a list of paths under `docs/**`. F
 
 If a `.pdf`/`.docx` skill is unavailable or fails, do NOT crash — record the file as `unprocessed: <reason>` and continue with the rest.
 
-### Design folder (first-class input)
+### Design source (first-class input)
 
-If the orchestrator passes a `design_folder` path, read its contents in full:
+The orchestrator passes a `design_folder` path (a static prototype), a `design_url` (a running design), and a `design_fidelity` level (L1–L4, default L3) — any may be present. **Static folder** — when `design_folder` is set, read its contents in full:
 
 - **CSS custom properties / design tokens** — any `.css` files or inline `<style>` blocks containing `--variable` declarations; extract palette, typography scale, spacing, radius, and shadow values.
 - **`ui-kit.jsx`** (or similarly named file) — enumerate component atoms and their variants; note visual properties (size, colour usage, border radius, shadow).
@@ -39,7 +39,11 @@ If the orchestrator passes a `design_folder` path, read its contents in full:
 - **`app-data.jsx`** (or similar) — list entities and their fields.
 - **`api-*.md`** files — read as API assumptions (endpoints, request/response shapes, auth).
 
-Describe the **design intent**, not the implementation. Do NOT reproduce inline styles or Babel-specific patterns verbatim. Summarise token values as MUI theme intent (e.g. "`--c-accent: #0a8a3f` → `palette.primary.main: '#0a8a3f'`"). If `design_folder` is `null` or not provided, skip this section.
+Describe the **design intent**, not the implementation. Do NOT reproduce inline styles or Babel-specific patterns verbatim. Summarise token values as MUI theme intent (e.g. "`--c-accent: #0a8a3f` → `palette.primary.main: '#0a8a3f'`").
+
+**Running design** — when `design_url` is set, open it with the Playwright MCP (`browser_navigate` → `browser_snapshot`/`browser_take_screenshot`; `browser_evaluate` to read computed tokens). Capture the rendered screen inventory and the real palette/typography/spacing as MUI-theme intent; this is the ground-truth source above declared tokens. Inspection is read-only.
+
+**Fidelity** — record the `design_fidelity` level (L1–L4, default L3) so `ui-architect`/`react-developer` know how exactly to reproduce. If neither `design_folder` nor `design_url` is provided, skip this section.
 
 ## Output: `docs/PROJECT.md` (fixed structure, 11 sections + source table)
 
@@ -75,14 +79,14 @@ Write exactly this scaffold, filled from sources:
 <roles + concerns; one line each>
 
 ## Design reference
-<If a design folder was provided: path to docs/design/<name>/ + concise summary of:
+<If a design source was provided: record **Design source** (none|folder|url|both), **Prototype folder** path, **Running design URL**, **Fidelity level** (L1–L4, default L3), then a concise summary of:
   - Tokens: palette entries (primary, secondary, background, text colours), typography scale, spacing, radius values
   - Component inventory: list of atoms/molecules in ui-kit (e.g. Button variants, Card, Badge, Input, Nav)
   - Screen inventory: list of screens with one-line purpose each
   - API assumptions: endpoints and shapes from api-*.md files
   End with: "Status: very strong UI source of truth — reproduced faithfully React 19 + MUI 9 + TypeScript (tokens → src/theme/, primitives → MUI components, screens → routes + component tree). See @.claude/rules/design-reference.md."
 >
-<If no design folder: none.>
+<If no design source: none.>
 
 ## Design deviations
 <Bulleted list of intentional differences from the design reference, each with a reason.

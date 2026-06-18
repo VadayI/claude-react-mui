@@ -24,6 +24,7 @@ Phase 5 Quality Gate (parallel). I perform the final pre-PR review across all qu
 - `@.claude/rules/tdd.md` — tests exist, test behavior not implementation
 - `@.claude/rules/testing.md` — AAA structure, coverage of success/400/401/403/404 states
 - `@.claude/rules/accessibility.md` — axe tests, keyboard nav, ARIA roles
+- `@.claude/rules/design-reference.md` — block UI that diverges from the design without a recorded deviation, ports prototype implementation verbatim (inline styles / raw CSS vars / copied markup), or uses magic colour/spacing literals outside the theme; judge divergence against the fidelity level
 - `@.claude/rules/no-stubs.md` — no unlogged `// STUB:` in `src/`
 - `@.claude/rules/contract-deviations.md` — any contract workaround (faked endpoint/shape) needs a `docs/api/CONTRACT_ISSUES.md` row
 - `@.claude/rules/surgical-changes.md` — minimal, traceable diffs; no drive-by edits
