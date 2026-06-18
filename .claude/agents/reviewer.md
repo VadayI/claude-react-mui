@@ -10,7 +10,7 @@ assistant: 'Using reviewer: checking component contract adherence, test coverage
 </example>"
 model: opus
 color: red
-tools: [Read, Glob, Grep, Write, SendMessage]
+tools: [Read, Glob, Grep, SendMessage]
 ---
 
 # Reviewer (reviewer)
