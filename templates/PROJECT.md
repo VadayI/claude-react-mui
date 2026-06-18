@@ -44,12 +44,26 @@
 - Accessibility standard: {TODO: e.g. WCAG 2.1 AA}
 - Performance budget: {TODO: e.g. LCP < 2.5s on 4G}
 
-## Design references
+## Design reference
 
-{TODO: Links to Figma files, design system docs, brand guidelines, or screenshots.}
+{TODO: Links to Figma files, design system docs, brand guidelines, screenshots, a Claude-design prototype folder, or a running design URL.}
 
-- Figma: {TODO}
-- Design system: MUI 9 default theme, customized in `src/theme/`
+| Item               | Value                                                                              |
+| ------------------ | ---------------------------------------------------------------------------------- |
+| Design source      | {TODO: none \| folder \| url \| both}                                              |
+| Prototype folder   | {TODO: docs/design/<name>/ or none}                                                |
+| Running design URL | {TODO: e.g. http://localhost:8331/ or none}                                        |
+| Fidelity level     | {TODO: L1 measured-pixel-perfect \| L2 pixel-perfect \| L3 close-MUI (default) \| L4 inspiration} |
+| Figma              | {TODO}                                                                             |
+| Design system      | MUI 9 theme in `src/theme/`, derived from the design tokens                        |
+
+> The design is always translated into the MUI theme + components and the project stack — never ported verbatim. See `@.claude/rules/design-reference.md` (incl. fidelity levels L1–L4 and live-URL inspection).
+
+## Design deviations
+
+{Intentional differences from the design reference, each with a reason. Sourced during `/synthesize-brief` Step 1.5 and any conflict-resolution noted by `ui-architect` / `a11y-auditor`. Accessibility and the four-state component contract win over the design and are recorded here.}
+
+- {none recorded yet}
 
 ## Backend API
 
