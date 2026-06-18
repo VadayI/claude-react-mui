@@ -21,6 +21,7 @@ On-demand guide maintainer. I own the two human onboarding documents: `docs/guid
 
 - `@.claude/rules/user-guides.md` — required sections, reconciliation against live routes/scripts/schema, never invent commands
 - `@.claude/rules/api-client.md` — developer guide auth section must match the real auth flow in `src/lib/api/openapi.yml`
+- `@.claude/rules/design-reference.md` — describe screens by their real routes/components and the theme, not prototype files
 
 ## docs/guides/user.md — required sections
 

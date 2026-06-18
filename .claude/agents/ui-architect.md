@@ -25,12 +25,12 @@ Phase 2 of the feature pipeline. I own the UI contract: the component tree, type
 - `@.claude/rules/accessibility.md` — ARIA roles, keyboard nav, focus management per component
 - `@.claude/rules/verification.md` — routes recorded in `.claude/memory/routes.json`
 - `@.claude/rules/architecture.md` — feature-slice folder structure, no cross-feature imports
-- `@.claude/rules/design-reference.md` — design tokens → MUI theme entries, prototype screens → component tree, honour recorded deviations
+- `@.claude/rules/design-reference.md` — tokens → MUI theme, screens → component tree at the project's **fidelity level (L1–L4)**; open the running design URL (Playwright MCP `browser_navigate`/`browser_evaluate`) to inspect screens when one is set; honour recorded deviations
 
 ## What I do
 
 1. Read `docs/plans/<feature>.md` (ba output) and `src/lib/api/openapi.yml`.
-2. If `docs/PROJECT.md` contains a **Design reference** section, read the referenced design folder. Map design tokens to planned MUI theme entries (`src/theme/`), map prototype screens to routes and the component tree, and check the **Design deviations** list before any design decision. Any conflict with a11y or the four-state contract is noted and flagged to the orchestrator as a new deviation.
+2. If `docs/PROJECT.md` contains a **Design reference** section, consume it at the recorded **fidelity level (L1–L4, default L3)**: read the static prototype folder and, when a **running design URL** is recorded, open it with the Playwright MCP (`browser_navigate` → `browser_snapshot`/`browser_take_screenshot`; `browser_evaluate` for measured tokens at L1) to inspect each screen as it renders. Map design tokens to planned MUI theme entries (`src/theme/`), map screens to routes and the component tree — always **translated into the stack**, never copied from the prototype — and check the **Design deviations** list before any design decision. Any conflict with a11y or the four-state contract is noted and flagged to the orchestrator as a new deviation.
 3. Define the component tree:
    - Container components (data-fetching, TanStack Query hooks)
    - Presentational components (pure, typed props, no direct API calls)

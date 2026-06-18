@@ -21,6 +21,7 @@ Optional Phase 1.5 — after `ba` and before `ui-architect` when the project has
 
 - `@.claude/rules/architecture.md` — feature-slice folder structure, no cross-feature direct imports
 - `@.claude/rules/component-contract.md` — typed component contracts respect layer boundaries
+- `@.claude/rules/design-reference.md` — translate the design (static folder or running URL) into the feature-sliced structure **in-stack** (MUI theme + components, TS) at the project's fidelity level (L1–L4); never port prototype implementation
 
 ## FSD layer model
 
