@@ -998,3 +998,14 @@ Cross-machine work history. Updated at the end of every session (`/wrap-up`) and
 - `@types/jest-axe` dependency remains because jest-axe 10 does not ship its own TypeScript types.
 - **Deferred follow-up (non-blocker):** remove `.npmrc legacy-peer-deps=true` once both `eslint-plugin-jsx-a11y` (ESLint 10 peer) and `openapi-typescript` (TypeScript 6 peer) publish updated peer ranges.
 - **✅ This PR completes the staged stack upgrade (PR A–E).** The template is now fully current: React 19 · Vite 8 · TS 6 · MUI 9 · React Router 7 · TanStack Query 5.101 · Zustand 5 · MSW 2.14 · Playwright 1.61 · Vitest 4.
+
+## 2026-06-18 — Design-fidelity workflow + audit
+- Аудит конфігу claude-react-mui: чистий (0 битих посилань/сиріт/дрейфу версій/мертвого коду).
+- Дизайн-воркфлоу: 2 джерела (тека + живий URL), рівні переносу L1–L4 (дефолт L3),
+  наскрізний мандат трансляції дизайну в стек (MUI-тема+компоненти, TS, Query/Zustand),
+  жива інспекція через Playwright MCP. Прив'язано до 11 design-touching агентів.
+  Команди: synthesize-brief питає URL+рівень; preflight/doctor/audit перевіряють досяжність.
+- ADR 0027 (рівні дизайну). reviewer → read-only. Нота про Vitest forks pool на WSL2/9p.
+- PRs: #43 (правило+шаблон), #44 (агенти), #45 (команди), #46 (ADR+reviewer), #47 (vitest 9p).
+- Урок 9p: правки на /mnt робити з host-shell; перед мержем перевіряти
+  `git show <branch>:<file> | tr -dc '\000' | wc -c` (спіймало пошкодження reviewer.md).
