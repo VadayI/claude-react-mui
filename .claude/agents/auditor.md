@@ -44,6 +44,9 @@ git log -1 --format=%cI -- src/lib/api/schema.d.ts   # last generated-types chan
 git log -1 --format=%cI -- src                       # last src/ change
 grep -rE 'STUB:|throw new Error\("STUB' src 2>/dev/null | grep -vE '\.(test|spec|stories)\.|/test/|/mocks/' | wc -l
 test -d .claude/memory && echo INIT_OK || echo NEEDS_BOOTSTRAP
+
+# Design reference: if PROJECT.md declares a running design URL, surface it (the agent then probes reachability, non-fatal)
+grep -iE 'Running design URL|Fidelity level|https?://' docs/PROJECT.md 2>/dev/null | head -3
 gh api repos/{owner}/{repo}/branches/main/protection >/dev/null 2>&1 && echo PROTECTED || echo UNPROTECTED
 
 # HANDOFF.md — read the rolling project snapshot if present (maintained by /handoff and /wrap-up)
@@ -71,6 +74,7 @@ test -f docs/HANDOFF.md && {
 11. **Auth/guard files in the current diff + no recent `/security-check`** → `/security-check`.
 12. **Interaction-heavy feature merged/changed + no recent `/a11y-audit`** → `/a11y-audit`.
 13. **Feature branch ready to share (commits ahead of `origin/main`, no open PR)** → `/create-pr`.
+14. **`docs/PROJECT.md` declares a running design URL that is unreachable** (or the `playwright` plugin is not enabled) → flag that the design cannot be opened in a browser; recommend starting the design server or correcting the URL, else agents fall back to the prototype folder/brief.
 
 ## Report format
 
