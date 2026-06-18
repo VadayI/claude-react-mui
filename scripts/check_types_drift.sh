@@ -36,7 +36,7 @@ fi
 # ---------------------------------------------------------------------------
 if ! command -v npx >/dev/null 2>&1; then
   echo "[check_types_drift] FAIL — npx not found on PATH."
-  echo "  Install Node 20.19+ (includes npx): scripts/setup-wsl.sh"
+  echo "  Install Node 24+ (includes npx): scripts/setup-wsl.sh"
   exit 1
 fi
 

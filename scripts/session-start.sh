@@ -39,7 +39,7 @@ PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
     node "$SCRIPT_DIR/detect-env.mjs"
   else
     echo "[session-start] ERROR: 'node' not found on PATH."
-    echo "[session-start] Node 20.19+ is required for this project."
+    echo "[session-start] Node 24+ is required for this project."
     echo "[session-start] Install Node via nvm: run scripts/setup-wsl.sh or visit https://nodejs.org"
     echo "[session-start] env-detect.json was NOT written — /doctor will report missing env data."
   fi
