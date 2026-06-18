@@ -16,7 +16,7 @@ This is a **frontend-only** repository. Both this frontend and the backend are c
 
 ### Prerequisites
 
-- Node 20+ (`node --version`)
+- Node 24+ (`node --version`)
 - npm 10+ (`npm --version`)
 - A running backend instance (or a mock — see MSW section below)
 
