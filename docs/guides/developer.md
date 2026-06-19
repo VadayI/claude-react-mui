@@ -6,7 +6,7 @@ A **frontend-only** React + MUI SPA (TypeScript, Vite) that consumes the `VadayI
 
 ## Run it locally
 
-Prerequisites: **Node 24+** on WSL2 / Linux / macOS.
+Prerequisites: **Node 24+** on Linux / macOS / WSL2, or **native Windows via Git Bash** (Git for Windows). See `.claude/rules/environment.md` (ADR 0028).
 
 ```bash
 npm ci
@@ -15,6 +15,8 @@ npm run api:pull            # pull the contract openapi.yml from VadayI/claude-a
 npm run api:types           # generate src/lib/api/schema.d.ts
 npm run dev                 # http://localhost:5173
 ```
+
+> **Native Windows note:** the committed `package-lock.json` is generated on Linux to match CI (`ubuntu-latest`), so `npm ci` fails on native Windows with `EBADPLATFORM` (it pins the Linux Rollup binary). On native Windows, install with `npm install --legacy-peer-deps` instead — it resolves the Windows Rollup binary for your machine and bypasses the pre-existing `eslint@10` / `eslint-plugin-jsx-a11y` peer mismatch. (A fully cross-platform lockfile is a tracked follow-up.) `npm ci` works as shown on Linux / macOS / WSL2.
 
 Tests & checks:
 

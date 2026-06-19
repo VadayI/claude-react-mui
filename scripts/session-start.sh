@@ -40,7 +40,7 @@ PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
   else
     echo "[session-start] ERROR: 'node' not found on PATH."
     echo "[session-start] Node 24+ is required for this project."
-    echo "[session-start] Install Node via nvm: run scripts/setup-wsl.sh or visit https://nodejs.org"
+    echo "[session-start] Install Node 24+: WSL2/Linux/macOS -> 'bash scripts/setup-wsl.sh' (nvm); native Windows -> 'winget install OpenJS.NodeJS' or https://nodejs.org"
     echo "[session-start] env-detect.json was NOT written — /doctor will report missing env data."
   fi
 ) || echo "[session-start] WARNING: detect-env.mjs failed (non-fatal)"

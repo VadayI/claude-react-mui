@@ -14,7 +14,7 @@ node scripts/log-cmd.mjs /bootstrap "$ARGUMENTS"
 
 Before doing ANYTHING:
 
-1. Read `.claude/memory/env-detect.json`. If `platform_supported: false` or `wrong_runner_suspected: true` → **HARD STOP: UNSUPPORTED_PLATFORM**. Instruct the user to run WSL2-native Claude CLI.
+1. Read `.claude/memory/env-detect.json`. If `platform_supported: false` → **HARD STOP: UNSUPPORTED_PLATFORM** — on native Windows install **Git for Windows** (`winget install Git.Git`) so the bash hooks/gates run, or use WSL2. If `wrong_runner_suspected: true` (a Windows runner launched from inside WSL2) → **WARN**, do not hard-stop: ask the user to pick one environment (WSL2-native `claude`, or native Windows from Git Bash), then continue.
 2. If `node_supported: false` or Node < 24 → **HARD STOP: NO_NODE**. Instruct `nvm install --lts`.
 3. Run `gh repo view` to confirm GitHub access. If it fails → HARD STOP and ask the user to fix credentials.
 

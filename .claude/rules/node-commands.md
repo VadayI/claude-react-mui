@@ -1,6 +1,6 @@
 # Node / dev commands
 
-> **Shell:** bash (Linux / macOS / WSL2 Ubuntu). PowerShell on Windows native is NOT supported — see ADR `docs/decisions/0005-drop-windows-native-shell.md`. Working from a Windows drive (`/mnt/c`/`/mnt/d`) is fully supported (ADR `0009`); only caveat is slightly slower file watching, and git is best run from the host shell. Vitest also keeps its default `forks` pool here — do not switch to `pool: 'threads'` on `/mnt`, as Tinypool's `Atomics.wait()` can hang on the 9p filesystem (native-Linux CI is unaffected).
+> **Shell:** bash — Linux / macOS / WSL2 Ubuntu, or **native Windows via Git Bash** (Git for Windows; ADR `0028`, amending `0005`). PowerShell/cmd alone are not supported. Working from a Windows drive under **WSL2** (`/mnt/c`/`/mnt/d`) is fully supported (ADR `0009`); the only caveats are slightly slower file watching, running git from the host shell, and the 9p note below. (Native Windows runs on NTFS and has none of the 9p caveats.) Vitest keeps its default `forks` pool on `/mnt` — do not switch to `pool: 'threads'` there, as Tinypool's `Atomics.wait()` can hang on the 9p filesystem (native-Linux CI and native Windows are unaffected).
 >
 > **Node 24+ is a hard requirement** (Node 20/22 floor raised, ADR 0023). It runs the SessionStart env-detection hook, the CI gate helpers, the Vite dev server, Vitest, and Playwright. Install via `nvm` if missing. The `SessionStart` hook writes `.claude/memory/env-detect.json` with the active shell + node version so agents can verify their assumptions.
 
