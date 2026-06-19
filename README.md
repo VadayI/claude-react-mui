@@ -79,13 +79,19 @@ bash scripts/setup-wsl.sh
 #    winget install Anthropic.ClaudeCode GitHub.cli
 
 # 2. Create the GitHub repo by hand (ADR 0008), then point this clone at it.
-#    Put tokens in .env (gitignored — never commit them). Claude Code does NOT
-#    auto-load .env, so launch via `make cc` (step 3) to feed them to the MCPs + gh:
-#      GITHUB_PERSONAL_ACCESS_TOKEN=...   # fine-grained PAT, repo RW + workflows + admin
-#      CONTEXT7_API_KEY=...
+#    Copy the template and fill it in:  cp .env.example .env   (.env is gitignored —
+#    never commit it). It holds config (VITE_API_BASE_URL, VITE_OPENAPI_URL,
+#    CONTRACT_REPO, CONTRACT_VERSION, VITE_MSW_ENABLED) plus two secret keys:
+#      GITHUB_PERSONAL_ACCESS_TOKEN=...   # fine-grained PAT: Contents RW, Metadata RO,
+#                                         #   Pull requests RW, Workflows RW, Administration RW (github MCP + gh)
+#      CONTEXT7_API_KEY=...               # context7 docs MCP key
+#    Claude Code does NOT auto-load .env — the step-3 wrapper sources EVERY var
+#    into the claude process and mirrors the PAT to GH_TOKEN for gh.
 
 # 3. Launch Claude Code in the project (sources .env) and let it drive setup:
 make cc      # = bash scripts/claude.sh; plain `claude` will not see .env secrets
+#    native Windows (no make): launch the wrapper directly in Git Bash —
+#      bash scripts/claude.sh
 #   /doctor      → audits the machine vs .claude/rules/environment.md, proposes fixes
 #   /bootstrap   → Mode A scaffolds the Vite+MUI app from templates/, or Mode B PRs missing pieces
 #   /preflight   → verifies build inputs (brief, stack, OpenAPI contract, GitHub access)
