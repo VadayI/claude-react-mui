@@ -45,13 +45,13 @@ fi
 [ -z "${CONTEXT7_API_KEY:-}" ]             && [ -n "$_pre_CONTEXT7_API_KEY" ]             && export CONTEXT7_API_KEY="$_pre_CONTEXT7_API_KEY"
 
 # gh authenticates with GH_TOKEN, then GITHUB_TOKEN (in that order) — not with
-# GITHUB_PERSONAL_ACCESS_TOKEN. When .env provides a PAT, make it authoritative for
-# gh: copy it into GH_TOKEN (unless you deliberately set GH_TOKEN yourself) AND drop
-# any stale GITHUB_TOKEN — often a leftover Windows *system* env var — that would
-# otherwise shadow the PAT and cause gh 401s. With no PAT in .env, your existing gh
-# credentials are left untouched (e.g. `gh auth login`, or a GH_TOKEN you set).
+# GITHUB_PERSONAL_ACCESS_TOKEN. A PAT in .env is AUTHORITATIVE for gh: copy it into
+# GH_TOKEN, OVERRIDING any inherited GH_TOKEN — on Windows often a stale/invalid
+# *system* env var that would otherwise win and cause gh 401s — and drop any inherited
+# GITHUB_TOKEN too. To use a different GH_TOKEN or the `gh auth login` keyring instead,
+# leave the .env PAT empty (then the gh creds in your environment are left untouched).
 if [ -n "${GITHUB_PERSONAL_ACCESS_TOKEN:-}" ]; then
-  [ -z "${GH_TOKEN:-}" ] && export GH_TOKEN="$GITHUB_PERSONAL_ACCESS_TOKEN"
+  export GH_TOKEN="$GITHUB_PERSONAL_ACCESS_TOKEN"
   unset GITHUB_TOKEN
 fi
 
