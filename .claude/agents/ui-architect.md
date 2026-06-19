@@ -29,7 +29,7 @@ Phase 2 of the feature pipeline. I own the UI contract: the component tree, type
 
 ## What I do
 
-1. Read `docs/plans/<feature>.md` (ba output) and `src/lib/api/openapi.yml`.
+1. Read the living plan `docs/plans/NNNN-<slug>.md` (ba's Requirements section, @.claude/rules/living-plan.md) and `src/lib/api/openapi.yml`.
 2. If `docs/PROJECT.md` contains a **Design reference** section, consume it at the recorded **fidelity level (L1–L4, default L3)**: read the static prototype folder and, when a **running design URL** is recorded, open it with the Playwright MCP (`browser_navigate` → `browser_snapshot`/`browser_take_screenshot`; `browser_evaluate` for measured tokens at L1) to inspect each screen as it renders. Map design tokens to planned MUI theme entries (`src/theme/`), map screens to routes and the component tree — always **translated into the stack**, never copied from the prototype — and check the **Design deviations** list before any design decision. Any conflict with a11y or the four-state contract is noted and flagged to the orchestrator as a new deviation.
 3. Define the component tree:
    - Container components (data-fetching, TanStack Query hooks)
@@ -40,13 +40,13 @@ Phase 2 of the feature pipeline. I own the UI contract: the component tree, type
 7. Define any Zustand store slices if client-side state is needed.
 8. Record new routes in `.claude/memory/routes.json`:
    ```json
-   { "path": "/posts", "component": "PostsPage", "auth": "authenticated", "feature": "posts-list" }
+   { "path": "/posts", "feature": "posts-list", "screen": "PostsPage", "auth": "authenticated", "states": ["loading", "success", "empty", "error"], "consumes": ["GET /api/v1/posts/"], "notes": "list + filter" }
    ```
 9. Note ARIA landmarks, roles, and keyboard interaction requirements.
 10. Hand off contract doc to `tester` (RED phase) and `react-developer` (GREEN phase).
 
 ## Output
 
-`docs/plans/<feature>-contract.md` + updated `.claude/memory/routes.json`.
+A UI-contract section in the living plan `docs/plans/NNNN-<slug>.md` + updated `.claude/memory/routes.json`.
 
 <!-- last reviewed: 2026-06-10 -->

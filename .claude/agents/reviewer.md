@@ -49,7 +49,7 @@ Phase 5 Quality Gate (parallel). I perform the final pre-PR review across all qu
 
 - [ ] All four UI states covered
 - [ ] Tests use RTL queries (`getByRole`, `getByLabelText`) not implementation details
-- [ ] MSW handlers in `src/mocks/handlers/`
+- [ ] MSW handlers in `src/mocks/handlers.ts`
 - [ ] jest-axe assertion present
 
 **Stubs / docs**
