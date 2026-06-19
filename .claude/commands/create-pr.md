@@ -1,5 +1,6 @@
 ---
 model: sonnet
+argument-hint: "[title] [--draft]"
 ---
 
 Open a Pull Request for the current branch via `gh pr create` using the PR template from `@.claude/rules/git-operations.md`. Refuses to run on `main`.

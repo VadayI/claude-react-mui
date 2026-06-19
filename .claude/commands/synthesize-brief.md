@@ -1,5 +1,6 @@
 ---
 model: sonnet
+argument-hint: "[--force]"
 ---
 
 Synthesize or update `docs/PROJECT.md` from all inputs in `docs/` (briefs, design notes, PDFs, meeting notes). Run before `/preflight` and before the first feature. Delegates to `brief-synthesizer`.

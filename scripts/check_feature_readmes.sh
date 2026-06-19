@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# templates/scripts/check_feature_readmes.sh
+# scripts/check_feature_readmes.sh
 #
 # Gate: every directory directly under src/features/ must contain a
 # non-empty README.md.

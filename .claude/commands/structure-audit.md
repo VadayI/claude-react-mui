@@ -1,5 +1,6 @@
 ---
 model: sonnet
+argument-hint: "[path]"
 ---
 
 Audit `src/` against the 400-line file size limit and propose folder/module splits. Read-only — no files are changed. Delegates to `code-structure-auditor`.

@@ -1,5 +1,6 @@
 ---
 model: sonnet
+argument-hint: "[pr-number]"
 ---
 
 Comprehensive review of an open Pull Request via the GitHub MCP. Dispatches `reviewer`, `security-scanner`, and `a11y-auditor` in parallel and posts consolidated inline comments per `@.claude/rules/mcp-stack.md`.

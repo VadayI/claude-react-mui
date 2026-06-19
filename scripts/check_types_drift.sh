@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# templates/scripts/check_types_drift.sh
+# scripts/check_types_drift.sh
 #
 # Gate (analog of the Django framework's OpenAPI drift gate):
 # Regenerate API TypeScript types from the committed OpenAPI schema and fail

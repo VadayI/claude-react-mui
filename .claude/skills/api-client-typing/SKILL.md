@@ -105,7 +105,8 @@ export function mapArticle(dto: ArticleDTO): ArticleViewModel {
 // src/lib/api/errors.ts
 export interface ApiError {
   status: number
-  message: string
+  code: string
+  detail: string
   fieldErrors?: Record<string, string[]>
 }
 
@@ -113,7 +114,7 @@ export function normaliseError(error: unknown): ApiError {
   if (error && typeof error === 'object' && 'status' in error) {
     return error as ApiError
   }
-  return { status: 0, message: 'Network error' }
+  return { status: 0, code: 'network_error', detail: 'Network error' }
 }
 ```
 

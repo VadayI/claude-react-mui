@@ -1,5 +1,6 @@
 ---
 model: sonnet
+argument-hint: "[brief|stack|contract|design|context7|github]"
 ---
 
 Project kickoff preflight (hard gate): verifies the **inputs to build** are present before the first feature pipeline — brief, stack, OpenAPI contract, design references, Context7, GitHub access. The authoritative criteria live in `@.claude/rules/preflight.md`; this command executes them on demand and reports a readiness checklist. Optional `$ARGUMENTS`: a single item to re-check (`brief` | `stack` | `contract` | `design` | `context7` | `github`).

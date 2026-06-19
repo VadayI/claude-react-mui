@@ -1,5 +1,6 @@
 ---
 model: sonnet
+argument-hint: "[feature | file]"
 ---
 
 Update project documentation (feature READMEs, `docs/api/INDEX.md`, and guides) to match the latest code changes. Delegates to `docs-writer` and `guide-writer`.
@@ -53,6 +54,7 @@ Instruct `guide-writer` to run the reconciliation from `@.claude/rules/user-guid
 ### 4. Commit
 
 ```bash
+if [ "$(git branch --show-current)" = "main" ]; then echo "Refusing to commit on main — create a feature branch first."; exit 1; fi
 git add docs/ src/features/
 git commit -m "docs: update feature READMEs and docs/api/INDEX.md"
 ```

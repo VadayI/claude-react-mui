@@ -58,6 +58,7 @@ Before declaring guides ready, `guide-writer` MUST verify:
 If any changes were made, stage and commit on the current branch (must not be `main`):
 
 ```bash
+if [ "$(git branch --show-current)" = "main" ]; then echo "Refusing to commit on main — create a feature branch first."; exit 1; fi
 git add docs/guides/
 git commit -m "docs: refresh user and developer guides"
 ```

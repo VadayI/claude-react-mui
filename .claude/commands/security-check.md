@@ -1,5 +1,6 @@
 ---
 model: sonnet
+argument-hint: "[path | feature]"
 ---
 
 Focused security audit over working changes via `security-scanner`. Covers XSS, token handling, npm vulnerabilities, CSP, and open-redirect risks.

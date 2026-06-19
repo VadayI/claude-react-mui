@@ -1,5 +1,6 @@
 ---
 model: sonnet
+argument-hint: "[feature | route]"
 ---
 
 Deep WCAG 2.1 AA accessibility audit over the current feature/flow via `a11y-auditor`. Goes beyond the per-component `jest-axe` checks `tester` runs: keyboard-only navigation, screen-reader announcements, focus management, color contrast, and reduced motion. Takes an optional scope (a route, feature folder, or flow name) as `$ARGUMENTS`.

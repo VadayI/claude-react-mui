@@ -1,5 +1,6 @@
 ---
 model: sonnet
+argument-hint: "[english | українська | polski]"
 ---
 
 Change the output language for all agents in this project after bootstrap. Copies `templates/output-language.md` to `.claude/rules/output-language.md` with the chosen native name and appends the import to `CLAUDE.md`.

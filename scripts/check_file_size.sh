@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# templates/scripts/check_file_size.sh
+# scripts/check_file_size.sh
 #
 # Gate: no TypeScript/TSX source file under src/ may exceed MAX_LINES lines.
 #

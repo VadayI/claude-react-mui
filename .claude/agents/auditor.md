@@ -47,7 +47,7 @@ test -d .claude/memory && echo INIT_OK || echo NEEDS_BOOTSTRAP
 
 # Design reference: if PROJECT.md declares a running design URL, surface it (the agent then probes reachability, non-fatal)
 grep -iE 'Running design URL|Fidelity level|https?://' docs/PROJECT.md 2>/dev/null | head -3
-gh api repos/{owner}/{repo}/branches/main/protection >/dev/null 2>&1 && echo PROTECTED || echo UNPROTECTED
+gh api "repos/$(gh repo view --json nameWithOwner -q .nameWithOwner)/branches/main/protection" >/dev/null 2>&1 && echo PROTECTED || echo UNPROTECTED
 
 # HANDOFF.md — read the rolling project snapshot if present (maintained by /handoff and /wrap-up)
 test -f docs/HANDOFF.md && {

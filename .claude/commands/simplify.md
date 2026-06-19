@@ -1,5 +1,6 @@
 ---
 model: sonnet
+argument-hint: "[file | feature]"
 ---
 
 Simplify recent changes without changing behavior, under green tests. Delegates to `react-refactoring-expert` to reduce complexity, remove duplication, and improve readability.
