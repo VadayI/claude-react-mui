@@ -80,7 +80,27 @@ try {
   /* ignore */
 }
 
-const platformSupported = detectedPlatform === 'linux' || detectedPlatform === 'darwin'
+// Native Windows: the bash hooks/gates run under Git Bash — the same shell
+// Claude Code uses for its Bash tool on Windows. Git Bash (MSYS2) always exports
+// MSYSTEM (e.g. "MINGW64"); that is the reliable signal a POSIX bash drives us.
+// We deliberately do NOT trust an inherited SHELL=/bin/bash, which a Windows
+// process launched from WSL2 interop would also carry.
+const isGitBash = detectedPlatform === 'windows' && Boolean(env['MSYSTEM'])
+
+// A Windows process launched from WSL2 via PATH interop inherits these markers.
+const launchedFromWsl = Boolean(env['WSL_DISTRO_NAME'] || env['WSL_INTEROP'])
+
+// Supported runners: native Linux, native macOS, WSL2 (reports as linux), and
+// native Windows when a POSIX bash (Git Bash) is present (ADR 0028). Windows
+// without Git Bash cannot run the bash hooks/gates → unsupported.
+const platformSupported =
+  detectedPlatform === 'linux' ||
+  detectedPlatform === 'darwin' ||
+  (detectedPlatform === 'windows' && isGitBash)
+
+// Claude Code's *sandboxed* Bash tool runs on macOS, Linux, and WSL2 — not on
+// native Windows. Informational only; native Windows is still fully supported.
+const sandboxSupported = detectedPlatform !== 'windows'
 
 // ---------------------------------------------------------------------------
 // Wrong-runner heuristic
@@ -103,7 +123,10 @@ try {
   const windowsPathLike =
     /^[a-z]:[\\\/]/.test(execPathLower) || // C:\ or C:/
     execPathLower.startsWith('/mnt/c/') // WSL2 interop path to Windows node.exe
-  if (detectedPlatform === 'windows' && isWsl2) {
+  // "Wrong runner" = a Windows runner launched from *inside* WSL2 (mixing the
+  // two environments). Native Windows + Git Bash is a supported runner (ADR 0028)
+  // and is NOT flagged: it carries no WSL markers and /proc/version is absent.
+  if (detectedPlatform === 'windows' && (isWsl2 || launchedFromWsl)) {
     wrongRunnerSuspected = true
   } else if (isWsl2 && windowsPathLike) {
     wrongRunnerSuspected = true
@@ -199,11 +222,13 @@ try {
 // Assemble output
 // ---------------------------------------------------------------------------
 const result = {
-  schema_version: 1,
+  schema_version: 2,
   generated_at: new Date().toISOString(),
   platform: detectedPlatform,
   is_wsl2: isWsl2,
+  is_git_bash: isGitBash,
   platform_supported: platformSupported,
+  sandbox_supported: sandboxSupported,
   shell,
   node: {
     version,
@@ -237,7 +262,11 @@ try {
 // ---------------------------------------------------------------------------
 // Human summary (one line)
 // ---------------------------------------------------------------------------
-const supportedStr = platformSupported ? 'SUPPORTED' : 'NOT SUPPORTED (install WSL2)'
+const supportedStr = platformSupported
+  ? 'SUPPORTED'
+  : detectedPlatform === 'windows'
+    ? 'NOT SUPPORTED (install Git for Windows, or use WSL2)'
+    : 'NOT SUPPORTED'
 const nodeStr = nodeSupported ? `Node ${version} OK` : `Node ${version} TOO OLD (need 24+)`
 const wslStr = isWsl2 ? ' [WSL2]' : ''
 const wrongStr = wrongRunnerSuspected ? ' ⚠ WRONG RUNNER SUSPECTED' : ''

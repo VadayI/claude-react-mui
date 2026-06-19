@@ -5,14 +5,15 @@
 # the template to a temp dir and copies the config + scaffolding inputs into the
 # target folder, then wipes transient state the SessionStart hook regenerates.
 #
-# After it finishes you still: launch the WSL2-native `claude` from the folder and
+# After it finishes you still: launch `claude` from the folder (WSL2-native, or native Windows) and
 # run /doctor -> /bootstrap. This script ONLY seeds files; it never runs git,
 # never pushes, never touches secrets, never runs npm.
 #
-# SUPPORTED: WSL2 Ubuntu (on Windows) and native Debian/Ubuntu/macOS bash -- the
-# single supported runner per ADR 0005. Windows PowerShell/cmd are NOT supported.
+# SUPPORTED: native Debian/Ubuntu/macOS bash, WSL2 Ubuntu, and native Windows via
+# Git Bash (Git for Windows) -- the single bash dialect per ADR 0028 (amends 0005).
+# Windows PowerShell/cmd are NOT supported.
 #
-# Usage (inside a real WSL2 shell, from the root of your project folder):
+# Usage (in a bash shell -- WSL2, Linux, macOS, or Git Bash on Windows -- from your project root):
 #   bash <(curl -fsSL https://raw.githubusercontent.com/VadayI/claude-react-mui/main/scripts/install.sh)
 # or, if you already have the file:
 #   bash scripts/install.sh [TARGET_DIR] [--ref GIT_REF] [--url REPO_URL] [--force]
@@ -53,9 +54,10 @@ done
 
 # --- 1. Platform + tool guards ------------------------------------------------
 case "$(uname -s)" in
-  Linux)  grep -qiE 'microsoft|wsl' /proc/version 2>/dev/null && ok "running inside WSL2" || warn "not WSL2 -- assuming native Linux. Continuing." ;;
-  Darwin) ok "running on macOS (native bash)" ;;
-  *)      die "Unsupported platform '$(uname -s)'. On Windows install WSL2 Ubuntu and run this from inside it (ADR 0005)." ;;
+  Linux)               grep -qiE 'microsoft|wsl' /proc/version 2>/dev/null && ok "running inside WSL2" || warn "not WSL2 -- assuming native Linux. Continuing." ;;
+  Darwin)              ok "running on macOS (native bash)" ;;
+  MINGW*|MSYS*|CYGWIN*) ok "running on native Windows via Git Bash (ADR 0028)" ;;
+  *)                   die "Unsupported platform '$(uname -s)'. On Windows use Git Bash (Git for Windows) or WSL2 (ADR 0028/0005)." ;;
 esac
 have git || die "git not found. Install it first (WSL2: sudo apt install -y git)."
 
@@ -108,15 +110,25 @@ ok "wiped transient memory"
 # --- 6. Runner check + next steps ---------------------------------------------
 echo
 claude_path="$(command -v claude || true)"
-case "$claude_path" in
-  /mnt/c/*|*.exe) warn "\`claude\` resolves to the Windows binary ($claude_path). Install the WSL2-native CLI first: bash scripts/setup-wsl.sh" ;;
-  "")             warn "\`claude\` not on PATH yet. Install it: bash scripts/setup-wsl.sh (then open a new shell)." ;;
-  *)              ok "\`claude\` resolves to a Linux path: $claude_path" ;;
+case "$(uname -s)" in
+  MINGW*|MSYS*|CYGWIN*)
+    case "$claude_path" in
+      "") warn "\`claude\` not on PATH yet. Install Git for Windows + the CLI: winget install Anthropic.ClaudeCode (or npm i -g @anthropic-ai/claude-code)." ;;
+      *)  ok "\`claude\` resolves to: $claude_path (native Windows)" ;;
+    esac ;;
+  *)
+    case "$claude_path" in
+      /mnt/c/*|*.exe) warn "\`claude\` resolves to the Windows binary ($claude_path) inside a Unix shell. Use the WSL2-native CLI (bash scripts/setup-wsl.sh), or run natively on Windows from Git Bash." ;;
+      "")             warn "\`claude\` not on PATH yet. Install it: bash scripts/setup-wsl.sh (then open a new shell)." ;;
+      *)              ok "\`claude\` resolves to a Linux/macOS path: $claude_path" ;;
+    esac ;;
 esac
 
 echo
 log "Seeded. Next steps:"
 echo "  1) cd $TARGET"
-echo "  2) (first time on this machine) bash scripts/setup-wsl.sh   # node (nvm) + claude + gh"
+echo "  2) (first time on this machine) toolchain:"
+echo "       WSL2/Linux/macOS:  bash scripts/setup-wsl.sh                 # node (nvm) + claude + gh"
+echo "       native Windows:    Git for Windows + Node 24+, then 'winget install Anthropic.ClaudeCode GitHub.cli'"
 echo "  3) launch:  claude"
 echo "  4) in the session:  /doctor   ->   /bootstrap   ->   /preflight"

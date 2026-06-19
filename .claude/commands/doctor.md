@@ -16,9 +16,11 @@ node scripts/log-cmd.mjs /doctor "$ARGUMENTS"
 
 Read `.claude/memory/env-detect.json` (written by the SessionStart hook via `node scripts/detect-env.mjs`). If the file is missing, the hook failed — instruct the user to run `node scripts/detect-env.mjs` manually and verify it writes the file honestly. Never hand-write or patch this file.
 
-**HARD STOP — UNSUPPORTED_PLATFORM**: if `platform_supported: false` OR `wrong_runner_suspected: true`, stop immediately with:
+**HARD STOP — UNSUPPORTED_PLATFORM**: if `platform_supported: false`, stop immediately with:
 
-> ERROR: UNSUPPORTED_PLATFORM — the Claude CLI appears to be running as the Windows-native binary (backslashes in paths, `platform: "windows"`). Install the WSL2-native CLI: inside a WSL2 Ubuntu shell run `npm install -g @anthropic-ai/claude-code` and relaunch. See `.claude/rules/environment.md` for the full fix.
+> ERROR: UNSUPPORTED_PLATFORM — `platform: "windows"` with no Git Bash detected (`is_git_bash: false`). Native Windows needs **Git for Windows** so the bash hooks/gates can run: install it (`winget install Git.Git`) and relaunch, or use WSL2. See `.claude/rules/environment.md` for the full fix.
+
+**WARNING — MIXED_RUNNER**: if `wrong_runner_suspected: true` (a Windows runner launched from inside WSL2), do NOT hard-stop — warn the user to pick one environment: either the WSL2-native `claude` (`npm install -g @anthropic-ai/claude-code` inside WSL2) **or** native Windows from a Git Bash shell. Mixing the two means Windows node operating on `/mnt` files (slow, 9p hazards).
 
 **HARD STOP — NO_NODE**: if `node_supported: false` or Node < 24, stop with:
 
@@ -31,8 +33,8 @@ Check and report each item (✅ / ❌ / ⚠️):
 1. **Node.js ≥ 24** — `node --version`. Source: `env-detect.json` field `node_version`. Must be 24+.
 2. **npm** — `npm --version`. Must be present.
 3. **git** — `git --version`. Must be present.
-4. **GitHub CLI (gh)** — `gh --version`. On Windows, a Windows-native `gh.exe` is NOT visible in WSL2; install via `apt` or the GitHub CLI Linux instructions.
-5. **Claude Code CLI (WSL2-native)** — `which claude` must resolve to `/home/...` or `/usr/...`, NEVER `/mnt/c/...`. If it resolves to `/mnt/c/...`, the Windows binary shadows it — prepend npm-global bin to PATH or install via nvm.
+4. **GitHub CLI (gh)** — `gh --version`. On **WSL2**, a Windows-native `gh.exe` is NOT visible inside WSL2 — install via `apt` or the GitHub CLI Linux instructions. On **native Windows**, `winget install GitHub.cli`.
+5. **Claude Code CLI** — resolve `which claude` against the platform. On **WSL2/Linux/macOS** it must be a Linux/macOS path (`/home/...`, `/usr/...`), NEVER `/mnt/c/...` (a `/mnt/c/...` hit means the Windows binary shadows the WSL2-native one — prepend npm-global bin to PATH or install via nvm). On **native Windows + Git Bash** a `C:\...` / `/c/...` path is correct.
 6. **Playwright browsers** — check `env-detect.json` for `playwright_browsers` flag, or run `npx playwright install --dry-run`. Required for e2e tests.
 7. **Docker** (optional) — `docker info`. Not required for the React app itself, but note if absent for teams using containerized mock backends.
 
