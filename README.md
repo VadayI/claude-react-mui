@@ -126,10 +126,24 @@ Full routing and the optional agents (`a11y-auditor`, `qa`, `integration-archite
 
 ---
 
+## Model turbo mode (all-Opus)
+
+Each subagent pins its own model in frontmatter (13 Opus / 9 Sonnet); the main session runs `opusplan`. To put **every** subagent on Opus temporarily and revert later:
+
+```bash
+bash scripts/turbo.sh on       # main session + all subagents → Opus
+bash scripts/turbo.sh status   # show current state
+bash scripts/turbo.sh off      # revert to opusplan + per-agent models
+```
+
+It writes `model: opus` + `CLAUDE_CODE_SUBAGENT_MODEL` (the global override that wins over every agent's frontmatter) into `.claude/settings.local.json` — gitignored and personal, so it never reaches derived projects. **Restart Claude Code after `on`/`off`** (env applies at session start).
+
+---
+
 ## Slash commands
 
 Environment & project: `/doctor`, `/bootstrap`, `/preflight`, `/synthesize-brief`, `/config-check`, `/plugins`, `/set-language`, `/handoff`, `/wrap-up`, `/audit`, `/update-from-template`.
-Feature & quality: `/verify`, `/guides`, `/review-pr`, `/security-check`, `/structure-audit`, `/simplify`, `/update-docs`, `/create-pr`, `/fix-ci`.
+Feature & quality: `/verify`, `/guides`, `/review-pr`, `/security-check`, `/a11y-audit`, `/structure-audit`, `/simplify`, `/update-docs`, `/create-pr`, `/fix-ci`.
 
 Defined in `.claude/commands/`.
 
@@ -145,7 +159,7 @@ Defined in `.claude/commands/`.
 ├── skills/        # reusable knowledge modules (react, mui, vitest-rtl-tdd, ...)
 ├── memory/        # session-local state (env-detect.json, routes.json, command-log) — gitignored where noted
 └── settings.json  # permissions, plugins, hooks
-scripts/           # detect-env.mjs, session-start.sh, log-cmd.mjs, setup-wsl.sh
+scripts/           # detect-env.mjs, session-start.sh, log-cmd.mjs, setup-wsl.sh, turbo.sh
 templates/         # scaffold inputs for /bootstrap (app config, CI, docs, gate scripts, example feature)
 docs/
 ├── decisions/     # ADRs
