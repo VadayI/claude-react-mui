@@ -1,28 +1,58 @@
-# Project kickoff preflight (hard gate)
+---
+model: sonnet
+---
 
-Before agents start work on a (new) project — and before the first feature pipeline — verify that the inputs and access needed to build correctly are present. This is a **hard gate**: if a critical item is missing, agents do NOT start coding; the orchestrator stops and either asks the user or fixes access. Runs automatically at project kickoff and on demand via `/preflight`.
+Project kickoff preflight (hard gate): verifies the **inputs to build** are present before the first feature pipeline — brief, stack, OpenAPI contract, design references, Context7, GitHub access. The authoritative criteria live in `@.claude/rules/preflight.md`; this command executes them on demand and reports a readiness checklist. Optional `$ARGUMENTS`: a single item to re-check (`brief` | `stack` | `contract` | `design` | `context7` | `github`).
 
-## What to verify (all CRITICAL)
+## Log
 
-1. **Project brief / description.** A clear statement of what we are building: goals, scope, target users, key screens/flows. Source: `docs/PROJECT.md`, a README brief, or a description the user provided. If absent or vague → STOP and ask — `ba` cannot write meaningful user stories without it.
-2. **Tech stack.** Declared (CLAUDE.md / README: React · Vite · TypeScript · MUI · TanStack Query · Zustand · Vitest/RTL/MSW · Playwright) and dependencies resolvable (`package.json` present; versions consistent). If undeclared or contradictory → STOP and confirm.
-3. **Contract available.** Both `CONTRACT_REPO` and `CONTRACT_VERSION` are set (in `.env` or environment) and `src/lib/api/openapi.yml` is present. The contract is vendored from the project's own contract repo (`CONTRACT_REPO`, structured like `VadayI/claude-api-contract`) at the pinned tag — run `npm run api:pull` to fetch it, then `npm run api:types` to regenerate types. The contract-sync gate (`scripts/check_contract_sync.sh`) must be GREEN before any feature pipeline starts. If the contract is missing or either variable is unset → STOP: the UI would be coded against an imagined API. (@.claude/rules/api-client.md.)
-4. **Design references (recommended).** A prototype folder in `docs/design/`, a **running design URL** (opened in a browser via the `playwright` MCP), Figma/brand/theme tokens, or at least a description of look & feel — recorded in `docs/PROJECT.md` § Design reference together with the **fidelity level** (L1–L4, default L3), so `ui-architect` and the theme are grounded. If a running design URL is declared, verify it is reachable and the `playwright` plugin is enabled (declared-but-unreachable → ⚠️, fall back to folder/brief). If absent entirely, note that the UI will follow MUI defaults and proceed. (@.claude/rules/design-reference.md)
-5. **Library docs access — Context7.** The `context7` MCP is reachable so agents can check current React/MUI/Query APIs before implementing. If down → STOP, or proceed only on explicit user override (noting APIs will be unverified against current docs).
-6. **GitHub project access.** `gh auth status` authenticated AND repo reachable (`gh repo view`), so PRs, CI, and history work. `GITHUB_PERSONAL_ACCESS_TOKEN` set. If no access → STOP.
+```bash
+node scripts/log-cmd.mjs /preflight "$ARGUMENTS"
+```
 
-## Gate behavior
+## Steps
 
-- Items 1, 2, 3, 5, 6 are blockers. Item 4 is a strong recommendation (proceed with MUI defaults if absent). If any blocker is ❌ → report the readiness checklist and STOP before dispatching `ba` / the feature pipeline.
-- Context7 may be waived only on **explicit** user override; record that implementation relies on training knowledge, not current docs.
-- Never start writing components, hooks, or the API client while a CRITICAL item is ❌.
+### 1. Load the criteria
 
-## Who runs it
+Read `@.claude/rules/preflight.md` — the checklist (items 1–6), the gate behavior (blockers = items 1, 2, 3, 5, 6; item 4 design is a recommendation), and the relation to `/doctor`. Do NOT restate the criteria here; this command runs them. If `$ARGUMENTS` names a single item, narrow to it.
 
-- The **orchestrator** runs preflight at project kickoff, delegating access checks (Context7, GitHub, contract availability, stack deps) to `devops` and brief/stack comprehension to `ba`.
-- `ba` confirms it has a usable brief + an unambiguous declared stack BEFORE producing user stories.
-- The `/preflight` command runs the same check on demand.
+### 2. Gather live state
 
-## Relation to `/doctor`
+```bash
+# item 3 — contract pin + vendored schema + sync gate
+grep -E '^(CONTRACT_REPO|CONTRACT_VERSION)=' .env 2>/dev/null || echo "contract vars: UNSET"
+test -f src/lib/api/openapi.yml && echo "openapi.yml: present" || echo "openapi.yml: MISSING"
+bash scripts/check_contract_sync.sh 2>&1 | tail -3 || true
+# item 6 — GitHub access
+gh auth status 2>&1 | tail -3 || echo "gh: NOT authenticated"
+gh repo view --json nameWithOwner -q .nameWithOwner 2>&1 || echo "repo: UNREACHABLE"
+# item 2 — stack deps
+test -f package.json && echo "package.json: present" || echo "package.json: MISSING"
+```
 
-`/doctor` checks the **environment** (tools, services, git hygiene). Preflight checks the **inputs to build** (brief, stack, contract pin, design refs, docs/GitHub access). On a fresh machine run `/doctor` first, then preflight before the first feature.
+Also read (never print secrets): `docs/PROJECT.md` (brief + § Design reference + fidelity level) and `CLAUDE.md` / `README.md` (declared stack).
+
+### 3. Delegate the judgement calls
+
+- `devops` — access checks: Context7 reachability (item 5), GitHub auth + repo (item 6), contract availability + `check_contract_sync` (item 3), stack-deps resolvable (item 2).
+- `ba` — comprehension: is the brief usable (item 1) and the stack unambiguous (item 2) enough to write user stories?
+- item 4 (design): if `docs/PROJECT.md` declares a running design URL, verify it is reachable and the `playwright` plugin is enabled; declared-but-unreachable → ⚠️, fall back to folder/brief (@.claude/rules/design-reference.md).
+
+### 4. Report the readiness checklist
+
+```
+## Preflight — <date>
+1. Brief ........... ✅ / ❌   <note>
+2. Stack ........... ✅ / ❌   <note>
+3. Contract ........ ✅ / ❌   <note>
+4. Design (rec.) ... ✅ / ⚠️   <note>
+5. Context7 ........ ✅ / ❌   <note>
+6. GitHub .......... ✅ / ❌   <note>
+```
+
+### 5. Gate
+
+- Any blocker (items 1, 2, 3, 5, 6) ❌ → **STOP**: report the checklist and do NOT dispatch `ba` / the feature pipeline. Context7 may be waived only on **explicit** user override (record that APIs are unverified against current docs).
+- All blockers ✅ → preflight passes; the feature pipeline may start. Item 4 ⚠️ / absent → proceed with MUI defaults, noted.
+
+<!-- last reviewed: 2026-06-19 -->
