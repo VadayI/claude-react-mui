@@ -46,6 +46,15 @@ bash <(curl -fsSL https://raw.githubusercontent.com/VadayI/claude-react-mui/main
 # optional args:  install.sh [TARGET_DIR] [--ref GIT_REF] [--url FORK_URL] [--force]
 ```
 
+**On Windows (Git Bash), if `curl`/`git` fails with `CRYPT_E_NO_REVOCATION_CHECK`** (`curl: (35) … The revocation function was unable to check revocation for the certificate`): your network can't reach the certificate-revocation servers — common on corporate networks with SSL inspection or blocked OCSP/CRL. The certificate isn't bad; the revocation _check_ just can't complete. Tell **git** (used by the clone inside `install.sh`) and **curl** (used to fetch the script) to skip that check, then re-run the one-liner:
+
+```bash
+git config --global http.schannelCheckRevoke false
+bash <(curl -fsSL --ssl-no-revoke https://raw.githubusercontent.com/VadayI/claude-react-mui/main/scripts/install.sh)
+```
+
+This is the standard corporate-network workaround; it relaxes revocation checking slightly (revoked certs won't be flagged) — fine for GitHub. The stricter alternative is git's OpenSSL backend with your IT's proxy CA bundle (`git config --global http.sslBackend openssl`).
+
 It seeds **only** the Claude config + the `/bootstrap` inputs (`.claude/`, `CLAUDE.md`, `.mcp.json`, `.gitignore`, `.gitattributes`, `scripts/`, `templates/`, the root `Makefile`, and `.github/workflows/`); the actual Vite+MUI app is scaffolded later by `/bootstrap` Mode A. To upgrade an _already-seeded_ project use `/update-from-template` instead (it preserves your edits).
 
 **Manual equivalent** (what `install.sh` does, if you prefer to run it by hand):
@@ -73,10 +82,11 @@ which claude    # WSL2/Linux/macOS: expect /home/... or /usr/...  (if /mnt/c/...
 ### Then drive setup from inside Claude Code
 
 ```bash
-# 1. Toolchain. WSL2/Linux/macOS (idempotent helper): node (nvm) + claude CLI + gh
-bash scripts/setup-wsl.sh
-#    native Windows instead: install Git for Windows + Node 24+, then:
-#    winget install Anthropic.ClaudeCode GitHub.cli
+# 1. Toolchain (skip whatever you already have; Node 24+ is REQUIRED — check: node -v):
+#    WSL2 / Linux:    bash scripts/setup-wsl.sh        # node (nvm) + claude CLI + gh
+#    macOS:           brew install node gh && npm i -g @anthropic-ai/claude-code
+#    native Windows:  do NOT run setup-wsl.sh (it is WSL2/Linux-only). In Git Bash:
+#                       winget install OpenJS.NodeJS Anthropic.ClaudeCode GitHub.cli
 
 # 2. Create the GitHub repo by hand (ADR 0008), then point this clone at it.
 #    Copy the template and fill it in:  cp .env.example .env   (.env is gitignored —
