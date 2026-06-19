@@ -47,6 +47,6 @@ Optional Phase 2.5 — sits between `ui-architect` and `react-developer` when th
 
 ## Output
 
-Integration contract doc appended to `docs/plans/<feature>-contract.md`.
+Integration contract appended to the living plan `docs/plans/NNNN-<slug>.md` (@.claude/rules/living-plan.md).
 
 <!-- last reviewed: 2026-06-02 -->

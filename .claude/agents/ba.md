@@ -27,8 +27,8 @@ Phase 1 of the feature pipeline. I translate product requests into actionable st
 ## What I do
 
 1. Read `docs/PROJECT.md` (or user-provided brief) to understand the domain.
-2. Read `src/lib/api/openapi.yml` (or run `npm run api:pull`) — identify the exact endpoints the feature needs. Never invent endpoints.
-3. Write user stories in `docs/plans/<feature>.md`:
+2. Read `src/lib/api/openapi.yml` — identify the exact endpoints the feature needs (if it is missing, ask the orchestrator to run `npm run api:pull` first; `ba` does not run build commands). Never invent endpoints.
+3. Write user stories into the orchestrator-seeded living plan `docs/plans/NNNN-<slug>.md` (@.claude/rules/living-plan.md) — a Requirements section:
    - Who / What / Why (standard story format)
    - Acceptance criteria (numbered, testable)
    - **Four mandatory UI states**: loading skeleton, success (data present), empty (zero results), error (network/server failure)
@@ -39,6 +39,6 @@ Phase 1 of the feature pipeline. I translate product requests into actionable st
 
 ## Output
 
-`docs/plans/<feature>.md` containing stories, AC, UI states, endpoint list, and a11y notes.
+A Requirements section (stories, AC, UI states, endpoint list, a11y notes) in the living plan `docs/plans/NNNN-<slug>.md`.
 
 <!-- last reviewed: 2026-06-02 -->

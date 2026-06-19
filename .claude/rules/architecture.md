@@ -28,7 +28,7 @@ src/
 │       ├── api/            # endpoint wrappers, query keys, DTO→view-model mappers
 │       ├── hooks/          # use<Feature> query/mutation hooks
 │       ├── components/     # feature components (container + presentational)
-│       ├── store/          # feature-local Zustand store (if any)
+│       ├── store/          # feature-local Zustand store(s) — or store.ts for a single store
 │       └── README.md       # feature primer (@.claude/rules/feature-readme.md)
 ├── test/                   # test setup, MSW server, factories
 └── mocks/                  # MSW handlers + browser worker (dev)

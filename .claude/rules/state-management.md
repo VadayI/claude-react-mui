@@ -17,7 +17,7 @@ The single most important state decision in a React app is **server-state vs cli
 
 ## Zustand conventions
 
-- One store per concern (`useAuthStore`, `useUiStore`), defined in `src/.../store/` with a typed state + actions; **no business/server data** in stores.
+- One store per concern (`useAuthStore`, `useUiStore`), defined in the feature's `store/` directory (or a single `store.ts` when there's just one store) with a typed state + actions; **no business/server data** in stores.
 - Select narrowly (`useUiStore(s => s.sidebarOpen)`) to avoid needless re-renders.
 - Persisted slices (e.g. theme, locale, sidebar layout) use the `persist` middleware with an explicit allowlist. The **auth token is NEVER persisted** — it lives in memory only (@.claude/rules/auth.md); never route it through `persist`.
 - Stores are unit-tested: initial state + each action's transition.
