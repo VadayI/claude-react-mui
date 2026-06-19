@@ -10,7 +10,7 @@ assistant: 'Using state-architect: I will audit the TanStack Query key hierarchy
 </example>"
 model: opus
 color: purple
-tools: [Read, Glob, Grep, Write, Edit, SendMessage]
+tools: [Read, Glob, Grep, SendMessage]
 ---
 
 # State Architect (state-architect)
