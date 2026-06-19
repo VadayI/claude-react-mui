@@ -44,11 +44,15 @@ fi
 [ -z "${GITHUB_PERSONAL_ACCESS_TOKEN:-}" ] && [ -n "$_pre_GITHUB_PERSONAL_ACCESS_TOKEN" ] && export GITHUB_PERSONAL_ACCESS_TOKEN="$_pre_GITHUB_PERSONAL_ACCESS_TOKEN"
 [ -z "${CONTEXT7_API_KEY:-}" ]             && [ -n "$_pre_CONTEXT7_API_KEY" ]             && export CONTEXT7_API_KEY="$_pre_CONTEXT7_API_KEY"
 
-# gh reads GH_TOKEN / GITHUB_TOKEN — not GITHUB_PERSONAL_ACCESS_TOKEN. Mirror it
-# so the same .env value authenticates gh too. (Prefer `gh auth login` if you
-# want gh creds in the OS keychain instead — then leave GH_TOKEN unset.)
-if [ -n "${GITHUB_PERSONAL_ACCESS_TOKEN:-}" ] && [ -z "${GH_TOKEN:-}" ] && [ -z "${GITHUB_TOKEN:-}" ]; then
-  export GH_TOKEN="$GITHUB_PERSONAL_ACCESS_TOKEN"
+# gh authenticates with GH_TOKEN, then GITHUB_TOKEN (in that order) — not with
+# GITHUB_PERSONAL_ACCESS_TOKEN. When .env provides a PAT, make it authoritative for
+# gh: copy it into GH_TOKEN (unless you deliberately set GH_TOKEN yourself) AND drop
+# any stale GITHUB_TOKEN — often a leftover Windows *system* env var — that would
+# otherwise shadow the PAT and cause gh 401s. With no PAT in .env, your existing gh
+# credentials are left untouched (e.g. `gh auth login`, or a GH_TOKEN you set).
+if [ -n "${GITHUB_PERSONAL_ACCESS_TOKEN:-}" ]; then
+  [ -z "${GH_TOKEN:-}" ] && export GH_TOKEN="$GITHUB_PERSONAL_ACCESS_TOKEN"
+  unset GITHUB_TOKEN
 fi
 
 exec claude "$@"
