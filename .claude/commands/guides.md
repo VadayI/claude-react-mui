@@ -40,7 +40,7 @@ Delegate to `guide-writer` with all gathered sources. Instructions:
 2. First start — prerequisites, `cp .env.example .env` + which vars to fill, `npm install`, `npm run dev`. Copy-paste runnable, dev URL `http://localhost:5173`.
 3. Running tests — `npm run test`, `npm run e2e`, coverage.
 4. Generating API types — `npm run api:pull && npm run api:types`, when to re-run.
-5. Gate scripts — list all four scripts and when they run.
+5. Gate scripts — list all nine gate scripts (`check_types_drift`, `check_contract_sync`, `check_stubs`, `check_file_size`, `check_feature_readmes`, `check_plan_sync`, `check_routes_registry`, `check_guides_sync`, `check_bundle_size`) and when they run.
 6. Adding a feature — brief pointer to the pipeline in `CLAUDE.md`.
 7. Where to go next — links to `docs/guides/user.md`, `docs/api/INDEX.md`, Swagger UI.
 

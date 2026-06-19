@@ -39,9 +39,14 @@ npm run typecheck
 npm run lint
 npm run test:run
 bash scripts/check_types_drift.sh
+bash scripts/check_contract_sync.sh
 bash scripts/check_stubs.sh
 bash scripts/check_file_size.sh
 bash scripts/check_feature_readmes.sh
+bash scripts/check_plan_sync.sh
+bash scripts/check_routes_registry.sh
+bash scripts/check_guides_sync.sh
+npm run build && bash scripts/check_bundle_size.sh
 ```
 
 Report ✅ / ❌ per gate. If any gate fails → the user must fix before the PR is ready (report what needs fixing, do not auto-fix risky things).

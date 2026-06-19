@@ -30,7 +30,14 @@ Run these and report results before opening the PR. Block on failures:
 - `npm run lint` — must be clean.
 - `npm run test:run` — must pass.
 - `bash scripts/check_types_drift.sh` — no drift.
+- `bash scripts/check_contract_sync.sh` — vendored contract matches the pin.
 - `bash scripts/check_stubs.sh` — no unlogged stubs.
+- `bash scripts/check_file_size.sh` — no file over 400 lines.
+- `bash scripts/check_feature_readmes.sh` — every feature has a README.
+- `bash scripts/check_plan_sync.sh` — non-trivial PR has an updated plan.
+- `bash scripts/check_routes_registry.sh` — router change reconciled with routes.json + docs/verify.
+- `bash scripts/check_guides_sync.sh` — route/auth change updates docs/guides.
+- `npm run build && bash scripts/check_bundle_size.sh` — bundle within budget.
 
 ### 3. Gather PR metadata
 
