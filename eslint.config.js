@@ -16,6 +16,7 @@ export default tseslint.config(
       ...reactHooks.configs['recommended-latest'].rules,
       ...jsxA11y.configs.recommended.rules,
       '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+      'no-warning-comments': ['error', { terms: ['todo', 'fixme', 'xxx', 'hack'], location: 'start' }],
     },
   },
 )

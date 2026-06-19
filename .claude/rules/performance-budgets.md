@@ -21,7 +21,7 @@ A React SPA degrades silently — one stray dependency or an un-split route, and
 ## Enforcement (the gate)
 
 - **`scripts/check_bundle_size.sh`** runs after `vite build`, compares gzipped chunk sizes against `.performance-budget.json`, and **exits non-zero** when a budget is exceeded. Run locally before pushing.
-- **Lighthouse CI** (`lhci`) runs the CWV/score budgets against `npm run preview` in `frontend-ci.yml`; a budget breach fails the PR.
+- **Lighthouse CI** (`lhci`, CWV/score budgets against `npm run preview`) is **planned — not yet wired into `frontend-ci.yml`** (see the `_note` in `.performance-budget.json` and `docs/plans/ci-gates-plan.md`). Until it lands, the **Core Web Vitals targets above are advisory, not a CI gate**; only `scripts/check_bundle_size.sh` is enforced.
 - **`reviewer`** flags un-split heavy routes, whole-barrel imports, and unjustified large dependencies; a budget breach is 🟡 Important, a core-flow LCP/INP regression is 🔴.
 
 ## Binds these agents (rule is auto-loaded)
@@ -29,9 +29,9 @@ A React SPA degrades silently — one stray dependency or an un-split route, and
 - `ui-architect` — declares which routes are lazy-loaded and what the loading fallback is, as part of the contract.
 - `react-developer` — code-splits routes, dynamically imports heavy/rare modules, keeps imports named/tree-shakeable, runs the bundle check locally.
 - `react-refactoring-expert` — owns render-cost work (memoization, virtualization) under green tests, driven by profiler evidence not guesswork.
-- `ci-cd-engineer` — wires `check_bundle_size.sh` + Lighthouse CI into the pipeline and keeps `.performance-budget.json` authoritative.
+- `ci-cd-engineer` — wires `check_bundle_size.sh` into the pipeline (Lighthouse CI is planned, not yet wired) and keeps `.performance-budget.json` authoritative.
 - `reviewer` — blocks PRs that breach a budget or add an unjustified heavy dependency.
 
-> Goal: bundle weight and Core Web Vitals are explicit numbers checked on every build, so performance can only get better — a regression fails CI instead of shipping unnoticed.
+> Goal: bundle weight is an explicit number checked on every build (and Core Web Vitals once Lighthouse CI is wired), so performance can only get better — a bundle regression fails CI instead of shipping unnoticed.
 
 > **Skill:** activate the `performance-optimization` skill for code-splitting and render-cost recipes.
