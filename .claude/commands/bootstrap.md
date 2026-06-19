@@ -10,6 +10,10 @@ Scaffold a new Vite+React+TS+MUI project from templates (Mode A) or PR each miss
 node scripts/log-cmd.mjs /bootstrap "$ARGUMENTS"
 ```
 
+## Step 0 — Output language (before anything else)
+
+If `.claude/rules/output-language.md` does NOT exist and `templates/output-language.md` DOES, run the `/set-language` flow first (AskUserQuestion `English` / `Українська` / `Polski` → copy the template to `.claude/rules/output-language.md`, substitute both `{LANGUAGE_NATIVE}` tokens, append `@.claude/rules/output-language.md` to the CLAUDE.md import block), so the rest of bootstrap speaks the user's language. If it already exists, skip.
+
 ## Pre-flight hard gates
 
 Before doing ANYTHING:
@@ -177,7 +181,7 @@ docs/
 
 ### Step 8: CLAUDE.md
 
-Seed `CLAUDE.md` from the template root (`scripts/install.sh` copies it), filling in the project name and repo URL. Ensure all rule imports are present.
+Seed `CLAUDE.md` from the template root (`scripts/install.sh` copies it), filling in the project name and repo URL. Ensure all rule imports are present. If `.claude/rules/output-language.md` exists (language chosen in Step 0), make sure the re-seeded CLAUDE.md keeps the `@.claude/rules/output-language.md` import line at the end of the import block.
 
 ### Step 9: Pull backend OpenAPI schema
 
