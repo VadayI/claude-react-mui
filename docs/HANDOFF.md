@@ -1,7 +1,19 @@
 # HANDOFF — claude-react-mui
 
 > Read this first when joining the project. Updated by `/wrap-up` at end of each session.
-> Last updated: 2026-06-17 (session — stack-upgrade-pr-e)
+> Last updated: 2026-06-19 (session — native-windows-git-bash)
+
+## Latest session (2026-06-19) — native Windows via Git Bash
+
+**Main @ `bb2ce1a`.** Merged this session: **PR #49** (undici 7.27.0 → 7.28.0, high advisory GHSA-vmh5-mc38-953g) and **PR #48 — native Windows + Git Bash as a first-class runner (ADR 0028, amends 0005)**.
+
+- `scripts/detect-env.mjs`: `platform_supported: true` for `win32` when Git Bash is present (`MSYSTEM`); new fields `is_git_bash` / `sandbox_supported`; `schema_version` 1→2; `wrong_runner_suspected` narrowed to "a Windows runner launched from inside WSL2" and is now a **warning**, not a hard stop.
+- `/doctor` + `/bootstrap` hard-stop **only** on `platform_supported: false`; `wrong_runner_suspected` → MIXED_RUNNER warning.
+- Docs/scripts aligned (`environment.md`, `node-commands.md`, `CLAUDE.md`, `README.md`, `install.sh` accepts `MINGW*`, `session-start.sh`, `developer.md`). The heredoc/9p edit caveat is now scoped to **WSL2 `/mnt` only** — native Windows NTFS is unaffected.
+
+**Follow-up (NOT a blocker):** `npm ci` fails on native Windows with `EBADPLATFORM` — the committed lockfile carries only the Linux Rollup binary, plus a pre-existing `eslint@10` / `eslint-plugin-jsx-a11y` peer mismatch. Workaround documented in `docs/guides/developer.md` (`npm install --legacy-peer-deps`); a fully cross-platform lockfile + peer cleanup is a tracked follow-up PR.
+
+> The sections below are from the prior session (stack-upgrade PR E, 2026-06-17) and are historical context. Since then, the stack upgrade (A–E), design-fidelity work (#43–47), the undici fix (#49), and native Windows (#48) have all merged to `main`.
 
 ## Current state
 

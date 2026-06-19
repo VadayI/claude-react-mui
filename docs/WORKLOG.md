@@ -1009,3 +1009,16 @@ Cross-machine work history. Updated at the end of every session (`/wrap-up`) and
 - PRs: #43 (правило+шаблон), #44 (агенти), #45 (команди), #46 (ADR+reviewer), #47 (vitest 9p).
 - Урок 9p: правки на /mnt робити з host-shell; перед мержем перевіряти
   `git show <branch>:<file> | tr -dc '\000' | wc -c` (спіймало пошкодження reviewer.md).
+
+
+## 2026-06-19 — Native Windows via Git Bash (ADR 0028) + undici fix
+- Питання: чи можуть агенти Claude працювати на Windows напряму? Так — нативно через Git Bash; WSL2-мандат шаблону (ADR 0005) застарів (писався до появи нативної підтримки Claude Code на Windows). Підтверджено пошуком офіційної доки.
+- **PR #49** — `npm audit fix`: undici 7.27.0→7.28.0 (high GHSA-vmh5-mc38-953g), розблокував audit-гейт усього репо (main теж був червоний). Lockfile згенеровано на Linux (під CI на ubuntu), закоммічено з нативного Windows.
+- **PR #48** (ADR 0028, амендує 0005) — native Windows + Git Bash як first-class runner:
+  - `scripts/detect-env.mjs`: `platform_supported=true` для `win32` за наявності Git Bash (`MSYSTEM`); нові поля `is_git_bash`/`sandbox_supported`; `schema_version` 1→2; `wrong_runner_suspected` звужено до «Windows-раннер із WSL2» і → warning.
+  - `/doctor`, `/bootstrap`: hard-stop лише на `platform_supported:false`; MIXED_RUNNER → warning.
+  - `environment.md`/`node-commands.md`/`CLAUDE.md`/`README.md`: native Windows first-class; heredoc/9p позначено WSL2-`/mnt`-only.
+  - `install.sh` приймає `MINGW*/MSYS*`; `session-start.sh`; `developer.md` — нотатка про `npm install --legacy-peer-deps`.
+  - Верифіковано: матриця `detect-env` (8 сценаріїв) PASS; усі правки через heredoc (Edit/Write обрізають на 9p).
+- Знахідка (задокументовано, follow-up): `npm ci` на нативному Windows падає `EBADPLATFORM` — lockfile містить лише `@rollup/rollup-linux-x64-gnu`; + `eslint@10` vs `jsx-a11y` peer-конфлікт (тому `--legacy-peer-deps`). Повний крос-платформний lockfile = окремий PR.
+- 9p-урок (підтверджено вживу): git із WSL2-на-`/mnt` падав на `.git/index.lock` (EPERM на unlink); усі коміти робились із нативного Windows (NTFS) — що й ілюструє цінність зміни.
