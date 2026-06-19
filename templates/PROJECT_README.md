@@ -73,7 +73,7 @@ make gates
 
 ## Environment variables
 
-See `.env.example`. All `VITE_*` variables ship to the client bundle. **Never put secrets here.**
+See `.env.example`. All `VITE_*` variables ship to the client bundle — **never put secrets in `VITE_*`**. Non-client secrets (`GITHUB_PERSONAL_ACCESS_TOKEN`, `CONTEXT7_API_KEY`) go in `.env` (gitignored) and reach the MCP servers + `gh` only when you launch Claude via `make cc` (= `bash scripts/claude.sh`) — Claude Code does not auto-load `.env`.
 
 ## Contributing
 

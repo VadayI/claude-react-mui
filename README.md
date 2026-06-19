@@ -79,12 +79,13 @@ bash scripts/setup-wsl.sh
 #    winget install Anthropic.ClaudeCode GitHub.cli
 
 # 2. Create the GitHub repo by hand (ADR 0008), then point this clone at it.
-#    Set tokens (never commit them):
-export GITHUB_PERSONAL_ACCESS_TOKEN=...   # fine-grained PAT, repo RW + workflows + admin
-export CONTEXT7_API_KEY=...
+#    Put tokens in .env (gitignored — never commit them). Claude Code does NOT
+#    auto-load .env, so launch via `make cc` (step 3) to feed them to the MCPs + gh:
+#      GITHUB_PERSONAL_ACCESS_TOKEN=...   # fine-grained PAT, repo RW + workflows + admin
+#      CONTEXT7_API_KEY=...
 
-# 3. Launch Claude Code in the project and let it drive setup:
-claude
+# 3. Launch Claude Code in the project (sources .env) and let it drive setup:
+make cc      # = bash scripts/claude.sh; plain `claude` will not see .env secrets
 #   /doctor      → audits the machine vs .claude/rules/environment.md, proposes fixes
 #   /bootstrap   → Mode A scaffolds the Vite+MUI app from templates/, or Mode B PRs missing pieces
 #   /preflight   → verifies build inputs (brief, stack, OpenAPI contract, GitHub access)

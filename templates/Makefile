@@ -5,7 +5,7 @@
 # not the source of truth. The canonical commands are in package.json.
 # `make` is never required by the CI pipeline (GitHub Actions calls npm directly).
 
-.PHONY: help setup install dev build test cov e2e lint fmt typecheck types gates doctor-deps
+.PHONY: help setup install dev build test cov e2e lint fmt typecheck types gates doctor-deps cc
 
 # Self-documenting help — lists all targets with their inline ## comment.
 help:
@@ -60,3 +60,6 @@ doctor-deps: ## Quick check that required host tools are present (node, npm, cla
 	@npm  --version   2>/dev/null && echo "  npm    OK" || echo "  npm    MISSING"
 	@claude --version 2>/dev/null && echo "  claude OK" || echo "  claude MISSING"
 	@gh --version     2>/dev/null && echo "  gh     OK" || echo "  gh     MISSING"
+
+cc: ## Launch Claude Code with .env sourced (feeds MCP + gh secrets from .env).
+	bash scripts/claude.sh $(ARGS)

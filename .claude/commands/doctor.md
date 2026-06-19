@@ -12,6 +12,10 @@ node scripts/log-cmd.mjs /doctor "$ARGUMENTS"
 
 ## Steps
 
+### Step 0 — Output language (run before anything else)
+
+If `.claude/rules/output-language.md` does NOT exist and `templates/output-language.md` DOES, run the `/set-language` selection flow first: ask via `AskUserQuestion` (header `Language`, options `English` (Recommended) / `Українська` / `Polski`); on a non-English choice, `cp templates/output-language.md .claude/rules/output-language.md`, replace both `{LANGUAGE_NATIVE}` tokens with the chosen native name, and append `@.claude/rules/output-language.md` to the import block at the top of `CLAUDE.md`. Then continue the audit. If the rule already exists, skip. This makes the language choice deterministic even when the user's first action is a slash command — CLAUDE.md "IMPORTANT 0" is only the fallback for a free-form first turn.
+
 ### Pre-check: read env-detect.json
 
 Read `.claude/memory/env-detect.json` (written by the SessionStart hook via `node scripts/detect-env.mjs`). If the file is missing, the hook failed — instruct the user to run `node scripts/detect-env.mjs` manually and verify it writes the file honestly. Never hand-write or patch this file.
@@ -41,7 +45,10 @@ Check and report each item (✅ / ❌ / ⚠️):
 ### Scope 2 — Claude config & access
 
 8. **Required plugins** — check `.claude/settings.json` `enabledPlugins` against the baseline: `superpowers@superpowers-marketplace`, `engineering@knowledge-work-plugins`, `playwright@claude-plugins-official`, `github@claude-plugins-official`, `context7@claude-plugins-official`. Report missing plugins and paste-ready `/plugin install` commands.
-9. **GITHUB_PERSONAL_ACCESS_TOKEN** — `[ -n "$GITHUB_PERSONAL_ACCESS_TOKEN" ]`. Must be set. Never print the value. If missing, instruct the user to set it in their shell profile.
+9. **GITHUB_PERSONAL_ACCESS_TOKEN** — check it is visible to the session (`[ -n "$GITHUB_PERSONAL_ACCESS_TOKEN" ]`). Never print the value.
+    - Present in the session → ✅.
+    - Empty in the session but a non-empty `GITHUB_PERSONAL_ACCESS_TOKEN=` line exists in `.env` → the user launched `claude` directly; have them relaunch via `make cc` / `bash scripts/claude.sh` (which sources `.env`).
+    - Absent from both → OFFER to add it: ask the user to paste a fine-grained PAT and, on their confirmation, append `GITHUB_PERSONAL_ACCESS_TOKEN=<value>` to `.env` (gitignored — safe; never echo the value back), then have them relaunch via `make cc`. (Setting it in the shell rc still works too.)
 10. **CONTEXT7_API_KEY** — `[ -n "$CONTEXT7_API_KEY" ]`. Must be set. Never print the value.
 11. **CONTRACT_VERSION** — check `.env` for `CONTRACT_VERSION` (the pinned tag for `VadayI/claude-api-contract`). If absent, `npm run api:pull` cannot fetch the contract schema; note as ⚠️ (not a hard stop — offline work is allowed). Also verify `contract.lock.json` matches the set version.
 12. **gh auth** — `gh auth status`. Must be authenticated. If `GITHUB_TOKEN`/`GITHUB_PERSONAL_ACCESS_TOKEN` is set, `gh auth login` will refuse to store separate creds — that is EXPECTED.

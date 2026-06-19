@@ -1,4 +1,4 @@
-.PHONY: help install dev build test cov e2e lint fmt typecheck types gates
+.PHONY: help install dev build test cov e2e lint fmt typecheck types gates cc
 
 help: ## Show available targets
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-15s\033[0m %s\n", $$1, $$2}'
@@ -41,3 +41,6 @@ gates: ## Run all CI gate scripts locally
 	npm audit --audit-level=high
 	npm run build
 	bash scripts/check_bundle_size.sh
+
+cc: ## Launch Claude Code with .env sourced (feeds MCP + gh secrets from .env).
+	bash scripts/claude.sh $(ARGS)
