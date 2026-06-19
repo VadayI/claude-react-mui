@@ -1,5 +1,6 @@
 ---
 model: sonnet
+argument-hint: "[run-id]"
 ---
 
 Diagnose failing GitHub Actions runs for the current branch, classify the failure type, and delegate the fix through the appropriate agent. PR-only — never touches `main`.

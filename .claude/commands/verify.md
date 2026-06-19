@@ -1,5 +1,6 @@
 ---
 model: sonnet
+argument-hint: "[feature] [--run]"
 ---
 
 Generate or refresh `docs/verify/<feature>.md` from `.claude/memory/routes.json` and the live router — a human-facing click-through + keyboard + Playwright checklist per `@.claude/rules/verification.md`. With `--run`, execute Playwright steps against a running app.
@@ -63,6 +64,7 @@ Capture output. Append a `## Playwright run results` section to the verify doc w
 ### 6. Commit
 
 ```bash
+if [ "$(git branch --show-current)" = "main" ]; then echo "Refusing to commit on main — create a feature branch first."; exit 1; fi
 git add docs/verify/<feature>.md .claude/memory/routes.json docs/api/INDEX.md
 git commit -m "docs: generate verification guide for <feature>"
 ```

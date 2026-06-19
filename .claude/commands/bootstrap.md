@@ -175,7 +175,7 @@ docs/
     user.md           # copied from templates/guides_user.md with {TODO} markers
     developer.md      # copied from templates/guides_developer.md with {TODO} markers
   decisions/
-    0001-stack.md     # ADR: why React 19 + MUI + TanStack Query
+    0001-stack.md     # the new project's own first ADR (numbering restarts per project): why React 19 + MUI + TanStack Query
   plans/              # (empty)
 ```
 

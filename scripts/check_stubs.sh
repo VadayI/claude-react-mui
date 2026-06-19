@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# templates/scripts/check_stubs.sh
+# scripts/check_stubs.sh
 #
 # Gate: every "// STUB:" comment or throw new Error("STUB...") in src/ must
 # be recorded in docs/STUBS.md.

@@ -1,5 +1,6 @@
 ---
 model: sonnet
+argument-hint: "<template-url> [--ref <tag>]"
 ---
 
 Sync this derived project's `.claude/` configuration to a newer `claude-react-mui` template version via `template-sync`. PR-only — never pushes to `main`. Takes an optional template repo URL as `$ARGUMENTS`.

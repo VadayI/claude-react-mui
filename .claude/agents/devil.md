@@ -54,6 +54,6 @@ For a given plan or contract doc, I challenge:
 
 ## Output
 
-A numbered list of risks and questions, with severity (🔴 High / 🟡 Medium / 🟢 Low). No code changes — advisory only.
+A numbered list of risks and questions, with severity (🔴 Critical / 🟡 Important / 🟢 Minor). No code changes — advisory only.
 
 <!-- last reviewed: 2026-06-02 -->

@@ -1,5 +1,6 @@
 ---
 model: sonnet
+argument-hint: "[git | project | workflow]"
 ---
 
 Workflow audit via `auditor`: reads `.claude/memory/command-log.jsonl` plus live git and project state, reports what has been done, and suggests the next command. Takes an optional scope as `$ARGUMENTS` (git | project | workflow).
