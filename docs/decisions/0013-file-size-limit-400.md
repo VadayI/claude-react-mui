@@ -1,6 +1,8 @@
 # 0013. File-size limit: 400 lines for src/
 
-Status: accepted · 2026-06-02
+Status: superseded by [ADR 0029](0029-file-size-limit-800.md) · 2026-06-25
+
+> **Superseded by [ADR 0029](0029-file-size-limit-800.md)** — the `src/` file-size limit was raised to 800 lines (matching the backend cap). The 400-line decision recorded below is kept as the historical record.
 
 ## Context
 

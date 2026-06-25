@@ -54,7 +54,7 @@ npm run typecheck
 ```bash
 bash scripts/check_types_drift.sh    # openapi.yml in sync with schema.d.ts
 bash scripts/check_stubs.sh          # no unlogged STUB markers
-bash scripts/check_file_size.sh      # no file > 400 lines
+bash scripts/check_file_size.sh      # no file > 800 lines
 bash scripts/check_feature_readmes.sh  # every feature has README.md
 ```
 

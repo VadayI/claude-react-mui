@@ -21,7 +21,7 @@ the highest existing one.
 | 0008 | Manual repo + fine-grained PAT |
 | 0009 | `/mnt` working dir supported |
 | 0011 | Config baseline (plugins / MCP) |
-| 0013 | File-size limit 400 |
+| 0013 | File-size limit 400 (superseded by 0029) |
 | 0014 | Update-from-template |
 | 0015 | Stack: React + MUI + TanStack Query + Zustand (React pin superseded by 0024; MUI pin superseded by 0025; Router pin superseded by 0026) |
 | 0016 | Accessibility mandatory |
@@ -35,5 +35,6 @@ the highest existing one.
 | 0024 | Upgrade React 18.3 → 19 |
 | 0025 | Upgrade Material UI 6 → 9 |
 | 0026 | Upgrade React Router 6 → 7 (+ route-level code-splitting) |
+| 0029 | File-size limit 800 (supersedes 0013) |
 
 > Index added in the 2026-06-16 template audit. Keep in sync when adding an ADR.

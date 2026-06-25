@@ -33,7 +33,7 @@ Run these and report results before opening the PR. Block on failures:
 - `bash scripts/check_types_drift.sh` — no drift.
 - `bash scripts/check_contract_sync.sh` — vendored contract matches the pin.
 - `bash scripts/check_stubs.sh` — no unlogged stubs.
-- `bash scripts/check_file_size.sh` — no file over 400 lines.
+- `bash scripts/check_file_size.sh` — no file over 800 lines.
 - `bash scripts/check_feature_readmes.sh` — every feature has a README.
 - `bash scripts/check_plan_sync.sh` — non-trivial PR has an updated plan.
 - `bash scripts/check_routes_registry.sh` — router change reconciled with routes.json + docs/verify.

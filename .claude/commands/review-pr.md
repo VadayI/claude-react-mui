@@ -40,7 +40,7 @@ Dispatch all three agents simultaneously (no dependencies between them):
 
 - Component contracts met (`@.claude/rules/component-contract.md`).
 - No stubs in `src/` without `docs/STUBS.md` entries.
-- No file over 400 lines.
+- No file over 800 lines.
 - Feature README updated if surface changed.
 - Tests cover success, 400, 401, 403, 404, edge cases.
 - TypeScript types correct; no `any` without justification.

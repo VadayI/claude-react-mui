@@ -81,9 +81,9 @@ type ButtonProps = {
 - Decisions worth recording: state management library choice, auth strategy, folder structure changes, CSP approach, API client library
 - ADR template: Context / Decision / Consequences
 
-## File size limit (400 lines)
+## File size limit (800 lines)
 
-- No source file over 400 lines (CI gate; `src/lib/api/schema.d.ts` is exempt as generated)
+- No source file over 800 lines (CI gate; `src/lib/api/schema.d.ts` is exempt as generated)
 - A large component file = multiple responsibilities — split into feature folder
 - CI gate: `scripts/check_file_size.sh`
 

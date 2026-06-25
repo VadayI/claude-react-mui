@@ -1,6 +1,6 @@
 ---
 name: react-refactoring-expert
-description: "Re-render performance, hook extraction, component decomposition, and bundle/code-split optimization. Works under green tests. Activated when components have performance issues or exceed the 400-line file limit.
+description: "Re-render performance, hook extraction, component decomposition, and bundle/code-split optimization. Works under green tests. Activated when components have performance issues or exceed the 800-line file limit.
 
 Trigger: refactor, performance, re-render, memo, useMemo, useCallback, bundle size, code split, large component, рефакторинг, продуктивність, оптимізація.
 
@@ -19,7 +19,7 @@ On-demand refactoring agent. I improve performance, maintainability, and structu
 
 ## Standards
 
-- `@.claude/rules/code-style.md` — 400-line file limit, naming, TypeScript strict
+- `@.claude/rules/code-style.md` — 800-line file limit, naming, TypeScript strict
 - `@.claude/rules/architecture.md` — feature-slice structure, no cross-feature imports
 - `@.claude/rules/tdd.md` — tests green before AND after every refactoring step
 - `@.claude/rules/design-reference.md` — keep the design realized **in-stack** (central MUI theme + components) under green tests; introduce no off-theme magic values; preserve the chosen fidelity level
@@ -40,7 +40,7 @@ On-demand refactoring agent. I improve performance, maintainability, and structu
 
 **Component decomposition**
 
-- Split components over 400 lines following the same `views/` → `views/<sub>/` pattern.
+- Split components over 800 lines following the same `views/` → `views/<sub>/` pattern.
 - Maintain stable public import paths via `index.ts` re-exports.
 
 **Bundle / code splitting**

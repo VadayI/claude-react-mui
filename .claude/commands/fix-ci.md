@@ -46,7 +46,7 @@ Map the log output to one of these categories:
 - **e2e** — Playwright failures (`npm run e2e`).
 - **types-drift** — `check_types_drift.sh` failed; generated types out of sync with OpenAPI schema.
 - **stubs** — `check_stubs.sh` found unlogged stubs.
-- **file-size** — `check_file_size.sh` file over 400-line limit.
+- **file-size** — `check_file_size.sh` file over 800-line limit.
 - **feature-readme** — `check_feature_readmes.sh` missing README.
 - **contract-sync** — `check_contract_sync.sh` failed; vendored `openapi.yml` doesn't match the pinned `CONTRACT_VERSION`.
 - **plan-sync** — `check_plan_sync.sh` failed; a non-trivial PR (>2 files under `src/`/`e2e/`) has no updated `docs/plans/*.md`.
