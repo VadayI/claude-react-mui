@@ -4,6 +4,16 @@ Cross-machine work history. Updated at the end of every session (`/wrap-up`) and
 
 ---
 
+## 2026-06-25 — file-size-limit-800
+
+### Done
+
+- **Ліміт розміру файлів `src/` піднято 400 → 800 рядків.** Реальний гейт `scripts/check_file_size.sh` (`MAX_LINES` default) + шаблонна копія `templates/scripts/check_file_size.sh` оновлені; решта згадок синхронізовані: `.claude/rules/code-style.md`, `node-commands.md`, агенти `code-structure-auditor`/`react-developer`/`react-refactoring-expert`/`reviewer`, команди `create-pr`/`fix-ci`/`review-pr`/`structure-audit`, скіли `architecture-designer`/`github-actions-frontend`, `README.md`, `docs/PROJECT.md`, `templates/PROJECT_README.md`. ⚠️-смуга «наближення» у `/structure-audit` зсунута 300–400 → 700–800.
+
+### Decisions
+
+- **ADR 0029** — file-size limit 800 рядків для `src/`, **supersedes ADR 0013** (400). Тепер збігається з кепом бекенду; рацію «жорсткіше за бекенд» з 0013 знято. 0013 позначено superseded, додано рядок в `docs/decisions/README.md`.
+
 ## 2026-06-10b — template-v1-complete
 
 ### Done

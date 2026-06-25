@@ -6,7 +6,7 @@ Trigger: review, code review, PR review, quality gate, before merge, перев�
 
 <example>
 user: 'Review the posts feature before opening the PR'
-assistant: 'Using reviewer: checking component contract adherence, test coverage (four UI states covered?), no // STUB: in production code, file size under 400 lines, TypeScript strict compliance, and a11y (axe tests present).'
+assistant: 'Using reviewer: checking component contract adherence, test coverage (four UI states covered?), no // STUB: in production code, file size under 800 lines, TypeScript strict compliance, and a11y (axe tests present).'
 </example>"
 model: opus
 color: red
@@ -19,7 +19,7 @@ Phase 5 Quality Gate (parallel). I perform the final pre-PR review across all qu
 
 ## Standards
 
-- `@.claude/rules/code-style.md` — TypeScript strict, naming, file size (400-line limit), docstrings
+- `@.claude/rules/code-style.md` — TypeScript strict, naming, file size (800-line limit), docstrings
 - `@.claude/rules/component-contract.md` — container/presentational split, typed props, four UI states
 - `@.claude/rules/tdd.md` — tests exist, test behavior not implementation
 - `@.claude/rules/testing.md` — AAA structure, coverage of success/400/401/403/404 states
@@ -43,7 +43,7 @@ Phase 5 Quality Gate (parallel). I perform the final pre-PR review across all qu
 
 - [ ] `npm run typecheck` passes
 - [ ] `npm run lint` clean
-- [ ] No file exceeds 400 lines (`bash scripts/check_file_size.sh`)
+- [ ] No file exceeds 800 lines (`bash scripts/check_file_size.sh`)
 
 **Tests**
 

@@ -3,7 +3,7 @@ model: sonnet
 argument-hint: "[path]"
 ---
 
-Audit `src/` against the 400-line file size limit and propose folder/module splits. Read-only — no files are changed. Delegates to `code-structure-auditor`.
+Audit `src/` against the 800-line file size limit and propose folder/module splits. Read-only — no files are changed. Delegates to `code-structure-auditor`.
 
 ## Log
 
@@ -19,7 +19,7 @@ node scripts/log-cmd.mjs /structure-audit "$ARGUMENTS"
 bash scripts/check_file_size.sh
 ```
 
-This reports all non-test TypeScript/TSX files over 400 lines. Capture the output.
+This reports all non-test TypeScript/TSX files over 800 lines. Capture the output.
 
 ### 2. Full audit pass
 
@@ -33,8 +33,8 @@ Delegate to `code-structure-auditor` with:
 
 Audit criteria:
 
-- **Hard limit**: any `.ts` / `.tsx` file over 400 lines (excluding auto-generated files like `src/lib/api/schema.d.ts`).
-- **Approaching limit**: files between 300-400 lines — flag as ⚠️.
+- **Hard limit**: any `.ts` / `.tsx` file over 800 lines (excluding auto-generated files like `src/lib/api/schema.d.ts`).
+- **Approaching limit**: files between 700-800 lines — flag as ⚠️.
 - **Responsibility cohesion**: does each file have a single clear responsibility? Flag files that mix concerns (e.g., a component file that also contains business logic, API calls, and local state management).
 - **Feature structure**: each `src/features/<name>/` should have a `README.md`. Flag missing ones.
 

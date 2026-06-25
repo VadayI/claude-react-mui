@@ -198,7 +198,7 @@ Hard CI gates (`.github/workflows/frontend-ci.yml`, mirrored locally via `make g
 - **lint** — ESLint incl. `jsx-a11y` (accessibility) and no leftover `TODO/FIXME`.
 - **types drift** — `scripts/check_types_drift.sh`: generated `schema.d.ts` must match the committed `openapi.yml` (the contract can't silently drift).
 - **stub ledger** — `scripts/check_stubs.sh`: every `// STUB:` is logged in `docs/STUBS.md`.
-- **file size** — `scripts/check_file_size.sh`: no `src/` file over 400 lines.
+- **file size** — `scripts/check_file_size.sh`: no `src/` file over 800 lines.
 - **feature READMEs** — `scripts/check_feature_readmes.sh`: every `src/features/<f>/` has a README.
 - **tests** — `vitest --coverage` (unit/component, incl. `jest-axe`) and `playwright` (E2E, incl. axe).
 
@@ -214,4 +214,4 @@ Start a new frontend by using this repo as a GitHub template (or `/bootstrap` in
 
 ## Architecture decisions
 
-See `docs/decisions/` (ADRs 0001–0028): the frontend double-loop TDD boundary, Node-based env detection, the bootstrap/resume command, bash-only shell (native Windows via Git Bash — ADR 0028), frontend-as-separate-repo, manual repo + fine-grained PAT, `/mnt` working-dir support, the config baseline, the 400-line file-size limit, template sync, the React + MUI + TanStack Query + Zustand stack, mandatory accessibility, the server-vs-client state split, the default Bearer/JWT auth mode, the dependency upgrade policy, the external contract repo model (Variant A), and the v0.2.0 contract pin with the auth-path rename.
+See `docs/decisions/` (ADRs 0001–0029): the frontend double-loop TDD boundary, Node-based env detection, the bootstrap/resume command, bash-only shell (native Windows via Git Bash — ADR 0028), frontend-as-separate-repo, manual repo + fine-grained PAT, `/mnt` working-dir support, the config baseline, the 800-line file-size limit, template sync, the React + MUI + TanStack Query + Zustand stack, mandatory accessibility, the server-vs-client state split, the default Bearer/JWT auth mode, the dependency upgrade policy, the external contract repo model (Variant A), and the v0.2.0 contract pin with the auth-path rename.

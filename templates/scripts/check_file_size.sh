@@ -8,14 +8,14 @@
 #   - any *.d.ts file           (all generated type declarations)
 #   - node_modules/             (dependencies)
 #
-# MAX_LINES defaults to 400; override via environment:
+# MAX_LINES defaults to 800; override via environment:
 #   MAX_LINES=600 bash scripts/check_file_size.sh
 #
 # Exits 1 if any file exceeds the limit, 0 if all are within bounds.
 
 set -uo pipefail
 
-MAX_LINES="${MAX_LINES:-400}"
+MAX_LINES="${MAX_LINES:-800}"
 SRC_DIR="src"
 FAIL=0
 

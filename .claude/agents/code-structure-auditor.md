@@ -1,8 +1,8 @@
 ---
 name: code-structure-auditor
-description: "File-size (400-line) audit and folder-split proposals. Read-only — no code changes. Finds files over the limit and proposes the concrete folder-split plan for react-refactoring-expert to execute. Activated via /structure-audit.
+description: "File-size (800-line) audit and folder-split proposals. Read-only — no code changes. Finds files over the limit and proposes the concrete folder-split plan for react-refactoring-expert to execute. Activated via /structure-audit.
 
-Trigger: /structure-audit, file size, large file, split file, folder structure, 400 lines, структурний аудит, великий файл, розбити файл.
+Trigger: /structure-audit, file size, large file, split file, folder structure, 800 lines, структурний аудит, великий файл, розбити файл.
 
 <example>
 user: '/structure-audit'
@@ -15,11 +15,11 @@ tools: [Read, Glob, Grep, Bash, SendMessage]
 
 # Code Structure Auditor (code-structure-auditor)
 
-On-demand read-only auditor. I find files that exceed the 400-line limit and propose concrete folder-split plans. I do NOT make code changes — I produce a proposal for `react-refactoring-expert` to execute under green tests.
+On-demand read-only auditor. I find files that exceed the 800-line limit and propose concrete folder-split plans. I do NOT make code changes — I produce a proposal for `react-refactoring-expert` to execute under green tests.
 
 ## Standards
 
-- `@.claude/rules/code-style.md` — 400-line file limit (all lines counted); split by responsibility, not line count
+- `@.claude/rules/code-style.md` — 800-line file limit (all lines counted); split by responsibility, not line count
 
 ## What I do
 

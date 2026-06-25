@@ -20,7 +20,7 @@ Phase 4 of the feature pipeline (GREEN). I implement the minimal code to make th
 ## Standards
 
 - `@.claude/rules/tdd.md` — inner RED → GREEN → REFACTOR loop; minimal code per cycle
-- `@.claude/rules/code-style.md` — TypeScript strict, ESLint + Prettier, naming conventions, 400-line file limit
+- `@.claude/rules/code-style.md` — TypeScript strict, ESLint + Prettier, naming conventions, 800-line file limit
 - `@.claude/rules/component-contract.md` — typed props, container/presentational split, four UI states
 - `@.claude/rules/api-client.md` — generated types from `npm run api:types`; never hand-roll endpoint URLs
 - `@.claude/rules/state-management.md` — TanStack Query for server state, Zustand for client state only

@@ -37,9 +37,9 @@ Rules of thumb: first line is a single sentence; document props/params, return, 
 - One component per file; the file name matches the component (`TodoList.tsx`).
 - Colocate tests (`TodoList.test.tsx`) and stories next to the component.
 
-## File size limit (max 400 lines, enforced)
+## File size limit (max 800 lines, enforced)
 
-No source file in `src/` may exceed **400 lines** (React files should be small; a large component is almost always several components or a missing hook). Counted as `wc -l`. Enforced by `scripts/check_file_size.sh` in CI. Generated files (`src/lib/api/schema.d.ts`) are exempt. When a file grows: extract child components, extract a hook, or split a barrel into focused modules and re-export from `index.ts` so import paths stay stable. `code-structure-auditor` proposes the split (`/structure-audit`).
+No source file in `src/` may exceed **800 lines** (React files should be small; a large component is almost always several components or a missing hook). Counted as `wc -l`. Enforced by `scripts/check_file_size.sh` in CI. Generated files (`src/lib/api/schema.d.ts`) are exempt. When a file grows: extract child components, extract a hook, or split a barrel into focused modules and re-export from `index.ts` so import paths stay stable. `code-structure-auditor` proposes the split (`/structure-audit`).
 
 ## General
 

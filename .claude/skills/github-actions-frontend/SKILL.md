@@ -113,7 +113,7 @@ jobs:
 ```bash
 npm audit --audit-level=high          # fail on high/critical advisories
 bash scripts/check_stubs.sh           # no // STUB: markers in src/ outside tests (must be logged in docs/STUBS.md)
-bash scripts/check_file_size.sh       # no src/ .ts/.tsx file over 400 lines (schema.d.ts exempt)
+bash scripts/check_file_size.sh       # no src/ .ts/.tsx file over 800 lines (schema.d.ts exempt)
 bash scripts/check_feature_readmes.sh # every src/features/<name>/ has README.md
 bash scripts/check_types_drift.sh     # regenerate schema.d.ts and diff — fail on drift
 bash scripts/check_contract_sync.sh   # vendored openapi.yml matches the pinned contract tag (sha256)

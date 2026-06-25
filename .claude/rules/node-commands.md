@@ -32,7 +32,7 @@ npm run format           # prettier --write
 npm run api:types        # regenerate src/lib/api/schema.d.ts from openapi.yml
 bash scripts/check_types_drift.sh    # types match the committed schema
 bash scripts/check_stubs.sh          # every STUB is logged
-bash scripts/check_file_size.sh      # no src file over 400 lines
+bash scripts/check_file_size.sh      # no src file over 800 lines
 bash scripts/check_feature_readmes.sh # every feature has a README
 bash scripts/check_contract_sync.sh  # vendored openapi.yml matches the pinned tag
 bash scripts/check_plan_sync.sh       # non-trivial PR has an updated living plan
