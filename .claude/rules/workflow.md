@@ -95,7 +95,7 @@ ba → ui-architect → tester (RED) → react-developer (GREEN) → tester (REF
 | 3. RED           | sequential   | `tester`                                          | Failing Playwright journey + failing Vitest/RTL tests with MSW handlers                                                                              |
 | 4. GREEN         | sequential   | `react-developer`                                 | Code that greens the tests + eslint/prettier + typecheck                                                                                             |
 | 5. Quality Gate  | **parallel** | `reviewer`, `security-scanner`, `state-architect` | Independent reports                                                                                                                                  |
-| 6. Documentation | sequential   | `docs-writer`, `guide-writer`                     | feature README, `docs/verify/<feature>.md`, `docs/guides/{user,developer}.md` (when surface changed), WORKLOG, PR description + `gh pr create`       |
+| 6. Documentation | sequential   | `docs-writer` (+ `guide-writer` — optional, when the user/dev surface changed) | feature README, `docs/verify/<feature>.md`, `docs/guides/{user,developer}.md` (when surface changed), WORKLOG, PR description + `gh pr create`       |
 
 **Quality Gate resolution:** all passed → phase 6. Any 🔴 Critical / 🟡 Important → back to `react-developer` → re-run the gate. Max 2 cycles, then escalate to the user.
 

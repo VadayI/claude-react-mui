@@ -17,7 +17,7 @@ Dependencies rot whether or not you touch them — security advisories land, tra
 ## Stay current, on purpose
 
 - Keep runtime libraries within a small window of the latest stable (don't drift majors behind); schedule the migration rather than letting the gap compound.
-- MUI 9 (ADR 0025) and React 19 (ADR 0024) are the current baselines; next major migrations (Router 7 — PR D, TanStack Query / Zustand sweep — PR E) follow the same pattern. Pinned choices are revisited on a cadence and bumped when the ecosystem catches up — the decision is recorded, not forgotten.
+- MUI 9 (ADR 0025), React 19 (ADR 0024), React Router 7 (ADR 0026), and the TanStack Query 5 / Zustand 5 sweep (PR E) are the current baselines; future major migrations follow the same pattern. Pinned choices are revisited on a cadence and bumped when the ecosystem catches up — the decision is recorded, not forgotten.
 - Node engine and CI runner versions are upgraded deliberately (Node 24+ is the floor, @.claude/rules/environment.md); a bump is its own reviewed PR.
 
 ## Rules

@@ -5,8 +5,8 @@ A React SPA degrades silently — one stray dependency or an un-split route, and
 ## The budgets (defaults — tune in `.performance-budget.json`)
 
 - **Initial JS (gzipped, route `/`)** ≤ **180 KB**; total initial transfer ≤ **350 KB**. Each lazy route chunk ≤ **120 KB** gzipped.
-- **Core Web Vitals (lab, mid-tier mobile via Lighthouse CI):** LCP ≤ **2.5 s**, CLS ≤ **0.1**, INP ≤ **200 ms**, TBT ≤ **200 ms**.
-- **Lighthouse Performance score** ≥ **90** on the main screens.
+- **Core Web Vitals (lab, mid-tier mobile via Lighthouse CI):** LCP ≤ **2.5 s**, CLS ≤ **0.1**, INP ≤ **200 ms**, TBT ≤ **200 ms**. *(advisory until Lighthouse CI is wired — see Enforcement)*
+- **Lighthouse Performance score** ≥ **90** on the main screens. *(advisory until Lighthouse CI is wired — see Enforcement)*
 - A regression > **5%** on any tracked metric fails the PR — budgets ratchet down, never silently up.
 
 ## How we stay inside them

@@ -2,7 +2,7 @@
 model: sonnet
 ---
 
-Regenerate or refresh `docs/guides/user.md` and `docs/guides/developer.md` via `guide-writer`, reconciling content against live routes, npm scripts, and the backend OpenAPI schema per `@.claude/rules/user-guides.md`.
+Regenerate or refresh `docs/guides/user.md` and `docs/guides/developer.md` via `guide-writer`, reconciling content against live routes, npm scripts, and the contract repo's OpenAPI schema per `@.claude/rules/user-guides.md`.
 
 ## Log
 

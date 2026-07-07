@@ -1,6 +1,6 @@
 # 0011. Config baseline from a real setup (plugins via official plugins)
 
-Status: accepted · 2026-06-02
+Status: accepted · 2026-06-02 · amended 2026-07-07 (engineering plugin removed from baseline)
 
 ## Context
 
@@ -14,3 +14,7 @@ Committed `enabledPlugins` baseline: `superpowers@superpowers-marketplace`, `eng
 
 - Predictable, identical config across machines via git.
 - `playwright` plugin included (E2E is first-class here).
+
+## Amendment (2026-07-07)
+
+`engineering@knowledge-work-plugins` removed from the plugin baseline — it was enabled but never installed, and its generic commands overlap the local `reviewer`/`debugger` agents. See `docs/plans/0005-template-optimization.md` (PR1/A3).

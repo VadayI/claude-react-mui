@@ -18,7 +18,6 @@ The expected plugins for this project are:
 | Plugin | Purpose |
 |---|---|
 | `superpowers@superpowers-marketplace` | Core agent capabilities |
-| `engineering@knowledge-work-plugins` | Engineering workflows |
 | `playwright@claude-plugins-official` | E2e test integration |
 | `github@claude-plugins-official` | GitHub MCP (PRs, reviews) |
 | `context7@claude-plugins-official` | Up-to-date library docs |
