@@ -44,7 +44,7 @@ Check and report each item (✅ / ❌ / ⚠️):
 
 ### Scope 2 — Claude config & access
 
-8. **Required plugins** — check `.claude/settings.json` `enabledPlugins` against the baseline: `superpowers@superpowers-marketplace`, `engineering@knowledge-work-plugins`, `playwright@claude-plugins-official`, `github@claude-plugins-official`, `context7@claude-plugins-official`. Report missing plugins and paste-ready `/plugin install` commands.
+8. **Required plugins** — check `.claude/settings.json` `enabledPlugins` against the baseline: `superpowers@superpowers-marketplace`, `playwright@claude-plugins-official`, `github@claude-plugins-official`, `context7@claude-plugins-official`. Report missing plugins and paste-ready `/plugin install` commands.
 9. **GITHUB_PERSONAL_ACCESS_TOKEN** — check it is visible to the session (`[ -n "$GITHUB_PERSONAL_ACCESS_TOKEN" ]`). Never print the value.
     - Present in the session → ✅.
     - Empty in the session but a non-empty `GITHUB_PERSONAL_ACCESS_TOKEN=` line exists in `.env` → the user launched `claude` directly; have them relaunch via `make cc` / `bash scripts/claude.sh` (which sources `.env`).

@@ -16,7 +16,7 @@ the highest existing one.
 | 0001 | TDD double-loop at the UI boundary |
 | 0002 | Node-based env detection |
 | 0003 | Bootstrap command + resume mode |
-| 0005 | Drop Windows-native shell (WSL2 required) |
+| 0005 | Drop Windows-native shell (WSL2 required) (amended by 0028) |
 | 0007 | Frontend as a separate repo |
 | 0008 | Manual repo + fine-grained PAT |
 | 0009 | `/mnt` working dir supported |
@@ -35,6 +35,8 @@ the highest existing one.
 | 0024 | Upgrade React 18.3 → 19 |
 | 0025 | Upgrade Material UI 6 → 9 |
 | 0026 | Upgrade React Router 6 → 7 (+ route-level code-splitting) |
+| 0027 | Design reference: fidelity levels, live-URL inspection, and the stack-translation mandate |
+| 0028 | Support native Windows via Git Bash (amends 0005) |
 | 0029 | File-size limit 800 (supersedes 0013) |
 
 > Index added in the 2026-06-16 template audit. Keep in sync when adding an ADR.

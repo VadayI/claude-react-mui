@@ -17,7 +17,6 @@ node scripts/log-cmd.mjs /config-check "$ARGUMENTS"
 Read `.claude/settings.json` `enabledPlugins`. Compare against the required baseline:
 
 - `superpowers@superpowers-marketplace`
-- `engineering@knowledge-work-plugins`
 - `playwright@claude-plugins-official`
 - `github@claude-plugins-official`
 - `context7@claude-plugins-official`

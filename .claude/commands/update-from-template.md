@@ -5,6 +5,8 @@ argument-hint: "<template-url> [--ref <tag>]"
 
 Sync this derived project's `.claude/` configuration to a newer `claude-react-mui` template version via `template-sync`. PR-only — never pushes to `main`. Takes an optional template repo URL as `$ARGUMENTS`.
 
+The file-ownership classification (template-owned / merge-by-hand / project-owned) lives in ONE place — the `template-sync` agent definition. This command only prepares the upstream clone, dispatches the agent, and turns its result into a PR.
+
 ## Log
 
 ```bash
@@ -21,66 +23,40 @@ Must not be on `main`. If on `main`:
 git checkout -b chore/update-from-template
 ```
 
-### 2. Identify template source
+### 2. Fetch the upstream template into `$UPSTREAM`
 
-If `$ARGUMENTS` contains a GitHub URL or path, use it as the template source. Otherwise use the default: `https://github.com/VadayI/claude-react-mui` (or the value in `.claude/memory/template-origin.json` if present).
+Resolve the template source, in order: a GitHub URL/path in `$ARGUMENTS` → `.claude/memory/template-origin.json` (if present) → the default `https://github.com/VadayI/claude-react-mui`.
 
-Fetch the latest template:
+Clone it where `template-sync` expects it (`$UPSTREAM`, default `/tmp/claude-react-mui`); a `--ref <tag>` argument maps to `--branch <tag>`:
 
 ```bash
-git remote add template <template-url> 2>/dev/null || true
-git fetch template main
+UPSTREAM=/tmp/claude-react-mui
+rm -rf "$UPSTREAM"
+git clone --depth 1 [--branch <tag>] <template-url> "$UPSTREAM"
 ```
 
-### 3. Classify changed template files
+### 3. Delegate to `template-sync`
 
-Delegate to `template-sync` to diff the fetched template against this project and classify every changed file into one of three buckets:
+Dispatch the `template-sync` agent with `$UPSTREAM`. The agent owns the rest: it classifies every file by the ownership rules in its own definition, overwrites template-owned files, proposes merge-by-hand diffs additively (never wholesale), wires new gate scripts into `scripts/` + CI, runs the stale-scan, records `.claude/memory/template-sync.json`, and produces the sync report. Honor `--dry-run` if requested.
 
-**Template-owned (safe to overwrite from template):**
+### 4. Review the report and open a PR
 
-- `.claude/agents/*.md` — agent definitions.
-- `.claude/commands/*.md` — command definitions (this file's siblings).
-- `.claude/rules/*.md` — shared rules (except `output-language.md` and any project-customized rules).
-- `scripts/check_*.sh`, `scripts/detect-env.mjs`, `scripts/log-cmd.mjs` — gate and utility scripts.
+Present the agent's report to the user. For each merge-by-hand conflict the agent surfaced, ask which hunks to apply — do NOT auto-apply conflicting hunks.
 
-**Merge-by-hand (review changes, do NOT auto-overwrite):**
-
-- `CLAUDE.md` — project customizations may exist; review and cherry-pick rule additions.
-- `.claude/settings.json` — project-specific `enabledPlugins` and MCP config.
-- `.github/workflows/frontend-ci.yml` — CI may have project-specific steps.
-
-**Project-owned (never overwrite from template):**
-
-- `src/` — all application source code.
-- `docs/` — project documentation, briefs, worklog.
-- `.env`, `.env.example` — project-specific env vars.
-- `package.json` — dependencies may have been customized; review version bumps separately.
-- Any file in `docs/decisions/` — project ADRs.
-
-### 4. Apply template-owned changes
-
-For each template-owned file with a diff, apply the update:
+Then commit what the sync changed (the paths listed in the agent's report) and open the PR:
 
 ```bash
-git checkout template/main -- .claude/agents/<file>
-git checkout template/main -- .claude/commands/<file>
-# etc.
-```
-
-### 5. Present merge-by-hand diffs
-
-For each merge-by-hand file, show the diff and ask the user which hunks to apply. Do NOT auto-apply.
-
-### 6. Open a PR
-
-```bash
-git add .claude/ scripts/
-git commit -m "chore: sync .claude config from template $(date +%Y-%m-%d)"
+git add .claude/ scripts/ .github/workflows/
+git commit -m "chore: sync config from claude-react-mui template $(date +%Y-%m-%d)"
 gh pr create --title "chore: update from claude-react-mui template" \
-  --body "Syncs .claude/agents, .claude/commands, .claude/rules, and gate scripts from the upstream template. See diff for details. Merge-by-hand files (CLAUDE.md, settings.json, CI) reviewed separately." \
+  --body "Syncs template-owned config from the upstream template (see the template-sync report in this PR). Merge-by-hand files reviewed hunk-by-hunk. Stale files listed for manual cleanup — not auto-deleted." \
   --base main
 ```
 
-Report the PR URL. Summarize what was updated and what requires manual review.
+Report the PR URL, then clean up:
 
-<!-- last reviewed: 2026-06-02 -->
+```bash
+rm -rf "$UPSTREAM"
+```
+
+<!-- last reviewed: 2026-07-07 -->

@@ -22,7 +22,7 @@ Phase 5 Quality Gate (parallel). I perform the final pre-PR review across all qu
 - `@.claude/rules/code-style.md` — TypeScript strict, naming, file size (800-line limit), docstrings
 - `@.claude/rules/component-contract.md` — container/presentational split, typed props, four UI states
 - `@.claude/rules/tdd.md` — tests exist, test behavior not implementation
-- `@.claude/rules/testing.md` — AAA structure, coverage of success/400/401/403/404 states
+- `@.claude/rules/testing.md` — AAA structure, test naming and location
 - `@.claude/rules/accessibility.md` — axe tests, keyboard nav, ARIA roles
 - `@.claude/rules/design-reference.md` — block UI that diverges from the design without a recorded deviation, ports prototype implementation verbatim (inline styles / raw CSS vars / copied markup), or uses magic colour/spacing literals outside the theme; judge divergence against the fidelity level
 - `@.claude/rules/no-stubs.md` — no unlogged `// STUB:` in `src/`

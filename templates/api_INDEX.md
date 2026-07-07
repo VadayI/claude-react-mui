@@ -1,6 +1,6 @@
 # API Index — {PROJECT_NAME}
 
-> This file indexes the backend endpoints this frontend consumes. It is the **human index** only — the authoritative contract is the backend OpenAPI schema committed at `src/lib/api/openapi.yml`. If this table disagrees with that file, the schema is correct and this index is wrong.
+> This file indexes the backend endpoints this frontend consumes. It is the **human index** only — the authoritative contract is the external contract repo's OpenAPI schema (`VadayI/claude-api-contract`), vendored at `src/lib/api/openapi.yml`. If this table disagrees with that file, the schema is correct and this index is wrong.
 >
 > Update this table in the same PR as any change to the consumed endpoint surface (new query, new mutation, removed call). `docs-writer` runs the reconciliation (`routes.json <-> openapi.yml <-> this file`) before declaring a PR ready.
 

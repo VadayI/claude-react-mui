@@ -3,7 +3,7 @@
 The route/component contract and `docs/verify/<feature>.md` prove the UI is correct for a _reviewer_. They do NOT tell a **real user** or an **integrating developer** how to actually use the app. This rule mandates two living guides that grow with the project:
 
 1. **`docs/guides/user.md`** — for the **end user** of the app: what the app does, how to sign in, how to perform the main flows, where things are, and how to recover from common errors.
-2. **`docs/guides/developer.md`** — for a **developer working on or integrating with this frontend**: how to run it, environment variables, how the API contract is consumed and refreshed (`api:pull`/`api:types`), how routing/auth/state are structured, how to add a feature, and where the full contract lives (the backend OpenAPI schema / Swagger).
+2. **`docs/guides/developer.md`** — for a **developer working on or integrating with this frontend**: how to run it, environment variables, how the API contract is consumed and refreshed (`api:pull`/`api:types`), how routing/auth/state are structured, how to add a feature, and where the full contract lives (the external contract repo `VadayI/claude-api-contract`).
 
 These are **narrative onboarding documents**, not a component dump. The contract is the OpenAPI schema (@.claude/rules/api-client.md); the per-feature manual smoke test is `docs/verify/` (@.claude/rules/verification.md). The guides are the **"how do I get started"** layer above both.
 
@@ -21,7 +21,7 @@ These are **narrative onboarding documents**, not a component dump. The contract
 
 1. **Overview** — stack, that it's a frontend consuming a separate backend API.
 2. **Run it locally** — prerequisites (Node 24+), `npm ci`, `cp .env.example .env` + which `VITE_*` vars to fill (base API URL, OpenAPI URL), `npm run dev`. Copy-paste runnable; dev URL `http://localhost:5173`.
-3. **The API contract** — how the typed client/types are generated from the backend OpenAPI (`npm run api:pull`, `npm run api:types`), the drift gate, where `openapi.yml`/`schema.d.ts` live, and the link to the backend's Swagger/Redoc.
+3. **The API contract** — how the typed client/types are generated from the contract repo's OpenAPI (`npm run api:pull`, `npm run api:types`), the drift gate, where `openapi.yml`/`schema.d.ts` live, and the link to the contract repo (`VadayI/claude-api-contract`) and its Prism mock.
 4. **Architecture** — feature-sliced layout, routing/guards, server-state (Query) vs client-state (Zustand), the theme.
 5. **Add a feature** — the pipeline in one paragraph (contract → RED tests → GREEN → docs), where files go, the feature README requirement.
 6. **Where to go next** — `docs/verify/`, ADRs, the backend repo.
