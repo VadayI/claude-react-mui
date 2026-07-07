@@ -6,7 +6,7 @@ Tests prove the app is correct at build time; **observability** is how we know i
 
 - A **top-level error boundary** wraps the app shell and renders an accessible fallback (a `role="alert"` message + a retry/reload affordance), never a blank page or a raw stack trace.
 - **Route-level boundaries** isolate failures to the screen that broke (React Router `errorElement` per route / loader), so one feature crashing does not take down the whole app.
-- Async/data errors are the component's **error state** (@.claude/rules/component-contract.md), not the boundary — boundaries catch _render_ crashes; expected API errors (`ApiError`, @.claude/rules/api-error-and-pagination.md) are handled in the UI with a retry.
+- Async/data errors are the component's **error state** (@.claude/rules/component-contract.md), not the boundary — boundaries catch _render_ crashes; expected API errors (`ApiError`, @.claude/rules/api-contract.md) are handled in the UI with a retry.
 - The boundary reports the error to the logging sink (below) before showing the fallback.
 
 ## Logging & monitoring

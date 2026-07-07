@@ -20,7 +20,7 @@ Quality Gate specialist (Phase 5, parallel with `reviewer` and `security-scanner
 ## Standards
 
 - `@.claude/rules/state-management.md` — TanStack Query vs Zustand boundary, key conventions, invalidation rules
-- `@.claude/rules/api-client.md` — generated types; query functions typed against OpenAPI schema
+- `@.claude/rules/api-contract.md` — generated types; query functions typed against OpenAPI schema
 - `@.claude/rules/component-contract.md` — no direct fetch calls in presentational components
 
 ## What I do (Quality Gate review)

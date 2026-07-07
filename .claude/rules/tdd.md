@@ -23,7 +23,7 @@ This is our adaptation of Harry Percival's _Obey the Testing Goat_ double-loop t
 
 Flow per feature: **outer Playwright test RED → run the inner Vitest/RTL loop (RED→GREEN→REFACTOR) until the outer test is GREEN → refactor.** This maps onto the pipeline: `ui-architect` fixes the component/route contract → `tester` writes the failing outer Playwright test and the first failing RTL test → `react-developer` greens them via inner loops.
 
-Why MSW and not hand-rolled mocks: MSW intercepts at the network layer (`fetch`/`XHR`), so components and TanStack Query hooks run **exactly the code path they run in production** — only the HTTP response is faked. This gives the same "real boundary" parity that a real test database gives a backend, without coupling tests to implementation details of the fetch layer. The MSW handlers are derived from the external contract repo's OpenAPI schema (`VadayI/claude-api-contract`, @.claude/rules/api-client.md), so the mocked shapes cannot drift from the real API.
+Why MSW and not hand-rolled mocks: MSW intercepts at the network layer (`fetch`/`XHR`), so components and TanStack Query hooks run **exactly the code path they run in production** — only the HTTP response is faked. This gives the same "real boundary" parity that a real test database gives a backend, without coupling tests to implementation details of the fetch layer. The MSW handlers are derived from the external contract repo's OpenAPI schema (`VadayI/claude-api-contract`, @.claude/rules/api-contract.md), so the mocked shapes cannot drift from the real API.
 
 ## Test behavior, not implementation (RTL discipline)
 
@@ -73,6 +73,12 @@ Assert behavior from at least 2–3 distinct cases (different inputs → differe
 - `jest-axe` (component a11y) and `@axe-core/playwright` (E2E a11y).
 - `@playwright/test` for the outer loop.
 - Test data via small typed factories in `src/test/factories/` (no inline fixtures duplicated across tests).
+
+## Test structure & naming
+
+- AAA: Arrange / Act / Assert.
+- Names: `<subject> <condition> <expectation>` (e.g. `TodoList renders empty state when no todos`).
+- Colocate component tests next to the source (`TodoList.test.tsx`); E2E specs live in `e2e/`.
 
 ## Commands
 

@@ -19,7 +19,7 @@ Phase 5 Quality Gate (parallel). I audit the frontend for security vulnerabiliti
 
 ## Standards
 
-- `@.claude/rules/api-client.md` — auth headers sent via the API client, not hand-rolled fetch
+- `@.claude/rules/api-contract.md` — auth headers sent via the API client, not hand-rolled fetch
 - `@.claude/rules/state-management.md` — auth state must not leak into logs or non-auth Zustand slices
 - `@.claude/rules/mcp-stack.md` — no secrets committed or hard-coded
 

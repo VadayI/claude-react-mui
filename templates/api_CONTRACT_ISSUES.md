@@ -1,10 +1,10 @@
 # Contract issues & proposals (ledger)
 
 The frontend **consumes** the API contract (`VadayI/claude-api-contract`); it never invents endpoints
-(@.claude/rules/api-client.md). When the frontend finds a contract **bug**, a **schema ambiguity**, a
+(@.claude/rules/api-contract.md). When the frontend finds a contract **bug**, a **schema ambiguity**, a
 **better design**, or a **temporary gap** between the UI it needs and the pinned contract, it MUST
 record it here. This ledger is the durable bridge between "frontend found a problem" and "the contract
-was fixed officially". Governing rule: @.claude/rules/contract-deviations.md.
+was fixed officially". Governing rule: @.claude/rules/api-contract.md.
 
 ## Status lifecycle
 

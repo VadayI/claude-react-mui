@@ -12,7 +12,7 @@ The single most important state decision in a React app is **server-state vs cli
 - **Query keys are structured and centralized** per feature: `src/features/<feature>/api/keys.ts` exports a factory, e.g. `todoKeys.all`, `todoKeys.list(filters)`, `todoKeys.detail(id)`. No stringly-typed keys scattered in components.
 - **Queries and mutations are wrapped in hooks** (`useTodos`, `useCreateTodo`) in `src/features/<feature>/hooks/` — components never call `useQuery` with an inline fetcher.
 - **Mutations invalidate or update precisely** — invalidate the narrowest key that changed, or do optimistic updates with rollback on error. Document the invalidation in the hook.
-- **Error normalization** happens in the API client (@.claude/rules/api-client.md); hooks surface a typed error the UI can render.
+- **Error normalization** happens in the API client (@.claude/rules/api-contract.md); hooks surface a typed error the UI can render.
 - **Defaults** (staleTime, retry, refetchOnWindowFocus) are set once on the `QueryClient` in `src/lib/query/`, tuned per query only when needed.
 
 ## Zustand conventions

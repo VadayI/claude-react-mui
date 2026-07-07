@@ -2,7 +2,7 @@
 
 ## Contract-first, frontend-only
 
-This repo is the **frontend**. The REST API contract is authored in the external `VadayI/claude-api-contract` repository and consumed here via a typed client generated from it. Both this frontend and the `claude-django` backend are fellow consumers — neither generates the canon. See @.claude/rules/api-client.md. The UI never invents endpoints; a missing endpoint is a **contract-repo task** (`VadayI/claude-api-contract`), not a frontend fake.
+This repo is the **frontend**. The REST API contract is authored in the external `VadayI/claude-api-contract` repository and consumed here via a typed client generated from it. Both this frontend and the `claude-django` backend are fellow consumers — neither generates the canon. See @.claude/rules/api-contract.md. The UI never invents endpoints; a missing endpoint is a **contract-repo task** (`VadayI/claude-api-contract`), not a frontend fake.
 
 Order of work on a feature:
 

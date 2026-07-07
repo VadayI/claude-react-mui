@@ -5,13 +5,13 @@ description: openapi-typescript workflow — generate schema types, typed fetch 
 
 # Typed API Client (openapi-typescript)
 
-Reference: `@.claude/rules/api-client.md`
+Reference: `@.claude/rules/api-contract.md`
 
 ## Core rule: never hand-write a DTO type
 
 All request/response types are derived from the **vendored contract** `src/lib/api/openapi.yml`,
 pulled from the external contract repo `VadayI/claude-api-contract` at the pinned tag — **NOT** from
-the backend, which is a fellow consumer and generates nothing (@.claude/rules/api-client.md).
+the backend, which is a fellow consumer and generates nothing (@.claude/rules/api-contract.md).
 Hand-written DTOs drift from the contract — the generator catches renames and removals at build time.
 
 ## Workflow

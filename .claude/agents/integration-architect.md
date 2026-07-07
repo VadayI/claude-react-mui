@@ -19,7 +19,7 @@ Optional Phase 2.5 — sits between `ui-architect` and `react-developer` when th
 
 ## Standards
 
-- `@.claude/rules/api-client.md` — all backend calls through the typed API client; no direct third-party API calls from the frontend that should go via backend
+- `@.claude/rules/api-contract.md` — all backend calls through the typed API client; no direct third-party API calls from the frontend that should go via backend
 - `@.claude/rules/state-management.md` — auth state management after OAuth callback
 - `@.claude/rules/component-contract.md` — payment/auth widgets are container components
 - `@.claude/rules/design-reference.md` — style third-party / SSO / payment widgets to the central MUI theme so they match the design at the project's fidelity level; no off-theme vendor styling left raw

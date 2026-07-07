@@ -19,8 +19,7 @@ Phase 3 (RED) and phase 5 (REFACTOR-check) of the feature pipeline. I write test
 
 ## Standards
 
-- `@.claude/rules/tdd.md` — RED before GREEN; outer loop drives inner loops
-- `@.claude/rules/testing.md` — stack, structure (Arrange/Act/Assert), naming conventions
+- `@.claude/rules/tdd.md` — RED before GREEN; outer loop drives inner loops; stack, structure (Arrange/Act/Assert), naming conventions
 - `@.claude/rules/accessibility.md` — jest-axe on every rendered component; keyboard interaction paths
 - `@.claude/rules/no-stubs.md` — triangulate with 2-3 distinct cases to defeat hardcoded returns
 

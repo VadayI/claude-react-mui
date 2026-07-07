@@ -20,7 +20,7 @@ Phase 2 of the feature pipeline. I own the UI contract: the component tree, type
 ## Standards
 
 - `@.claude/rules/component-contract.md` — typed props, container vs presentational split, four UI states
-- `@.claude/rules/api-client.md` — only consume endpoints that exist in `src/lib/api/openapi.yml`
+- `@.claude/rules/api-contract.md` — only consume endpoints that exist in `src/lib/api/openapi.yml`
 - `@.claude/rules/state-management.md` — TanStack Query vs Zustand boundary, key conventions
 - `@.claude/rules/accessibility.md` — ARIA roles, keyboard nav, focus management per component
 - `@.claude/rules/verification.md` — routes recorded in `.claude/memory/routes.json`

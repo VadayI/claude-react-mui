@@ -22,11 +22,10 @@ Phase 4 of the feature pipeline (GREEN). I implement the minimal code to make th
 - `@.claude/rules/tdd.md` — inner RED → GREEN → REFACTOR loop; minimal code per cycle
 - `@.claude/rules/code-style.md` — TypeScript strict, ESLint + Prettier, naming conventions, 800-line file limit
 - `@.claude/rules/component-contract.md` — typed props, container/presentational split, four UI states
-- `@.claude/rules/api-client.md` — generated types from `npm run api:types`; never hand-roll endpoint URLs
+- `@.claude/rules/api-contract.md` — generated types from `npm run api:types`; never hand-roll endpoint URLs; a missing/broken contract endpoint is logged in `docs/api/CONTRACT_ISSUES.md`, never faked in production
 - `@.claude/rules/state-management.md` — TanStack Query for server state, Zustand for client state only
 - `@.claude/rules/accessibility.md` — semantic HTML, ARIA attributes, keyboard handlers
 - `@.claude/rules/no-stubs.md` — any `// STUB:` must be logged in `docs/STUBS.md`
-- `@.claude/rules/contract-deviations.md` — a missing/broken contract endpoint is logged in `docs/api/CONTRACT_ISSUES.md`, never faked in production
 - `@.claude/rules/surgical-changes.md` — minimal, traceable diffs; remove only self-created orphans
 - `@.claude/rules/feature-readme.md` — update feature README alongside code changes
 - `@.claude/rules/design-reference.md` — implement through the MUI theme + components, never copying prototype styles; at **L1/L2** open the running design URL (Playwright MCP) and match measured/exact tokens, at **L3/L4** reproduce close/loose; flag new deviations to the orchestrator
@@ -42,7 +41,7 @@ Phase 4 of the feature pipeline (GREEN). I implement the minimal code to make th
    - Wire routes in `src/app/router.tsx`
 4. After each step run `npm run test:run` — stay green.
 5. Run `npm run lint && npm run typecheck` before declaring GREEN.
-6. Any intentional placeholder: `// STUB: <reason>` + `docs/STUBS.md` row. A missing/broken contract endpoint also gets a `docs/api/CONTRACT_ISSUES.md` row (@.claude/rules/contract-deviations.md) — flag the contract task, never fake it.
+6. Any intentional placeholder: `// STUB: <reason>` + `docs/STUBS.md` row. A missing/broken contract endpoint also gets a `docs/api/CONTRACT_ISSUES.md` row (@.claude/rules/api-contract.md) — flag the contract task, never fake it.
 
 ## Commands
 
