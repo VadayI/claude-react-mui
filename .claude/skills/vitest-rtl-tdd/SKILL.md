@@ -5,7 +5,7 @@ description: Core TDD skill — double-loop, RTL queries, MSW handlers, four-sta
 
 # Vitest + RTL + MSW TDD
 
-References: `@.claude/rules/tdd.md`, `@.claude/rules/testing.md`
+Reference: `@.claude/rules/tdd.md`
 
 ## Double-loop
 

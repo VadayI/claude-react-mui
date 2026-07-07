@@ -5,7 +5,7 @@ description: TanStack Query 5 patterns — query-key factories, mutations, inval
 
 # TanStack Query 5
 
-References: `@.claude/rules/state-management.md`, `@.claude/rules/api-client.md`
+References: `@.claude/rules/state-management.md`, `@.claude/rules/api-contract.md`
 
 ## Core principle: server state vs client state
 

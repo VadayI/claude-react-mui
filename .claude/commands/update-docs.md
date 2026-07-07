@@ -38,7 +38,7 @@ Delegate to `docs-writer` with the change list:
 
 **`docs/api/INDEX.md`**:
 
-- Update the **consumed-endpoints** index to match `src/lib/api/schema.d.ts` / `src/lib/api/openapi.yml` (@.claude/rules/api-client.md) — the list of API endpoints the UI calls, NOT a UI route list (routes live in `.claude/memory/routes.json` + `docs/verify/`).
+- Update the **consumed-endpoints** index to match `src/lib/api/schema.d.ts` / `src/lib/api/openapi.yml` (@.claude/rules/api-contract.md) — the list of API endpoints the UI calls, NOT a UI route list (routes live in `.claude/memory/routes.json` + `docs/verify/`).
 - Each entry: HTTP method + path, the feature that consumes it, auth requirement, notes.
 - Add entries for newly consumed endpoints; remove entries no longer called.
 

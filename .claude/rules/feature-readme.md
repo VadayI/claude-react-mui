@@ -8,7 +8,7 @@ Every feature under `src/features/<feature>/` MUST have a local `README.md` desc
 2. **Routes** — the route(s) this feature registers (`path`, screen, guard/auth), if any.
 3. **Components** — the main components with one-line descriptions, marking container vs presentational.
 4. **Hooks & state** — the query/mutation hooks (and their query keys) and any Zustand store, with invalidation notes.
-5. **Consumed endpoints** — the backend endpoints this feature calls (`method path`), which trace to the OpenAPI schema (@.claude/rules/api-client.md). Detail lives in the schema; the README is the index.
+5. **Consumed endpoints** — the backend endpoints this feature calls (`method path`), which trace to the OpenAPI schema (@.claude/rules/api-contract.md). Detail lives in the schema; the README is the index.
 6. **UI states** — how loading / empty / error are handled here.
 7. **Accessibility notes** — key roles/labels/focus decisions for this feature.
 8. **Cross-feature dependencies** — which other features/shared modules it relies on, and why.

@@ -35,7 +35,7 @@ Generated from a machine-readable route registry so it always matches the real a
 }
 ```
 
-`auth` is one of `anonymous` | `authenticated` | `role:<name>`. `consumes` entries trace to the OpenAPI schema (@.claude/rules/api-client.md).
+`auth` is one of `anonymous` | `authenticated` | `role:<name>`. `consumes` entries trace to the OpenAPI schema (@.claude/rules/api-contract.md).
 
 ### Reconciliation (enforced)
 

@@ -25,7 +25,7 @@ Dependencies rot whether or not you touch them — security advisories land, tra
 - Upgrades come through automation PRs, not ad-hoc `npm update` on a feature branch.
 - The green CI gate is the merge criterion for patch/minor; majors require a human + (for frameworks) an ADR.
 - Security high/critical is expedited but still gated.
-- A breaking upgrade carries its migration + tests in the same PR; the contract/types drift gate must stay green (@.claude/rules/api-client.md).
+- A breaking upgrade carries its migration + tests in the same PR; the contract/types drift gate must stay green (@.claude/rules/api-contract.md).
 
 ## Binds these agents (rule is auto-loaded)
 

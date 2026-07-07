@@ -8,8 +8,8 @@
 
 | # | Крок (PR) | Стан | Виконавець |
 |-----|--------------------------------------------------------------|---------|------------|
-| PR1 | Блок A — протиріччя, stale-фікси, плагіни | in_progress | orchestrator + агенти |
-| PR2 | Блок B1 — злиття rules (testing→tdd, API-родина) | pending | — |
+| PR1 | Блок A — протиріччя, stale-фікси, плагіни | done | orchestrator + агенти |
+| PR2 | Блок B1 — злиття rules (testing→tdd, API-родина) | in_progress | orchestrator + агент |
 | PR3 | Блок B2 — binds→агенти, environment→on-demand, дедуп пасажів | pending | — |
 | PR4 | Блок C — агенти й команди | pending | — |
 | PR5 | Блок D — документаційний податок | pending | — |
@@ -18,6 +18,8 @@
 
 - 2026-07-07 — аудит завершено, план створено, рішення користувача зафіксовано (див. шапку).
 - 2026-07-07 — PR1: правки Блоку A застосовано в робочому дереві (18 файлів, 44+/64−; settings.json → JSON OK, NUL=0, grep-звірки чисті). A1 виконано лише в команді — `agents/template-sync.md` уже був канонічним. Понад план (та сама категорія A2): 3 згадки «backend OpenAPI» (bootstrap.md, guides.md, templates/api_INDEX.md) та amended-маркер у рядку 0005 ADR-індексу; ADR 0011 отримав Amendment-секцію. Урок: git у sandbox лишає невидаляний `.git/index.lock` — прибрати з host перед комітом. Очікує host-shell: branch → commit → push → PR.
+- 2026-07-07 — PR1 змержено в main (#66, squash d0b61c2), гілки видалено. Інцидент mount: `.git/HEAD` виявився обрізаним (`ref: refs/heads/chore`) — полагоджено `git symbolic-ref` з host; правило надалі: після git-операцій перевіряти `cat .git/HEAD`.
+- 2026-07-07 — PR2: створено `.claude/rules/api-contract.md` (98 р. — злиття api-client + openapi-conventions + api-error-and-pagination + contract-deviations); testing.md влито в tdd.md (секція Test structure & naming); переадресовано посилання у 32 файлах (+48/−49); імпорт-блок CLAUDE.md = 24 правила. `rm` на mount заборонений — 5 старих файлів видаляє host (`git rm`) перед комітом. Очікує host: branch → git rm → commit → push → PR.
 
 ## Поправки (append-only)
 

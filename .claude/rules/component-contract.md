@@ -44,11 +44,11 @@ A feature is not "done" until all four are implemented and tested.
 
 - Every screen declares its route, its guard (if any), and its four states.
 - Loading/error/empty are first-class, not afterthoughts.
-- Components depend on **view models** (mapped) not raw API DTOs (@.claude/rules/api-client.md).
+- Components depend on **view models** (mapped) not raw API DTOs (@.claude/rules/api-contract.md).
 - Accessibility attributes are part of the contract, not a later pass (@.claude/rules/accessibility.md).
 
 ## Testing (mandatory)
 
-Per component: render in each of the four states; assert by role/label; drive interaction with `user-event`; assert the mutation/callback fires with the right payload; `jest-axe` clean. Per route: allowed and denied guard paths. See @.claude/rules/testing.md.
+Per component: render in each of the four states; assert by role/label; drive interaction with `user-event`; assert the mutation/callback fires with the right payload; `jest-axe` clean. Per route: allowed and denied guard paths. See @.claude/rules/tdd.md.
 
 > **Skill:** activate the `mui-theming` skill for theme-token and MUI styling recipes.

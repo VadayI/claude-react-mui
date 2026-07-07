@@ -21,7 +21,7 @@ Phase 6 (final) of the feature pipeline. I generate all documentation artifacts,
 
 - `@.claude/rules/feature-readme.md` — per-feature README: purpose, components, routes, consumed endpoints
 - `@.claude/rules/verification.md` — `docs/verify/<feature>.md` derived from `.claude/memory/routes.json` + `src/lib/api/openapi.yml`
-- `@.claude/rules/api-client.md` — `docs/api/INDEX.md` lists every endpoint the frontend consumes
+- `@.claude/rules/api-contract.md` — `docs/api/INDEX.md` lists every endpoint the frontend consumes
 - `@.claude/rules/user-guides.md` — update `docs/guides/user.md` or `developer.md` if first-start or auth flow changed
 - `@.claude/rules/design-reference.md` — describe screens by their real routes/components and the MUI theme, never prototype files; keep `docs/PROJECT.md` § Design reference / Design deviations in sync
 - `@.claude/rules/git-operations.md` — conventional commit message, PR description template

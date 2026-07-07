@@ -1,8 +1,7 @@
 @.claude/rules/workflow.md
 @.claude/rules/tdd.md
 @.claude/rules/no-stubs.md
-@.claude/rules/api-client.md
-@.claude/rules/contract-deviations.md
+@.claude/rules/api-contract.md
 @.claude/rules/component-contract.md
 @.claude/rules/accessibility.md
 @.claude/rules/feature-readme.md
@@ -14,8 +13,6 @@
 @.claude/rules/verification.md
 @.claude/rules/user-guides.md
 @.claude/rules/auth.md
-@.claude/rules/api-error-and-pagination.md
-@.claude/rules/openapi-conventions.md
 @.claude/rules/forms-and-validation.md
 @.claude/rules/performance-budgets.md
 @.claude/rules/observability-and-errors.md
@@ -46,7 +43,7 @@ You DO:
 
 ## Iron principles of this project
 
-1. **Contract-first, consume the API — never invent it.** This is a **frontend-only** repository. The REST API contract is owned by the **external `VadayI/claude-api-contract` repository** (Variant A multi-repo model) and is the single source of truth. The contract is vendored here as `src/lib/api/openapi.yml` via `npm run api:pull` (which fetches the pinned `CONTRACT_VERSION` tag from GitHub raw). The typed API client and all request/response types are **generated** from that schema (`openapi-typescript`) and locked by two CI gates: a drift gate and a contract-sync gate. The frontend can never silently diverge from the contract. The backend (`claude-django`) is also a consumer of the contract — it does NOT generate the schema. Details — @.claude/rules/api-client.md.
+1. **Contract-first, consume the API — never invent it.** This is a **frontend-only** repository. The REST API contract is owned by the **external `VadayI/claude-api-contract` repository** (Variant A multi-repo model) and is the single source of truth. The contract is vendored here as `src/lib/api/openapi.yml` via `npm run api:pull` (which fetches the pinned `CONTRACT_VERSION` tag from GitHub raw). The typed API client and all request/response types are **generated** from that schema (`openapi-typescript`) and locked by two CI gates: a drift gate and a contract-sync gate. The frontend can never silently diverge from the contract. The backend (`claude-django`) is also a consumer of the contract — it does NOT generate the schema. Details — @.claude/rules/api-contract.md.
 2. **TDD in TypeScript, double-loop, outside-in at the UI boundary.** No production code without a failing test first. Outer loop = a Playwright E2E user journey (the real UI boundary); inner loop = Vitest + React Testing Library component/hook tests with the network mocked by MSW. Red → Green → Refactor. **Test behavior, not implementation** (query by role/label, never by class or internal state). Details — @.claude/rules/tdd.md.
 3. **Pull Requests only.** NEVER commit directly to `main`. Branch → PR → review → merge. Details — @.claude/rules/git-operations.md.
 4. **Accessibility is mandatory, not optional.** Every interactive component meets WCAG 2.1 AA: reachable by keyboard, correct ARIA roles/labels, visible focus, sufficient contrast. Enforced by `jest-axe`/`@axe-core/playwright` in the test suite and by `eslint-plugin-jsx-a11y`. Details — @.claude/rules/accessibility.md.
@@ -58,7 +55,7 @@ You DO:
 - Use the available Skills for React, MUI, TanStack Query, Vitest/RTL TDD, Playwright, a11y, performance, CI.
 - If a Skill applies — prefer it over repeating rules here.
 - The `superpowers` plugin's process skills (brainstorming, writing-plans, executing-plans, subagent-driven-development, finishing-a-development-branch) are advisory. Where they conflict with this project's rules, **the pipeline in @.claude/rules/workflow.md and the PR-only rule (@.claude/rules/git-operations.md) win** — in particular, never use finish/merge options that bypass a PR.
-- A few rules are **reference docs loaded on demand**, not auto-imported in the block above: @.claude/rules/architecture.md, @.claude/rules/mcp-stack.md, @.claude/rules/testing.md (plus @.claude/rules/git-operations.md and @.claude/rules/node-commands.md, referenced on demand). Agents `@`-reference them where relevant. For test policy, @.claude/rules/tdd.md is canonical — `testing.md` is only the quick where/how index.
+- A few rules are **reference docs loaded on demand**, not auto-imported in the block above: @.claude/rules/architecture.md, @.claude/rules/mcp-stack.md (plus @.claude/rules/git-operations.md and @.claude/rules/node-commands.md, referenced on demand). Agents `@`-reference them where relevant.
 - **Read `.claude/memory/env-detect.json` once per session** (it is rewritten by the `SessionStart` hook, which runs `scripts/session-start.sh` → `node scripts/detect-env.mjs`). Use its `platform_supported` / `shell` / `is_wsl2` / `is_git_bash` / `sandbox_supported` / `node_supported` fields to pick shell-appropriate syntax. Supported runners: Linux, macOS, WSL2, and **native Windows + Git Bash** (ADR 0028, amending 0005). Only `platform_supported: false` (e.g. Windows with no Git Bash) is a STOP — instruct the user to install Git for Windows, or use WSL2. PowerShell/cmd *alone* are not supported (the hooks/gates are bash). **Node.js 24+ is a hard requirement** (Node 20/22 floor raised, ADR 0023) — it runs the env-detection hook, the CI gate helpers, and the app itself; if `env-detect.json` is missing, the SessionStart hook failed and the user must install Node 24+.
 - **Editing files on a WSL2 `/mnt` (9p) mount — never via the `Edit`/`Write` tools.** (Scope: WSL2 `/mnt/c`/`/mnt/d` only — on native Windows NTFS and on native Linux/macOS the `Edit`/`Write` tools are safe.) On a 9p/`/mnt` mount these tools can silently truncate the file tail or write NUL bytes; committing such a file lands a 0-byte / corrupt blob on `main`. Safe loop: write via **bash heredoc → scratch in `/dev/shm` → `cp` to destination → verify**, all in **one** bash call (`cmp scratch dest`, `wc -c`, and a no-NUL check `tr -dc '\000' < dest | wc -c` → must be `0`) — scratch dirs do NOT persist between bash calls and `/tmp` can be unavailable during workspace boot. Never trust the write call's return value; read authoritative content via `git show HEAD:<path>` (a working-tree read can be a stale 9p inode cache). Run `git commit`/`push` and final byte-verification from the **host shell**, never the sandbox (9p can corrupt the `.git` index / `multi-pack-index`).
 

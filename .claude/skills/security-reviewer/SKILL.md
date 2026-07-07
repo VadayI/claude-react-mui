@@ -5,7 +5,7 @@ description: Frontend security checklist — XSS, auth token storage, CSRF, CSP,
 
 # Frontend Security Review
 
-References: `@.claude/rules/auth.md`, `@.claude/rules/api-client.md`, `@.claude/rules/mcp-stack.md`
+References: `@.claude/rules/auth.md`, `@.claude/rules/api-contract.md`, `@.claude/rules/mcp-stack.md`
 
 ## XSS prevention
 

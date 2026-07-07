@@ -171,7 +171,7 @@ Defined in `.claude/commands/`.
 .claude/
 ├── agents/        # specialized subagents (ba, ui-architect, react-developer, tester, ...)
 ├── commands/      # slash commands (/doctor, /bootstrap, /verify, ...)
-├── rules/         # auto-loaded conventions (tdd, api-client, accessibility, workflow, ...)
+├── rules/         # auto-loaded conventions (tdd, api-contract, accessibility, workflow, ...)
 ├── skills/        # reusable knowledge modules (react, mui, vitest-rtl-tdd, ...)
 ├── memory/        # session-local state (env-detect.json, routes.json, command-log) — gitignored where noted
 └── settings.json  # permissions, plugins, hooks

@@ -1,6 +1,6 @@
 # Forms & validation (schema-first, accessible, enforced)
 
-Forms are where most UX and accessibility bugs live, and where the frontend meets the backend's validation contract. This project keeps validation in **one schema per form**, renders errors **accessibly and associated to their field**, and maps the backend's **400 field errors** back onto the right inputs — never a toast, never scattered `onChange` checks. This is the companion to @.claude/rules/component-contract.md (the _Forms & validation_ clause) and @.claude/rules/api-error-and-pagination.md (where field errors come from).
+Forms are where most UX and accessibility bugs live, and where the frontend meets the backend's validation contract. This project keeps validation in **one schema per form**, renders errors **accessibly and associated to their field**, and maps the backend's **400 field errors** back onto the right inputs — never a toast, never scattered `onChange` checks. This is the companion to @.claude/rules/component-contract.md (the _Forms & validation_ clause) and @.claude/rules/api-contract.md (where field errors come from).
 
 ## The stack — react-hook-form + Zod
 
@@ -17,7 +17,7 @@ Forms are where most UX and accessibility bugs live, and where the frontend meet
 
 ## Server (400) errors map onto fields
 
-- A backend **400** carries `fieldErrors` (normalized once by the API client into `ApiError`, @.claude/rules/api-error-and-pagination.md). The submit handler routes each field error to RHF via `setError(field, …)`, and any non-field error to a form-level `role="alert"` region. **Field errors are never shown as a toast** and never swallowed.
+- A backend **400** carries `fieldErrors` (normalized once by the API client into `ApiError`, @.claude/rules/api-contract.md). The submit handler routes each field error to RHF via `setError(field, …)`, and any non-field error to a form-level `role="alert"` region. **Field errors are never shown as a toast** and never swallowed.
 - Field-name mapping (DRF snake_case ↔ form camelCase) lives in the feature's mapper next to the form, not inline in the component.
 
 ## Rules
@@ -26,7 +26,7 @@ Forms are where most UX and accessibility bugs live, and where the frontend meet
 - Validation lives in the schema, not in `onChange`/`onBlur` handlers.
 - Errors are visible **and** associated (`aria-describedby` + `aria-invalid`); required state is not color-only.
 - Server 400s map back to fields via `setError`; non-field errors go to an announced form-level region.
-- Components depend on view models and the typed client — a form never calls `fetch` directly (@.claude/rules/api-client.md, @.claude/rules/state-management.md).
+- Components depend on view models and the typed client — a form never calls `fetch` directly (@.claude/rules/api-contract.md, @.claude/rules/state-management.md).
 
 ## Testing (mandatory)
 

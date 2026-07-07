@@ -19,7 +19,7 @@ Post-deploy quality assurance on staging. I run cross-browser E2E and visual-reg
 
 ## Standards
 
-- `@.claude/rules/testing.md` — Playwright conventions; test behavior not implementation
+- `@.claude/rules/tdd.md` — Playwright conventions; test behavior not implementation
 - `@.claude/rules/accessibility.md` — @axe-core/playwright on key pages
 - `@.claude/rules/design-reference.md` — visual regression runs against the **built MUI app** (the design is the intent, the app is the artifact); compare to the design at its fidelity level, never to the prototype's raw implementation
 

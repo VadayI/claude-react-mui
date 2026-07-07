@@ -5,7 +5,7 @@ The route/component contract and `docs/verify/<feature>.md` prove the UI is corr
 1. **`docs/guides/user.md`** — for the **end user** of the app: what the app does, how to sign in, how to perform the main flows, where things are, and how to recover from common errors.
 2. **`docs/guides/developer.md`** — for a **developer working on or integrating with this frontend**: how to run it, environment variables, how the API contract is consumed and refreshed (`api:pull`/`api:types`), how routing/auth/state are structured, how to add a feature, and where the full contract lives (the external contract repo `VadayI/claude-api-contract`).
 
-These are **narrative onboarding documents**, not a component dump. The contract is the OpenAPI schema (@.claude/rules/api-client.md); the per-feature manual smoke test is `docs/verify/` (@.claude/rules/verification.md). The guides are the **"how do I get started"** layer above both.
+These are **narrative onboarding documents**, not a component dump. The contract is the OpenAPI schema (@.claude/rules/api-contract.md); the per-feature manual smoke test is `docs/verify/` (@.claude/rules/verification.md). The guides are the **"how do I get started"** layer above both.
 
 ## Required sections
 
