@@ -62,7 +62,8 @@ def prepare(root: Path, runtime: str, role: str, task: str, delivery: str) -> tu
 def main() -> int:
     """Preview or execute a fresh CLI role and record bounded session metadata.
 
-    Args: CLI runtime, role, --task-file, optional --delivery/--dry-run.
+    Args: CLI runtime, role, --task-file, optional --delivery/--dry-run;
+        complete role-pack delivery is the default selected by ADR 0001.
     Returns: Runtime exit code; invalid configuration/missing executable returns 2.
     Side effects: Reads a non-secret task file; execution invokes the selected CLI
         and writes raw output plus metadata under gitignored .ai-runtime/sessions.
@@ -74,7 +75,7 @@ def main() -> int:
     parser.add_argument("runtime", choices=("claude", "codex"))
     parser.add_argument("role")
     parser.add_argument("--task-file", required=True)
-    parser.add_argument("--delivery", choices=("file-list", "role-pack"), default="file-list")
+    parser.add_argument("--delivery", choices=("file-list", "role-pack"), default="role-pack")
     parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
     if sys.version_info < (3, 13):

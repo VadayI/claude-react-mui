@@ -34,6 +34,6 @@ Use bounded reads and verify file endings; do not treat truncated output as read
 - `docs/ai/rules/upgrade-policy.md`
 - `docs/ai/rules/user-guides.md`
 - `docs/ai/rules/verification.md`
-Alternatively read the complete generated role pack and verify its END marker.
+Read the full generated role pack by default; verify its END marker. The explicit source list remains a fallback.
 Pack: docs/ai/generated/role-packs/tester.md
 Report revision, exact file paths/lines, changed files, checks and limitations.

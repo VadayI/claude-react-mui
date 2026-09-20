@@ -1,0 +1,234 @@
+{
+  "files": {
+    ".agents/skills/doctor/SKILL.md": {
+      "ownership": "template",
+      "sha256": "e900a83dc20b53e49a0422f775a58ef8a11fd129032c3da50ccd6f455ca5557b"
+    },
+    ".agents/skills/verify/SKILL.md": {
+      "ownership": "template",
+      "sha256": "3f7071cc22c155a373922a879e9ed62c59c8d84f952936ccca8b8d5b1ac269e6"
+    },
+    ".agents/skills/wrap-up/SKILL.md": {
+      "ownership": "template",
+      "sha256": "e0f907d525aa679830ec19ac66d0b3a048b9d46945e8155b20058fa1986b7763"
+    },
+    ".claude/agents/react-developer.md": {
+      "ownership": "template",
+      "sha256": "44f061b0e94d0c840086fffb239687ab9395b469c2b92ae601be9d10a734805a"
+    },
+    ".claude/agents/reviewer.md": {
+      "ownership": "template",
+      "sha256": "e3ea5f0d964566a60cf4c5ca8a703600988a216103adb4ab29b104344086e8a2"
+    },
+    ".claude/agents/tester.md": {
+      "ownership": "template",
+      "sha256": "fbd917d80bafa0f51d3b8b19f2f4666de7c5526f96191bfb73c381a351b38cf7"
+    },
+    ".claude/agents/ui-architect.md": {
+      "ownership": "template",
+      "sha256": "1e29b16aa20ceea76e1b8b936ba8224e35a0b3a76730e12ce35cf1fdad8cec8e"
+    },
+    ".claude/commands/doctor.md": {
+      "ownership": "template",
+      "sha256": "6b88cf93431d749deec3de086a828e498a8c764b1443a0391c81a185989a864c"
+    },
+    ".claude/commands/verify.md": {
+      "ownership": "template",
+      "sha256": "b53b23a8aa029b638bbd7aabffb3729f7a2e4c4ed4d9a8b6f435cee2dd63c235"
+    },
+    ".claude/commands/wrap-up.md": {
+      "ownership": "template",
+      "sha256": "be9a3f3b40ed3a7bd73c8eebd449999c00ced0e8ba462384e395b5c58bfb32f5"
+    },
+    ".claude/rules/accessibility.md": {
+      "ownership": "template",
+      "sha256": "108dd7c5d125c98fc79102d8f5a24fa34a57adbc47b7331e3b818e065c651618"
+    },
+    ".claude/rules/api-contract.md": {
+      "ownership": "template",
+      "sha256": "0e794c4634a1f4eeefeecd19aa488bfe149c3854449ee3e35b42e8072085a233"
+    },
+    ".claude/rules/architecture.md": {
+      "ownership": "template",
+      "sha256": "b3d7ca1a8d24ebb7cb69d1ba660b341493c3b287f504b8d966f8ff74544bf7e9"
+    },
+    ".claude/rules/auth.md": {
+      "ownership": "template",
+      "sha256": "2c377541d94a6149cf243b36570fbef2b31df655415c76632099006997c5e351"
+    },
+    ".claude/rules/code-style.md": {
+      "ownership": "template",
+      "sha256": "a5e711ae5af4990ba15b063227036e770379450086dd3f412b03d9c7ef2a3502"
+    },
+    ".claude/rules/component-contract.md": {
+      "ownership": "template",
+      "sha256": "8a1a58c4319418c9db334922e7ec6ed9776e780d039b1f813e4539651b011b33"
+    },
+    ".claude/rules/dependencies-and-supply-chain.md": {
+      "ownership": "template",
+      "sha256": "8b302fa86b4a556c3eb0fa76d0213fa2809717c616628844207dac55046b2a95"
+    },
+    ".claude/rules/design-reference.md": {
+      "ownership": "template",
+      "sha256": "a785ed6e73daa7b2c7ee9af82ee506947c35ca2a706a0244692f905d60ec7560"
+    },
+    ".claude/rules/environment.md": {
+      "ownership": "template",
+      "sha256": "c0e8020b10ceedbae0b6bc759af00e2e58b860ba0316e57c452e30ff6e43f938"
+    },
+    ".claude/rules/feature-readme.md": {
+      "ownership": "template",
+      "sha256": "da64abdf4465ff4bfe0eee4c2fe71dfc4b58d18ff9e9dbbae0769e077149a7aa"
+    },
+    ".claude/rules/forms-and-validation.md": {
+      "ownership": "template",
+      "sha256": "14a88ce7cb7c8f16ad2f1f5c6d904cb6ef0cad96b516572a6a1d9708261c9b05"
+    },
+    ".claude/rules/git-operations.md": {
+      "ownership": "template",
+      "sha256": "3dfca8833bc206dcfce5a5e0e0e701209a9e84319184e18301775894b68b1f33"
+    },
+    ".claude/rules/i18n-and-formatting.md": {
+      "ownership": "template",
+      "sha256": "35ab8914770a54e680559148e039603674f5d285cf3b6dbd332bdd3f580ea8b9"
+    },
+    ".claude/rules/living-plan.md": {
+      "ownership": "template",
+      "sha256": "9719458a0ac30d8c9c4a255dafa0d73eb8ef1a54a7954728aff5f30784e6d731"
+    },
+    ".claude/rules/mcp-stack.md": {
+      "ownership": "template",
+      "sha256": "63eea8eff98549818ea9a53d7cda43f6051443cb7952b9714ecee3a0e7b34e4b"
+    },
+    ".claude/rules/no-stubs.md": {
+      "ownership": "template",
+      "sha256": "09822b6b9ac8e168bce5a6df7b31530823cc315e05cb119789536c3208b632f5"
+    },
+    ".claude/rules/node-commands.md": {
+      "ownership": "template",
+      "sha256": "e4cfef1c759a6bc265959c710487d7a2f07b03408be2f40f164d02c38fcb8ec4"
+    },
+    ".claude/rules/observability-and-errors.md": {
+      "ownership": "template",
+      "sha256": "a5e31565c1091d2c056a34341fd8b8460276bc71428322be8b91a764dbb9a3b4"
+    },
+    ".claude/rules/performance-budgets.md": {
+      "ownership": "template",
+      "sha256": "d5a8d177b65f650ab99556067f256bd9b47114b747918de0b7e6b094295ed9e7"
+    },
+    ".claude/rules/preflight.md": {
+      "ownership": "template",
+      "sha256": "8306f5f779020f001acbeb567f4a5d26083cb6811ff5d57cb6ec206e0ce0f7d5"
+    },
+    ".claude/rules/routing-and-data-loading.md": {
+      "ownership": "template",
+      "sha256": "11c29cdb47cba11905b5e85f532d1a82ede45e8dbd731baa7784ab76324b318f"
+    },
+    ".claude/rules/state-management.md": {
+      "ownership": "template",
+      "sha256": "fa37dd19657a46e8a1dbff4254dca91b9dff2499cfb69550a97c9366c1474525"
+    },
+    ".claude/rules/surgical-changes.md": {
+      "ownership": "template",
+      "sha256": "6e3ecade381bd1c10541a62260d5ef0ea10ecbe18bac5cce0edd6722e1d32d80"
+    },
+    ".claude/rules/tdd.md": {
+      "ownership": "template",
+      "sha256": "79bf09b627d8e8fbdec5c95716905a1b017854f1576f87de601adbaf78f3073c"
+    },
+    ".claude/rules/upgrade-policy.md": {
+      "ownership": "template",
+      "sha256": "97924fbbe00760c4c7536a1468dde8e4bb1a217712b29d4f2d795fa2d885df77"
+    },
+    ".claude/rules/user-guides.md": {
+      "ownership": "template",
+      "sha256": "c7e55aff8f6bc4e01ea66e514b42b37a5c40360d6775f53004eaf4844b5b4df1"
+    },
+    ".claude/rules/verification.md": {
+      "ownership": "template",
+      "sha256": "bce1e91c6b8c7592a5216b2868f332a50002371925adf8fc7b3f08473ad067f8"
+    },
+    ".claude/rules/workflow.md": {
+      "ownership": "template",
+      "sha256": "f07d9ea0ae800bf3f7317dcfe5a48079b758404e113807e533eabaa9e9e8f688"
+    },
+    ".codex/agents/react-developer.toml": {
+      "ownership": "template",
+      "sha256": "bd38a9168cce1c17b6d60b00fed279a875c59b83b63f17f8753b5c3ac1f29f3f"
+    },
+    ".codex/agents/reviewer.toml": {
+      "ownership": "template",
+      "sha256": "79a20dff30c780abd6b5f9b1dca6848f2361fcc7cbabec4452a62bf173406e82"
+    },
+    ".codex/agents/tester.toml": {
+      "ownership": "template",
+      "sha256": "5096190decbe8b4a687d01790f82792a05e51b66d3e154399e4fb88d569cbff9"
+    },
+    ".codex/agents/ui-architect.toml": {
+      "ownership": "template",
+      "sha256": "2930f830e3d84f2be36887c981626d14dba18b29b5dd5dce91e5bbaae4b602bf"
+    },
+    "CLAUDE.md": {
+      "ownership": "mixed",
+      "sha256": "fea1bb7d24fd01ae28593a9675a3ae923021acd951ccbd6cf103e390bc3c348c"
+    },
+    "docs/ai/generated/role-packs/react-developer.md": {
+      "ownership": "template",
+      "sha256": "53ad4ac0a14aa657ac7f8e930ff152bc5d18771074cb0b1e5afa67350c58993d"
+    },
+    "docs/ai/generated/role-packs/reviewer.md": {
+      "ownership": "template",
+      "sha256": "7723f912920bebc33eff84448e13e0c94ba875c3ec466fa311c6302e9e7e8a59"
+    },
+    "docs/ai/generated/role-packs/tester.md": {
+      "ownership": "template",
+      "sha256": "a983ae5c804edf7b06749c1c91568aa5ac4ed267bf65d1efc5cfa93e018f8ebb"
+    },
+    "docs/ai/generated/role-packs/ui-architect.md": {
+      "ownership": "template",
+      "sha256": "5b86a8a1860d13208b36764e1b3abc1e15d31844e56d77fc17414adbc446bc09"
+    }
+  },
+  "generator": "family-core",
+  "schema_version": 1,
+  "sources": {
+    "AGENTS.md": "da3869154fa94086fdd1afdf6492aabf7db5a368fe1733f6b2e483edb4be49c9",
+    "docs/ai/catalog.json": "e20b440977db4f870494493a9cbe32481fafae4e9d2e70d8328f3b74ffcabef3",
+    "docs/ai/roles/react-developer.md": "ecc1c9e114cdeb272fc070aaa36f29b3c0dd649a9eb811c4d23cf9f07d7114a8",
+    "docs/ai/roles/reviewer.md": "246dc11d06d17d7c705ff986071bdbedea92d4a9e75efc987d3d8fc28e65a25a",
+    "docs/ai/roles/tester.md": "884d756c8044b39d52af2f7632a959d9e00aaf74add348c326852a230f753892",
+    "docs/ai/roles/ui-architect.md": "4cffc6b6fe8a523fd8a3cba9e72d9297ab07741db708d3efe193269df47584b5",
+    "docs/ai/rules/accessibility.md": "dd266eb6d14e6cb4af22a1c7f7c88aeb484b1e551dd6cc89930df9efd55c713a",
+    "docs/ai/rules/api-contract.md": "fb2f660ba6692565eaa818e43b1e4a29f84013518f898cecae2ce72815df2b18",
+    "docs/ai/rules/architecture.md": "c3844652f12857304c65c2c8cb9b3057e42d608489b02edce7aa8021caa74e9d",
+    "docs/ai/rules/auth.md": "177cb461d0d5261d248090bece84f2f621f43d193bcce86260e8e5949b336a21",
+    "docs/ai/rules/code-style.md": "0ce554099477ed96b7cf16501ab007dc106c2aba59c640208cbbe3e8f10cb09a",
+    "docs/ai/rules/component-contract.md": "2cc84affee32b53ff188de0ea384b84778ff96e6e74cdd5ba101847e5d6b7a65",
+    "docs/ai/rules/dependencies-and-supply-chain.md": "44057f813c35d7147e466fc56f9b52381026a782a74a6a109200546120390f5b",
+    "docs/ai/rules/design-reference.md": "cb14305c945a1893b7e1d32c5b6c4eeb16c3566c93dcfa8f1e9d171d573001c9",
+    "docs/ai/rules/environment.md": "a94308221d3aacab18ff9a0e1923aed6b77cd477acc2abf0c6a8e8a468fecbbe",
+    "docs/ai/rules/feature-readme.md": "33db4989f362f27894471302d5fd8689bf7ba8dad6bbc51d27a3fe52487cb2af",
+    "docs/ai/rules/forms-and-validation.md": "5d82c3c9847f3840e5897969babe7d9f51dc8b364669c98dae8942090938fb7d",
+    "docs/ai/rules/git-operations.md": "211d2f63e1bc7b8c2696bd68c52fb7d335c66c3e2b6a2e08cee9905eacb39192",
+    "docs/ai/rules/i18n-and-formatting.md": "25d70fc85ac2931f86995dac437eedd2544c4f13c627c52a48803a9a41b0ecf1",
+    "docs/ai/rules/living-plan.md": "c3bb6e864b420e13cf3efcf5d005838711dea246cd6112b080476931e5a3a4ac",
+    "docs/ai/rules/mcp-stack.md": "dae2d781bfa8b8396d246f66df63a3b2a59b93eb5d0014767ffdbb1e42c3af2a",
+    "docs/ai/rules/no-stubs.md": "3341cb09601dbeb83e8534055aabf38b2d6547d2cbc03caeff90a6acb56d4d9d",
+    "docs/ai/rules/node-commands.md": "cb7f9155bd4144c414b0c5df2a47e2410fe5bebaccc5be9608c4ddeae62c24b6",
+    "docs/ai/rules/observability-and-errors.md": "e6049a3006f569fc525a4e593cd8755d8e57b6d04f2aa041346a1d9251b84e0d",
+    "docs/ai/rules/performance-budgets.md": "30236a6d55fcfb4020ab2f4291e2f8bbfadc758ceff0ae931c396b63069ae5e1",
+    "docs/ai/rules/preflight.md": "d6edca439cc631e0c2be17926bf613202c07706428af97c247822e9c4a9a23d5",
+    "docs/ai/rules/routing-and-data-loading.md": "131bf0b5c28fd135107b4493e1637d457a441d502c297ed46c37cbea2766efed",
+    "docs/ai/rules/state-management.md": "d31d463e0edaf499a470a37e18d648b3b481edc38e1daa6a3f9ddb2aa07878ee",
+    "docs/ai/rules/surgical-changes.md": "e372b7a9d4725249505803bfe3f454a34fd87f5b3dd213ca96646b1a570b8550",
+    "docs/ai/rules/tdd.md": "9b471f08a7c02628112ff2ac88f70c738212dae809bc04d11e38fbec32c96e9b",
+    "docs/ai/rules/upgrade-policy.md": "fb36c7f01f6b7858b16551825a6c16d41da4c1d78fecf92b7178212a11f83ead",
+    "docs/ai/rules/user-guides.md": "594824c8516c77b1a94f46fa7bfac225405e24e9c8f892bc28e91e3d54a6fc6f",
+    "docs/ai/rules/verification.md": "76bced84e7df5688906dc339db264e1bc6afc409484b436affdd063d4094a0f5",
+    "docs/ai/rules/workflow.md": "6d632cc86edc678b42469d6a215a1b94e23c8406e5138c21cc17bc9b023ba0df",
+    "docs/ai/workflows/doctor.md": "14d6faef3ac769fb8c2e743159b3689726fc19646841942dd9cded2f02385477",
+    "docs/ai/workflows/orchestrate.md": "c2e2a5fbd02366885eac402254deaf456788bd5e78a1d70c265a27650ea4230c",
+    "docs/ai/workflows/verify.md": "682aa5e3f5abc30fc55f38529e75970d2162397cd8fe3e693b5bd9d82a7af39b",
+    "docs/ai/workflows/wrap-up.md": "995c5d116e9e18560978d36d0fdd0a7bf8bc657a67889f669dcf1280fe5b89fa"
+  }
+}

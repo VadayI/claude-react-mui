@@ -2,6 +2,7 @@
 
 Do not edit; generated from full canonical sources.
 
+<!-- SOURCE docs/ai/roles/tester.md SHA256 884d756c8044b39d52af2f7632a959d9e00aaf74add348c326852a230f753892 -->
 # Tester (tester)
 
 Phase 3 (RED) and phase 5 (REFACTOR-check) of the feature pipeline. I write tests first — before implementation exists. I own the outer Playwright loop and the inner Vitest+RTL loop. Tests must describe behavior, never implementation details.
@@ -55,6 +56,7 @@ Report exact revision, files/lines, changed files, command exit codes, limitatio
 and next actions. Respect secrets/path permissions even for reported files.
 Do not change models, install plugins, publish or merge implicitly.
 
+<!-- END SOURCE docs/ai/roles/tester.md -->
 
 <!-- SOURCE docs/ai/rules/accessibility.md SHA256 dd266eb6d14e6cb4af22a1c7f7c88aeb484b1e551dd6cc89930df9efd55c713a -->
 

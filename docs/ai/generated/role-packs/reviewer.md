@@ -2,6 +2,7 @@
 
 Do not edit; generated from full canonical sources.
 
+<!-- SOURCE docs/ai/roles/reviewer.md SHA256 246dc11d06d17d7c705ff986071bdbedea92d4a9e75efc987d3d8fc28e65a25a -->
 # Reviewer (reviewer)
 
 Phase 5 Quality Gate (parallel). I perform the final pre-PR review across all quality dimensions. I block PRs with unresolved 🔴 Critical issues; 🟡 Important issues must be fixed or explicitly deferred with a logged reason.
@@ -65,6 +66,7 @@ Do not change models, install plugins, publish or merge implicitly.
 
 Read-only role: do not edit source, notes, plans, or config; return findings only.
 
+<!-- END SOURCE docs/ai/roles/reviewer.md -->
 
 <!-- SOURCE docs/ai/rules/accessibility.md SHA256 dd266eb6d14e6cb4af22a1c7f7c88aeb484b1e551dd6cc89930df9efd55c713a -->
 
