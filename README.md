@@ -215,3 +215,16 @@ Start a new frontend by using this repo as a GitHub template (or `/bootstrap` in
 ## Architecture decisions
 
 See `docs/decisions/` (ADRs 0001–0029): the frontend double-loop TDD boundary, Node-based env detection, the bootstrap/resume command, bash-only shell (native Windows via Git Bash — ADR 0028), frontend-as-separate-repo, manual repo + fine-grained PAT, `/mnt` working-dir support, the config baseline, the 800-line file-size limit, template sync, the React + MUI + TanStack Query + Zustand stack, mandatory accessibility, the server-vs-client state split, the default Bearer/JWT auth mode, the dependency upgrade policy, the external contract repo model (Variant A), and the v0.2.0 contract pin with the auth-path rename.
+
+## Portable seed and translations
+
+Clean `npm ci` now works on native Windows as well as Linux. Use Node 24 (verified
+24.21.0); Node 26 is an additional baseline check. Do not add a platform-specific
+Rollup binary to package.json. Existing `.npmrc` peer policy remains unchanged.
+
+The seed includes i18next/react-i18next with English/Ukrainian resources. See
+[ADR 0029](docs/decisions/0029-portable-i18n-baseline.md) for dependency rationale
+and the user-approved 200 KiB initial-JS budget. Other bundle budgets remain.
+New bootstrap projects receive the same resources from `templates/i18n` via
+`python scripts/seed-i18n.py --target .` (Python 3.13+ tooling prerequisite).
+`--check` verifies mirrors; existing project translations are never overwritten.

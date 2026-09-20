@@ -1,0 +1,14 @@
+{
+  "title": "Articles",
+  "titleLabel": "Article title",
+  "bodyLabel": "Article body",
+  "add": "Add Article",
+  "empty": "No articles yet. Add one above!",
+  "listLabel": "articles list",
+  "loading": "Loading articles",
+  "loadError": "Failed to load articles.",
+  "createError": "Failed to create article.",
+  "status": { "draft": "draft", "published": "published", "archived": "archived" },
+  "count_one": "{{count}} article",
+  "count_other": "{{count}} articles"
+}

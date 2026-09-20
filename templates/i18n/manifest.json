@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "ownership": "project-owned-after-install",
+  "files": {
+    "src/lib/i18n.ts": "e8721dd4f5a1c7f6bc007bbdfc819b31b710ef7ab16228f8c1344a50e936fb2c",
+    "src/locales/en/articles.json": "dc2aae210893faeeb7f12e0182c86626cd0d24ca00ce0f7085ab27a09efcd264",
+    "src/locales/en/auth.json": "322c73aac794014e7645790e36f67d8e242d1ad858a19246d3ddc7fc987fe961",
+    "src/locales/en/common.json": "a094bdcd7ad7029ea36c93f4cc85892ea27fe4a90d7d6a2de314f14592946078",
+    "src/locales/uk/articles.json": "20cc63ba6aa3409af011526c1c5393b2998aba0414a4ef99a8e3bf3939579008",
+    "src/locales/uk/auth.json": "340e525655cdb12eb12dd113927501ff852c09980ae8a381fcd76ae88a21cb74",
+    "src/locales/uk/common.json": "c2c57f0b85e6e99ea172043a1f2851bfd6496175a09b9c4bf66ed75bf9dd091e"
+  }
+}

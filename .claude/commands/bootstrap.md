@@ -78,7 +78,7 @@ Record the answer as `CONTRACT_SOURCE` (A / B / C) for use in Steps 1 and 9.
 
 Author the project config inline (these files are **not** in `templates/` — generate them for the pinned stack):
 
-- `package.json` with all deps: React 19, Vite 8, MUI 9, React Router 7 (data router), TanStack Query 5, Zustand 5, Vitest+RTL+MSW, jest-axe, Playwright, openapi-typescript, openapi-fetch, react-hook-form, zod, ESLint+Prettier, TypeScript.
+- `package.json` with all deps: React 19, Vite 8, MUI 9, React Router 7 (data router), TanStack Query 5, Zustand 5, Vitest+RTL+MSW, jest-axe, Playwright, openapi-typescript, openapi-fetch, react-hook-form, zod, i18next 26.4.2, react-i18next 17.0.14, ESLint+Prettier, TypeScript.
 - `vite.config.ts`, `tsconfig.json`, `tsconfig.node.json`, `index.html`.
 - `.env.example` — configured per `CONTRACT_SOURCE` from Step 0:
   - **Variant A:** `VITE_API_BASE_URL=http://localhost:4010`, `CONTRACT_REPO=<user value or {TODO}>`, `CONTRACT_VERSION=<user tag or {TODO}>`, `VITE_MSW_ENABLED=false`
@@ -121,6 +121,18 @@ src/
     server.ts         # MSW node server (Vitest)
     setup.ts          # test setup
 ```
+
+### Step 2b: Install the tested translation seed
+
+Require Python 3.13+ for template tooling. Run `python scripts/seed-i18n.py --target .`
+to deliver manifest-verified `src/lib/i18n.ts` and English/Ukrainian namespaces.
+A differing project file is a conflict: retain it and prepare a reviewed adaptation,
+never overwrite. See `templates/i18n/README.md`. Add i18next 26.4.2 and
+react-i18next 17.0.14 to package.json and regenerate the lock with npm.
+Wrap the app in I18nextProvider and initialize i18n in test setup. Feature strings,
+client validation and accessible labels belong in resources; test two locales with axe.
+Copy `templates/.performance-budget.json` for new projects (initial JS 200 KiB,
+explicit user decision 2026-09-20); preserve existing projects' budgets on update.
 
 ### Step 3: Write the example feature RED→GREEN
 

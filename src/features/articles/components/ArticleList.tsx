@@ -5,6 +5,7 @@
  * Handles the EMPTY state (no items) inline with a helpful message.
  * Easy to unit-test because it has no data-fetching or global-state dependencies.
  */
+import { useTranslation } from 'react-i18next'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemText from '@mui/material/ListItemText'
@@ -23,7 +24,9 @@ interface ArticleListProps {
  *
  * When `items` is empty, shows a friendly empty-state message.
  */
+/** Renders translated empty/list/status labels for items; no I/O or mutations. Article content remains server-provided text. */
 export function ArticleList({ items }: ArticleListProps) {
+  const { t } = useTranslation('articles')
   if (items.length === 0) {
     return (
       <Typography
@@ -31,13 +34,13 @@ export function ArticleList({ items }: ArticleListProps) {
         sx={{ color: 'text.secondary', py: 4, textAlign: 'center' }}
         data-testid="article-empty-message"
       >
-        No articles yet. Add one above!
+        {t('empty')}
       </Typography>
     )
   }
 
   return (
-    <List aria-label="articles list">
+    <List aria-label={t('listLabel')}>
       {items.map((article) => (
         <ListItem key={article.id} divider alignItems="flex-start">
           <ListItemText
@@ -59,7 +62,12 @@ export function ArticleList({ items }: ArticleListProps) {
                 >
                   {article.body}
                 </Typography>
-                <Chip label={article.status} size="small" variant="outlined" sx={{ mt: 0.5 }} />
+                <Chip
+                  label={t(`status.${article.status}`)}
+                  size="small"
+                  variant="outlined"
+                  sx={{ mt: 0.5 }}
+                />
               </Box>
             }
           />

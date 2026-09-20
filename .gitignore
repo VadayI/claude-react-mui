@@ -43,3 +43,7 @@ test-results/
 
 # TypeScript incremental build info (side effect of `tsc -b`)
 *.tsbuildinfo
+
+# Python template tooling
+__pycache__/
+*.py[cod]

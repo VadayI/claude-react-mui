@@ -1032,3 +1032,13 @@ Cross-machine work history. Updated at the end of every session (`/wrap-up`) and
   - Верифіковано: матриця `detect-env` (8 сценаріїв) PASS; усі правки через heredoc (Edit/Write обрізають на 9p).
 - Знахідка (задокументовано, follow-up): `npm ci` на нативному Windows падає `EBADPLATFORM` — lockfile містить лише `@rollup/rollup-linux-x64-gnu`; + `eslint@10` vs `jsx-a11y` peer-конфлікт (тому `--legacy-peer-deps`). Повний крос-платформний lockfile = окремий PR.
 - 9p-урок (підтверджено вживу): git із WSL2-на-`/mnt` падав на `.git/index.lock` (EPERM на unlink); усі коміти робились із нативного Windows (NTFS) — що й ілюструє цінність зміни.
+
+## 2026-09-20 — P01 portable/i18n preparation
+
+Removed the direct Linux-only Rollup dependency in a separate commit. Added
+English/Ukrainian i18next resources, translated seed UI/client validation, 15
+behavioral locale tests, and conflict-preserving seed delivery with four fixtures.
+User approved a 200 KiB initial-JS budget (ADR 0029). Node 24 Windows checks passed:
+99 tests and 8 Playwright E2E, lint/typecheck/build, API types and bundle gates.
+The dependency audit remains failed (7 high/4 moderate); separate targeted fixes
+are required before claiming the full profile passed. No merge/deploy.

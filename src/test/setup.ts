@@ -7,6 +7,7 @@
  * - Extend `expect` with jest-axe accessibility matchers.
  * - Start the MSW server before all tests and clean up after.
  */
+import '../lib/i18n'
 import '@testing-library/jest-dom'
 import { expect, afterAll, afterEach, beforeAll } from 'vitest'
 import { configureAxe, toHaveNoViolations } from 'jest-axe'
