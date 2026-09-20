@@ -1,3 +1,23 @@
+# Current implementation handoff — 2026-09-20
+
+Working branch: `fix/windows-react-baseline` in the isolated P01 clone.
+Known committed baseline: `1ee8d60` (Windows dependency fix); i18n candidate follows.
+This is preparatory P01 work, not completion of the family plan or runtime pilot.
+
+- Windows Node 24: typecheck/lint, 99 tests, 8 E2E, build/bundle passed.
+- Linux Node 24: original prepared Rollup baseline passed clean install, 84 tests,
+  typecheck/lint/build. Final i18n Linux run still pending.
+- User explicitly set initial JS gzip budget to 200 KiB; other budgets unchanged.
+- Seed delivery: four fresh/repeat/conflict/drift/path fixtures passed.
+- npm audit remediation: zero high/critical; two moderate Vitest/mocker findings
+  remain documented for separate maintenance. Full candidate checks continue.
+- See `docs/plans/0005-agent-neutral-implementation.md` and ADR 0029.
+- No push, PR or merge yet. Preserve original checkout refs/stash/untracked files.
+
+---
+
+The following snapshot is historical and must not be interpreted as current Git state.
+
 # HANDOFF — claude-react-mui
 
 > Read this first when joining the project. Updated by `/wrap-up` at end of each session.

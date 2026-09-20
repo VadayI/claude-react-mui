@@ -1,0 +1,10 @@
+{
+  "appName": "Claude React MUI",
+  "home": "Home",
+  "articles": "Articles",
+  "welcome": "Welcome",
+  "articlesLink": "Open Articles",
+  "loading": "Loading",
+  "loadingText": "Loading…",
+  "retry": "Retry"
+}

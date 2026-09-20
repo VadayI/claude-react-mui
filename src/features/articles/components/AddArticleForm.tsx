@@ -6,6 +6,7 @@
  * Disables submission when the title is empty or whitespace.
  * Exposes an error prop that renders a visible, accessible validation message.
  */
+import { useTranslation } from 'react-i18next'
 import { useState } from 'react'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
@@ -35,7 +36,9 @@ const HELPER_ID = 'add-article-error'
  * - When `error` is set, `aria-describedby` links the title input to the error text.
  * - The submit button is disabled when the title input is blank.
  */
+/** Renders translated title/body fields. Props control submission/errors; onAdd receives trimmed values. Updates local form state only; callback errors propagate. */
 export function AddArticleForm({ onAdd, error, disabled = false }: AddArticleFormProps) {
+  const { t } = useTranslation('articles')
   const [title, setTitle] = useState('')
   const [body, setBody] = useState('')
 
@@ -59,7 +62,7 @@ export function AddArticleForm({ onAdd, error, disabled = false }: AddArticleFor
     >
       <Box>
         <TextField
-          label="Article title"
+          label={t('titleLabel')}
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           slotProps={{
@@ -79,7 +82,7 @@ export function AddArticleForm({ onAdd, error, disabled = false }: AddArticleFor
         )}
       </Box>
       <TextField
-        label="Article body"
+        label={t('bodyLabel')}
         value={body}
         onChange={(e) => setBody(e.target.value)}
         disabled={disabled}
@@ -90,7 +93,7 @@ export function AddArticleForm({ onAdd, error, disabled = false }: AddArticleFor
       />
       <Box>
         <Button type="submit" variant="contained" disabled={isTitleBlank || disabled}>
-          Add Article
+          {t('add')}
         </Button>
       </Box>
     </Box>

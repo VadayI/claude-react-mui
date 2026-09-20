@@ -5,6 +5,7 @@
  * presentational components (`AddArticleForm`, `ArticleList`). Handles all
  * four UI states: loading, error, empty, and success.
  */
+import { useTranslation } from 'react-i18next'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
@@ -25,21 +26,23 @@ import { ArticleList } from './ArticleList'
  * - Empty:   empty state via ArticleList
  * - Success: ArticleList + AddArticleForm
  */
+/** Renders translated articles UI; no parameters. Hooks fetch API data and invalidate the shared cache after creation; errors render in the alert. */
 export function ArticlesPage() {
+  const { t } = useTranslation(['articles', 'common'])
   const { articles, isLoading, isError, error, refetch } = useArticles()
   const { mutate: addArticle, isPending, error: createError } = useCreateArticle()
 
   return (
     <Box>
       <Typography variant="h4" component="h1" gutterBottom>
-        Articles
+        {t('title')}
       </Typography>
 
       <AddArticleForm onAdd={addArticle} error={createError?.message} disabled={isPending} />
 
       {isLoading && (
-        <Box role="status" aria-label="Loading articles" sx={{ mt: 1 }}>
-          <CircularProgress size={20} aria-label="Loading articles" sx={{ mr: 1 }} />
+        <Box role="status" aria-label={t('loading')} sx={{ mt: 1 }}>
+          <CircularProgress size={20} aria-label={t('loading')} sx={{ mr: 1 }} />
           {[1, 2, 3].map((i) => (
             <Skeleton key={i} variant="rectangular" height={72} sx={{ mb: 1 }} />
           ))}
@@ -51,11 +54,11 @@ export function ArticlesPage() {
           severity="error"
           action={
             <Button color="inherit" size="small" onClick={refetch}>
-              Retry
+              {t('retry', { ns: 'common' })}
             </Button>
           }
         >
-          {error?.message ?? 'Failed to load articles.'}
+          {error?.message ?? t('loadError')}
         </Alert>
       )}
 

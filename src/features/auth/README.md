@@ -85,3 +85,10 @@ Generated types in `src/lib/api/schema.d.ts`.
 
 - **ADR 0021** (`docs/decisions/0021-auth-bearer-jwt-default.md`) — Bearer/JWT default;
   tokens held in-memory only; `sanitizeNext()` open-redirect protection.
+
+## Internationalization
+
+UI labels and validation use the `auth` namespace under `src/locales/en/` and
+`src/locales/uk/`. The shared I18nextProvider supplies the active locale. API-provided
+content/errors are displayed as server data, not interpreted as translation keys.
+`src/test/i18n.test.tsx` covers both locales, accessible labels and axe checks.

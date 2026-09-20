@@ -96,3 +96,10 @@ Generated types in `src/lib/api/schema.d.ts`.
 
 - DTO → ViewModel mapping in `articlesApi.ts` decouples the schema from the UI.
 - Contract source: `VadayI/claude-api-contract@v0.1.0` (not the backend). See ADR `docs/decisions/0020-external-openapi-contract-variant-a.md`.
+
+## Internationalization
+
+UI labels and validation use the `articles` namespace under `src/locales/en/` and
+`src/locales/uk/`. The shared I18nextProvider supplies the active locale. API-provided
+content/errors are displayed as server data, not interpreted as translation keys.
+`src/test/i18n.test.tsx` covers both locales, accessible labels and axe checks.

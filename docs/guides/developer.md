@@ -16,7 +16,7 @@ npm run api:types           # generate src/lib/api/schema.d.ts
 npm run dev                 # http://localhost:5173
 ```
 
-> **Native Windows note:** the committed `package-lock.json` is generated on Linux to match CI (`ubuntu-latest`), so `npm ci` fails on native Windows with `EBADPLATFORM` (it pins the Linux Rollup binary). On native Windows, install with `npm install --legacy-peer-deps` instead — it resolves the Windows Rollup binary for your machine and bypasses the pre-existing `eslint@10` / `eslint-plugin-jsx-a11y` peer mismatch. (A fully cross-platform lockfile is a tracked follow-up.) `npm ci` works as shown on Linux / macOS / WSL2.
+> **Native Windows:** `npm ci` is supported. The direct Linux-only Rollup dependency was removed (ADR 0029); `.npmrc` retains the existing peer-dependency workaround. Call Bash gates with `& 'C:/Program Files/Git/bin/bash.exe' scripts/check_bundle_size.sh` in PowerShell.
 
 Tests & checks:
 
@@ -42,3 +42,14 @@ Through the pipeline: `ba` (stories) → `ui-architect` (route/component/props c
 ## Where to go next
 
 `docs/verify/` (manual smoke tests), `docs/decisions/` (ADRs), `VadayI/claude-api-contract` (the API contract source).
+
+
+## Translations
+
+English is the deterministic default. Call `i18n.changeLanguage('uk')` to switch the
+exported instance in `src/lib/i18n.ts`; there is no automatic browser detection or persistence.
+Namespaces live in `src/locales/<language>/{common,auth,articles}.json`; translate labels
+and client validation, while treating API messages as external data. Formatting helpers
+require an explicit language and use UTC by default for dates. Provider architecture is unchanged.
+Run `npm run test:run -- src/test/i18n.test.tsx` for the two-locale/axe fixtures.
+Seed delivery is checked with `python scripts/seed-i18n.py --check`.

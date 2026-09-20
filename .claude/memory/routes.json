@@ -1,5 +1,16 @@
 [
   {
+    "path": "/",
+    "feature": "home",
+    "screen": "HomePage",
+    "auth": "anonymous",
+    "states": [
+      "success"
+    ],
+    "consumes": [],
+    "notes": "Translated welcome and article navigation; route URL unchanged."
+  },
+  {
     "path": "/articles",
     "feature": "articles",
     "screen": "ArticlesPage",
@@ -13,7 +24,7 @@
     "consumes": [
       "GET /api/v1/articles"
     ],
-    "notes": "Protected by RequireAuth layout route. Anonymous → /login?next=%2Farticles. Lazy-loaded (React.lazy); RouteFallback (role=\"status\") shown by Suspense during initial chunk load."
+    "notes": "Protected by RequireAuth layout route. Anonymous → /login?next=%2Farticles. Lazy-loaded (React.lazy); RouteFallback (role=\"status\") shown by Suspense during initial chunk load. UI labels use bundled English/Ukrainian namespaces."
   },
   {
     "path": "/login",
@@ -29,6 +40,6 @@
     "consumes": [
       "POST /api/v1/auth/login"
     ],
-    "notes": "Authenticated visitors redirect to next ?? '/'. On success: setTokens → navigate(next ?? '/'). Lazy-loaded (React.lazy); RouteFallback (role=\"status\") shown by Suspense during initial chunk load."
+    "notes": "Authenticated visitors redirect to next ?? '/'. On success: setTokens → navigate(next ?? '/'). Lazy-loaded (React.lazy); RouteFallback (role=\"status\") shown by Suspense during initial chunk load. UI labels use bundled English/Ukrainian namespaces."
   }
 ]
