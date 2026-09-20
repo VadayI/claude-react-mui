@@ -686,7 +686,7 @@ Every feature under `src/features/<feature>/` MUST have a local `README.md` desc
 <!-- END SOURCE docs/ai/rules/feature-readme.md -->
 
 
-<!-- SOURCE docs/ai/rules/forms-and-validation.md SHA256 d95c051dff3c30abadf312d0d54478a387711f3474c724e7f1d0c424151236fe -->
+<!-- SOURCE docs/ai/rules/forms-and-validation.md SHA256 5d82c3c9847f3840e5897969babe7d9f51dc8b364669c98dae8942090938fb7d -->
 
 # Forms & validation (schema-first, accessible, enforced)
 
@@ -703,6 +703,11 @@ Forms are where most UX and accessibility bugs live, and where the frontend meet
 - Every field has a programmatic label (visible `<label>` / MUI `label`), and on error sets `aria-invalid` and links the message via `aria-describedby` (MUI `TextField` does this when given `error` + `helperText`). An error the user can see but assistive tech can't is a defect.
 - **Required is not conveyed by color or `*` alone** — pair it with text and the accessible name (docs/ai/rules/accessibility.md).
 - The first invalid field receives focus on a failed submit (RHF `shouldFocusError`), and the error summary (if any) is an announced region (`role="alert"`).
+- This includes server-400 submissions, not only client schema errors. Verify
+  actual input focus after the error appears, in form order. With MUI, attach
+  the RHF input ref to the input itself; focusing a wrapper is insufficient.
+  Do not attempt focus while the target input is disabled by pending state.
+  Tests must assert programmatic required state and focus after both failure paths.
 - Submit affordance reflects validity/in-flight state: disabled + `aria-busy` while submitting; do not leave the user guessing whether the click registered.
 
 ## Server (400) errors map onto fields

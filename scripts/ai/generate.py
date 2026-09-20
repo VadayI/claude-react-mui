@@ -150,7 +150,8 @@ def main() -> int:
         manifest["files"][path] = {"sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(), "ownership": "template"}
     for path, text in generated.items():
         manifest["files"][path] = {"sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(), "ownership": "mixed" if path == "CLAUDE.md" else "template"}
-    manifest["files"]["AGENTS.md"]["ownership"] = "mixed"
+    for path in ("AGENTS.md", ".claude/settings.json", ".codex/config.toml"):
+        manifest["files"][path]["ownership"] = "mixed"
     generated["docs/ai/delivery-manifest.json"] = json.dumps(manifest, indent=2, sort_keys=True) + "\n"
     drift = []
     for name, content in generated.items():

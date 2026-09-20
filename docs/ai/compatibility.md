@@ -11,9 +11,10 @@
 | Claude custom reviewer | Native role marker returned; init tools limited to Read/Glob/Grep; canary unchanged | PASS for fixture |
 | Codex native custom role | CLI session reported custom-role selection unavailable; explicit separate-session fallback used | NOT_VERIFIED natively |
 | Project skill/command | Both runtimes actually read rules.md and returned skill/rule markers | PASS for explicit invocation |
-| Trusted hooks | New checkout is untrusted; global trust not changed | NOT_VERIFIED |
+| Claude reviewed SessionStart hook | Invocation settings executed controlled marker script and delivered hook context | PASS for fixture; no global trust change |
+| Codex trusted hooks | No trust bypass or global trust change attempted | NOT_VERIFIED |
 | Reviewer read-only enforcement | Claude tool availability + canary fixture passed; Codex native role unavailable | PARTIAL |
-| K0/K1/K2 and S1–S4 | Required by P03; not yet run | NOT_VERIFIED |
+| K0/K1/K2 and S1–S4 | Sessions run; reviewer corrections pass; K2 Git mutation still blocked | P03 NOT_VERIFIED |
 | Hosted/local delivery matrix | Required by P06/P12/P13 | NOT_VERIFIED |
 
 The observed Claude model was `claude-opus-4-8[1m]` (with a auxiliary Haiku request),
@@ -55,3 +56,8 @@ than the fixture; it was not executed. The runtime Git test remains NOT_VERIFIED
 pending an explicit user decision. No workaround or global permission change
 is part of the launcher. Independent host-controlled squash fixtures passed,
 but they do not establish Codex Git execution or production G0–G9 support.
+
+Latest correction results and actual models are recorded in `pilot-results.json`.
+K1 S1 read all 27 embedded sources despite reporting 26 in its receipt; transcript
+markers establish the actual count. Both runtimes needed independent accessibility
+and seed-delivery checks; passing worker-authored tests alone was insufficient.

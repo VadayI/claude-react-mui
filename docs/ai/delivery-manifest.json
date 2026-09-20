@@ -153,7 +153,7 @@
       "sha256": "f07d9ea0ae800bf3f7317dcfe5a48079b758404e113807e533eabaa9e9e8f688"
     },
     ".claude/settings.json": {
-      "ownership": "template",
+      "ownership": "mixed",
       "sha256": "f888cb6e8dea7da058d7784cd6c20cb3f74c32562f511adbc050496352c44b5b"
     },
     ".codex/agents/react-developer.toml": {
@@ -173,7 +173,7 @@
       "sha256": "9cd1d49ae81cd12d7398dabbe8c5e62100286db192c005af8ef45be754778661"
     },
     ".codex/config.toml": {
-      "ownership": "template",
+      "ownership": "mixed",
       "sha256": "c5b30b785a5408689af413b04852f38690f198bc66875942483197109b191e45"
     },
     "AGENTS.md": {
@@ -194,27 +194,39 @@
     },
     "docs/ai/compatibility.md": {
       "ownership": "template",
-      "sha256": "5991ceb01b701ffd6aa7412eef58c9f5805679a45f73f48ba65807e8fddebd40"
+      "sha256": "0286916825f744135bdaec30fd004b616d4afae23e691c4df16bc11e209596b4"
+    },
+    "docs/ai/fixtures/README.md": {
+      "ownership": "template",
+      "sha256": "005e03d1ad2e4eb1baa0203878e011f822742e3db8d096ca567ad1246601e1a1"
+    },
+    "docs/ai/fixtures/S1-acceptance.test.tsx.txt": {
+      "ownership": "template",
+      "sha256": "48282ad2020e39bf9e2d6a4d162a76283cbce756b9178a5b5f2efebe7254c52c"
     },
     "docs/ai/generated/role-packs/react-developer.md": {
       "ownership": "template",
-      "sha256": "840ffb096689381dee1b57ee185fc1df17bfc193fce92341bfb8b2c72ba0164f"
+      "sha256": "bd1fe11492f05a536615de76bf4c6722a50622290b0d5d61331726f61ea06a74"
     },
     "docs/ai/generated/role-packs/reviewer.md": {
       "ownership": "template",
-      "sha256": "38ddb5568cd25a145a0e7d15f5253cd5a2fafc192f21dd40615c48435611c27f"
+      "sha256": "f841c4695864987c100ea94b338a6d773dca6767bfe255c833d366ef47cd6712"
     },
     "docs/ai/generated/role-packs/tester.md": {
       "ownership": "template",
-      "sha256": "ee8cb4fb65ef3680677f801d76a512a2c01b17d647148fa6882e2913a6e60ba2"
+      "sha256": "cae4b8f9f9624919814af151830a79d5b05976a370bb15a52c933163ceec152a"
     },
     "docs/ai/generated/role-packs/ui-architect.md": {
       "ownership": "template",
-      "sha256": "d6476935c010ea99ce0c26515c40b8264f629da5053ebd8e71daa96bf58f0c4b"
+      "sha256": "f143d209e9fede692f90e18bf8bbcd96dbfdf1dfc8ff57783c54ec4e44f17c2f"
     },
     "docs/ai/pilot-report.md": {
       "ownership": "template",
-      "sha256": "f5a754e2918b9552194d34eb4f50a2cc1cf101bf040cef7740f10dc3510256f6"
+      "sha256": "06e4fed000e212e0dc434df6de58e86aa091996d0c0e25716d9741b3476a1a43"
+    },
+    "docs/ai/pilot-results.json": {
+      "ownership": "template",
+      "sha256": "1f6335cbedd2c6a98e975afbc9c8cd5359bbc0b65140e2b393bb2ad6eb1774d8"
     },
     "docs/ai/roles/react-developer.md": {
       "ownership": "template",
@@ -274,7 +286,7 @@
     },
     "docs/ai/rules/forms-and-validation.md": {
       "ownership": "template",
-      "sha256": "d95c051dff3c30abadf312d0d54478a387711f3474c724e7f1d0c424151236fe"
+      "sha256": "5d82c3c9847f3840e5897969babe7d9f51dc8b364669c98dae8942090938fb7d"
     },
     "docs/ai/rules/git-operations.md": {
       "ownership": "template",
@@ -362,11 +374,15 @@
     },
     "scripts/ai/generate.py": {
       "ownership": "template",
-      "sha256": "fbfc19f4e0291122ac8d696c6985c79fd34f886f138efb9e0803432191801d37"
+      "sha256": "bb72b262108fa35f846f6a1018146d99e04c997f980f442c459b65df584fa42c"
     },
     "scripts/ai/install.py": {
       "ownership": "template",
       "sha256": "97d6e75c17ca820ae472c72f0ae302ce7361ec60532b0deb49f413588e8b86b5"
+    },
+    "scripts/ai/pilot_squash.py": {
+      "ownership": "template",
+      "sha256": "a582647a9de07762d946a53d7f56d264849e6fd214f2294a05dc7e9a6528c4ef"
     },
     "scripts/ai/run_role.py": {
       "ownership": "template",
