@@ -206,7 +206,7 @@
     },
     "docs/ai/core-source.json": {
       "ownership": "template",
-      "sha256": "d48c126df08868ca4a88c3d08f13c8b6f9209a7883e00a635fe551fb4b43a7d7"
+      "sha256": "2fa56502fc2b4ea9779c4038523064e103e795c8251c70ed64bbaded90990c6b"
     },
     "docs/ai/decisions/0001-portable-family-core.md": {
       "ownership": "template",
@@ -242,7 +242,7 @@
     },
     "docs/ai/launchers.md": {
       "ownership": "template",
-      "sha256": "3a169997806df29f52d7523e92ce59f32eb756f043a6c7665936657e51fdb51f"
+      "sha256": "96a508d1dc671696af51869a423a88dd72b1c754c3dcf27c2eabdaa22bfc18ec"
     },
     "docs/ai/legacy/contract-maturity.md": {
       "ownership": "template",
@@ -426,11 +426,11 @@
     },
     "scripts/ai/core_sync.py": {
       "ownership": "template",
-      "sha256": "1b307ecbad6c84217ba40cd6bc55dce56ee68e96bf3f249ce7b68d274da573c3"
+      "sha256": "fd86b3d15f8ae0c9f01b82b5e8e5ecaedc0dc96c947a671407a2061134f4b24d"
     },
     "scripts/ai/generate.py": {
       "ownership": "template",
-      "sha256": "ab67930c1fc074a3d7462661f610ee448d3c1f099dd0de7aa2256f2fe6ec0889"
+      "sha256": "e57e2e7eac69935b4d0d54fcb867b81d408c78d6b93efbcfc4f2d140f63fad0a"
     },
     "scripts/ai/generate_adapters.py": {
       "ownership": "template",
@@ -438,7 +438,7 @@
     },
     "scripts/ai/install.py": {
       "ownership": "template",
-      "sha256": "97d6e75c17ca820ae472c72f0ae302ce7361ec60532b0deb49f413588e8b86b5"
+      "sha256": "a38c82e0112030fd2cb96fe90e66449a41c78be832187d3f63e8c832ebc04701"
     },
     "scripts/ai/launch.ps1": {
       "ownership": "template",
@@ -451,6 +451,10 @@
     "scripts/ai/launch.sh": {
       "ownership": "template",
       "sha256": "76a237581761312e881819e441d613f21a687998cc72615e4d62a69275311a9b"
+    },
+    "scripts/ai/legacy_launch.py": {
+      "ownership": "template",
+      "sha256": "81402423c6ace5ac586954f567d07740d0fa2c668b512fc4a753270ac1f93ebc"
     },
     "scripts/ai/pilot_squash.py": {
       "ownership": "template",
@@ -474,7 +478,20 @@
     },
     "scripts/ai/test_family_delivery.py": {
       "ownership": "template",
-      "sha256": "e153290c2dd4f683b95982e7482db15c8bad6552a658f85702c21eed3a82758c"
+      "sha256": "1a8e85f91c3078ed3af96385e349fe0df2e2418856dbaeceaba5d56d717e6c1e"
+    },
+    "scripts/claude.ps1": {
+      "ownership": "template",
+      "sha256": "6e394c705041b7eaa2ff69fbdd0d99832eb665919026cb61eed039adc86450fe"
+    },
+    "scripts/claude.sh": {
+      "legacy_sha256": "4156fb2058eb7fa7ac690fd9bea7bd88fce357303d4445d3489c33f62b3b9cbe",
+      "ownership": "template",
+      "sha256": "865f785eb1c0986fcfce0dba6c242afd8130add7cb8d0583f043c6c808e9acd1"
+    },
+    "templates/ai/legacy-launchers.json": {
+      "ownership": "template",
+      "sha256": "99cd0efb54e5007972ffd077f6b37dc77caec2a9016cba4d3203f78851babe5d"
     },
     "templates/ai/mcp/codex.optional.toml": {
       "ownership": "template",

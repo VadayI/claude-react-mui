@@ -46,7 +46,8 @@ def plan(source: Path, target: Path) -> tuple[dict[str, str], list[str]]:
         OSError/UnicodeError for unreadable files.
     Business rules: Missing/identical files are safe. Previously installed,
         unmodified template files may update; mixed-ownership entry points require
-        manual reconciliation when different. No deletion or execution occurs.
+        manual reconciliation when different. Exact known legacy launchers may
+        migrate using an explicit source-manifest hash. No deletion or execution.
     Side effects: Reads project and template files only; no DB or network access.
     """
     manifest_name = "docs/ai/delivery-manifest.json"
@@ -71,7 +72,9 @@ def plan(source: Path, target: Path) -> tuple[dict[str, str], list[str]]:
         if existing == incoming:
             continue
         old = previous.get("files", {}).get(name, {})
-        if metadata["ownership"] == "template" and old.get("ownership") == "template" and digest(existing) == old.get("sha256"):
+        owned = old.get("ownership") == "template" and digest(existing) == old.get("sha256")
+        legacy = name in ("scripts/claude.sh", "scripts/claude.ps1") and digest(existing) == metadata.get("legacy_sha256")
+        if metadata["ownership"] == "template" and (owned or legacy):
             pending[name] = incoming
         else:
             conflicts.append(name)

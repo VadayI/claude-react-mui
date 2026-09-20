@@ -42,7 +42,7 @@ gates: ## Run all CI gate scripts locally
 	npm run build
 	bash scripts/check_bundle_size.sh
 
-cc: ## Launch Claude Code with .env sourced (feeds MCP + gh secrets from .env).
+cc: ## Launch Claude Code with selected .env data (feeds MCP + gh secrets from .env).
 	bash scripts/claude.sh $(ARGS)
 
 ai-claude: ## Launch Claude through the portable core (no dotenv execution).
