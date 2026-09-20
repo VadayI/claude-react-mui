@@ -1,0 +1,3 @@
+# Project role adapters live in .codex/agents/*.toml.
+# Model, approvals, sandbox and project trust are user/runtime choices.
+# No optional MCP server or plugin is required by the neutral procedures.

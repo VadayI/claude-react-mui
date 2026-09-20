@@ -1042,3 +1042,11 @@ User approved a 200 KiB initial-JS budget (ADR 0029). Node 24 Windows checks pas
 99 tests and 8 Playwright E2E, lint/typecheck/build, API types and bundle gates.
 The dependency audit remains failed (7 high/4 moderate); separate targeted fixes
 are required before claiming the full profile passed. No merge/deploy.
+
+## 2026-09-20 — neutral React instruction pilot
+
+Moved all 28 rules to a cataloged canonical source, generated four runtime roles,
+three procedure adapters and complete role packs. Removed implicit project-wide
+repair hooks and mandatory plugin/model selection in K1/K2. Added ownership-aware
+preview/apply delivery with five passing regression tests. Generation is checked;
+runtime behavior remains pending P03. P01 Linux exact-commit checks also passed.

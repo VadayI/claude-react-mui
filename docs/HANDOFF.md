@@ -1,3 +1,14 @@
+## P02 pilot in progress — 2026-09-20
+
+App snapshot: `9581f9c`, verified Windows/Linux Node 24 with 99 tests;
+Windows E2E 8/8. Initial JS budget 200 KiB explicitly approved; measured 153.4.
+Branch: `chore/shared-react-pilot`, dependent on the unmerged P01 commits.
+Neutral catalog/adapters and non-destructive pilot installer are prepared.
+Generation/drift checks and five delivery regression tests pass; Unicode/spaced
+fresh and repeated delivery pass. Next: P03 behavioral runtime comparisons.
+Runtime support, production shared-core delivery and full implementation-plan
+completion are NOT claimed. No push/PR/merge yet. See docs/ai/README.md.
+
 # Current implementation handoff — 2026-09-20
 
 Working branch: `fix/windows-react-baseline` in the isolated P01 clone.

@@ -1,0 +1,649 @@
+{
+  "schema_version": 1,
+  "phase": "P02 pilot; not family acceptance",
+  "rules": [
+    {
+      "id": "accessibility",
+      "path": "docs/ai/rules/accessibility.md",
+      "legacy_path": ".claude/rules/accessibility.md",
+      "scope": "role-or-capability",
+      "explicit_consumers": [
+        "ui-architect",
+        "react-developer",
+        "tester",
+        "reviewer"
+      ],
+      "declared_consumers": [
+        "ui-architect",
+        "react-developer",
+        "tester",
+        "reviewer"
+      ],
+      "dependencies": [],
+      "review": "full source read; explicit links + Binds + transitive closure + conservative pilot delivery"
+    },
+    {
+      "id": "api-contract",
+      "path": "docs/ai/rules/api-contract.md",
+      "legacy_path": ".claude/rules/api-contract.md",
+      "scope": "role-or-capability",
+      "explicit_consumers": [
+        "ui-architect",
+        "react-developer",
+        "reviewer"
+      ],
+      "declared_consumers": [
+        "ui-architect",
+        "react-developer",
+        "tester",
+        "reviewer"
+      ],
+      "dependencies": [
+        "auth",
+        "component-contract",
+        "forms-and-validation",
+        "no-stubs",
+        "state-management"
+      ],
+      "review": "full source read; explicit links + Binds + transitive closure + conservative pilot delivery"
+    },
+    {
+      "id": "architecture",
+      "path": "docs/ai/rules/architecture.md",
+      "legacy_path": ".claude/rules/architecture.md",
+      "scope": "role-or-capability",
+      "explicit_consumers": [
+        "ui-architect"
+      ],
+      "declared_consumers": [],
+      "dependencies": [
+        "api-contract",
+        "feature-readme",
+        "state-management"
+      ],
+      "review": "full source read; explicit links + Binds + transitive closure + conservative pilot delivery"
+    },
+    {
+      "id": "auth",
+      "path": "docs/ai/rules/auth.md",
+      "legacy_path": ".claude/rules/auth.md",
+      "scope": "role-or-capability",
+      "explicit_consumers": [],
+      "declared_consumers": [
+        "react-developer"
+      ],
+      "dependencies": [],
+      "review": "full source read; explicit links + Binds + transitive closure + conservative pilot delivery"
+    },
+    {
+      "id": "code-style",
+      "path": "docs/ai/rules/code-style.md",
+      "legacy_path": ".claude/rules/code-style.md",
+      "scope": "role-or-capability",
+      "explicit_consumers": [
+        "react-developer",
+        "reviewer"
+      ],
+      "declared_consumers": [],
+      "dependencies": [
+        "component-contract",
+        "feature-readme",
+        "git-operations"
+      ],
+      "review": "full source read; explicit links + Binds + transitive closure + conservative pilot delivery"
+    },
+    {
+      "id": "component-contract",
+      "path": "docs/ai/rules/component-contract.md",
+      "legacy_path": ".claude/rules/component-contract.md",
+      "scope": "role-or-capability",
+      "explicit_consumers": [
+        "ui-architect",
+        "react-developer",
+        "reviewer"
+      ],
+      "declared_consumers": [],
+      "dependencies": [
+        "accessibility",
+        "api-contract",
+        "tdd"
+      ],
+      "review": "full source read; explicit links + Binds + transitive closure + conservative pilot delivery"
+    },
+    {
+      "id": "dependencies-and-supply-chain",
+      "path": "docs/ai/rules/dependencies-and-supply-chain.md",
+      "legacy_path": ".claude/rules/dependencies-and-supply-chain.md",
+      "scope": "role-or-capability",
+      "explicit_consumers": [],
+      "declared_consumers": [
+        "react-developer",
+        "reviewer"
+      ],
+      "dependencies": [
+        "auth",
+        "code-style",
+        "performance-budgets",
+        "upgrade-policy"
+      ],
+      "review": "full source read; explicit links + Binds + transitive closure + conservative pilot delivery"
+    },
+    {
+      "id": "design-reference",
+      "path": "docs/ai/rules/design-reference.md",
+      "legacy_path": ".claude/rules/design-reference.md",
+      "scope": "role-or-capability",
+      "explicit_consumers": [
+        "ui-architect",
+        "react-developer",
+        "reviewer"
+      ],
+      "declared_consumers": [
+        "ui-architect",
+        "react-developer",
+        "reviewer"
+      ],
+      "dependencies": [
+        "accessibility",
+        "architecture",
+        "component-contract",
+        "mcp-stack"
+      ],
+      "review": "full source read; explicit links + Binds + transitive closure + conservative pilot delivery"
+    },
+    {
+      "id": "environment",
+      "path": "docs/ai/rules/environment.md",
+      "legacy_path": ".claude/rules/environment.md",
+      "scope": "role-or-capability",
+      "explicit_consumers": [],
+      "declared_consumers": [],
+      "dependencies": [],
+      "review": "full source read; explicit links + Binds + transitive closure + conservative pilot delivery"
+    },
+    {
+      "id": "feature-readme",
+      "path": "docs/ai/rules/feature-readme.md",
+      "legacy_path": ".claude/rules/feature-readme.md",
+      "scope": "role-or-capability",
+      "explicit_consumers": [
+        "react-developer",
+        "reviewer"
+      ],
+      "declared_consumers": [
+        "ui-architect",
+        "react-developer",
+        "reviewer"
+      ],
+      "dependencies": [
+        "api-contract"
+      ],
+      "review": "full source read; explicit links + Binds + transitive closure + conservative pilot delivery"
+    },
+    {
+      "id": "forms-and-validation",
+      "path": "docs/ai/rules/forms-and-validation.md",
+      "legacy_path": ".claude/rules/forms-and-validation.md",
+      "scope": "role-or-capability",
+      "explicit_consumers": [],
+      "declared_consumers": [
+        "ui-architect",
+        "react-developer",
+        "tester",
+        "reviewer"
+      ],
+      "dependencies": [
+        "accessibility",
+        "api-contract",
+        "component-contract",
+        "no-stubs",
+        "state-management",
+        "tdd"
+      ],
+      "review": "full source read; explicit links + Binds + transitive closure + conservative pilot delivery"
+    },
+    {
+      "id": "git-operations",
+      "path": "docs/ai/rules/git-operations.md",
+      "legacy_path": ".claude/rules/git-operations.md",
+      "scope": "role-or-capability",
+      "explicit_consumers": [
+        "reviewer"
+      ],
+      "declared_consumers": [],
+      "dependencies": [],
+      "review": "full source read; explicit links + Binds + transitive closure + conservative pilot delivery"
+    },
+    {
+      "id": "i18n-and-formatting",
+      "path": "docs/ai/rules/i18n-and-formatting.md",
+      "legacy_path": ".claude/rules/i18n-and-formatting.md",
+      "scope": "role-or-capability",
+      "explicit_consumers": [],
+      "declared_consumers": [
+        "ui-architect",
+        "react-developer",
+        "tester",
+        "reviewer"
+      ],
+      "dependencies": [
+        "accessibility",
+        "component-contract"
+      ],
+      "review": "full source read; explicit links + Binds + transitive closure + conservative pilot delivery"
+    },
+    {
+      "id": "living-plan",
+      "path": "docs/ai/rules/living-plan.md",
+      "legacy_path": ".claude/rules/living-plan.md",
+      "scope": "role-or-capability",
+      "explicit_consumers": [
+        "ui-architect"
+      ],
+      "declared_consumers": [
+        "ui-architect",
+        "react-developer",
+        "tester",
+        "reviewer"
+      ],
+      "dependencies": [
+        "code-style",
+        "surgical-changes",
+        "workflow"
+      ],
+      "review": "full source read; explicit links + Binds + transitive closure + conservative pilot delivery"
+    },
+    {
+      "id": "mcp-stack",
+      "path": "docs/ai/rules/mcp-stack.md",
+      "legacy_path": ".claude/rules/mcp-stack.md",
+      "scope": "role-or-capability",
+      "explicit_consumers": [],
+      "declared_consumers": [],
+      "dependencies": [
+        "design-reference"
+      ],
+      "review": "full source read; explicit links + Binds + transitive closure + conservative pilot delivery"
+    },
+    {
+      "id": "no-stubs",
+      "path": "docs/ai/rules/no-stubs.md",
+      "legacy_path": ".claude/rules/no-stubs.md",
+      "scope": "role-or-capability",
+      "explicit_consumers": [
+        "react-developer",
+        "tester",
+        "reviewer"
+      ],
+      "declared_consumers": [
+        "react-developer",
+        "tester",
+        "reviewer"
+      ],
+      "dependencies": [],
+      "review": "full source read; explicit links + Binds + transitive closure + conservative pilot delivery"
+    },
+    {
+      "id": "node-commands",
+      "path": "docs/ai/rules/node-commands.md",
+      "legacy_path": ".claude/rules/node-commands.md",
+      "scope": "role-or-capability",
+      "explicit_consumers": [],
+      "declared_consumers": [],
+      "dependencies": [],
+      "review": "full source read; explicit links + Binds + transitive closure + conservative pilot delivery"
+    },
+    {
+      "id": "observability-and-errors",
+      "path": "docs/ai/rules/observability-and-errors.md",
+      "legacy_path": ".claude/rules/observability-and-errors.md",
+      "scope": "role-or-capability",
+      "explicit_consumers": [],
+      "declared_consumers": [
+        "ui-architect",
+        "react-developer",
+        "tester",
+        "reviewer"
+      ],
+      "dependencies": [
+        "api-contract",
+        "auth",
+        "component-contract"
+      ],
+      "review": "full source read; explicit links + Binds + transitive closure + conservative pilot delivery"
+    },
+    {
+      "id": "performance-budgets",
+      "path": "docs/ai/rules/performance-budgets.md",
+      "legacy_path": ".claude/rules/performance-budgets.md",
+      "scope": "role-or-capability",
+      "explicit_consumers": [],
+      "declared_consumers": [
+        "ui-architect",
+        "react-developer",
+        "reviewer"
+      ],
+      "dependencies": [
+        "accessibility",
+        "code-style",
+        "component-contract"
+      ],
+      "review": "full source read; explicit links + Binds + transitive closure + conservative pilot delivery"
+    },
+    {
+      "id": "preflight",
+      "path": "docs/ai/rules/preflight.md",
+      "legacy_path": ".claude/rules/preflight.md",
+      "scope": "role-or-capability",
+      "explicit_consumers": [],
+      "declared_consumers": [],
+      "dependencies": [
+        "api-contract",
+        "design-reference"
+      ],
+      "review": "full source read; explicit links + Binds + transitive closure + conservative pilot delivery"
+    },
+    {
+      "id": "routing-and-data-loading",
+      "path": "docs/ai/rules/routing-and-data-loading.md",
+      "legacy_path": ".claude/rules/routing-and-data-loading.md",
+      "scope": "role-or-capability",
+      "explicit_consumers": [],
+      "declared_consumers": [
+        "ui-architect",
+        "react-developer",
+        "tester",
+        "reviewer"
+      ],
+      "dependencies": [
+        "component-contract",
+        "forms-and-validation",
+        "observability-and-errors",
+        "performance-budgets",
+        "state-management",
+        "verification"
+      ],
+      "review": "full source read; explicit links + Binds + transitive closure + conservative pilot delivery"
+    },
+    {
+      "id": "state-management",
+      "path": "docs/ai/rules/state-management.md",
+      "legacy_path": ".claude/rules/state-management.md",
+      "scope": "role-or-capability",
+      "explicit_consumers": [
+        "ui-architect",
+        "react-developer"
+      ],
+      "declared_consumers": [
+        "react-developer",
+        "tester",
+        "reviewer"
+      ],
+      "dependencies": [
+        "api-contract",
+        "auth"
+      ],
+      "review": "full source read; explicit links + Binds + transitive closure + conservative pilot delivery"
+    },
+    {
+      "id": "surgical-changes",
+      "path": "docs/ai/rules/surgical-changes.md",
+      "legacy_path": ".claude/rules/surgical-changes.md",
+      "scope": "role-or-capability",
+      "explicit_consumers": [
+        "react-developer",
+        "reviewer"
+      ],
+      "declared_consumers": [
+        "react-developer",
+        "reviewer"
+      ],
+      "dependencies": [
+        "code-style",
+        "no-stubs",
+        "workflow"
+      ],
+      "review": "full source read; explicit links + Binds + transitive closure + conservative pilot delivery"
+    },
+    {
+      "id": "tdd",
+      "path": "docs/ai/rules/tdd.md",
+      "legacy_path": ".claude/rules/tdd.md",
+      "scope": "role-or-capability",
+      "explicit_consumers": [
+        "react-developer",
+        "tester",
+        "reviewer"
+      ],
+      "declared_consumers": [],
+      "dependencies": [
+        "accessibility",
+        "api-contract",
+        "no-stubs"
+      ],
+      "review": "full source read; explicit links + Binds + transitive closure + conservative pilot delivery"
+    },
+    {
+      "id": "upgrade-policy",
+      "path": "docs/ai/rules/upgrade-policy.md",
+      "legacy_path": ".claude/rules/upgrade-policy.md",
+      "scope": "role-or-capability",
+      "explicit_consumers": [],
+      "declared_consumers": [
+        "react-developer",
+        "reviewer"
+      ],
+      "dependencies": [
+        "api-contract",
+        "dependencies-and-supply-chain",
+        "environment",
+        "performance-budgets"
+      ],
+      "review": "full source read; explicit links + Binds + transitive closure + conservative pilot delivery"
+    },
+    {
+      "id": "user-guides",
+      "path": "docs/ai/rules/user-guides.md",
+      "legacy_path": ".claude/rules/user-guides.md",
+      "scope": "role-or-capability",
+      "explicit_consumers": [],
+      "declared_consumers": [
+        "ui-architect",
+        "react-developer",
+        "reviewer"
+      ],
+      "dependencies": [
+        "api-contract",
+        "verification"
+      ],
+      "review": "full source read; explicit links + Binds + transitive closure + conservative pilot delivery"
+    },
+    {
+      "id": "verification",
+      "path": "docs/ai/rules/verification.md",
+      "legacy_path": ".claude/rules/verification.md",
+      "scope": "role-or-capability",
+      "explicit_consumers": [
+        "ui-architect"
+      ],
+      "declared_consumers": [
+        "ui-architect",
+        "tester",
+        "reviewer"
+      ],
+      "dependencies": [
+        "api-contract"
+      ],
+      "review": "full source read; explicit links + Binds + transitive closure + conservative pilot delivery"
+    },
+    {
+      "id": "workflow",
+      "path": "docs/ai/rules/workflow.md",
+      "legacy_path": ".claude/rules/workflow.md",
+      "scope": "coordinator",
+      "explicit_consumers": [],
+      "declared_consumers": [],
+      "dependencies": [],
+      "review": "full source read; explicit links + Binds + transitive closure + conservative pilot delivery"
+    }
+  ],
+  "roles": {
+    "ui-architect": {
+      "path": "docs/ai/roles/ui-architect.md",
+      "rules": [
+        "accessibility",
+        "api-contract",
+        "architecture",
+        "auth",
+        "code-style",
+        "component-contract",
+        "dependencies-and-supply-chain",
+        "design-reference",
+        "environment",
+        "feature-readme",
+        "forms-and-validation",
+        "git-operations",
+        "i18n-and-formatting",
+        "living-plan",
+        "mcp-stack",
+        "no-stubs",
+        "node-commands",
+        "observability-and-errors",
+        "performance-budgets",
+        "preflight",
+        "routing-and-data-loading",
+        "state-management",
+        "surgical-changes",
+        "tdd",
+        "upgrade-policy",
+        "user-guides",
+        "verification"
+      ],
+      "delivery": "file-list",
+      "reason": "Conservative full-rule delivery for pilot; no unmeasured pruning. Coordinator-only workflow excluded."
+    },
+    "react-developer": {
+      "path": "docs/ai/roles/react-developer.md",
+      "rules": [
+        "accessibility",
+        "api-contract",
+        "architecture",
+        "auth",
+        "code-style",
+        "component-contract",
+        "dependencies-and-supply-chain",
+        "design-reference",
+        "environment",
+        "feature-readme",
+        "forms-and-validation",
+        "git-operations",
+        "i18n-and-formatting",
+        "living-plan",
+        "mcp-stack",
+        "no-stubs",
+        "node-commands",
+        "observability-and-errors",
+        "performance-budgets",
+        "preflight",
+        "routing-and-data-loading",
+        "state-management",
+        "surgical-changes",
+        "tdd",
+        "upgrade-policy",
+        "user-guides",
+        "verification"
+      ],
+      "delivery": "file-list",
+      "reason": "Conservative full-rule delivery for pilot; no unmeasured pruning. Coordinator-only workflow excluded."
+    },
+    "tester": {
+      "path": "docs/ai/roles/tester.md",
+      "rules": [
+        "accessibility",
+        "api-contract",
+        "architecture",
+        "auth",
+        "code-style",
+        "component-contract",
+        "dependencies-and-supply-chain",
+        "design-reference",
+        "environment",
+        "feature-readme",
+        "forms-and-validation",
+        "git-operations",
+        "i18n-and-formatting",
+        "living-plan",
+        "mcp-stack",
+        "no-stubs",
+        "node-commands",
+        "observability-and-errors",
+        "performance-budgets",
+        "preflight",
+        "routing-and-data-loading",
+        "state-management",
+        "surgical-changes",
+        "tdd",
+        "upgrade-policy",
+        "user-guides",
+        "verification"
+      ],
+      "delivery": "file-list",
+      "reason": "Conservative full-rule delivery for pilot; no unmeasured pruning. Coordinator-only workflow excluded."
+    },
+    "reviewer": {
+      "path": "docs/ai/roles/reviewer.md",
+      "rules": [
+        "accessibility",
+        "api-contract",
+        "architecture",
+        "auth",
+        "code-style",
+        "component-contract",
+        "dependencies-and-supply-chain",
+        "design-reference",
+        "environment",
+        "feature-readme",
+        "forms-and-validation",
+        "git-operations",
+        "i18n-and-formatting",
+        "living-plan",
+        "mcp-stack",
+        "no-stubs",
+        "node-commands",
+        "observability-and-errors",
+        "performance-budgets",
+        "preflight",
+        "routing-and-data-loading",
+        "state-management",
+        "surgical-changes",
+        "tdd",
+        "upgrade-policy",
+        "user-guides",
+        "verification"
+      ],
+      "delivery": "file-list",
+      "reason": "Conservative full-rule delivery for pilot; no unmeasured pruning. Coordinator-only workflow excluded."
+    }
+  },
+  "workflows": {
+    "doctor": "docs/ai/workflows/doctor.md",
+    "verify": "docs/ai/workflows/verify.md",
+    "wrap-up": "docs/ai/workflows/wrap-up.md",
+    "orchestrate": "docs/ai/workflows/orchestrate.md"
+  },
+  "legacy_inventory": {
+    "agents": 22,
+    "commands": 21,
+    "skills": 12,
+    "rules": 28
+  },
+  "hidden_rules": [
+    "dependencies-and-supply-chain",
+    "forms-and-validation",
+    "i18n-and-formatting",
+    "observability-and-errors",
+    "performance-budgets",
+    "routing-and-data-loading",
+    "upgrade-policy"
+  ]
+}

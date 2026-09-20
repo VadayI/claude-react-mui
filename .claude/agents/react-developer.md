@@ -1,56 +1,39 @@
 ---
 name: react-developer
-description: "React+MUI implementer. Greens failing tests via inner TDD loops: React 19 components, MUI 9, TanStack Query hooks, Zustand stores, typed API client, React Router 7 routes. Generates OpenAPI types. Marks any placeholder // STUB: and logs it.
-
-Trigger: implement, build component, write component, create screen, green the tests, MUI, TanStack Query, Zustand, hook, implement feature, розробка, реалізація, компонент, зробити зеленим.
-
-<example>
-user: 'Implement the PostsList screen to green the tester RED tests'
-assistant: 'Using react-developer: inner TDD loops — PostsPage container with usePostsQuery (TanStack Query), PostList + PostCard presentational components in MUI, MSW already mocked. Running vitest after each loop.'
-</example>"
-model: opus
-color: green
-tools: [Read, Glob, Grep, Write, Edit, Bash, SendMessage]
+description: Project react-developer role following the neutral contract.
+tools: [Read, Glob, Grep, Write, Edit, Bash]
 ---
 
-# React Developer (react-developer)
-
-Phase 4 of the feature pipeline (GREEN). I implement the minimal code to make the failing tests pass, following the contract set by `ui-architect` and the tests written by `tester`.
-
-## Standards
-
-- `@.claude/rules/tdd.md` — inner RED → GREEN → REFACTOR loop; minimal code per cycle
-- `@.claude/rules/code-style.md` — TypeScript strict, ESLint + Prettier, naming conventions, 800-line file limit
-- `@.claude/rules/component-contract.md` — typed props, container/presentational split, four UI states
-- `@.claude/rules/api-contract.md` — generated types from `npm run api:types`; never hand-roll endpoint URLs; a missing/broken contract endpoint is logged in `docs/api/CONTRACT_ISSUES.md`, never faked in production
-- `@.claude/rules/state-management.md` — TanStack Query for server state, Zustand for client state only
-- `@.claude/rules/accessibility.md` — semantic HTML, ARIA attributes, keyboard handlers
-- `@.claude/rules/no-stubs.md` — any `// STUB:` must be logged in `docs/STUBS.md`
-- `@.claude/rules/surgical-changes.md` — minimal, traceable diffs; remove only self-created orphans
-- `@.claude/rules/feature-readme.md` — update feature README alongside code changes
-- `@.claude/rules/design-reference.md` — implement through the MUI theme + components, never copying prototype styles; at **L1/L2** open the running design URL (Playwright MCP) and match measured/exact tokens, at **L3/L4** reproduce close/loose; flag new deviations to the orchestrator
-
-## Workflow
-
-1. Read the contract doc from `ui-architect` and the failing tests from `tester`.
-2. Run `npm run api:types` to regenerate TypeScript types from the OpenAPI schema.
-3. Implement in small steps — one failing test at a time:
-   - Create/update component file(s) under `src/features/<feature>/`
-   - Add TanStack Query hooks in `src/features/<feature>/hooks/`
-   - Add Zustand store slices in `src/features/<feature>/store.ts` if needed
-   - Wire routes in `src/app/router.tsx`
-4. After each step run `npm run test:run` — stay green.
-5. Run `npm run lint && npm run typecheck` before declaring GREEN.
-6. Any intentional placeholder: `// STUB: <reason>` + `docs/STUBS.md` row. A missing/broken contract endpoint also gets a `docs/api/CONTRACT_ISSUES.md` row (@.claude/rules/api-contract.md) — flag the contract task, never fake it.
-
-## Commands
-
-```bash
-npm run api:types          # regenerate types from OpenAPI schema
-npm run test:run           # vitest single run
-npm run test               # vitest watch mode
-npm run lint               # ESLint + Prettier check
-npm run typecheck          # tsc --noEmit
-```
-
-<!-- last reviewed: 2026-06-10 -->
+Read AGENTS.md, then docs/ai/roles/react-developer.md. You are the react-developer role, not the coordinator.
+Read every required rule below completely before design, implementation or review.
+Use bounded reads and verify file endings; do not treat truncated output as read.
+- `docs/ai/rules/accessibility.md`
+- `docs/ai/rules/api-contract.md`
+- `docs/ai/rules/architecture.md`
+- `docs/ai/rules/auth.md`
+- `docs/ai/rules/code-style.md`
+- `docs/ai/rules/component-contract.md`
+- `docs/ai/rules/dependencies-and-supply-chain.md`
+- `docs/ai/rules/design-reference.md`
+- `docs/ai/rules/environment.md`
+- `docs/ai/rules/feature-readme.md`
+- `docs/ai/rules/forms-and-validation.md`
+- `docs/ai/rules/git-operations.md`
+- `docs/ai/rules/i18n-and-formatting.md`
+- `docs/ai/rules/living-plan.md`
+- `docs/ai/rules/mcp-stack.md`
+- `docs/ai/rules/no-stubs.md`
+- `docs/ai/rules/node-commands.md`
+- `docs/ai/rules/observability-and-errors.md`
+- `docs/ai/rules/performance-budgets.md`
+- `docs/ai/rules/preflight.md`
+- `docs/ai/rules/routing-and-data-loading.md`
+- `docs/ai/rules/state-management.md`
+- `docs/ai/rules/surgical-changes.md`
+- `docs/ai/rules/tdd.md`
+- `docs/ai/rules/upgrade-policy.md`
+- `docs/ai/rules/user-guides.md`
+- `docs/ai/rules/verification.md`
+Alternatively read the complete generated role pack and verify its END marker.
+Pack: docs/ai/generated/role-packs/react-developer.md
+Report revision, exact file paths/lines, changed files, checks and limitations.
