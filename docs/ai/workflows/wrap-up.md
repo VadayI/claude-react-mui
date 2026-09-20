@@ -15,6 +15,12 @@ mutations when acting as coordinator. Preserve the initial inventory of foreign 
 4. Create logical commits on a task branch, never main. Validate the actual candidate
    and base in a separate checkout with the selected full checks. Dirty-tree tests
    alone are not push evidence. P05/P08 will automate this currently explicit process.
+   When constructing a commit through a separate index/plumbing, reconcile only
+   the committed task hunks into the real index afterward, preserving every foreign
+   staged/unstaged hunk. Compare the resulting cached diff with the saved foreign
+   patch. Leaving newly committed task content staged for reversal or a new task
+   file staged for deletion is a failure, not a cosmetic status artifact. Do not
+   blindly add a mixed file if it also contains foreign unstaged edits.
 5. Push without force, create/update the existing PR, verify remote and PR head.
    A network error requires state inspection before retry. In local mode do not
    dispatch Actions; in GitHub mode wait for exact-head required checks. No CI choice

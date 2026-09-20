@@ -41,3 +41,25 @@ This command installs the **pilot instruction payload**. The legacy full-project
 installer remains separate until the P06/P12 migration; do not use its `--force`
 as a conflict-resolution mechanism. Full transactional rollback and production
 core pinning are not claimed by this pilot.
+
+## Separate role sessions
+
+When native Codex role selection is unavailable, invoke a separate role session:
+
+```text
+python scripts/ai/run_role.py codex react-developer --task-file docs/task.md --dry-run
+python scripts/ai/run_role.py codex react-developer --task-file docs/task.md --delivery role-pack
+```
+
+The task file must be a repository-contained non-secret file. Claude uses the
+native generated role; Codex receives the same explicit role contract in a fresh
+session. Models inherit runtime settings. Reviewers use read-only tools/sandbox.
+No trust bypass, global permissions or automatic approval policy is enabled.
+Denied Git operations remain blocked; do not interpret a transcript as success.
+Raw transcripts/metadata go only to gitignored `.ai-runtime/sessions`; commit
+sanitized evidence summaries to shared docs separately. CLI print-mode should
+only be used in reviewed project directories, never untrusted foreign code.
+
+This launcher implements the measured fallback, not independent review or a
+claim that Codex native custom roles work. File-list versus pack acceptance is
+still being measured in P03. Use `--dry-run` to inspect argv without execution.

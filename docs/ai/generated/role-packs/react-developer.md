@@ -816,13 +816,19 @@ At the end of a session, update and commit: `docs/WORKLOG.md`, and if needed `.c
 <!-- END SOURCE docs/ai/rules/git-operations.md -->
 
 
-<!-- SOURCE docs/ai/rules/i18n-and-formatting.md SHA256 12a871ed3d8a906ad2d59772b807bfa8d5d1c8d8cf3e972bbf802b136ee41479 -->
+<!-- SOURCE docs/ai/rules/i18n-and-formatting.md SHA256 25d70fc85ac2931f86995dac437eedd2544c4f13c627c52a48803a9a41b0ecf1 -->
 
 # Internationalization & formatting (translatable, locale-correct)
 
 Even a single-language app should be **structurally translatable** and **locale-correct** from day one — retrofitting i18n after strings are hardcoded across the tree is expensive and error-prone. This project keeps user-facing text out of components, formats dates/numbers/currency through the platform `Intl` APIs, and treats locale and direction (LTR/RTL) as first-class.
 
 ## Strings live in resources, not in JSX
+
+In this template, locale resources and `src/lib/i18n.ts` also feed the reusable
+`templates/i18n/` seed. After changing those sources, deliberately run
+`python scripts/seed-i18n.py --sync`, inspect the seed diff, then run `--check`.
+Passing application tests does not prove seed consistency. Keep both supplied
+locales complete; do not update only the app while shipping an older seed.
 
 - User-facing text goes through **react-i18next** (`useTranslation` / `t('key')`), with messages in `src/locales/<lng>/<namespace>.json` keyed by feature namespace. **No hardcoded display strings in components** — a literal in JSX that the user can read is a defect.
 - Keys are **semantic, not English sentences** (`todos.empty.title`, not `'No todos yet'`), so copy changes don't churn keys.

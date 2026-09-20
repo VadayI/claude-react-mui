@@ -186,7 +186,7 @@
     },
     "docs/ai/README.md": {
       "ownership": "template",
-      "sha256": "78f71ee38f3e1833f2d57b0167961cb6c931ef6161275f895325429f768f9459"
+      "sha256": "cbc788ebdb6cf0b49f0e036c03340b323790ef9f3756d131d3ce96565b0dce32"
     },
     "docs/ai/catalog.json": {
       "ownership": "template",
@@ -194,23 +194,27 @@
     },
     "docs/ai/compatibility.md": {
       "ownership": "template",
-      "sha256": "db4c65c0dec2df60c0c836de4577d88d8a878f33086ca254bb5411ffe3b3ca25"
+      "sha256": "5991ceb01b701ffd6aa7412eef58c9f5805679a45f73f48ba65807e8fddebd40"
     },
     "docs/ai/generated/role-packs/react-developer.md": {
       "ownership": "template",
-      "sha256": "3810dd81f020d6ba11566d4ce787c43f799aa7eeef0287f22e8432165a842cc1"
+      "sha256": "840ffb096689381dee1b57ee185fc1df17bfc193fce92341bfb8b2c72ba0164f"
     },
     "docs/ai/generated/role-packs/reviewer.md": {
       "ownership": "template",
-      "sha256": "83dceb42c52a070c8e1079928b7ed6c2af629f1aa600ad547ffc80ab35b8533b"
+      "sha256": "38ddb5568cd25a145a0e7d15f5253cd5a2fafc192f21dd40615c48435611c27f"
     },
     "docs/ai/generated/role-packs/tester.md": {
       "ownership": "template",
-      "sha256": "7e3b1607cc0f6e98e5a94c40c12cf0fb8809f8c9dc8f593485305023dcc74f37"
+      "sha256": "ee8cb4fb65ef3680677f801d76a512a2c01b17d647148fa6882e2913a6e60ba2"
     },
     "docs/ai/generated/role-packs/ui-architect.md": {
       "ownership": "template",
-      "sha256": "dcc8ddca55e83d9561d0fc8d2acd591b21bb9e09504a8139064d2d8da2f333cf"
+      "sha256": "d6476935c010ea99ce0c26515c40b8264f629da5053ebd8e71daa96bf58f0c4b"
+    },
+    "docs/ai/pilot-report.md": {
+      "ownership": "template",
+      "sha256": "f5a754e2918b9552194d34eb4f50a2cc1cf101bf040cef7740f10dc3510256f6"
     },
     "docs/ai/roles/react-developer.md": {
       "ownership": "template",
@@ -278,7 +282,7 @@
     },
     "docs/ai/rules/i18n-and-formatting.md": {
       "ownership": "template",
-      "sha256": "12a871ed3d8a906ad2d59772b807bfa8d5d1c8d8cf3e972bbf802b136ee41479"
+      "sha256": "25d70fc85ac2931f86995dac437eedd2544c4f13c627c52a48803a9a41b0ecf1"
     },
     "docs/ai/rules/living-plan.md": {
       "ownership": "template",
@@ -354,7 +358,7 @@
     },
     "docs/ai/workflows/wrap-up.md": {
       "ownership": "template",
-      "sha256": "2c1e6e91ae3d6694e08385ef990d5e10aedbd01feec0709ee648831b8472899c"
+      "sha256": "995c5d116e9e18560978d36d0fdd0a7bf8bc657a67889f669dcf1280fe5b89fa"
     },
     "scripts/ai/generate.py": {
       "ownership": "template",
@@ -363,6 +367,10 @@
     "scripts/ai/install.py": {
       "ownership": "template",
       "sha256": "97d6e75c17ca820ae472c72f0ae302ce7361ec60532b0deb49f413588e8b86b5"
+    },
+    "scripts/ai/run_role.py": {
+      "ownership": "template",
+      "sha256": "8e27e855635f1430f8653b0e5ca56d78a3203ab64b6e1ac242b7e669dce780db"
     },
     "scripts/ai/test_delivery.py": {
       "ownership": "template",

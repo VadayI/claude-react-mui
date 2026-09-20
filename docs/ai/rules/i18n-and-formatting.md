@@ -4,6 +4,12 @@ Even a single-language app should be **structurally translatable** and **locale-
 
 ## Strings live in resources, not in JSX
 
+In this template, locale resources and `src/lib/i18n.ts` also feed the reusable
+`templates/i18n/` seed. After changing those sources, deliberately run
+`python scripts/seed-i18n.py --sync`, inspect the seed diff, then run `--check`.
+Passing application tests does not prove seed consistency. Keep both supplied
+locales complete; do not update only the app while shipping an older seed.
+
 - User-facing text goes through **react-i18next** (`useTranslation` / `t('key')`), with messages in `src/locales/<lng>/<namespace>.json` keyed by feature namespace. **No hardcoded display strings in components** — a literal in JSX that the user can read is a defect.
 - Keys are **semantic, not English sentences** (`todos.empty.title`, not `'No todos yet'`), so copy changes don't churn keys.
 - **Pluralization and interpolation** use i18next plural rules / `{{count}}` placeholders — never string concatenation (`` `${n} items` ``), which is grammatically wrong in most languages.
