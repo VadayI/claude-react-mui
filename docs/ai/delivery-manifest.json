@@ -206,7 +206,7 @@
     },
     "docs/ai/core-source.json": {
       "ownership": "template",
-      "sha256": "d17293fdd483e8b59615b88aed09e656a3ce3aa048454d333565f23358868cc1"
+      "sha256": "d48c126df08868ca4a88c3d08f13c8b6f9209a7883e00a635fe551fb4b43a7d7"
     },
     "docs/ai/decisions/0001-portable-family-core.md": {
       "ownership": "template",
