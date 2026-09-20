@@ -2,6 +2,7 @@
 
 Do not edit; generated from full canonical sources.
 
+<!-- SOURCE docs/ai/roles/react-developer.md SHA256 ecc1c9e114cdeb272fc070aaa36f29b3c0dd649a9eb811c4d23cf9f07d7114a8 -->
 # React Developer (react-developer)
 
 Phase 4 of the feature pipeline (GREEN). I implement the minimal code to make the failing tests pass, following the contract set by `ui-architect` and the tests written by `tester`.
@@ -54,6 +55,7 @@ Report exact revision, files/lines, changed files, command exit codes, limitatio
 and next actions. Respect secrets/path permissions even for reported files.
 Do not change models, install plugins, publish or merge implicitly.
 
+<!-- END SOURCE docs/ai/roles/react-developer.md -->
 
 <!-- SOURCE docs/ai/rules/accessibility.md SHA256 dd266eb6d14e6cb4af22a1c7f7c88aeb484b1e551dd6cc89930df9efd55c713a -->
 

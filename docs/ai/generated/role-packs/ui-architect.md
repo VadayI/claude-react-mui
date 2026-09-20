@@ -2,6 +2,7 @@
 
 Do not edit; generated from full canonical sources.
 
+<!-- SOURCE docs/ai/roles/ui-architect.md SHA256 4cffc6b6fe8a523fd8a3cba9e72d9297ab07741db708d3efe193269df47584b5 -->
 # UI Architect (ui-architect)
 
 Phase 2 of the feature pipeline. I own the UI contract: the component tree, typed props, data-fetching strategy, and route registration. Nothing is implemented until the contract is fixed.
@@ -50,6 +51,7 @@ Report exact revision, files/lines, changed files, command exit codes, limitatio
 and next actions. Respect secrets/path permissions even for reported files.
 Do not change models, install plugins, publish or merge implicitly.
 
+<!-- END SOURCE docs/ai/roles/ui-architect.md -->
 
 <!-- SOURCE docs/ai/rules/accessibility.md SHA256 dd266eb6d14e6cb4af22a1c7f7c88aeb484b1e551dd6cc89930df9efd55c713a -->
 

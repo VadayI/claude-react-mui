@@ -35,6 +35,12 @@ The whole framework is built around one discipline, adapted from _Obey the Testi
 
 ## Quick start
 
+The shared Claude/Codex core development integration is documented in
+[core integration](docs/ai/core-integration.md). Its Python 3.13+ AI installer
+delivers both adapters, full role packs, schemas and portable launchers without
+a plugin dependency. Use `make ai-claude` or `make codex` for the new launcher;
+the legacy Bash scaffold flow below remains pending CI-choice/bootstrap migration.
+
 > Run everything in **bash** — Linux / macOS / WSL2, or **Git Bash** on native Windows. Not PowerShell/cmd.
 
 ### Attach the config to a project — one-line seed

@@ -63,3 +63,10 @@ doctor-deps: ## Quick check that required host tools are present (node, npm, cla
 
 cc: ## Launch Claude Code with .env sourced (feeds MCP + gh secrets from .env).
 	bash scripts/claude.sh $(ARGS)
+
+.PHONY: ai-claude codex
+ai-claude: ## Launch Claude through the portable core (no dotenv execution).
+	python scripts/ai/launch.py claude $(ARGS)
+
+codex: ## Launch Codex through the portable core (no dotenv execution).
+	python scripts/ai/launch.py codex $(ARGS)
