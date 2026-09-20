@@ -23,3 +23,30 @@ by file creation. Merge requires a user command.
   now pass. Final full suite pending after final edits.
 - 2026-09-20: user explicitly selected a 200 KiB initial-JS budget; ADR 0029
   records cost and scope. Other budgets unchanged. No merge/deploy executed.
+
+## Separate baseline security remediation
+
+Current audit found 7 high/4 moderate findings in the inherited lock. Updated only
+identified vulnerable dependency families within compatible ranges, plus React Router
+7.18.0 → 7.18.2. No broad framework upgrade or audit exception. Final audit: zero
+high/critical, two moderate Vitest/mocker advisories retained for a separate update.
+
+| Package path | Before | After |
+|---|---|---|
+| `node_modules/@eslint/config-array/node_modules/brace-expansion` | 5.0.6 | 5.0.12 |
+| `node_modules/@redocly/openapi-core` | 1.34.15 | 1.34.20 |
+| `node_modules/@redocly/openapi-core/node_modules/brace-expansion` | 2.1.1 | 2.1.7 |
+| `node_modules/@typescript-eslint/typescript-estree/node_modules/brace-expansion` | 5.0.6 | 5.0.12 |
+| `node_modules/baseline-browser-mapping` | 2.10.37 | 2.11.25 |
+| `node_modules/brace-expansion` | 1.1.15 | 1.1.21 |
+| `node_modules/browserslist` | 4.28.2 | 4.29.0 |
+| `node_modules/caniuse-lite` | 1.0.30001799 | 1.0.30001810 |
+| `node_modules/electron-to-chromium` | 1.5.373 | 1.5.433 |
+| `node_modules/eslint/node_modules/brace-expansion` | 5.0.6 | 5.0.12 |
+| `node_modules/js-yaml` | 4.1.1 | 4.3.2 |
+| `node_modules/nanoid` | 3.3.12 | 3.3.19 |
+| `node_modules/node-releases` | 2.0.47 | 2.0.56 |
+| `node_modules/postcss` | 8.5.15 | 8.5.28 |
+| `node_modules/react-router` | 7.18.0 | 7.18.2 |
+| `node_modules/undici` | 7.28.0 | 7.29.1 |
+| `node_modules/update-browserslist-db` | 1.2.3 | 1.3.3 |

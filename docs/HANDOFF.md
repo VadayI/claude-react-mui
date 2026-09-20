@@ -9,8 +9,8 @@ This is preparatory P01 work, not completion of the family plan or runtime pilot
   typecheck/lint/build. Final i18n Linux run still pending.
 - User explicitly set initial JS gzip budget to 200 KiB; other budgets unchanged.
 - Seed delivery: four fresh/repeat/conflict/drift/path fixtures passed.
-- npm audit: 7 high, 4 moderate findings. Targeted remediation is next;
-  the full verification profile is not green while high findings remain.
+- npm audit remediation: zero high/critical; two moderate Vitest/mocker findings
+  remain documented for separate maintenance. Full candidate checks continue.
 - See `docs/plans/0005-agent-neutral-implementation.md` and ADR 0029.
 - No push, PR or merge yet. Preserve original checkout refs/stash/untracked files.
 
