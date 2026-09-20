@@ -37,16 +37,20 @@ def main() -> int:
     generated[MANIFEST] = pending[MANIFEST] if MANIFEST in pending else read_source(root, MANIFEST)
     if len(read_source(root, "AGENTS.md").encode("utf-8")) > 16384:
         raise ValueError("AGENTS.md exceeds the 16 KiB pilot budget")
-    sources = ["AGENTS.md", ".claude/settings.json", ".codex/config.toml"]
+    sources = ["AGENTS.md", ".claude/settings.json", ".codex/config.toml",
+               "scripts/claude.sh", "scripts/claude.ps1"]
     sources += [p.relative_to(root).as_posix() for p in sorted((root / "scripts/ai").glob("*")) if p.is_file() and p.suffix in (".py", ".sh", ".ps1")]
     sources += [p.relative_to(root).as_posix() for p in sorted((root / "docs/ai").rglob("*"))
                 if p.is_file() and "generated" not in p.parts and "overrides" not in p.parts
                 and p.name != "delivery-manifest.json"]
     sources += [p.relative_to(root).as_posix() for p in sorted((root / "templates/ai").rglob("*")) if p.is_file()]
     manifest = {"schema_version": 1, "phase": "P04-development-pin", "files": {}}
+    legacy = json.loads(read_source(root, "templates/ai/legacy-launchers.json"))
     for path in sources:
         text = read_source(root, path)
         manifest["files"][path] = {"sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(), "ownership": "template"}
+        if path in legacy:
+            manifest["files"][path]["legacy_sha256"] = legacy[path]
     for path, text in generated.items():
         manifest["files"][path] = {"sha256": hashlib.sha256(text.encode("utf-8")).hexdigest(), "ownership": "mixed" if path == "CLAUDE.md" else "template"}
     for path in ("AGENTS.md", ".claude/settings.json", ".codex/config.toml"):

@@ -101,10 +101,10 @@ which claude    # WSL2/Linux/macOS: expect /home/... or /usr/...  (if /mnt/c/...
 #      GITHUB_PERSONAL_ACCESS_TOKEN=...   # fine-grained PAT: Contents RW, Metadata RO,
 #                                         #   Pull requests RW, Workflows RW, Administration RW (github MCP + gh)
 #      CONTEXT7_API_KEY=...               # context7 docs MCP key
-#    Claude Code does NOT auto-load .env — the step-3 wrapper sources EVERY var
+#    Claude Code does NOT auto-load .env — the step-3 wrapper reads selected keys as literal data
 #    into the claude process and mirrors the PAT to GH_TOKEN for gh.
 
-# 3. Launch Claude Code in the project (sources .env) and let it drive setup:
+# 3. Launch Claude Code in the project (reads selected .env data) and let it drive setup:
 make cc      # = bash scripts/claude.sh; plain `claude` will not see .env secrets
 #    native Windows (no make): launch the wrapper directly in Git Bash —
 #      bash scripts/claude.sh
@@ -234,3 +234,15 @@ and the user-approved 200 KiB initial-JS budget. Other bundle budgets remain.
 New bootstrap projects receive the same resources from `templates/i18n` via
 `python scripts/seed-i18n.py --target .` (Python 3.13+ tooling prerequisite).
 `--check` verifies mirrors; existing project translations are never overwritten.
+
+### Safe legacy launcher migration
+
+`make cc`, `scripts/claude.sh` and `scripts/claude.ps1` now use a shared Python
+compatibility launcher. Selected dotenv values are literal data: shell statements,
+substitutions and unknown application environment keys are not executed or passed.
+The PAT/GH_TOKEN precedence and blank-placeholder fallback are preserved only in
+the child process; PowerShell caller variables remain unchanged. CLI arguments and
+exit status are forwarded. Applications load their own runtime environment.
+
+This candidate uses integrated core commit 485bb7ae64e5c09ce046ea5cae6e92fd641a7ffe from merged contract PR #57. Delivery was regenerated and checked. Exact known template wrappers migrate by hash;
+custom wrappers conflict and remain unchanged. Full bootstrap/CI migration pending.

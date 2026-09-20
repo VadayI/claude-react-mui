@@ -137,3 +137,16 @@ React 19 · Vite 8 · TypeScript 6 · MUI 9 · React Router 7 · TanStack Query 
 - `docs/plans/0004-stack-upgrade-latest-versions.md` — living plan for the full upgrade sequence (COMPLETE)
 - `.performance-budget.json` — `initialJsGzipKb` 145
 - `.npmrc` — `legacy-peer-deps=true` (peer stopgap; removal deferred — see Next steps)
+
+## 2026-09-20 — safe legacy launcher checkpoint
+
+Shared compatibility source: integrated contract commit 485bb7ae64e5c09ce046ea5cae6e92fd641a7ffe.
+Contract core tests: Windows 43 PASS + 1 symlink SKIP; Linux all 44 PASS.
+Django/React pins reference merged contract PR #57 at integrated commit 485bb7ae64e5c09ce046ea5cae6e92fd641a7ffe.
+Legacy .env is parsed as selected literal data, never executed; credentials affect
+only the child, preserving blank fallback and PAT precedence. Known legacy wrappers
+migrate by exact hash; custom wrappers conflict before writes. Windows PowerShell
+and Git Bash version probes passed. These are not model-session acceptance.
+React actual main-to-candidate upgrade/generator check passed; Django old-seed
+component upgrade/repeat passed. Full bootstrap, CI-choice and P05+ remain pending.
+All PRs remain unmerged; a new explicit user command is required for merge.

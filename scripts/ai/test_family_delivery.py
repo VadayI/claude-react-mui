@@ -58,6 +58,19 @@ class FamilyDeliveryTests(unittest.TestCase):
         self.assertEqual(notes.read_text(encoding="utf-8"), "Project-owned notes\n")
         self.assertEqual(custom.read_text(encoding="utf-8"), "# Local customization\n")
 
+    def test_custom_legacy_wrapper_is_preserved(self):
+        """Keep an unknown wrapper outside the exact legacy-hash migration.
+
+        No arguments/return value. Writes fixture files only; no network/DB.
+        Assertions fail if migration silently claims a customized launcher.
+        """
+        custom = self.target / "scripts/claude.sh"
+        custom.parent.mkdir(parents=True)
+        custom.write_text("# custom wrapper\n", encoding="utf-8")
+        _, conflicts = delivery.plan(ROOT, self.target)
+        self.assertEqual(conflicts, ["scripts/claude.sh"])
+        self.assertEqual(custom.read_text(encoding="utf-8"), "# custom wrapper\n")
+
 
 if __name__ == "__main__":
     unittest.main()
