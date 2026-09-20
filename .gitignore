@@ -47,3 +47,6 @@ test-results/
 # Python template tooling
 __pycache__/
 *.py[cod]
+
+# Local role transcripts and evidence (never project memory)
+.ai-runtime/

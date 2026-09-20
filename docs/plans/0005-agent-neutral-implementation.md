@@ -50,3 +50,12 @@ high/critical, two moderate Vitest/mocker advisories retained for a separate upd
 | `node_modules/react-router` | 7.18.0 | 7.18.2 |
 | `node_modules/undici` | 7.28.0 | 7.29.1 |
 | `node_modules/update-browserslist-db` | 1.2.3 | 1.3.3 |
+
+## P03 measured adapter corrections — 2026-09-20
+
+P01 PR #68 passed hosted quality and Linux E2E at 9581f9c; merge pending.
+P02 candidate 212036d now has explicit separate-role launch tooling without trust
+or model overrides. Pilot findings require full-pack/read-completeness evidence,
+seed synchronization after locale edits, and real-index reconciliation after
+plumbing commits. See docs/ai/pilot-report.md for successes, failures and pending
+runtime permissions; neither P03 nor the full implementation plan is complete.
