@@ -629,7 +629,9 @@
     "doctor": "docs/ai/workflows/doctor.md",
     "verify": "docs/ai/workflows/verify.md",
     "wrap-up": "docs/ai/workflows/wrap-up.md",
-    "orchestrate": "docs/ai/workflows/orchestrate.md"
+    "orchestrate": "docs/ai/workflows/orchestrate.md",
+    "bootstrap": "docs/ai/workflows/bootstrap.md",
+    "update-from-template": "docs/ai/workflows/update-from-template.md"
   },
   "legacy_inventory": {
     "agents": 22,

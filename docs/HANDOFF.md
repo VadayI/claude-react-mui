@@ -150,3 +150,20 @@ and Git Bash version probes passed. These are not model-session acceptance.
 React actual main-to-candidate upgrade/generator check passed; Django old-seed
 component upgrade/repeat passed. Full bootstrap, CI-choice and P05+ remain pending.
 All PRs remain unmerged; a new explicit user command is required for merge.
+
+
+## 2026-09-20 — production bootstrap delivery checkpoint
+
+Branch `feat/production-bootstrap-integration` starts from integrated React main
+`afb35e8868412581a94af57f658bbb4b01264597`. The contract core stays pinned to
+integrated `485bb7ae64e5c09ce046ea5cae6e92fd641a7ffe`.
+The Bash installer now calls the complete Python ownership preflight, with an
+explicit per-file seed inventory and linked-root rejection. Canonical bootstrap
+and update procedures generate Claude/Codex entry points and retain the installed
+runtime; custom instructions, project notes/language/overrides and live workflows
+are preserved. Legacy template-sync delegates to the same update contract.
+Windows: 13 delivery tests PASS, 1 host symlink SKIP; generation/core checks PASS.
+Actual previous-main plus legacy-scaffold update passed install/generator/core
+and empty-repeat checks. Final committed Git Bash and Linux evidence follows in
+this task's publication report. P05 runner, P06 CI activation, remaining P12 roles
+and P13 runnable-family/rollback acceptance are not claimed. No merge/deploy.

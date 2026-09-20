@@ -1063,3 +1063,15 @@ and Git Bash version probes passed. These are not model-session acceptance.
 React actual main-to-candidate upgrade/generator check passed; Django old-seed
 component upgrade/repeat passed. Full bootstrap, CI-choice and P05+ remain pending.
 All PRs remain unmerged; a new explicit user command is required for merge.
+
+
+### 2026-09-20 — shared bootstrap and ownership-preserving full seed
+
+Integrated legacy install/bootstrap/update entry points with the shared runtime.
+The complete reviewed seed inventory carries both agent adapters and all existing
+legacy scaffold inputs; unknown files are not automatically packaged. Root-link
+and secret-path fixtures protect delivery boundaries. Local custom instructions,
+project language, notes and runtime overrides survive install/update. See
+`docs/ai/migration.md` for ownership, explicit old hashes and remaining P05–P13
+migration boundaries. Core pin remains integrated 485bb7a. No app/dependency/API
+changes and no merge/release/deploy.
