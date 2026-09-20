@@ -194,7 +194,7 @@
     },
     "docs/ai/compatibility.md": {
       "ownership": "template",
-      "sha256": "0286916825f744135bdaec30fd004b616d4afae23e691c4df16bc11e209596b4"
+      "sha256": "656910662813ae9737660beb85799356c4deb0e3d0b234ec72a5b88a10e71cb6"
     },
     "docs/ai/fixtures/README.md": {
       "ownership": "template",
@@ -222,11 +222,11 @@
     },
     "docs/ai/pilot-report.md": {
       "ownership": "template",
-      "sha256": "06e4fed000e212e0dc434df6de58e86aa091996d0c0e25716d9741b3476a1a43"
+      "sha256": "fbe3e400b071d11aa95b75486c9c02cbefbffa10c316be1ce83664074fb780e7"
     },
     "docs/ai/pilot-results.json": {
       "ownership": "template",
-      "sha256": "1f6335cbedd2c6a98e975afbc9c8cd5359bbc0b65140e2b393bb2ad6eb1774d8"
+      "sha256": "3ee4c2b7a178f81b904b3b33ceb4c1b92204a7fd4edfc2e161bfdc3d49b93d1d"
     },
     "docs/ai/roles/react-developer.md": {
       "ownership": "template",

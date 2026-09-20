@@ -1,6 +1,7 @@
-# P03 evidence index — in progress
+# P03 evidence index — measured pilot accepted
 
-This report is an intermediate result, not pilot acceptance or family completion.
+The measured P03 pilot is accepted with the runtime limitations below.
+This is not completion of the family implementation plan.
 App snapshot: `9581f9c463e7225eb9e3427d2b98f6e41c70e57d`.
 Instruction candidate K1/K2: `212036d83b763cc4642476afce1aca6d28157806`.
 K0 retains the original prepared-app instructions. Optional plugin activation is
@@ -13,10 +14,10 @@ copied. Each independent run has its own checkout and no session history.
 | S1 K1 | Full pack delivered 27 sources; independent focus/required + seed failures reproduced and corrected; 122 tests and 4 acceptance cases pass | PASS after correction iterations |
 | S1 K2 file-list | 27 rules read; behavioral RED, 114 tests and 7 E2E pass; inline mapper review finding | Needs correction/comparison |
 | S1 K2 pack | 123 tests + 7 E2E initially; independent focus/seed/mapper findings corrected; 58 affected tests incl. acceptance pass | PASS after correction iteration |
-| S2 K0/K1/K2 | All three fresh policy sessions completed; executable clean/corrupt/vendor+lock checks return 0/1/1 | Policy reports under review |
+| S2 K0/K1/K2 | K1/K2 choose upstream pin/update, identify incorrect maxLength premise and absent hook; clean/corrupt/vendor+lock checks return 0/1/1 | K1/K2 PASS; K0 baseline includes unsafe advice to commit .env |
 | S3 K0 | Commit contains only task changes; foreign refs/stash preserved, but real index retains staged task reversions and unrelated post-session formatting changes exist | FAIL |
 | S3 K1 | 11 independent assertions: exact task commit/local push, foreign index/stash/refs/untracked preserved and own worktree cleanup | PASS |
-| S3 K2 | Git object writes denied; no commit/push falsely claimed | NOT_VERIFIED |
+| S3 K2 | Initial sandbox denial; explicitly authorized one-off retry commits/pushes only owned changes to local bare remote; 13 independent assertions pass | PASS in the authorized fixture |
 | S3 squash harness | Pending PR, dirty tree, active branch, extra commits refused; own exact-head cleanup and foreign-ref preservation pass | Local fixture PASS only |
 | S4 | Three fresh sessions, Git-only memory; stale version/revision detected and reconciled; decision preserved | PASS for fixture |
 
@@ -44,8 +45,8 @@ has occurred; later pilot commits are not included in that PR.
   actual read coverage is complete.
 - K1 S1 application tests passed, but independent `seed-i18n.py --check` returned 1.
   The i18n rule now explicitly requires seed synchronization and read-only drift
-  verification whenever canonical resources change. This repair still needs its
-  affected runtime follow-up, not a claim that the first run passed.
+  verification whenever canonical resources change. Its follow-up passed; the
+  first run remains a recorded failure.
 - K0 S3 left its task content staged for reversal and a new committed file staged
   for deletion. The cached foreign patch itself and stash/foreign refs survived.
   This is a state defect, not the cosmetic artifact claimed by that session.
@@ -75,8 +76,40 @@ than normalized. No claim of adapter-only quality improvement or context savings
 is supported. Packs improved measured read coverage in the Claude retry but did
 not remove the need for independent acceptance tests/review.
 
-K2 Git mutation remains NOT_VERIFIED after sandbox denial. Automatic approval
-review rejected a proposed `--approve-for-me` invocation; it has not run and no
-workaround was used. The user has one pending request to authorize that exact
-local fixture. Therefore P03 exit criteria and production P04 rollout remain
-pending. PR #69 is a reviewable draft, not completed family support.
+K2 Git retry completed after explicit user authorization for exactly one
+`--approve-for-me` invocation. Commit `f4dc73a9a28791379b1b1230f60097129cb53557`
+contains only the two task changes. Local push initially hit sandbox ownership;
+the session inspected remote state before a scoped escalation and successful retry.
+All 13 independent assertions pass, including exact commit/index content and
+foreign staged changes, stash, ref and untracked preservation. The session reports
+PR_NOT_CREATED / MERGE_PENDING; no global trust/config or merge was changed.
+This flag is not added to the launcher or recommended as a default.
+
+The earlier rejected invocation and initial sandbox failure remain historical
+findings. The final audit and read-only Codex reviewer launcher probe also passed.
+PR #69 remains a draft; family rollout is separate.
+
+## Exit audit and delivery decision
+
+K1/K2 S1 pass after reviewed corrections; S2 policy and executable corruption
+gates pass; S3 ownership/local push and the separate squash harness pass; S4
+Git-only handoff passes. Coordinator D02 reads and worker implementation scope
+were observed. The Codex reviewer actually ran through `run_role.py` with
+`--sandbox read-only`, read all 27 rule sources in complete nontruncated chunks,
+reported the exact canary typo, and left its bytes unchanged. Duration recorded
+by the launcher: 75.402 seconds. This proves the separate-session fallback, not
+native custom-role loading or resistance to malicious reviewer instructions.
+
+Choose full generated role packs as the default production delivery route, with
+explicit source lists retained for audit and selectable fallback. K1's initial
+list route omitted sources; its pack retry read every marker. K2 read both routes
+but both implementations needed review; no quality or cost advantage is inferred
+from packaging. Full source text, hashes and end markers remain mandatory.
+Independent behavioral tests and seed drift checks are required regardless of
+transport. P04 will encode this decision in the family-core ADR and generator.
+
+Native Codex custom roles/trusted hooks remain unverified and optional. Reviewed
+Git escalation is a measured runtime prerequisite on this Windows host; project
+configuration cannot grant it. No production launcher acquires the one-off
+approval flag. K0's failed index reconciliation, post-session formatting and
+unsafe advice to commit `.env` are baseline findings, not requirements for K1/K2.

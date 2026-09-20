@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "acceptance": "NOT_VERIFIED",
-  "blocking_check": "K2-S3 Git mutation capability; user permission pending after automatic approval rejection",
+  "acceptance": "PASS_WITH_DOCUMENTED_RUNTIME_LIMITATIONS",
+  "blocking_check": null,
   "app_snapshot": "9581f9c463e7225eb9e3427d2b98f6e41c70e57d",
   "instruction_candidate": "212036d83b763cc4642476afce1aca6d28157806",
   "correction_instructions": "9a99e6c",
@@ -21,10 +21,12 @@
     "S2-external-corruption": "PASS",
     "K0-S3-index-reconciliation": "FAIL",
     "K1-S3-owned-commit-and-foreign-state": "PASS",
-    "K2-S3-owned-commit-and-foreign-state": "NOT_VERIFIED",
+    "K2-S3-owned-commit-and-foreign-state": "PASS",
     "S3-squash-local-harness": "PASS",
     "S4-Git-memory-handoff": "PASS",
-    "D02-Claude-and-Codex-scope": "PASS"
+    "D02-Claude-and-Codex-scope": "PASS",
+    "K1-K2-S2-policy-review": "PASS",
+    "Codex-reviewer-separate-launcher": "PASS"
   },
   "runs": [
     {
@@ -506,6 +508,44 @@
         "output_tokens": 4159,
         "reasoning_output_tokens": 156
       }
+    },
+    {
+      "id": "K2-S3-retry",
+      "transcript_sha256": "aa0e3a9ea9ba5c092a2c717bbbca707450d4a0b14199c0cd421063ebf279765a",
+      "runtime_completed": true,
+      "observed_model": null,
+      "duration_ms": null,
+      "reported_cost_usd": null,
+      "usage": {
+        "input_tokens": 474441,
+        "cached_input_tokens": 443520,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 5160,
+        "reasoning_output_tokens": 391
+      },
+      "authorization": "Explicit user-authorized one-off --approve-for-me in disposable local Git fixture; no global changes",
+      "commit": "f4dc73a9a28791379b1b1230f60097129cb53557",
+      "independent_assertions": 13
+    },
+    {
+      "id": "Codex-reviewer-launcher",
+      "transcript_sha256": "4fc689f72563e87bc247e534d27939a0c28329a2df2b29ea69e92a4b6d2091f6",
+      "runtime_completed": true,
+      "observed_model": null,
+      "duration_ms": 75402,
+      "reported_cost_usd": null,
+      "usage": {
+        "input_tokens": 511576,
+        "cached_input_tokens": 445824,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1360,
+        "reasoning_output_tokens": 25
+      },
+      "sandbox": "read-only",
+      "native_custom_role": false,
+      "source_markers_read": 27,
+      "canary_unchanged": true
     }
-  ]
+  ],
+  "scope": "P03 measured pilot only; no production family rollout or integrated downstream pin"
 }
