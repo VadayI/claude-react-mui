@@ -190,6 +190,16 @@ class ReactGateTests(unittest.TestCase):
             (root / ".performance-budget.json").write_text(json.dumps(budget), encoding="utf-8")
             self.assertEqual(react_gate.bundle_budget(root), 1)
 
+    def test_playwright_config_delegates_server_lifecycle_to_wrapper(self):
+        """Prevent Playwright from starting a second server in wrapper mode.
+
+        No arguments/return. Reads the checked-in TypeScript config only; no writes,
+        subprocess, Git, DB, environment mutation, or network access.
+        """
+        config = (ROOT / "playwright.config.ts").read_text(encoding="utf-8")
+        self.assertIn("process.env.PLAYWRIGHT_BASE_URL ??", config)
+        self.assertIn("process.env.PLAYWRIGHT_EXTERNAL_SERVER === 'true' ? undefined", config)
+
 
 if __name__ == "__main__":
     unittest.main()

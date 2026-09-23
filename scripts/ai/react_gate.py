@@ -496,7 +496,12 @@ def e2e(root: Path) -> int:
         terminates the supervised process tree. No external network or DB is used.
     """
     env = dict(os.environ)
-    env.update({"VITE_MSW_ENABLED": "true", "VITE_API_BASE_URL": "http://127.0.0.1:5173"})
+    env.update({
+        "PLAYWRIGHT_BASE_URL": "http://127.0.0.1:5173",
+        "PLAYWRIGHT_EXTERNAL_SERVER": "true",
+        "VITE_MSW_ENABLED": "true",
+        "VITE_API_BASE_URL": "http://127.0.0.1:5173",
+    })
     options: dict[str, object] = {
         "cwd": root, "env": env, "stdout": subprocess.PIPE, "stderr": subprocess.STDOUT,
         "text": True, "encoding": "utf-8", "errors": "replace", "shell": False,
