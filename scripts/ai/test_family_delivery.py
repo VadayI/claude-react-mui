@@ -63,9 +63,9 @@ class FamilyDeliveryTests(unittest.TestCase):
         report = json.loads(detector.stdout)
         self.assertEqual(report["repository"]["status"], "NOT_VERIFIED")
         receipt = json.loads((self.target / "docs/ai/core-source.json").read_text(encoding="utf-8"))
-        self.assertEqual(receipt["source_commit"], "246717baa1c33fb4cf2ed38875efdf8ea577cacd")
-        self.assertEqual(receipt["pin_status"], "development")
-        self.assertNotIn("observed_upstream_main", receipt)
+        self.assertEqual(receipt["source_commit"], "2e985eeb4883ccb79151c6c5834d6f82186d46a1")
+        self.assertEqual(receipt["pin_status"], "integrated")
+        self.assertEqual(receipt["observed_upstream_main"], receipt["source_commit"])
         for name in ("scripts/ai/launch.ps1", "scripts/ai/launch.sh", "templates/ai/schemas/catalog.schema.json",
                      "scripts/ai/detector.py", "scripts/ai/runner.py", "docs/ai/runner.md",
                      "templates/ai/schemas/check-catalog.schema.json",
