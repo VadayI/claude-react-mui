@@ -1,4 +1,4 @@
-# Neutral instruction pilot
+# Shared instruction delivery
 
 `catalog.json` routes the full canonical rules and four pilot roles. Root
 `AGENTS.md` is the shared entry point; `CLAUDE.md`, runtime roles, command wrappers,
@@ -37,10 +37,14 @@ installation metadata, not a substitute for an authenticated upstream revision.
 No deletion, shell execution, dependency installation, workflow activation,
 credentials, trust changes or Git mutations occur during this delivery.
 
-This command installs the **pilot instruction payload**. The legacy full-project
-installer remains separate until the P06/P12 migration; do not use its `--force`
-as a conflict-resolution mechanism. Full transactional rollback and production
-core pinning are not claimed by this pilot.
+This command now installs the complete manifest payload, including legacy roles,
+commands, skills and scaffold inputs, plus the derived Makefile. The Bash
+`scripts/install.sh` launcher uses this same preflight; `--force` cannot bypass
+conflicts. Active workflows, memory, project notes, application code and real env
+files are not seeded. The complete bootstrap/update procedures have generated
+Claude and Codex entry points; see [migration.md](migration.md). Existing
+custom instructions require a reviewable reconciliation. Full transactional
+rollback, CI-choice materialization and full role migration remain later phases.
 
 ## Separate role sessions
 

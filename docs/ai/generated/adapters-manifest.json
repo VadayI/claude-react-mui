@@ -1,8 +1,16 @@
 {
   "files": {
+    ".agents/skills/bootstrap/SKILL.md": {
+      "ownership": "template",
+      "sha256": "5776ad75ca1ee02537d25e0c3f9f3a7032b2eeea1eb0e209b7dac3ecdfa9cf7c"
+    },
     ".agents/skills/doctor/SKILL.md": {
       "ownership": "template",
       "sha256": "e900a83dc20b53e49a0422f775a58ef8a11fd129032c3da50ccd6f455ca5557b"
+    },
+    ".agents/skills/update-from-template/SKILL.md": {
+      "ownership": "template",
+      "sha256": "592f3a60f20f64a02a80828473dd6b66e560ffe663d73d98e411daf5eb9e8176"
     },
     ".agents/skills/verify/SKILL.md": {
       "ownership": "template",
@@ -28,9 +36,17 @@
       "ownership": "template",
       "sha256": "1e29b16aa20ceea76e1b8b936ba8224e35a0b3a76730e12ce35cf1fdad8cec8e"
     },
+    ".claude/commands/bootstrap.md": {
+      "ownership": "template",
+      "sha256": "cbf35aa9c87948aec27cdbd6ccecf402764ae5b35c1ec6a4a0160c6083123b68"
+    },
     ".claude/commands/doctor.md": {
       "ownership": "template",
       "sha256": "6b88cf93431d749deec3de086a828e498a8c764b1443a0391c81a185989a864c"
+    },
+    ".claude/commands/update-from-template.md": {
+      "ownership": "template",
+      "sha256": "d260b70a3a213fb6b8bc5da35528196012ab72396fcf2028c4982fee91af051c"
     },
     ".claude/commands/verify.md": {
       "ownership": "template",
@@ -193,7 +209,7 @@
   "schema_version": 1,
   "sources": {
     "AGENTS.md": "da3869154fa94086fdd1afdf6492aabf7db5a368fe1733f6b2e483edb4be49c9",
-    "docs/ai/catalog.json": "e20b440977db4f870494493a9cbe32481fafae4e9d2e70d8328f3b74ffcabef3",
+    "docs/ai/catalog.json": "e30a1bb033141893095e06b31816f0c08a2c54c128ab5523ed119e8ae9c3d9b3",
     "docs/ai/roles/react-developer.md": "ecc1c9e114cdeb272fc070aaa36f29b3c0dd649a9eb811c4d23cf9f07d7114a8",
     "docs/ai/roles/reviewer.md": "246dc11d06d17d7c705ff986071bdbedea92d4a9e75efc987d3d8fc28e65a25a",
     "docs/ai/roles/tester.md": "884d756c8044b39d52af2f7632a959d9e00aaf74add348c326852a230f753892",
@@ -226,8 +242,10 @@
     "docs/ai/rules/user-guides.md": "594824c8516c77b1a94f46fa7bfac225405e24e9c8f892bc28e91e3d54a6fc6f",
     "docs/ai/rules/verification.md": "76bced84e7df5688906dc339db264e1bc6afc409484b436affdd063d4094a0f5",
     "docs/ai/rules/workflow.md": "6d632cc86edc678b42469d6a215a1b94e23c8406e5138c21cc17bc9b023ba0df",
+    "docs/ai/workflows/bootstrap.md": "5ea8b18b1bb51a5f5399adb3bf14258054666f777160bd4113ab3fbc8a66214a",
     "docs/ai/workflows/doctor.md": "14d6faef3ac769fb8c2e743159b3689726fc19646841942dd9cded2f02385477",
     "docs/ai/workflows/orchestrate.md": "c2e2a5fbd02366885eac402254deaf456788bd5e78a1d70c265a27650ea4230c",
+    "docs/ai/workflows/update-from-template.md": "9715916bd24f979bac040126fc571f7a7dc63e8f860beabc9d0d4cfd1559b1cb",
     "docs/ai/workflows/verify.md": "682aa5e3f5abc30fc55f38529e75970d2162397cd8fe3e693b5bd9d82a7af39b",
     "docs/ai/workflows/wrap-up.md": "995c5d116e9e18560978d36d0fdd0a7bf8bc657a67889f669dcf1280fe5b89fa"
   }

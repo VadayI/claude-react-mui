@@ -1,10 +1,28 @@
-"""Install neutral pilot instructions with explicit, non-destructive updates."""
+"""Install the complete React template payload with ownership-aware updates."""
 
 import argparse
 import hashlib
 import json
 from pathlib import Path
 import sys
+
+
+def validate_root(root: Path) -> Path:
+    """Reject linked ancestors before reading or writing an installation tree.
+
+    Args: root is a source or target directory, including a not-yet-created path.
+    Returns: The lexical absolute path after checking every existing ancestor.
+    Raises: ValueError for symlink/junction traversal or a nondirectory ancestor;
+        filesystem metadata errors propagate. No DB/network or file writes occur.
+    Business rule: A missing final directory does not make a linked parent safe.
+    """
+    absolute = root.absolute()
+    for path in (absolute, *absolute.parents):
+        if path.is_symlink() or path.is_junction():
+            raise ValueError(f"Linked installation root ancestor: {path}")
+        if path.exists() and not path.is_dir():
+            raise ValueError(f"Installation root ancestor is not a directory: {path}")
+    return absolute
 
 
 def contained(root: Path, name: str) -> Path:
@@ -16,7 +34,7 @@ def contained(root: Path, name: str) -> Path:
     Side effects: Filesystem metadata reads only; no database or network access.
     """
     relative = Path(name)
-    if relative.is_absolute() or not relative.parts or ".." in relative.parts:
+    if relative.is_absolute() or not relative.parts or ".." in relative.parts or ":" in name or "\\" in name:
         raise ValueError(f"Unsafe path: {name}")
     path = root
     for part in relative.parts:
@@ -46,10 +64,13 @@ def plan(source: Path, target: Path) -> tuple[dict[str, str], list[str]]:
         OSError/UnicodeError for unreadable files.
     Business rules: Missing/identical files are safe. Previously installed,
         unmodified template files may update; mixed-ownership entry points require
-        manual reconciliation when different. Exact known legacy launchers may
-        migrate using an explicit source-manifest hash. No deletion or execution.
+        manual reconciliation when different. Exact known legacy entry points may
+        migrate using an explicit source-manifest hash. Source aliases deliver
+        the derived Makefile without replacing a customized project Makefile.
+        No deletion or execution; project files absent from the manifest stay intact.
     Side effects: Reads project and template files only; no DB or network access.
     """
+    source, target = validate_root(source), validate_root(target)
     manifest_name = "docs/ai/delivery-manifest.json"
     manifest_text = contained(source, manifest_name).read_text(encoding="utf-8")
     manifest = json.loads(manifest_text)
@@ -61,7 +82,7 @@ def plan(source: Path, target: Path) -> tuple[dict[str, str], list[str]]:
         raise ValueError("Unsupported installed manifest")
     pending, conflicts = {}, []
     for name, metadata in manifest["files"].items():
-        incoming = contained(source, name).read_text(encoding="utf-8")
+        incoming = contained(source, metadata.get("source", name)).read_text(encoding="utf-8")
         if digest(incoming) != metadata["sha256"]:
             raise ValueError(f"Source digest mismatch: {name}; regenerate first")
         destination = contained(target, name)
@@ -73,7 +94,7 @@ def plan(source: Path, target: Path) -> tuple[dict[str, str], list[str]]:
             continue
         old = previous.get("files", {}).get(name, {})
         owned = old.get("ownership") == "template" and digest(existing) == old.get("sha256")
-        legacy = name in ("scripts/claude.sh", "scripts/claude.ps1") and digest(existing) == metadata.get("legacy_sha256")
+        legacy = digest(existing) == metadata.get("legacy_sha256")
         if metadata["ownership"] == "template" and (owned or legacy):
             pending[name] = incoming
         else:

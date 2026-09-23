@@ -1,0 +1,6 @@
+{
+  ".claude/commands/bootstrap.md": "61b7f5783650828d649db43973a59b4d4ff31196ae72a77959f8e12aa74c0154",
+  ".claude/commands/update-from-template.md": "dcae3a30dbd277df69da03db3f63f885e3cc8a0f387307f04a235b67ef4a5885",
+  ".claude/agents/template-sync.md": "f9506caf28f8bf9a2f9a9e438db84905e07271011618ba2ad544804f0a786f8a",
+  "scripts/install.sh": "abc925037e676401aa1db40dffd0a9223632ba905f173296d8f450198a4640d5"
+}

@@ -71,6 +71,57 @@ class FamilyDeliveryTests(unittest.TestCase):
         self.assertEqual(conflicts, ["scripts/claude.sh"])
         self.assertEqual(custom.read_text(encoding="utf-8"), "# custom wrapper\n")
 
+    def test_complete_seed_preserves_runtime_and_inert_workflows(self):
+        """Deliver both runtimes and legacy functions without activating CI.
+
+        Args: None. Returns: None. Writes temporary payload files only; no DB or
+        network. AssertionError exposes missing adapters or unintended state.
+        """
+        self.install()
+        for name in ("AGENTS.md", "CLAUDE.md", ".codex/agents/react-developer.toml",
+                     ".agents/skills/bootstrap/SKILL.md", ".claude/commands/bootstrap.md",
+                     ".agents/skills/update-from-template/SKILL.md",
+                     "docs/ai/workflows/bootstrap.md", "scripts/seed-i18n.py",
+                     ".claude/agents/ba.md", ".claude/skills/react-specialist/SKILL.md",
+                     "templates/.github/workflows/frontend-ci.yml", "templates/.env.example"):
+            self.assertTrue((self.target / name).is_file(), name)
+        self.assertEqual((self.target / "Makefile").read_bytes(), (ROOT / "templates/Makefile").read_bytes())
+        for name in (".github/workflows", ".env", ".claude/memory", "docs/HANDOFF.md", "src", "package.json"):
+            self.assertFalse((self.target / name).exists(), name)
+
+    def test_custom_entrypoint_blocks_apply_before_any_other_writes(self):
+        """Keep custom CLAUDE text and the complete target unchanged on conflict.
+
+        Args: None. Returns: None. Runs the trusted installer subprocess against
+        a temporary directory; no network/DB. AssertionError reports lost data.
+        """
+        custom = self.target / "CLAUDE.md"
+        custom.write_text("Project custom instructions\n", encoding="utf-8")
+        result = subprocess.run([sys.executable, str(ROOT / "scripts/ai/install.py"),
+                                 "--target", str(self.target), "--apply"],
+                                capture_output=True, text=True, check=False)
+        self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
+        self.assertEqual(list(self.target.iterdir()), [custom])
+        self.assertEqual(custom.read_text(encoding="utf-8"), "Project custom instructions\n")
+
+    def test_project_preferences_and_unknown_files_survive_reinstall(self):
+        """Preserve project-only registries, language, notes, env and overrides.
+
+        Args: None. Returns: None. Writes synthetic temporary fixture text (no
+        credentials); no DB/network. AssertionError reports changed project data.
+        """
+        self.install()
+        names = (".claude/memory/routes.json", ".claude/rules/output-language.md",
+                 "docs/ai/overrides/custom.md", "docs/HANDOFF.md", ".env",
+                 ".claude/settings.local.json", ".github/workflows/custom.yml")
+        for name in names:
+            path = self.target / name
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text("project-only fixture\n", encoding="utf-8")
+        self.assertEqual(delivery.plan(ROOT, self.target), ({}, []))
+        for name in names:
+            self.assertEqual((self.target / name).read_text(encoding="utf-8"), "project-only fixture\n")
+
 
 if __name__ == "__main__":
     unittest.main()
