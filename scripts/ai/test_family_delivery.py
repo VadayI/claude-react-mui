@@ -7,6 +7,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from ci_mode import workflow
 
 ROOT = Path(__file__).resolve().parents[2]
 SPEC = importlib.util.spec_from_file_location("family_delivery", Path(__file__).with_name("install.py"))
@@ -25,8 +26,14 @@ class FamilyDeliveryTests(unittest.TestCase):
         self.target.mkdir()
 
     def install(self):
-        """Apply an entirely preflighted fixture payload; assert no conflicts, no DB."""
-        pending, conflicts = delivery.plan(ROOT, self.target)
+        """Apply the preflighted fixture with an explicit local CI selection.
+
+        Args: None; uses the temporary target created in setUp.
+        Returns: None after asserting conflict-free delivery.
+        Side effects: Writes only fixture files below the temporary target;
+            no database or network access. Installer errors fail the test.
+        """
+        pending, conflicts = delivery.plan(ROOT, self.target, "local")
         self.assertEqual(conflicts, [])
         for name, text in pending.items():
             path = self.target / name
@@ -86,7 +93,7 @@ class FamilyDeliveryTests(unittest.TestCase):
         catalog.write_text('{"custom": true}\n', encoding="utf-8")
         before = {path.relative_to(self.target): path.read_bytes()
                   for path in self.target.rglob("*") if path.is_file()}
-        _, conflicts = delivery.plan(ROOT, self.target)
+        _, conflicts = delivery.plan(ROOT, self.target, "local")
         self.assertEqual(conflicts, ["templates/ai/checks/react.json"])
         after = {path.relative_to(self.target): path.read_bytes()
                  for path in self.target.rglob("*") if path.is_file()}
@@ -114,12 +121,12 @@ class FamilyDeliveryTests(unittest.TestCase):
         custom = self.target / "scripts/claude.sh"
         custom.parent.mkdir(parents=True)
         custom.write_text("# custom wrapper\n", encoding="utf-8")
-        _, conflicts = delivery.plan(ROOT, self.target)
+        _, conflicts = delivery.plan(ROOT, self.target, "local")
         self.assertEqual(conflicts, ["scripts/claude.sh"])
         self.assertEqual(custom.read_text(encoding="utf-8"), "# custom wrapper\n")
 
     def test_complete_seed_preserves_runtime_and_inert_workflows(self):
-        """Deliver both runtimes and legacy functions without activating CI.
+        """Deliver both runtimes and only a manual active workflow.
 
         Args: None. Returns: None. Writes temporary payload files only; no DB or
         network. AssertionError exposes missing adapters or unintended state.
@@ -133,7 +140,11 @@ class FamilyDeliveryTests(unittest.TestCase):
                      "templates/.github/workflows/frontend-ci.yml", "templates/.env.example"):
             self.assertTrue((self.target / name).is_file(), name)
         self.assertEqual((self.target / "Makefile").read_bytes(), (ROOT / "templates/Makefile").read_bytes())
-        for name in (".github/workflows", ".env", ".claude/memory", "docs/HANDOFF.md", "src", "package.json"):
+        active = (self.target / ".github/workflows/frontend-ci.yml").read_text(encoding="utf-8")
+        self.assertIn("workflow_dispatch:", active)
+        self.assertNotIn("  push:", active)
+        self.assertNotIn("  pull_request:", active)
+        for name in (".env", ".claude/memory", "docs/HANDOFF.md", "src", "package.json"):
             self.assertFalse((self.target / name).exists(), name)
 
     def test_custom_entrypoint_blocks_apply_before_any_other_writes(self):
@@ -145,7 +156,7 @@ class FamilyDeliveryTests(unittest.TestCase):
         custom = self.target / "CLAUDE.md"
         custom.write_text("Project custom instructions\n", encoding="utf-8")
         result = subprocess.run([sys.executable, str(ROOT / "scripts/ai/install.py"),
-                                 "--target", str(self.target), "--apply"],
+                                 "--target", str(self.target), "--ci-mode", "local", "--apply"],
                                 capture_output=True, text=True, check=False)
         self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
         self.assertEqual(list(self.target.iterdir()), [custom])
@@ -168,6 +179,73 @@ class FamilyDeliveryTests(unittest.TestCase):
         self.assertEqual(delivery.plan(ROOT, self.target), ({}, []))
         for name in names:
             self.assertEqual((self.target / name).read_text(encoding="utf-8"), "project-only fixture\n")
+
+    def test_ci_mode_choice_switch_and_custom_workflow(self):
+        """Require an initial choice, switch owned workflow, and preserve edits.
+
+        Args: None; uses a temporary derived project.
+        Returns: None after assertions on local/GitHub rendering and receipts.
+        Raises: AssertionError if selection, repeat, or ownership is incorrect.
+        Side effects: Writes only temporary fixture files; no database or network.
+        Business rule: A custom active workflow blocks the whole update before
+            writing a new CI receipt or changing project-owned preferences.
+        """
+        with self.assertRaisesRegex(ValueError, "requires --ci-mode"):
+            delivery.plan(ROOT, self.target)
+        self.install()
+        project_path = self.target / "docs/project-state/project.json"
+        project = json.loads(project_path.read_text(encoding="utf-8"))
+        project["extensions"] = {"owner": "fixture"}
+        project_path.write_text(json.dumps(project, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        pending, conflicts = delivery.plan(ROOT, self.target, "github")
+        self.assertEqual(conflicts, [])
+        self.assertEqual(set(pending), {".github/workflows/frontend-ci.yml",
+                                        "docs/ai/ci-workflow-receipt.json",
+                                        "docs/project-state/project.json"})
+        for name, content in pending.items():
+            (self.target / name).write_text(content, encoding="utf-8", newline="\n")
+        active = (self.target / ".github/workflows/frontend-ci.yml").read_text(encoding="utf-8")
+        self.assertIn("  push:", active)
+        self.assertIn("  pull_request:", active)
+        self.assertIn("scripts/ai/runner.py --repository .", active)
+        self.assertIn('--candidate "$CI_CANDIDATE" --base "$base" --event "$event"', active)
+        local = workflow(ROOT, "local")
+        github = workflow(ROOT, "github")
+        self.assertEqual(local.split("\njobs:\n", 1)[1], github.split("\njobs:\n", 1)[1])
+        self.assertEqual(delivery.plan(ROOT, self.target), ({}, []))
+        self.assertEqual(json.loads(project_path.read_text(encoding="utf-8"))["extensions"],
+                         {"owner": "fixture"})
+        active_path = self.target / ".github/workflows/frontend-ci.yml"
+        active_path.write_text(active + "# project customization\n", encoding="utf-8")
+        snapshot = {path.relative_to(self.target).as_posix(): path.read_bytes()
+                    for path in self.target.rglob("*") if path.is_file()}
+        pending, conflicts = delivery.plan(ROOT, self.target, "local")
+        self.assertIn(".github/workflows/frontend-ci.yml", conflicts)
+        result = subprocess.run([sys.executable, str(ROOT / "scripts/ai/install.py"),
+                                 "--target", str(self.target), "--ci-mode", "local", "--apply"],
+                                capture_output=True, text=True, check=False)
+        self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
+        self.assertEqual(snapshot, {path.relative_to(self.target).as_posix(): path.read_bytes()
+                                    for path in self.target.rglob("*") if path.is_file()})
+        self.assertEqual(json.loads(project_path.read_text(encoding="utf-8"))["ci"]["execution"], "github")
+        self.assertNotEqual(pending.get("docs/project-state/project.json"), project_path.read_text(encoding="utf-8"))
+
+    def test_ci_workflow_rejects_unreviewed_trigger_template(self):
+        """Fail closed if the source workflow event structure changes.
+
+        Args: None; uses a temporary source fixture.
+        Returns: None after asserting rejection of an unreviewed schedule.
+        Raises: AssertionError if an automatic trigger is accepted silently.
+        Side effects: Writes one temporary YAML fixture; no database or network.
+        """
+        source = self.target / "source"
+        template = source / "templates/.github/workflows/frontend-ci.yml"
+        template.parent.mkdir(parents=True)
+        reviewed = (ROOT / "templates/.github/workflows/frontend-ci.yml").read_text(encoding="utf-8")
+        template.write_text(reviewed.replace("  merge_group:\n", "  schedule:\n    - cron: '0 6 * * 1'\n"),
+                            encoding="utf-8")
+        with self.assertRaisesRegex(ValueError, "Unexpected canonical"):
+            workflow(source, "local")
 
 
 if __name__ == "__main__":

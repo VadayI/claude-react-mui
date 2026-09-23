@@ -55,10 +55,11 @@ def digest(text: str) -> str:
     return hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
-def plan(source: Path, target: Path) -> tuple[dict[str, str], list[str]]:
+def plan(source: Path, target: Path, ci_mode: str | None = None) -> tuple[dict[str, str], list[str]]:
     """Preflight the complete payload and preserve locally customized files.
 
-    Args: source contains the generated manifest; target is the project directory.
+    Args: source contains the generated manifest; target is the project directory;
+        ci_mode is an explicit local/github choice for fresh projects or a switch.
     Returns: Pending UTF-8 writes and conflict paths; never writes either tree.
     Raises: ValueError for corrupt manifests, digest mismatches or unsafe paths;
         OSError/UnicodeError for unreadable files.
@@ -101,13 +102,29 @@ def plan(source: Path, target: Path) -> tuple[dict[str, str], list[str]]:
             conflicts.append(name)
     if not previous_path.exists() or previous_path.read_text(encoding="utf-8") != manifest_text:
         pending[manifest_name] = manifest_text
-    return pending, conflicts
+    if (source / "templates/.github/workflows/frontend-ci.yml").is_file():
+        import ci_mode as ci_delivery
+
+        if ci_mode is None:
+            project_path = contained(target, ci_delivery.PROJECT)
+            if not project_path.exists():
+                raise ValueError("Fresh install requires --ci-mode local or github before workflow activation")
+            project = json.loads(project_path.read_text(encoding="utf-8"))
+            ci_mode = project.get("ci", {}).get("execution")
+        ci_pending, ci_conflicts = ci_delivery.plan(source, target, ci_mode)
+        for name in ci_pending:
+            if name in pending:
+                raise ValueError(f"Overlapping CI delivery path: {name}")
+        pending.update(ci_pending)
+        conflicts.extend(ci_conflicts)
+    return pending, sorted(conflicts)
 
 
 def main() -> int:
     """Preview or apply a fully preflighted instruction delivery.
 
-    Args: CLI --target selects the project; --apply enables writes.
+    Args: CLI --target selects the project; --ci-mode selects local or github;
+        --apply enables writes. Existing projects reuse their saved choice.
     Returns: 0 for a valid plan/application, 1 for conflicts; argparse errors exit 2.
     Side effects: --apply creates only planned files/directories after preflight.
         Preview and conflicting plans write nothing. No subprocess/network/DB use.
@@ -115,6 +132,7 @@ def main() -> int:
     """
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--target", required=True, type=Path)
+    parser.add_argument("--ci-mode", choices=("local", "github"))
     parser.add_argument("--apply", action="store_true")
     args = parser.parse_args()
     if sys.version_info < (3, 13):
@@ -123,7 +141,7 @@ def main() -> int:
     target = args.target.absolute()
     if target.is_symlink() or target.is_junction():
         parser.error("Target cannot be a linked directory")
-    pending, conflicts = plan(source, target)
+    pending, conflicts = plan(source, target, args.ci_mode)
     print(json.dumps({"mode": "apply" if args.apply else "preview", "writes": sorted(pending), "conflicts": sorted(conflicts)}, indent=2))
     if conflicts:
         print("No files written. Reconcile conflicts explicitly; local files are preserved.")

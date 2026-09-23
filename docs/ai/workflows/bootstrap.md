@@ -173,7 +173,7 @@ Copy the gate + helper scripts from the template root `scripts/` (the template s
 
 ### Step 6: CI workflow
 
-Keep `templates/.github/workflows/frontend-ci.yml` inert. P06 must select CI mode and materialize the applicable workflow before any push; do not copy it into the active directory in this P04 checkpoint. The future runner must run: npm audit (high), typecheck, lint, check_file_size, check_stubs, check_feature_readmes, check_types_drift, check_contract_sync, check_plan_sync, check_routes_registry, check_guides_sync, test:cov, build, check_bundle_size, then Playwright e2e.
+Before the first push, run `python scripts/ai/install.py --target . --ci-mode local --apply` (recommended) or choose `github`. The installer saves the choice in `docs/project-state/project.json` and materializes `.github/workflows/frontend-ci.yml` from the inert template. Local mode has only `workflow_dispatch`; GitHub mode adds push, pull request and merge group events. Both invoke `scripts/ai/runner.py` with `templates/ai/checks/react.json`. Review the active workflow and selected project setting before creating the remote. A later explicit `--ci-mode` switches only an unchanged owned workflow; foreign workflows remain untouched and create a conflict.
 
 For **Variant B or C**: report the missing equivalent URL-source integrity check as NOT_VERIFIED; the existing GitHub-source gate cannot prove integrity for a live URL.
 

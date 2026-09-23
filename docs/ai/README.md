@@ -23,8 +23,8 @@ the verification procedure; executable replacement hooks are a later P06 step.
 After generation, preview the self-contained instruction payload for a target:
 
 ```text
-python scripts/ai/install.py --target "../derived project"
-python scripts/ai/install.py --target "../derived project" --apply
+python scripts/ai/install.py --target "../derived project" --ci-mode local
+python scripts/ai/install.py --target "../derived project" --ci-mode local --apply
 ```
 
 The first command never writes. The second preflights every source digest and
@@ -34,17 +34,28 @@ mixed-ownership entry points produce conflicts without any writes. Resolve those
 explicitly after reviewing the diff. Arbitrary local files are preserved.
 `delivery-manifest.json` records normalized UTF-8 hashes and ownership; it is
 installation metadata, not a substitute for an authenticated upstream revision.
-No deletion, shell execution, dependency installation, workflow activation,
-credentials, trust changes or Git mutations occur during this delivery.
+No deletion, shell execution, dependency installation, credentials, trust
+changes or Git mutations occur during this delivery. A fresh install requires
+`--ci-mode local` or `--ci-mode github`; the choice is saved in project-owned
+`docs/project-state/project.json` before the first push. Local mode materializes
+only a `workflow_dispatch` active workflow. GitHub mode adds automatic events.
+Both call the same exact-candidate runner catalog. An existing project reuses
+its saved choice unless an explicit switch is requested. Edited or foreign
+active workflows conflict before any file is written. A fresh project starts at
+the conservative `experiment` maturity until onboarding records a reviewed
+stage; the contract artifact path matches the checked-in React template. An
+initial GitHub push with a zero-OID previous commit cannot prove an exact base
+and fails the runner honestly; use a reviewed manual run with an explicit base
+once one exists.
 
 This command now installs the complete manifest payload, including legacy roles,
 commands, skills and scaffold inputs, plus the derived Makefile. The Bash
-`scripts/install.sh` launcher uses this same preflight; `--force` cannot bypass
-conflicts. Active workflows, memory, project notes, application code and real env
-files are not seeded. The complete bootstrap/update procedures have generated
+`scripts/install.sh` launcher uses this same preflight and accepts `--ci-mode`;
+`--force` cannot bypass conflicts. Memory, project notes, application code and
+real env files are not seeded. The complete bootstrap/update procedures have generated
 Claude and Codex entry points; see [migration.md](migration.md). Existing
 custom instructions require a reviewable reconciliation. Full transactional
-rollback, CI-choice materialization and full role migration remain later phases.
+rollback and full role migration remain later phases.
 
 ## Separate role sessions
 

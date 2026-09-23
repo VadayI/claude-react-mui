@@ -1,104 +1,59 @@
-name: Frontend CI
-
+name: React exact runner
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
+  merge_group:
   workflow_dispatch:
+    inputs:
+      base:
+        description: Exact ancestor commit for manual verification
+        required: true
+        type: string
+
+permissions:
+  contents: read
 
 jobs:
-  quality:
-    name: Quality Gates
+  checks:
+    name: Exact candidate checks
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
         with:
-          fetch-depth: 0 # full history so PR-diff gates can resolve the base ref
-
-      - name: Set up Node 24
-        uses: actions/setup-node@v6
+          fetch-depth: 0
+      - uses: actions/setup-node@v6
         with:
           node-version: '24'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Gate — npm audit (high/critical)
-        run: npm audit --audit-level=high
-
-      - name: Type check
-        run: npm run typecheck
-
-      - name: Lint
-        run: npm run lint
-
-      - name: Gate — file size
-        run: bash scripts/check_file_size.sh
-
-      - name: Gate — stubs
-        run: bash scripts/check_stubs.sh
-
-      - name: Gate — feature READMEs
-        run: bash scripts/check_feature_readmes.sh
-
-      - name: Gate — API types drift
-        run: bash scripts/check_types_drift.sh
-
-      - name: Gate — contract sync
-        run: bash scripts/check_contract_sync.sh
-
-      - name: Gate — living plan sync
-        env:
-          GATE_BASE: ${{ github.event.pull_request.base.sha }}
-        run: bash scripts/check_plan_sync.sh
-
-      - name: Gate — routes registry sync
-        env:
-          GATE_BASE: ${{ github.event.pull_request.base.sha }}
-        run: bash scripts/check_routes_registry.sh
-
-      - name: Gate — guides sync
-        env:
-          GATE_BASE: ${{ github.event.pull_request.base.sha }}
-        run: bash scripts/check_guides_sync.sh
-
-      - name: Test with coverage
-        run: npm run test:cov
-
-      - name: Build
-        run: npm run build
-
-      - name: Gate — bundle size
-        run: bash scripts/check_bundle_size.sh
-
-  e2e:
-    name: E2E Tests
-    runs-on: ubuntu-latest
-    needs: quality
-    steps:
-      - uses: actions/checkout@v5
-
-      - name: Set up Node 24
-        uses: actions/setup-node@v6
+      - uses: actions/setup-python@v5
         with:
-          node-version: '24'
-          cache: 'npm'
-
-      - name: Install dependencies
+          python-version: '3.13'
+      - name: Install pinned browser CLI
         run: npm ci
-
-      - name: Install Playwright browsers
+      - name: Install browser prerequisite
         run: npx playwright install --with-deps chromium
-
-      - name: Run E2E tests
-        run: npm run e2e
-
-      - name: Upload Playwright report
-        uses: actions/upload-artifact@v7
+      - name: Run exact-candidate catalog
+        env:
+          CI_EVENT: ${{ github.event_name }}
+          CI_CANDIDATE: ${{ github.sha }}
+          CI_PR_BASE: ${{ github.event.pull_request.base.sha }}
+          CI_PUSH_BASE: ${{ github.event.before }}
+          CI_MERGE_BASE: ${{ github.event.merge_group.base_sha }}
+          CI_MANUAL_BASE: ${{ inputs.base }}
+        run: |
+          set -euo pipefail
+          case "$CI_EVENT" in
+            pull_request) event=pull_request; base="$CI_PR_BASE" ;;
+            push) event=push; base="$CI_PUSH_BASE" ;;
+            merge_group) event=pull_request; base="$CI_MERGE_BASE" ;;
+            workflow_dispatch) event=manual; base="$CI_MANUAL_BASE" ;;
+            *) echo "Unsupported CI event: $CI_EVENT" >&2; exit 2 ;;
+          esac
+          python scripts/ai/runner.py --repository . --candidate "$CI_CANDIDATE" --base "$base" --event "$event" --network allowed --catalog templates/ai/checks/react.json --output .ai-runtime/results/react.json
+      - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: playwright-report
-          path: playwright-report/
-          retention-days: 30
+          name: react-exact-runner-result
+          path: .ai-runtime/results/react.json
+          if-no-files-found: warn

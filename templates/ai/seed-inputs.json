@@ -115,6 +115,7 @@
     "scripts/ai/contract_policy.py",
     "scripts/ai/core_paths.py",
     "scripts/ai/core_sync.py",
+    "scripts/ai/ci_mode.py",
     "scripts/ai/detector.py",
     "scripts/ai/generate.py",
     "scripts/ai/generate_adapters.py",
