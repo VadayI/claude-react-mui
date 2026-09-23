@@ -63,7 +63,9 @@ seed `.env`, install dependencies, or start services. There is no automatic
 Stop/SessionEnd formatter, push, or merge; close with an explicit handoff.
 An interrupted session may not run an end hook. Codex has no verified trusted
 tool-hook equivalent in this pilot. Runtime tool hooks provide early policy
-feedback only and do not cover arbitrary shell writes.
+feedback only and do not cover arbitrary shell writes. This React pilot has
+no active Claude PreToolUse payload parser for patch, rename/delete, multi-file,
+Windows-path, or malformed edit events; Git/CI checks carry those gates.
 
 This command now installs the complete manifest payload, including legacy roles,
 commands, skills and scaffold inputs, plus the derived Makefile. The Bash
