@@ -426,7 +426,7 @@
     },
     "docs/ai/core-source.json": {
       "ownership": "template",
-      "sha256": "eac4c5e2ddf8a29755e91200ca204957210975c15089b9dc7b2fc8ae478307e0"
+      "sha256": "33ca95ae165df30f31559ebf6241108d49bf891c8ace83f17faee24dfc5ff66e"
     },
     "docs/ai/decisions/0001-portable-family-core.md": {
       "ownership": "template",
@@ -714,7 +714,7 @@
     },
     "scripts/ai/runner.py": {
       "ownership": "template",
-      "sha256": "6f56d1293777a0b9a3664fcc9e27a59a4e6812fe23fb9b64f7cc6df611987599"
+      "sha256": "04f3cc4c6cae6dedfce1a6bb94380839127c9b77e6eb177cecf1bd47b3b2ced6"
     },
     "scripts/ai/schema.py": {
       "ownership": "template",
@@ -726,7 +726,7 @@
     },
     "scripts/ai/test_family_delivery.py": {
       "ownership": "template",
-      "sha256": "93cd1f91be153d5fe70ac5b27d82ee2e0d4d9bbbfeeed7b7e4f907056a7464af"
+      "sha256": "3b74a30dbffcd7a84ef34a6c938864875044ad96a140ffd158393cc8555b0a60"
     },
     "scripts/ai/test_seed_inventory.py": {
       "ownership": "template",
