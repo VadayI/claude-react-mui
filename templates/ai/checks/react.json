@@ -130,9 +130,9 @@
     },
     {
       "id": "react.bundle-size", "description": "Build the exact candidate and enforce checked-in gzip bundle budgets in one capsule.",
-      "argv": ["{python}", "scripts/ai/react_gate.py", "bundle", "--bash", "{git_bash}"],
+      "argv": ["{python}", "scripts/ai/react_gate.py", "bundle"],
       "cwd": ".", "mandatory": true, "timeout_seconds": 900,
-      "prerequisites": ["python", "node", "npm", "git-bash"],
+      "prerequisites": ["python", "node", "npm"],
       "applicability": {"kind": "path_exists", "path": ".performance-budget.json", "missing_status": "NOT_VERIFIED"},
       "expected_artifacts": ["dist/index.html"], "dependencies": [], "allowed_side_effects": ["candidate_export", "evidence"],
       "network_access": "none", "not_verified_exit_codes": [],

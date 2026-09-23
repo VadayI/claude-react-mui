@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import os
 from pathlib import Path
 import subprocess
 import tempfile
@@ -161,6 +162,30 @@ class ReactGateTests(unittest.TestCase):
             }), encoding="utf-8")
             with mock.patch.object(react_gate, "urlopen", return_value=Response()):
                 self.assertEqual(react_gate.contract_sync(root), 0)
+
+    def test_bundle_budget_is_strict_and_shell_independent(self):
+        """Enforce real gzip limits without Git Bash or fail-open shell helpers.
+
+        No arguments/return. Writes disposable build assets and budget JSON only;
+        no subprocess, Git, DB, environment mutation, or network access.
+        """
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            assets = root / "dist/assets"
+            assets.mkdir(parents=True)
+            (root / "dist/index.html").write_text(
+                '<script type="module" src="/assets/app.js"></script>', encoding="utf-8"
+            )
+            (assets / "app.js").write_bytes(b"const payload='" + os.urandom(4096) + b"';")
+            (assets / "lazy.js").write_bytes(os.urandom(2048))
+            budget = {"bundle": {
+                "initialJsGzipKb": 10, "totalInitialTransferGzipKb": 10, "lazyChunkGzipKb": 10,
+            }}
+            (root / ".performance-budget.json").write_text(json.dumps(budget), encoding="utf-8")
+            self.assertEqual(react_gate.bundle_budget(root), 0)
+            budget["bundle"]["initialJsGzipKb"] = 0.1
+            (root / ".performance-budget.json").write_text(json.dumps(budget), encoding="utf-8")
+            self.assertEqual(react_gate.bundle_budget(root), 1)
 
 
 if __name__ == "__main__":

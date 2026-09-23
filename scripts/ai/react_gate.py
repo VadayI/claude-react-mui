@@ -3,12 +3,14 @@
 from __future__ import annotations
 
 import argparse
+import gzip
 import hashlib
 import json
 import os
 from pathlib import Path
 import re
 import signal
+import shutil
 import subprocess
 import sys
 import time
@@ -35,6 +37,27 @@ PLAYWRIGHT_MISSING = (
 
 class NotVerified(RuntimeError):
     """Represent an unavailable declared prerequisite without claiming gate failure."""
+
+
+def executable(name: str) -> str:
+    """Resolve one declared executable without invoking a command shell.
+
+    Args:
+        name: Reviewed tool name such as ``npm`` or ``npx``.
+
+    Returns:
+        Absolute executable/shim path, including ``.cmd`` resolution on Windows.
+
+    Raises:
+        NotVerified: If the declared prerequisite is unavailable on the runner PATH.
+
+    Side effects:
+        Reads PATH/PATHEXT metadata only; no subprocess, file write, DB, or network.
+    """
+    resolved = shutil.which(name)
+    if resolved is None:
+        raise NotVerified(f"declared executable is unavailable: {name}")
+    return resolved
 
 
 def canonical_digest(value: object) -> str:
@@ -160,9 +183,11 @@ def emit_process(result: subprocess.CompletedProcess[str]) -> None:
         Writes already captured public output to this process streams only.
     """
     if result.stdout:
-        print(result.stdout, end="")
+        sys.stdout.buffer.write(result.stdout.encode("utf-8", errors="replace"))
+        sys.stdout.buffer.flush()
     if result.stderr:
-        print(result.stderr, end="", file=sys.stderr)
+        sys.stderr.buffer.write(result.stderr.encode("utf-8", errors="replace"))
+        sys.stderr.buffer.flush()
 
 
 def audit(root: Path) -> int:
@@ -179,7 +204,7 @@ def audit(root: Path) -> int:
         Runs ``npm audit`` which may contact the npm advisory service. No files,
         Git refs, database records, or configuration are modified.
     """
-    result = run_process(["npm", "audit", "--audit-level=high", "--json"], cwd=root, timeout=300)
+    result = run_process([executable("npm"), "audit", "--audit-level=high", "--json"], cwd=root, timeout=300)
     emit_process(result)
     if result.returncode == 0:
         return 0
@@ -298,28 +323,102 @@ def policy(kind: str, root: Path, context_path: Path, base_root: Path) -> int:
     raise ValueError(f"Unknown policy gate: {kind}")
 
 
-def bundle(root: Path, bash: str) -> int:
+def bundle_budget(root: Path) -> int:
+    """Enforce checked-in gzip budgets against one production build.
+
+    Args:
+        root: Exact candidate export containing ``dist`` and the budget JSON.
+
+    Returns:
+        0 when the initial JavaScript, initial transfer, and every lazy chunk
+        satisfy their positive numeric limits; otherwise 1.
+
+    Raises:
+        ValueError/OSError/JSON errors: If required inputs are absent or invalid.
+
+    Side effects:
+        Reads candidate build artifacts and prints measurements only. Compression
+        is in memory with a fixed timestamp; no shell, Git, DB, network, or write.
+    """
+    budget_path = root / ".performance-budget.json"
+    index_path = root / "dist/index.html"
+    assets_root = root / "dist/assets"
+    if not budget_path.is_file() or not index_path.is_file() or not assets_root.is_dir():
+        raise ValueError("bundle budget, dist/index.html, and dist/assets must all exist")
+    document = json.loads(budget_path.read_text(encoding="utf-8"))
+    budgets = document.get("bundle")
+    names = ("initialJsGzipKb", "totalInitialTransferGzipKb", "lazyChunkGzipKb")
+    if not isinstance(budgets, dict) or any(
+        isinstance(budgets.get(name), bool)
+        or not isinstance(budgets.get(name), (int, float))
+        or budgets[name] <= 0
+        for name in names
+    ):
+        raise ValueError("bundle budgets must be positive numeric values")
+    html = index_path.read_text(encoding="utf-8")
+    referenced = {
+        Path(value.split("?", 1)[0].split("#", 1)[0]).name
+        for value in re.findall(r'(?:src|href)="([^"?#]+\.(?:js|css)(?:[?#][^"]*)?)"', html)
+    }
+    assets = sorted(path for path in assets_root.rglob("*") if path.is_file() and path.suffix in {".js", ".css"})
+    if not assets:
+        raise ValueError("dist/assets contains no JavaScript or CSS artifacts")
+
+    def gzip_kb(path: Path) -> float:
+        """Return deterministic in-memory gzip size for one emitted asset.
+
+        Args:
+            path: JavaScript or CSS artifact under the exact candidate export.
+
+        Returns:
+            Compressed byte length divided by 1024.
+
+        Side effects:
+            Reads the supplied file only; no writes, subprocess, DB, or network.
+        """
+        return len(gzip.compress(path.read_bytes(), mtime=0)) / 1024
+
+    initial_js = sum(gzip_kb(path) for path in assets if path.suffix == ".js" and path.name in referenced)
+    initial_css = sum(gzip_kb(path) for path in assets if path.suffix == ".css" and path.name in referenced)
+    lazy = [(path, gzip_kb(path)) for path in assets if path.suffix == ".js" and path.name not in referenced]
+    total = initial_js + initial_css
+    print(
+        "[react.bundle-size] measured "
+        f"initial_js={initial_js:.1f}KB initial_transfer={total:.1f}KB lazy_chunks={len(lazy)}"
+    )
+    failures: list[str] = []
+    if initial_js > budgets["initialJsGzipKb"]:
+        failures.append(f"initial JS {initial_js:.1f}KB > {budgets['initialJsGzipKb']}KB")
+    if total > budgets["totalInitialTransferGzipKb"]:
+        failures.append(f"initial transfer {total:.1f}KB > {budgets['totalInitialTransferGzipKb']}KB")
+    failures.extend(
+        f"lazy chunk {path.name} {size:.1f}KB > {budgets['lazyChunkGzipKb']}KB"
+        for path, size in lazy
+        if size > budgets["lazyChunkGzipKb"]
+    )
+    for failure in failures:
+        print(f"OVER: {failure}", file=sys.stderr)
+    return 1 if failures else 0
+
+
+def bundle(root: Path) -> int:
     """Build the exact candidate then apply its checked-in gzip bundle budget.
 
     Args:
         root: Exact candidate export with npm dependencies provisioned.
-        bash: Runner-resolved Git Bash/Bash executable from ``{git_bash}``.
-
     Returns:
-        0 only when both build and bundle-budget command succeed; otherwise the
-        first nonzero command exit.
+        0 only when both build and bundle-budget validation succeed; otherwise
+        the first nonzero result.
 
     Side effects:
         Runs local build commands and writes only declared ``dist``/TypeScript
         transient outputs inside the disposable candidate export. No network/DB/Git.
     """
-    built = run_process(["npm", "run", "build"], cwd=root, timeout=600)
+    built = run_process([executable("npm"), "run", "build"], cwd=root, timeout=600)
     emit_process(built)
     if built.returncode:
         return built.returncode
-    checked = run_process([bash, "scripts/check_bundle_size.sh"], cwd=root, timeout=180)
-    emit_process(checked)
-    return checked.returncode
+    return bundle_budget(root)
 
 
 def stop_process_tree(process: subprocess.Popen[str]) -> None:
@@ -407,12 +506,12 @@ def e2e(root: Path) -> int:
     else:
         options["start_new_session"] = True
     server = subprocess.Popen(
-        ["npm", "run", "dev", "--", "--host", "127.0.0.1", "--port", "5173", "--strictPort"],
+        [executable("npm"), "run", "dev", "--", "--host", "127.0.0.1", "--port", "5173", "--strictPort"],
         **options,
     )
     try:
         wait_for_server(server, "http://127.0.0.1:5173/")
-        result = run_process(["npx", "playwright", "test", "--workers=1"], cwd=root, env=env, timeout=900)
+        result = run_process([executable("npx"), "playwright", "test", "--workers=1"], cwd=root, env=env, timeout=900)
         emit_process(result)
         diagnostic = f"{result.stdout}\n{result.stderr}".lower()
         if result.returncode and any(token in diagnostic for token in PLAYWRIGHT_MISSING):
@@ -439,8 +538,7 @@ def parser() -> argparse.ArgumentParser:
     policy_parser.add_argument("kind", choices=("plan", "routes", "guides"))
     policy_parser.add_argument("--run-context", type=Path, required=True)
     policy_parser.add_argument("--base-root", type=Path, required=True)
-    bundle_parser = sub.add_parser("bundle")
-    bundle_parser.add_argument("--bash", required=True)
+    sub.add_parser("bundle")
     sub.add_parser("e2e")
     return result
 
@@ -466,7 +564,7 @@ def main() -> int:
         if args.command == "policy":
             return policy(args.kind, root, args.run_context, args.base_root)
         if args.command == "bundle":
-            return bundle(root, args.bash)
+            return bundle(root)
         if args.command == "e2e":
             return e2e(root)
         raise ValueError(f"Unsupported command: {args.command}")

@@ -29,8 +29,9 @@ declared artifacts; TypeScript build metadata is declared transient output.
 - plan/routes/guides receive immutable `{run_context}` and `{base_export}` argv
   values from the runner. There is no `origin/main`, `HEAD~1`, environment, fetch,
   or working-tree fallback;
-- bundle size performs build and the checked-in budget command in the same private
-  capsule, because separate runner checks never share candidate mutations;
+- bundle size performs build and strict deterministic gzip-budget validation in
+  the same private capsule, without a fail-open shell/toolchain dependency,
+  because separate runner checks never share candidate mutations;
 - E2E supervises a loopback-only Vite server, health check, Chromium Playwright
   journeys, checked-in axe accessibility assertions, HTML report, and process-tree
   cleanup. A missing browser is `NOT_VERIFIED`; test/a11y failures remain failures.
