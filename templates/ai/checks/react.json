@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "catalog_id": "react.isolated-current",
+  "profile": "isolated",
+  "policy": {
+    "allow_mandatory_not_applicable": false
+  },
+  "invalidation_paths": [
+    "docs/ai/core-source.json",
+    "docs/ai/delivery-manifest.json",
+    "scripts/check_feature_readmes.sh",
+    "scripts/check_file_size.sh",
+    "scripts/check_stubs.sh",
+    "templates/ai/checks/react.json"
+  ],
+  "checks": [
+    {
+      "id": "react.file-size",
+      "description": "Enforce the checked-in TypeScript and TSX source size policy.",
+      "argv": ["bash", "scripts/check_file_size.sh"],
+      "cwd": ".",
+      "mandatory": true,
+      "timeout_seconds": 120,
+      "prerequisites": ["bash"],
+      "applicability": {
+        "path_exists": "scripts/check_file_size.sh",
+        "missing_status": "NOT_VERIFIED"
+      },
+      "expected_artifacts": [],
+      "dependencies": [],
+      "allowed_side_effects": ["evidence"]
+    },
+    {
+      "id": "react.stubs",
+      "description": "Reject undocumented source stubs using the active repository gate.",
+      "argv": ["bash", "scripts/check_stubs.sh"],
+      "cwd": ".",
+      "mandatory": true,
+      "timeout_seconds": 120,
+      "prerequisites": ["bash"],
+      "applicability": {
+        "path_exists": "scripts/check_stubs.sh",
+        "missing_status": "NOT_VERIFIED"
+      },
+      "expected_artifacts": [],
+      "dependencies": [],
+      "allowed_side_effects": ["evidence"]
+    },
+    {
+      "id": "react.feature-readmes",
+      "description": "Require README coverage for checked-in feature directories.",
+      "argv": ["bash", "scripts/check_feature_readmes.sh"],
+      "cwd": ".",
+      "mandatory": true,
+      "timeout_seconds": 120,
+      "prerequisites": ["bash"],
+      "applicability": {
+        "path_exists": "scripts/check_feature_readmes.sh",
+        "missing_status": "NOT_VERIFIED"
+      },
+      "expected_artifacts": [],
+      "dependencies": [],
+      "allowed_side_effects": ["evidence"]
+    }
+  ]
+}

@@ -28,6 +28,18 @@ class SeedBoundaryTests(unittest.TestCase):
             (root / "unknown.md").write_text("not in inventory", encoding="utf-8")
             self.assertEqual(generate.seed_sources(root), ["reviewed.md"])
 
+    def test_react_runner_catalog_is_explicitly_enrolled(self):
+        """Require the stack catalog and boundary documentation in the inventory.
+
+        No parameters or return value. Reads the checked-in explicit inventory;
+        no writes, subprocesses, network, or database access occur. Assertion
+        failures identify accidental removal from fresh/update delivery.
+        """
+        root = Path(__file__).resolve().parents[2]
+        sources = generate.seed_sources(root)
+        self.assertIn("templates/ai/checks/react.json", sources)
+        self.assertIn("docs/ai/react-runner.md", sources)
+
     def test_secret_and_project_inputs_rejected_before_open(self):
         """Reject listed private/project paths without opening the candidate file.
 

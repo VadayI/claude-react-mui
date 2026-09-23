@@ -426,7 +426,7 @@
     },
     "docs/ai/core-source.json": {
       "ownership": "template",
-      "sha256": "6eea72dfcb17b66aec104f4ddcef896f575988273f611080d995fe277102829b"
+      "sha256": "eac4c5e2ddf8a29755e91200ca204957210975c15089b9dc7b2fc8ae478307e0"
     },
     "docs/ai/decisions/0001-portable-family-core.md": {
       "ownership": "template",
@@ -487,6 +487,10 @@
     "docs/ai/pilot-results.json": {
       "ownership": "template",
       "sha256": "3ee4c2b7a178f81b904b3b33ceb4c1b92204a7fd4edfc2e161bfdc3d49b93d1d"
+    },
+    "docs/ai/react-runner.md": {
+      "ownership": "template",
+      "sha256": "d90c522707351f92e3584f21953bd008fbf7ca0b53481fd103a0edf7ac83f3e8"
     },
     "docs/ai/roles/react-developer.md": {
       "ownership": "template",
@@ -616,6 +620,10 @@
       "ownership": "template",
       "sha256": "6d632cc86edc678b42469d6a215a1b94e23c8406e5138c21cc17bc9b023ba0df"
     },
+    "docs/ai/runner.md": {
+      "ownership": "template",
+      "sha256": "402126f986ba3a54aee047800c6a19b9bc9ef3af9bf9e38962322aad5cbe3fc9"
+    },
     "docs/ai/runtime-compatibility.md": {
       "ownership": "template",
       "sha256": "5c415860a5f9d2764b59763f9457890d426b223b0bac3e426cc3f1c90db78f07"
@@ -660,6 +668,10 @@
       "ownership": "template",
       "sha256": "fd86b3d15f8ae0c9f01b82b5e8e5ecaedc0dc96c947a671407a2061134f4b24d"
     },
+    "scripts/ai/detector.py": {
+      "ownership": "template",
+      "sha256": "c62a0c431e75d6c3b6e0aa81cde9f4ae39ea5c0b960cd0d35f8fe469d6ee1975"
+    },
     "scripts/ai/generate.py": {
       "ownership": "template",
       "sha256": "556eb2857e39fabd096831ca647c5fae8a3385880263b5e2abe220f5b003de69"
@@ -700,9 +712,13 @@
       "ownership": "template",
       "sha256": "cb22ff5f52fbd4a6b0d0e489aa6f28400b2a0ae0bb2ca2d32edf1aa8aaffaaf6"
     },
+    "scripts/ai/runner.py": {
+      "ownership": "template",
+      "sha256": "6f56d1293777a0b9a3664fcc9e27a59a4e6812fe23fb9b64f7cc6df611987599"
+    },
     "scripts/ai/schema.py": {
       "ownership": "template",
-      "sha256": "7acad99cf3a6fd4a3508752f1caee355d11f3fd6a52d93df507d6f988e4bd487"
+      "sha256": "e5c68c799ee7e2d38171fdb2da96bddbab5a7ee5644afbd2a1d0b123d4c44d8e"
     },
     "scripts/ai/test_delivery.py": {
       "ownership": "template",
@@ -710,11 +726,11 @@
     },
     "scripts/ai/test_family_delivery.py": {
       "ownership": "template",
-      "sha256": "96ed2de2331a1157f052e2a2d67ec800032078dca5487375ac6d1fc7dfb5e00c"
+      "sha256": "93cd1f91be153d5fe70ac5b27d82ee2e0d4d9bbbfeeed7b7e4f907056a7464af"
     },
     "scripts/ai/test_seed_inventory.py": {
       "ownership": "template",
-      "sha256": "f8dde18d9c1c4c8b2ef48a1920327f593b32778c9cf80ab0faf91d4cf7f18760"
+      "sha256": "eda06d135955374fc6f914fca6c2ef55fd665f22f68b680b7929ded1a0322e43"
     },
     "scripts/api-pull.mjs": {
       "ownership": "template",
@@ -838,6 +854,14 @@
       "ownership": "template",
       "sha256": "1022368e19909dd55227dccf06f318975ce763509bf9359fc0b154a304b91b85"
     },
+    "templates/ai/checks/contract.json": {
+      "ownership": "template",
+      "sha256": "5f10e1d076f2932cdd604065d440befb218182422733897b439d3e4f0eb6c71a"
+    },
+    "templates/ai/checks/react.json": {
+      "ownership": "template",
+      "sha256": "1937326c405000e7654997fcb58bbfbc9508572d1903255057f3348994d971b2"
+    },
     "templates/ai/legacy-entrypoints.json": {
       "ownership": "template",
       "sha256": "c5ff940702145c345721e2a6c833a9cbd5e03d687c8522fbf13d8e104bbb2c1e"
@@ -858,13 +882,21 @@
       "ownership": "template",
       "sha256": "bb8aaabbea242c0d4b1713e5a5a4a45154ed977a4a252b9885b25a1bb1e9b719"
     },
+    "templates/ai/schemas/check-catalog.schema.json": {
+      "ownership": "template",
+      "sha256": "9f2a98878251a486d0f9e9253272b491755c9857968421c894d62284cef77250"
+    },
+    "templates/ai/schemas/check-result.schema.json": {
+      "ownership": "template",
+      "sha256": "99e9f420f278fbba0f93feec19ea775aed94e331fdddfb4d54d1d1745600d226"
+    },
     "templates/ai/schemas/project.schema.json": {
       "ownership": "template",
       "sha256": "85be8ee2bbf035f1be351775747134794be1fb707094134ffa7d571c29fe11e6"
     },
     "templates/ai/seed-inputs.json": {
       "ownership": "template",
-      "sha256": "5e051cd6aac9a469b8db6e5e805048a2a5789f46752cbd618943183ffe03a311"
+      "sha256": "10082ed77aaa7184b36d9a4b4d162355b452513b4ce4fab25a3cdc7749d7a069"
     },
     "templates/api_CONTRACT_ISSUES.md": {
       "ownership": "template",
