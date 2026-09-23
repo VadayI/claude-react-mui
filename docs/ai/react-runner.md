@@ -42,7 +42,10 @@ Loopback E2E declares `network_access: loopback`. Missing tools, browser binarie
 network inputs, artifacts, or exact base/context remain `NOT_VERIFIED` and produce
 a nonzero runner outcome.
 
-The vendored core receipt remains `pin_status: development` until the exact
-contract runner commit is merged upstream. P06 owns CI mode selection and workflow
-materialization; it does not replace these P05 gate implementations. P13 owns full
-install/adopt/update rollback and interruption acceptance.
+The vendored core receipt pins integrated contract main commit
+`2e985eeb4883ccb79151c6c5834d6f82186d46a1`. Its manifest digest and
+runtime file map match the reviewed P05 development source; the receipt records
+the integrated provenance without changing runner bytes. P06 owns CI mode
+selection and workflow materialization; it does not replace these P05 gate
+implementations. P13 owns full install/adopt/update rollback and interruption
+acceptance.

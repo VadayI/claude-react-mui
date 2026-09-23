@@ -39,7 +39,8 @@ class FamilyDeliveryTests(unittest.TestCase):
         No arguments or return value. The fixture writes only below the temporary
         target and executes delivered Python tooling without network or database
         access. Assertions cover the development receipt, P05 payload, catalog
-        schema, sanitized detector output, and an empty repeat delivery plan.
+        schema, integrated receipt, sanitized detector output, and an empty
+        repeat delivery plan.
         """
         self.install()
         for script, args in (("core_sync.py", ["--target", str(self.target), "--check"]),

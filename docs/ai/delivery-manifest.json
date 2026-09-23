@@ -490,7 +490,7 @@
     },
     "docs/ai/react-runner.md": {
       "ownership": "template",
-      "sha256": "0c6af404ce1d1265f40e15b082b1fdbca55bd09d01190041873f435ab3bc4553"
+      "sha256": "b462e8db0fee0db9998c42f908a4b7e386916cb15b79076bf81910b47a2200a1"
     },
     "docs/ai/roles/react-developer.md": {
       "ownership": "template",
@@ -738,7 +738,7 @@
     },
     "scripts/ai/test_family_delivery.py": {
       "ownership": "template",
-      "sha256": "e1f9c780992a9f00e3c6d3e91a37aba3ea6f2bfeaab22bb611925444bdbbe87d"
+      "sha256": "95807375206ca6d2ef0972ef961bc96d5bbef167cb451b9664b4b3dbe620e459"
     },
     "scripts/ai/test_react_gate.py": {
       "ownership": "template",
