@@ -190,19 +190,19 @@
     },
     "docs/ai/generated/role-packs/react-developer.md": {
       "ownership": "template",
-      "sha256": "53ad4ac0a14aa657ac7f8e930ff152bc5d18771074cb0b1e5afa67350c58993d"
+      "sha256": "cdb9a4c417ea99aaf9595ff065495bbf8783c9e9d2b39176c92f6fb279cbf27e"
     },
     "docs/ai/generated/role-packs/reviewer.md": {
       "ownership": "template",
-      "sha256": "7723f912920bebc33eff84448e13e0c94ba875c3ec466fa311c6302e9e7e8a59"
+      "sha256": "8dbb9d7aa9ea5c6144d70ab82751e7bc22d78c5b44413d74cfeeb7b4b97cb4f2"
     },
     "docs/ai/generated/role-packs/tester.md": {
       "ownership": "template",
-      "sha256": "a983ae5c804edf7b06749c1c91568aa5ac4ed267bf65d1efc5cfa93e018f8ebb"
+      "sha256": "23c704edafc53b29a1ec752bc3d45e796a56d8012749a35ec9c139645c429ee1"
     },
     "docs/ai/generated/role-packs/ui-architect.md": {
       "ownership": "template",
-      "sha256": "5b86a8a1860d13208b36764e1b3abc1e15d31844e56d77fc17414adbc446bc09"
+      "sha256": "8f17d0526c20ebf8a701a3e5c3d639e882faae658cce8237fad5f3403c830145"
     }
   },
   "generator": "family-core",
@@ -215,7 +215,7 @@
     "docs/ai/roles/tester.md": "884d756c8044b39d52af2f7632a959d9e00aaf74add348c326852a230f753892",
     "docs/ai/roles/ui-architect.md": "4cffc6b6fe8a523fd8a3cba9e72d9297ab07741db708d3efe193269df47584b5",
     "docs/ai/rules/accessibility.md": "dd266eb6d14e6cb4af22a1c7f7c88aeb484b1e551dd6cc89930df9efd55c713a",
-    "docs/ai/rules/api-contract.md": "fb2f660ba6692565eaa818e43b1e4a29f84013518f898cecae2ce72815df2b18",
+    "docs/ai/rules/api-contract.md": "ba6e1ecd2c6c6f68e4211658eba14d4e5ed6226b6c4c1d602970429361f9efc3",
     "docs/ai/rules/architecture.md": "c3844652f12857304c65c2c8cb9b3057e42d608489b02edce7aa8021caa74e9d",
     "docs/ai/rules/auth.md": "177cb461d0d5261d248090bece84f2f621f43d193bcce86260e8e5949b336a21",
     "docs/ai/rules/code-style.md": "0ce554099477ed96b7cf16501ab007dc106c2aba59c640208cbbe3e8f10cb09a",

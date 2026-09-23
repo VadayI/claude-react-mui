@@ -155,6 +155,7 @@
     "scripts/detect-env.mjs",
     "scripts/install.sh",
     "scripts/log-cmd.mjs",
+    "scripts/policy/claude_edit_guard.mjs",
     "scripts/seed-i18n.py",
     "scripts/session-start.sh",
     "scripts/setup-wsl.sh",

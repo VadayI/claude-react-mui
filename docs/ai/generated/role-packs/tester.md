@@ -99,7 +99,7 @@ Every interactive feature must meet WCAG 2.1 AA. In practice:
 <!-- END SOURCE docs/ai/rules/accessibility.md -->
 
 
-<!-- SOURCE docs/ai/rules/api-contract.md SHA256 fb2f660ba6692565eaa818e43b1e4a29f84013518f898cecae2ce72815df2b18 -->
+<!-- SOURCE docs/ai/rules/api-contract.md SHA256 ba6e1ecd2c6c6f68e4211658eba14d4e5ed6226b6c4c1d602970429361f9efc3 -->
 
 # API contract — typed client, errors, pagination, deviations (enforced)
 
@@ -117,6 +117,8 @@ This is a **frontend-only** repository. It does not own the REST API — the **e
 **Gate 1 — types drift (`scripts/check_types_drift.sh`)**: CI regenerates `schema.d.ts` from the committed `openapi.yml` and diffs it against the committed one; any difference fails the PR.
 
 **Gate 2 — contract sync (`scripts/check_contract_sync.sh`)**: CI fetches the contract from GitHub raw at the pinned tag, computes sha256, and compares it against both the vendored `openapi.yml` and `contract.lock.json`; a hand-edited vendor file or stale lock fails the PR.
+
+Claude's PreToolUse hook gives early feedback when a known Write/Edit/MultiEdit/NotebookEdit or `apply_patch` payload targets `src/lib/api/openapi.yml`. It checks patch, rename/delete, multi-file and Windows path shapes. It cannot intercept arbitrary shell writes or guarantee execution after an abrupt exit; Git and CI drift gates remain authoritative.
 
 ```bash
 bash scripts/check_types_drift.sh && bash scripts/check_contract_sync.sh

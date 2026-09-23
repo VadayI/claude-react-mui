@@ -139,7 +139,8 @@ class FamilyDeliveryTests(unittest.TestCase):
                      ".claude/agents/ba.md", ".claude/skills/react-specialist/SKILL.md",
                      "templates/.github/workflows/frontend-ci.yml", "templates/.env.example",
                      ".githooks/pre-commit", ".githooks/pre-push",
-                     "scripts/ai/git_hooks.py", "scripts/ai/install_git_hooks.py"):
+                     "scripts/ai/git_hooks.py", "scripts/ai/install_git_hooks.py",
+                     "scripts/policy/claude_edit_guard.mjs"):
             self.assertTrue((self.target / name).is_file(), name)
         self.assertEqual((self.target / "Makefile").read_bytes(), (ROOT / "templates/Makefile").read_bytes())
         active = (self.target / ".github/workflows/frontend-ci.yml").read_text(encoding="utf-8")
@@ -149,6 +150,8 @@ class FamilyDeliveryTests(unittest.TestCase):
         settings = json.loads((self.target / ".claude/settings.json").read_text(encoding="utf-8"))
         self.assertEqual(settings["hooks"]["SessionStart"][0]["hooks"][0]["command"],
                          "node scripts/detect-env.mjs")
+        self.assertEqual(settings["hooks"]["PreToolUse"][0]["hooks"][0]["command"],
+                         "node scripts/policy/claude_edit_guard.mjs")
         self.assertNotIn("Stop", settings["hooks"])
         session = (self.target / "scripts/session-start.sh").read_text(encoding="utf-8")
         self.assertIn('node "$SCRIPT_DIR/detect-env.mjs"', session)

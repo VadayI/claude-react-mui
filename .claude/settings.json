@@ -48,6 +48,18 @@
     "CLAUDE_CODE_DISABLE_1M_CONTEXT": "1"
   },
   "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit|NotebookEdit|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node scripts/policy/claude_edit_guard.mjs",
+            "statusMessage": "Checking vendored contract edit policy..."
+          }
+        ]
+      }
+    ],
     "SessionStart": [
       {
         "hooks": [
