@@ -426,7 +426,7 @@
     },
     "docs/ai/core-source.json": {
       "ownership": "template",
-      "sha256": "ea7d71a587521b6e8887932fbdb0a4a3ea78e460fb79abb5be804701f975ce5a"
+      "sha256": "608c11b64d3b3fec9a832f82026650e733f5f0aa94178fa78c3651cbb917d07c"
     },
     "docs/ai/decisions/0001-portable-family-core.md": {
       "ownership": "template",
@@ -622,7 +622,7 @@
     },
     "docs/ai/runner.md": {
       "ownership": "template",
-      "sha256": "53cf052ada154a5eb88d10eee89816577c53e24b85dbd33b6d4a2e02b94d6092"
+      "sha256": "3786b47a4a0f66df249c2a1315bec893815de4b3842fe3bbea1fef6913a4b42d"
     },
     "docs/ai/runtime-compatibility.md": {
       "ownership": "template",
@@ -710,7 +710,7 @@
     },
     "scripts/ai/react_gate.py": {
       "ownership": "template",
-      "sha256": "84e0ca543d22375f5982d32b6c70e5aac50c35cc20f14f1c42cb8aea830eec73"
+      "sha256": "7b058285fee18119a0582da09d67d761aa7c7705e8889f26ced1d13a646bdccf"
     },
     "scripts/ai/readiness.py": {
       "ownership": "template",
@@ -722,7 +722,7 @@
     },
     "scripts/ai/runner.py": {
       "ownership": "template",
-      "sha256": "a6b55a747a846432609b6fa8221a1481a3770919dda74b6f942d3592f4b2d7a2"
+      "sha256": "4c9caa84ee08be65a9e70dd2746b81aa570faf84ab87ef8578b8138446fa20e1"
     },
     "scripts/ai/runner_caps.py": {
       "ownership": "template",
@@ -738,11 +738,11 @@
     },
     "scripts/ai/test_family_delivery.py": {
       "ownership": "template",
-      "sha256": "e154b9ee5a7d1a0a9bc1815f68f898c7e7b2f2ccdbb35e406ac9e0f8fcc22429"
+      "sha256": "151a5bec426008fa999859b6fcd4ae927d6e4162e25cfa13615ed08101ce26f7"
     },
     "scripts/ai/test_react_gate.py": {
       "ownership": "template",
-      "sha256": "eaa2aeaef59a48077c3b6a124521c5d60563a6be0a35b471a0b1bb541aee07fe"
+      "sha256": "744c55950defde0d4921d3d49a16c7431e649dad625dc08518a673a0dad91cc6"
     },
     "scripts/ai/test_seed_inventory.py": {
       "ownership": "template",
@@ -876,7 +876,7 @@
     },
     "templates/ai/checks/react.json": {
       "ownership": "template",
-      "sha256": "b1258f3eb598ac485bd68c26d5bcc301de136b1c0f209190e0f5e108cb23d49d"
+      "sha256": "2310a1675a1a66f79ef8b0564099c4da490c80f825ebaf120d360a7637162b4b"
     },
     "templates/ai/checks/workflow-inventory.json": {
       "ownership": "template",
@@ -904,7 +904,7 @@
     },
     "templates/ai/schemas/check-catalog.schema.json": {
       "ownership": "template",
-      "sha256": "9e09614beffe660d4e5018077ba61208b4cf94010cacd879bfb9231c42c45863"
+      "sha256": "c721c7ba041665c8a45410388ed46ff40ef224d8cc82a42e3e70dc7da927d045"
     },
     "templates/ai/schemas/check-result.schema.json": {
       "ownership": "template",
