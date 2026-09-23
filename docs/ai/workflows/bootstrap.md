@@ -175,6 +175,8 @@ Copy the gate + helper scripts from the template root `scripts/` (the template s
 
 Before the first push, run `python scripts/ai/install.py --target . --ci-mode local --apply` (recommended) or choose `github`. The installer saves the choice in `docs/project-state/project.json` and materializes `.github/workflows/frontend-ci.yml` from the inert template. Local mode has only `workflow_dispatch`; GitHub mode adds push, pull request and merge group events. Both invoke `scripts/ai/runner.py` with `templates/ai/checks/react.json`. Review the active workflow and selected project setting before creating the remote. A later explicit `--ci-mode` switches only an unchanged owned workflow; foreign workflows remain untouched and create a conflict.
 
+After `git init`, connect `.githooks` with `python scripts/ai/install_git_hooks.py --target . --apply`. The connector refuses to replace an existing `core.hooksPath` or non-sample default hook; review a manual chain instead. Use `AI_PYTHON` for a Python 3.13+ interpreter. The pre-push hook needs a named remote and current tracking `main` to verify a new branch's fork point; first push with no baseline remains unverified and stops.
+
 For **Variant B or C**: report the missing equivalent URL-source integrity check as NOT_VERIFIED; the existing GitHub-source gate cannot prove integrity for a live URL.
 
 ### Step 7: docs/ skeleton

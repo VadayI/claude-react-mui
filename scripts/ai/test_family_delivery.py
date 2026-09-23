@@ -137,7 +137,9 @@ class FamilyDeliveryTests(unittest.TestCase):
                      ".agents/skills/update-from-template/SKILL.md",
                      "docs/ai/workflows/bootstrap.md", "scripts/seed-i18n.py",
                      ".claude/agents/ba.md", ".claude/skills/react-specialist/SKILL.md",
-                     "templates/.github/workflows/frontend-ci.yml", "templates/.env.example"):
+                     "templates/.github/workflows/frontend-ci.yml", "templates/.env.example",
+                     ".githooks/pre-commit", ".githooks/pre-push",
+                     "scripts/ai/git_hooks.py", "scripts/ai/install_git_hooks.py"):
             self.assertTrue((self.target / name).is_file(), name)
         self.assertEqual((self.target / "Makefile").read_bytes(), (ROOT / "templates/Makefile").read_bytes())
         active = (self.target / ".github/workflows/frontend-ci.yml").read_text(encoding="utf-8")

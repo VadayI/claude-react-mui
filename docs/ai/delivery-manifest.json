@@ -383,6 +383,14 @@
       "ownership": "mixed",
       "sha256": "4e1bd58942c7d4b5e62286330128eee98ced50eefad7aa8bc5289409573b4510"
     },
+    ".githooks/pre-commit": {
+      "ownership": "template",
+      "sha256": "5c59a61b63ed04aef2cdb698acd451d43f682b9bdc93409b6b5b7a5f7261164a"
+    },
+    ".githooks/pre-push": {
+      "ownership": "template",
+      "sha256": "bf61e6ec19ce214b6a9d13635c68d1391e6751a0558ef44aa26ee394563b5d06"
+    },
     ".gitignore": {
       "ownership": "mixed",
       "sha256": "f88ee811556960409154d5c7d7f9a9df223d83e2be4bb831ce5780a9dd33a4bd"
@@ -406,7 +414,7 @@
     },
     "docs/ai/README.md": {
       "ownership": "template",
-      "sha256": "ad56596019c80313e72a8bc60e61946127acffe948967b4149007f191a919c21"
+      "sha256": "49c1926c3eab6022d594a3b6539f74b83598dc93b8951ce6e73e2eef633f6f35"
     },
     "docs/ai/adapter-generation.md": {
       "ownership": "template",
@@ -442,7 +450,7 @@
     },
     "docs/ai/generated/adapters-manifest.json": {
       "ownership": "template",
-      "sha256": "871d8134b887942c9ddf33ae80af36fc2d2980df6f014343002eefe3f5f74862"
+      "sha256": "5d7bda65c385dd8de29a521d1d89dab82f3a4ba8e9189409f700e6af7a949b04"
     },
     "docs/ai/generated/role-packs/react-developer.md": {
       "ownership": "template",
@@ -634,7 +642,7 @@
     },
     "docs/ai/workflows/bootstrap.md": {
       "ownership": "template",
-      "sha256": "0e08cad5acf3de55ebbe650c217919b3e178fdd75a1a690ff51b8d3b3d6562f1"
+      "sha256": "112f3462aac559a06f9c194d0a687d3c59e2b9b79443c7944d4e09f6b4a03bbc"
     },
     "docs/ai/workflows/doctor.md": {
       "ownership": "template",
@@ -688,9 +696,17 @@
       "ownership": "template",
       "sha256": "0bbff439ade45e6732b32f2e808add1513290b158a409c5c64c84d6159d5ed13"
     },
+    "scripts/ai/git_hooks.py": {
+      "ownership": "template",
+      "sha256": "6d1dbb263c081f5188dcd8d8bd23e2c867c88ab23ca012c5da9408606e20904f"
+    },
     "scripts/ai/install.py": {
       "ownership": "template",
       "sha256": "fb1320b553a29f2638ebd26ebccb3be7e65d1ff2d94dc9efa1a2faa70a46669a"
+    },
+    "scripts/ai/install_git_hooks.py": {
+      "ownership": "template",
+      "sha256": "d3a1a232b8fdaf57f20bce1367d87178bdcccd76a159d0ab34ed3e6e95c4bb3e"
     },
     "scripts/ai/launch.ps1": {
       "ownership": "template",
@@ -742,7 +758,11 @@
     },
     "scripts/ai/test_family_delivery.py": {
       "ownership": "template",
-      "sha256": "1452fdadd0de0b93e1451715fe006502ef5c9c132e5f1495ae93e96255bc1d43"
+      "sha256": "c789b5930fe7e598d3c836574bae3510b25806d509ab842a4dade20ec466853c"
+    },
+    "scripts/ai/test_git_hooks.py": {
+      "ownership": "template",
+      "sha256": "96645cd05a13df39a7d2f95b7dde074705579c542aa662aa59b1c5ab172bd76c"
     },
     "scripts/ai/test_react_gate.py": {
       "ownership": "template",
@@ -924,7 +944,7 @@
     },
     "templates/ai/seed-inputs.json": {
       "ownership": "template",
-      "sha256": "3659e786034df084fa774dd30dc11b2a105406afceb611c2703bafa5a05ca44d"
+      "sha256": "8246cc2c7aae632eebb4897ce12ef11608c6abca93ef3e46603e5c674ab479e4"
     },
     "templates/api_CONTRACT_ISSUES.md": {
       "ownership": "template",

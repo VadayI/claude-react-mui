@@ -48,6 +48,15 @@ initial GitHub push with a zero-OID previous commit cannot prove an exact base
 and fails the runner honestly; use a reviewed manual run with an explicit base
 once one exists.
 
+After `git init`, run `python scripts/ai/install_git_hooks.py --target . --apply`
+to connect the lightweight `.githooks` scripts. Existing `core.hooksPath` or
+default hook files cause a reviewable conflict, preserving foreign hooks. Set
+`AI_PYTHON` to a Python 3.13+ executable when PATH points to an older Python.
+The short pre-commit guard reads only staged diff; pre-push checks every branch
+ref with the exact runner. New branches require a current tracking ref for
+remote `main`; release tags use a separate procedure. Local hooks are
+bypassable and do not replace remote policy.
+
 This command now installs the complete manifest payload, including legacy roles,
 commands, skills and scaffold inputs, plus the derived Makefile. The Bash
 `scripts/install.sh` launcher uses this same preflight and accepts `--ci-mode`;
