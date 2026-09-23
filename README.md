@@ -144,7 +144,7 @@ Full routing and the optional agents (`a11y-auditor`, `qa`, `integration-archite
 
 ## Model turbo mode (all-Opus)
 
-Each subagent pins its own model in frontmatter (13 Opus / 9 Sonnet); the main session runs `opusplan`. To put **every** subagent on Opus temporarily and revert later:
+Each subagent pins its own model in frontmatter (3 Fable / 10 Opus / 4 Sonnet; 5 generated role adapters inherit the session model); the main session runs `opusplan`. To put **every** subagent on Opus temporarily and revert later:
 
 ```bash
 bash scripts/turbo.sh on       # main session + all subagents → Opus

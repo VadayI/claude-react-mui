@@ -8,7 +8,7 @@ Trigger: security, XSS, token storage, vulnerability, npm audit, CSP, security r
 user: 'Security review before the auth feature PR'
 assistant: 'Using security-scanner: checking token storage (no sensitive tokens in localStorage), no dangerouslySetInnerHTML with unsanitized input, VITE_ vars contain no secrets, npm audit for high/critical CVEs, and redirect targets validated.'
 </example>"
-model: opus
+model: fable
 color: red
 tools: [Read, Glob, Grep, Bash, SendMessage]
 ---
