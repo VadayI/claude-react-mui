@@ -148,7 +148,7 @@ class FamilyDeliveryTests(unittest.TestCase):
         self.assertNotIn("  pull_request:", active)
         settings = json.loads((self.target / ".claude/settings.json").read_text(encoding="utf-8"))
         self.assertEqual(settings["hooks"]["SessionStart"][0]["hooks"][0]["command"],
-                         "bash scripts/session-start.sh")
+                         "node scripts/detect-env.mjs")
         self.assertNotIn("Stop", settings["hooks"])
         session = (self.target / "scripts/session-start.sh").read_text(encoding="utf-8")
         self.assertIn('node "$SCRIPT_DIR/detect-env.mjs"', session)

@@ -53,7 +53,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash scripts/session-start.sh",
+            "command": "node scripts/detect-env.mjs",
             "statusMessage": "Detecting environment..."
           }
         ]
