@@ -426,7 +426,7 @@
     },
     "docs/ai/core-source.json": {
       "ownership": "template",
-      "sha256": "6eea72dfcb17b66aec104f4ddcef896f575988273f611080d995fe277102829b"
+      "sha256": "608c11b64d3b3fec9a832f82026650e733f5f0aa94178fa78c3651cbb917d07c"
     },
     "docs/ai/decisions/0001-portable-family-core.md": {
       "ownership": "template",
@@ -487,6 +487,10 @@
     "docs/ai/pilot-results.json": {
       "ownership": "template",
       "sha256": "3ee4c2b7a178f81b904b3b33ceb4c1b92204a7fd4edfc2e161bfdc3d49b93d1d"
+    },
+    "docs/ai/react-runner.md": {
+      "ownership": "template",
+      "sha256": "0c6af404ce1d1265f40e15b082b1fdbca55bd09d01190041873f435ab3bc4553"
     },
     "docs/ai/roles/react-developer.md": {
       "ownership": "template",
@@ -616,6 +620,10 @@
       "ownership": "template",
       "sha256": "6d632cc86edc678b42469d6a215a1b94e23c8406e5138c21cc17bc9b023ba0df"
     },
+    "docs/ai/runner.md": {
+      "ownership": "template",
+      "sha256": "3786b47a4a0f66df249c2a1315bec893815de4b3842fe3bbea1fef6913a4b42d"
+    },
     "docs/ai/runtime-compatibility.md": {
       "ownership": "template",
       "sha256": "5c415860a5f9d2764b59763f9457890d426b223b0bac3e426cc3f1c90db78f07"
@@ -652,6 +660,10 @@
       "ownership": "template",
       "sha256": "2d4d1b4320c45578cad211c28d9b038cacd67488488629ad0fd6b610f7e8c8f9"
     },
+    "scripts/ai/contract_policy.py": {
+      "ownership": "template",
+      "sha256": "18012088a72f0079842f813b4396a3e9dd8c07699f4b45cba28501f896716477"
+    },
     "scripts/ai/core_paths.py": {
       "ownership": "template",
       "sha256": "4981e75a8737c49e5fd2ee26d17cd09173f374751767b4656048b792a3003773"
@@ -659,6 +671,10 @@
     "scripts/ai/core_sync.py": {
       "ownership": "template",
       "sha256": "fd86b3d15f8ae0c9f01b82b5e8e5ecaedc0dc96c947a671407a2061134f4b24d"
+    },
+    "scripts/ai/detector.py": {
+      "ownership": "template",
+      "sha256": "c62a0c431e75d6c3b6e0aa81cde9f4ae39ea5c0b960cd0d35f8fe469d6ee1975"
     },
     "scripts/ai/generate.py": {
       "ownership": "template",
@@ -692,6 +708,10 @@
       "ownership": "template",
       "sha256": "a582647a9de07762d946a53d7f56d264849e6fd214f2294a05dc7e9a6528c4ef"
     },
+    "scripts/ai/react_gate.py": {
+      "ownership": "template",
+      "sha256": "7b058285fee18119a0582da09d67d761aa7c7705e8889f26ced1d13a646bdccf"
+    },
     "scripts/ai/readiness.py": {
       "ownership": "template",
       "sha256": "ceeb8a761f3dfe8096667234e684f61b664b1dbb47fc0b153dc5fd6266d43381"
@@ -700,9 +720,17 @@
       "ownership": "template",
       "sha256": "cb22ff5f52fbd4a6b0d0e489aa6f28400b2a0ae0bb2ca2d32edf1aa8aaffaaf6"
     },
+    "scripts/ai/runner.py": {
+      "ownership": "template",
+      "sha256": "4c9caa84ee08be65a9e70dd2746b81aa570faf84ab87ef8578b8138446fa20e1"
+    },
+    "scripts/ai/runner_caps.py": {
+      "ownership": "template",
+      "sha256": "abca8fbe50b6a91c1b15416699388666792c71bc5901af5c90725e5dfa1ec7c1"
+    },
     "scripts/ai/schema.py": {
       "ownership": "template",
-      "sha256": "7acad99cf3a6fd4a3508752f1caee355d11f3fd6a52d93df507d6f988e4bd487"
+      "sha256": "067c08b0e2a69c8ea285d226be9adbc2b8150f9fb11883489a18908a82c2b046"
     },
     "scripts/ai/test_delivery.py": {
       "ownership": "template",
@@ -710,11 +738,15 @@
     },
     "scripts/ai/test_family_delivery.py": {
       "ownership": "template",
-      "sha256": "96ed2de2331a1157f052e2a2d67ec800032078dca5487375ac6d1fc7dfb5e00c"
+      "sha256": "151a5bec426008fa999859b6fcd4ae927d6e4162e25cfa13615ed08101ce26f7"
+    },
+    "scripts/ai/test_react_gate.py": {
+      "ownership": "template",
+      "sha256": "744c55950defde0d4921d3d49a16c7431e649dad625dc08518a673a0dad91cc6"
     },
     "scripts/ai/test_seed_inventory.py": {
       "ownership": "template",
-      "sha256": "f8dde18d9c1c4c8b2ef48a1920327f593b32778c9cf80ab0faf91d4cf7f18760"
+      "sha256": "eda06d135955374fc6f914fca6c2ef55fd665f22f68b680b7929ded1a0322e43"
     },
     "scripts/api-pull.mjs": {
       "ownership": "template",
@@ -838,6 +870,18 @@
       "ownership": "template",
       "sha256": "1022368e19909dd55227dccf06f318975ce763509bf9359fc0b154a304b91b85"
     },
+    "templates/ai/checks/contract.json": {
+      "ownership": "template",
+      "sha256": "fa69f53fe89e1b2d448d299c25cd83d0536f08b998c2ce1bdaed16ff354ee1b1"
+    },
+    "templates/ai/checks/react.json": {
+      "ownership": "template",
+      "sha256": "2310a1675a1a66f79ef8b0564099c4da490c80f825ebaf120d360a7637162b4b"
+    },
+    "templates/ai/checks/workflow-inventory.json": {
+      "ownership": "template",
+      "sha256": "24a3a3381764ea1c20f75f5093872d6fccfa253ad0ff7fd94b69ed91b8bd8e3b"
+    },
     "templates/ai/legacy-entrypoints.json": {
       "ownership": "template",
       "sha256": "c5ff940702145c345721e2a6c833a9cbd5e03d687c8522fbf13d8e104bbb2c1e"
@@ -858,13 +902,25 @@
       "ownership": "template",
       "sha256": "bb8aaabbea242c0d4b1713e5a5a4a45154ed977a4a252b9885b25a1bb1e9b719"
     },
+    "templates/ai/schemas/check-catalog.schema.json": {
+      "ownership": "template",
+      "sha256": "c721c7ba041665c8a45410388ed46ff40ef224d8cc82a42e3e70dc7da927d045"
+    },
+    "templates/ai/schemas/check-result.schema.json": {
+      "ownership": "template",
+      "sha256": "2834173a6436d6fd6615cd442488e05efc16bed2b42817b62411712a4860f31a"
+    },
     "templates/ai/schemas/project.schema.json": {
       "ownership": "template",
       "sha256": "85be8ee2bbf035f1be351775747134794be1fb707094134ffa7d571c29fe11e6"
     },
+    "templates/ai/schemas/run-context.schema.json": {
+      "ownership": "template",
+      "sha256": "5f5a84216b5a8aca8d64c49704bb88b1413f6e506c3c81bf2f8dcdc05e863383"
+    },
     "templates/ai/seed-inputs.json": {
       "ownership": "template",
-      "sha256": "5e051cd6aac9a469b8db6e5e805048a2a5789f46752cbd618943183ffe03a311"
+      "sha256": "9c8b2e3f53db3bebf249d766af324e2a8cf1c1f9850679b8e1dbbef518708d49"
     },
     "templates/api_CONTRACT_ISSUES.md": {
       "ownership": "template",

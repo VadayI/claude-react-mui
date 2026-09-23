@@ -1,6 +1,7 @@
 """Verify real React AI payloads operate autonomously after fresh installation."""
 
 import importlib.util
+import json
 from pathlib import Path
 import subprocess
 import sys
@@ -33,7 +34,13 @@ class FamilyDeliveryTests(unittest.TestCase):
             path.write_text(text, encoding="utf-8", newline="\n")
 
     def test_fresh_autonomous_checks_and_repeat(self):
-        """Installed core/generator execute from the target with no source imports."""
+        """Run installed core, generator, schema, and detector without source imports.
+
+        No arguments or return value. The fixture writes only below the temporary
+        target and executes delivered Python tooling without network or database
+        access. Assertions cover the development receipt, P05 payload, catalog
+        schema, sanitized detector output, and an empty repeat delivery plan.
+        """
         self.install()
         for script, args in (("core_sync.py", ["--target", str(self.target), "--check"]),
                              ("generate_adapters.py", ["--root", str(self.target), "--check"]),
@@ -41,9 +48,48 @@ class FamilyDeliveryTests(unittest.TestCase):
             result = subprocess.run([sys.executable, str(self.target / "scripts/ai" / script), *args],
                                     cwd=self.target, capture_output=True, text=True, encoding="utf-8", check=False)
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
-        for name in ("scripts/ai/launch.ps1", "scripts/ai/launch.sh", "templates/ai/schemas/catalog.schema.json"):
+        catalog_check = subprocess.run(
+            [sys.executable, "-c",
+             "import json,sys; from pathlib import Path; "
+             "sys.path.insert(0, sys.argv[1]); import runner; "
+             "runner.validate_catalog(json.loads(Path(sys.argv[2]).read_text(encoding='utf-8')))",
+             str(self.target / "scripts/ai"), str(self.target / "templates/ai/checks/react.json")],
+            cwd=self.target, capture_output=True, text=True, encoding="utf-8", check=False)
+        self.assertEqual(catalog_check.returncode, 0, catalog_check.stdout + catalog_check.stderr)
+        detector = subprocess.run(
+            [sys.executable, str(self.target / "scripts/ai/detector.py"), "--repository", str(self.target)],
+            cwd=self.target, capture_output=True, text=True, encoding="utf-8", check=False)
+        self.assertEqual(detector.returncode, 0, detector.stdout + detector.stderr)
+        report = json.loads(detector.stdout)
+        self.assertEqual(report["repository"]["status"], "NOT_VERIFIED")
+        receipt = json.loads((self.target / "docs/ai/core-source.json").read_text(encoding="utf-8"))
+        self.assertEqual(receipt["source_commit"], "246717baa1c33fb4cf2ed38875efdf8ea577cacd")
+        self.assertEqual(receipt["pin_status"], "development")
+        self.assertNotIn("observed_upstream_main", receipt)
+        for name in ("scripts/ai/launch.ps1", "scripts/ai/launch.sh", "templates/ai/schemas/catalog.schema.json",
+                     "scripts/ai/detector.py", "scripts/ai/runner.py", "docs/ai/runner.md",
+                     "templates/ai/schemas/check-catalog.schema.json",
+                     "templates/ai/schemas/check-result.schema.json", "templates/ai/checks/react.json"):
             self.assertTrue((self.target / name).is_file())
         self.assertEqual(delivery.plan(ROOT, self.target), ({}, []))
+
+    def test_customized_runner_catalog_conflicts_without_writes(self):
+        """Preserve a customized installed catalog and block the complete update.
+
+        No arguments or return value. Writes a synthetic customization under the
+        temporary target, reads the ownership manifest, and performs no database
+        or network operations. Assertions prove conflict-before-write behavior.
+        """
+        self.install()
+        catalog = self.target / "templates/ai/checks/react.json"
+        catalog.write_text('{"custom": true}\n', encoding="utf-8")
+        before = {path.relative_to(self.target): path.read_bytes()
+                  for path in self.target.rglob("*") if path.is_file()}
+        _, conflicts = delivery.plan(ROOT, self.target)
+        self.assertEqual(conflicts, ["templates/ai/checks/react.json"])
+        after = {path.relative_to(self.target): path.read_bytes()
+                 for path in self.target.rglob("*") if path.is_file()}
+        self.assertEqual(after, before)
 
     def test_customized_core_and_project_notes_survive(self):
         """Modified vendored code conflicts while unrelated project notes stay intact."""
