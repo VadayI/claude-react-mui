@@ -146,6 +146,14 @@ class FamilyDeliveryTests(unittest.TestCase):
         self.assertIn("workflow_dispatch:", active)
         self.assertNotIn("  push:", active)
         self.assertNotIn("  pull_request:", active)
+        settings = json.loads((self.target / ".claude/settings.json").read_text(encoding="utf-8"))
+        self.assertEqual(settings["hooks"]["SessionStart"][0]["hooks"][0]["command"],
+                         "bash scripts/session-start.sh")
+        self.assertNotIn("Stop", settings["hooks"])
+        session = (self.target / "scripts/session-start.sh").read_text(encoding="utf-8")
+        self.assertIn('node "$SCRIPT_DIR/detect-env.mjs"', session)
+        self.assertNotIn("npm install", session)
+        self.assertNotIn("rm -f", session)
         for name in (".env", ".claude/memory", "docs/HANDOFF.md", "src", "package.json"):
             self.assertFalse((self.target / name).exists(), name)
 

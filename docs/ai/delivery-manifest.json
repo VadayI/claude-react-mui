@@ -309,7 +309,7 @@
     },
     ".claude/settings.json": {
       "ownership": "mixed",
-      "sha256": "f888cb6e8dea7da058d7784cd6c20cb3f74c32562f511adbc050496352c44b5b"
+      "sha256": "cd36a2ce9d7775ed30363d9ae85ec17325d870b256a9844002a3713e0a930194"
     },
     ".claude/skills/accessibility-reviewer/SKILL.md": {
       "ownership": "template",
@@ -414,7 +414,7 @@
     },
     "docs/ai/README.md": {
       "ownership": "template",
-      "sha256": "49c1926c3eab6022d594a3b6539f74b83598dc93b8951ce6e73e2eef633f6f35"
+      "sha256": "b48d6b6b9c8ecff62b122897991c4cde8fbd6321496bb82ac6528aaca412aa01"
     },
     "docs/ai/adapter-generation.md": {
       "ownership": "template",
@@ -758,7 +758,7 @@
     },
     "scripts/ai/test_family_delivery.py": {
       "ownership": "template",
-      "sha256": "c789b5930fe7e598d3c836574bae3510b25806d509ab842a4dade20ec466853c"
+      "sha256": "ccec3dd749e2201c055e293e30ffb4bbdc9f69987bb80cbf9f7875799bd2f958"
     },
     "scripts/ai/test_git_hooks.py": {
       "ownership": "template",
@@ -840,7 +840,7 @@
     },
     "scripts/session-start.sh": {
       "ownership": "template",
-      "sha256": "6c31e7c1549bd1ed1a59fa82ec0de9787ec7da8bb07ec96cd7d84d5e90149fe7"
+      "sha256": "0448018f14beb00f86caf64c5534a9c262f0d6accdf93ccf784c21f919924dd5"
     },
     "scripts/setup-wsl.sh": {
       "ownership": "template",

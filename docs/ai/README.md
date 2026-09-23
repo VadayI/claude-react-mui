@@ -57,6 +57,14 @@ ref with the exact runner. New branches require a current tracking ref for
 remote `main`; release tags use a separate procedure. Local hooks are
 bypassable and do not replace remote policy.
 
+Claude `SessionStart` runs the explicit `detect-env.mjs` probe through
+`scripts/session-start.sh` and exposes failure. It does not remove Git locks,
+seed `.env`, install dependencies, or start services. There is no automatic
+Stop/SessionEnd formatter, push, or merge; close with an explicit handoff.
+An interrupted session may not run an end hook. Codex has no verified trusted
+tool-hook equivalent in this pilot. Runtime tool hooks provide early policy
+feedback only and do not cover arbitrary shell writes.
+
 This command now installs the complete manifest payload, including legacy roles,
 commands, skills and scaffold inputs, plus the derived Makefile. The Bash
 `scripts/install.sh` launcher uses this same preflight and accepts `--ci-mode`;
