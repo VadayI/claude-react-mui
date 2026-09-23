@@ -49,21 +49,21 @@
     },
     {
       "id": "react.file-size", "description": "Enforce the checked-in TypeScript and TSX source-size policy.",
-      "argv": ["{git_bash}", "scripts/check_file_size.sh"], "cwd": ".", "mandatory": true, "timeout_seconds": 120,
+      "argv": ["{git_bash}", "--login", "scripts/check_file_size.sh"], "cwd": ".", "mandatory": true, "timeout_seconds": 120,
       "prerequisites": ["git-bash"], "applicability": {"kind": "always"},
       "expected_artifacts": [], "dependencies": [], "allowed_side_effects": ["evidence"],
       "network_access": "none", "not_verified_exit_codes": [], "provisioning": [], "generated_comparisons": [], "ephemeral_outputs": []
     },
     {
       "id": "react.stubs", "description": "Reject undocumented source stubs using the active repository gate.",
-      "argv": ["{git_bash}", "scripts/check_stubs.sh"], "cwd": ".", "mandatory": true, "timeout_seconds": 120,
+      "argv": ["{git_bash}", "--login", "scripts/check_stubs.sh"], "cwd": ".", "mandatory": true, "timeout_seconds": 120,
       "prerequisites": ["git-bash"], "applicability": {"kind": "always"},
       "expected_artifacts": [], "dependencies": [], "allowed_side_effects": ["evidence"],
       "network_access": "none", "not_verified_exit_codes": [], "provisioning": [], "generated_comparisons": [], "ephemeral_outputs": []
     },
     {
       "id": "react.feature-readmes", "description": "Require README coverage for checked-in feature directories.",
-      "argv": ["{git_bash}", "scripts/check_feature_readmes.sh"], "cwd": ".", "mandatory": true, "timeout_seconds": 120,
+      "argv": ["{git_bash}", "--login", "scripts/check_feature_readmes.sh"], "cwd": ".", "mandatory": true, "timeout_seconds": 120,
       "prerequisites": ["git-bash"], "applicability": {"kind": "always"},
       "expected_artifacts": [], "dependencies": [], "allowed_side_effects": ["evidence"],
       "network_access": "none", "not_verified_exit_codes": [], "provisioning": [], "generated_comparisons": [], "ephemeral_outputs": []

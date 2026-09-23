@@ -69,6 +69,9 @@ class ReactGateTests(unittest.TestCase):
         for item in catalog["checks"]:
             self.assertIn(item["network_access"], {"none", "loopback", "external"})
             self.assertIsInstance(item["not_verified_exit_codes"], list)
+        by_id = {item["id"]: item for item in catalog["checks"]}
+        for check_id in ("react.file-size", "react.stubs", "react.feature-readmes"):
+            self.assertEqual(by_id[check_id]["argv"][1], "--login")
         self.assertEqual(catalog["inventory"]["expected_steps"], 55)
 
     def test_exact_policy_uses_only_context_changed_manifest(self):
