@@ -25,6 +25,23 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # Kontrola dostawy AI: manifesty, adaptery i vendored core muszą być zgodne
+      # ze źródłami — inaczej install/update projektów pochodnych zatrzymuje się
+      # na "Source digest mismatch".
+      - name: Set up Python 3.13 (family-core tooling)
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Gate — AI delivery drift (core, adapters, manifest)
+        run: |
+          python scripts/ai/core_sync.py --check
+          python scripts/ai/generate_adapters.py --check
+          python scripts/ai/generate.py --check
+
+      - name: Gate — AI delivery tests
+        run: python -m unittest discover -s scripts/ai -p 'test_*.py'
+
       - name: Gate — npm audit (high/critical)
         run: npm audit --audit-level=high
 
