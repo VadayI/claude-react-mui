@@ -1,3 +1,34 @@
+## P02 pilot in progress — 2026-09-20
+
+App snapshot: `9581f9c`, verified Windows/Linux Node 24 with 99 tests;
+Windows E2E 8/8. Initial JS budget 200 KiB explicitly approved; measured 153.4.
+Branch: `chore/shared-react-pilot`, dependent on the unmerged P01 commits.
+Neutral catalog/adapters and non-destructive pilot installer are prepared.
+Generation/drift checks and five delivery regression tests pass; Unicode/spaced
+fresh and repeated delivery pass. Next: P03 behavioral runtime comparisons.
+Runtime support, production shared-core delivery and full implementation-plan
+completion are NOT claimed. No push/PR/merge yet. See docs/ai/README.md.
+
+# Current implementation handoff — 2026-09-20
+
+Working branch: `fix/windows-react-baseline` in the isolated P01 clone.
+Known committed baseline: `1ee8d60` (Windows dependency fix); i18n candidate follows.
+This is preparatory P01 work, not completion of the family plan or runtime pilot.
+
+- Windows Node 24: typecheck/lint, 99 tests, 8 E2E, build/bundle passed.
+- Linux Node 24: original prepared Rollup baseline passed clean install, 84 tests,
+  typecheck/lint/build. Final i18n Linux run still pending.
+- User explicitly set initial JS gzip budget to 200 KiB; other budgets unchanged.
+- Seed delivery: four fresh/repeat/conflict/drift/path fixtures passed.
+- npm audit remediation: zero high/critical; two moderate Vitest/mocker findings
+  remain documented for separate maintenance. Full candidate checks continue.
+- See `docs/plans/0005-agent-neutral-implementation.md` and ADR 0029.
+- No push, PR or merge yet. Preserve original checkout refs/stash/untracked files.
+
+---
+
+The following snapshot is historical and must not be interpreted as current Git state.
+
 # HANDOFF — claude-react-mui
 
 > Read this first when joining the project. Updated by `/wrap-up` at end of each session.
@@ -106,3 +137,33 @@ React 19 · Vite 8 · TypeScript 6 · MUI 9 · React Router 7 · TanStack Query 
 - `docs/plans/0004-stack-upgrade-latest-versions.md` — living plan for the full upgrade sequence (COMPLETE)
 - `.performance-budget.json` — `initialJsGzipKb` 145
 - `.npmrc` — `legacy-peer-deps=true` (peer stopgap; removal deferred — see Next steps)
+
+## 2026-09-20 — safe legacy launcher checkpoint
+
+Shared compatibility source: integrated contract commit 485bb7ae64e5c09ce046ea5cae6e92fd641a7ffe.
+Contract core tests: Windows 43 PASS + 1 symlink SKIP; Linux all 44 PASS.
+Django/React pins reference merged contract PR #57 at integrated commit 485bb7ae64e5c09ce046ea5cae6e92fd641a7ffe.
+Legacy .env is parsed as selected literal data, never executed; credentials affect
+only the child, preserving blank fallback and PAT precedence. Known legacy wrappers
+migrate by exact hash; custom wrappers conflict before writes. Windows PowerShell
+and Git Bash version probes passed. These are not model-session acceptance.
+React actual main-to-candidate upgrade/generator check passed; Django old-seed
+component upgrade/repeat passed. Full bootstrap, CI-choice and P05+ remain pending.
+All PRs remain unmerged; a new explicit user command is required for merge.
+
+
+## 2026-09-20 — production bootstrap delivery checkpoint
+
+Branch `feat/production-bootstrap-integration` starts from integrated React main
+`afb35e8868412581a94af57f658bbb4b01264597`. The contract core stays pinned to
+integrated `485bb7ae64e5c09ce046ea5cae6e92fd641a7ffe`.
+The Bash installer now calls the complete Python ownership preflight, with an
+explicit per-file seed inventory and linked-root rejection. Canonical bootstrap
+and update procedures generate Claude/Codex entry points and retain the installed
+runtime; custom instructions, project notes/language/overrides and live workflows
+are preserved. Legacy template-sync delegates to the same update contract.
+Windows: 13 delivery tests PASS, 1 host symlink SKIP; generation/core checks PASS.
+Actual previous-main plus legacy-scaffold update passed install/generator/core
+and empty-repeat checks. Final committed Git Bash and Linux evidence follows in
+this task's publication report. P05 runner, P06 CI activation, remaining P12 roles
+and P13 runnable-family/rollback acceptance are not claimed. No merge/deploy.

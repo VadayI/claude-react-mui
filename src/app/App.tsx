@@ -9,6 +9,7 @@
  * wrapped in a `<Suspense>` boundary that shows the accessible
  * {@link RouteFallback} while a route chunk loads.
  */
+import { useTranslation } from 'react-i18next'
 import { Suspense } from 'react'
 import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
@@ -24,19 +25,21 @@ import { RouteFallback } from '../components/RouteFallback'
  *
  * Child routes are rendered via `<Outlet />` inside a `<Suspense>` boundary.
  */
+/** Renders translated navigation and child routes; takes no parameters, starts no requests and mutates no state. */
 export function App() {
+  const { t } = useTranslation('common')
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Claude React MUI
+            {t('appName')}
           </Typography>
           <Button color="inherit" component={RouterLink} to="/">
-            Home
+            {t('home')}
           </Button>
           <Button color="inherit" component={RouterLink} to="/articles">
-            Articles
+            {t('articles')}
           </Button>
         </Toolbar>
       </AppBar>

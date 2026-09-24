@@ -9,12 +9,13 @@
  * @param isSubmitting - When true, disables the submit button and sets aria-busy.
  * @param serverError - Server-side error string; shown in role="alert" when non-null.
  */
+import { useTranslation } from 'react-i18next'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
-import { loginFormSchema, type LoginFormValues } from './LoginForm.schema'
+import { createLoginFormSchema, type LoginFormValues } from './LoginForm.schema'
 
 interface LoginFormProps {
   onSubmit: (values: { email: string; password: string }) => void
@@ -22,13 +23,15 @@ interface LoginFormProps {
   serverError: string | null
 }
 
+/** Renders translated labels and locale-specific Zod validation. Calls onSubmit with valid credentials, renders serverError and honors isSubmitting; performs no requests itself. */
 export function LoginForm({ onSubmit, isSubmitting, serverError }: LoginFormProps) {
+  const { t } = useTranslation('auth')
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginFormValues>({
-    resolver: zodResolver(loginFormSchema),
+    resolver: zodResolver(createLoginFormSchema(t)),
   })
 
   function handleValidSubmit(values: LoginFormValues) {
@@ -47,7 +50,7 @@ export function LoginForm({ onSubmit, isSubmitting, serverError }: LoginFormProp
       </Box>
 
       <TextField
-        label="Email"
+        label={t('email')}
         type="email"
         autoComplete="email"
         error={Boolean(errors.email)}
@@ -56,7 +59,7 @@ export function LoginForm({ onSubmit, isSubmitting, serverError }: LoginFormProp
       />
 
       <TextField
-        label="Password"
+        label={t('password')}
         type="password"
         autoComplete="current-password"
         error={Boolean(errors.password)}
@@ -65,7 +68,7 @@ export function LoginForm({ onSubmit, isSubmitting, serverError }: LoginFormProp
       />
 
       <Button type="submit" variant="contained" disabled={isSubmitting} aria-busy={isSubmitting}>
-        Sign in
+        {t('signIn')}
       </Button>
     </Box>
   )

@@ -12,6 +12,7 @@
  */
 import { lazy } from 'react'
 import { createBrowserRouter } from 'react-router'
+import { HomePage } from './HomePage'
 import { App } from './App'
 import { RequireAuth } from './guards/RequireAuth'
 
@@ -39,14 +40,7 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: (
-          <div style={{ padding: '2rem' }}>
-            <h2>Welcome</h2>
-            <p>
-              Navigate to <a href="/articles">/articles</a> to see the Articles feature.
-            </p>
-          </div>
-        ),
+        element: <HomePage />,
       },
 
       // Protected routes — wrapped in RequireAuth layout route

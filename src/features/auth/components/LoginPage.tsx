@@ -8,6 +8,7 @@
  * `sanitizeNext` prevents open-redirect attacks by only allowing same-origin
  * relative paths (starts with `/` but not `//`).
  */
+import { useTranslation } from 'react-i18next'
 import { useState } from 'react'
 import { Navigate, useNavigate, useSearchParams } from 'react-router'
 import Box from '@mui/material/Box'
@@ -21,7 +22,9 @@ function sanitizeNext(next: string | null): string {
   return next.startsWith('/') && !next.startsWith('//') ? next : '/'
 }
 
+/** Renders translated login UI; no parameters. Login performs an API request, sets in-memory tokens and navigates on success; errors render through LoginForm. */
 export function LoginPage() {
+  const { t } = useTranslation('auth')
   const accessToken = useAuthStore((s) => s.accessToken)
   const [searchParams] = useSearchParams()
   const next = searchParams.get('next')
@@ -41,7 +44,7 @@ export function LoginPage() {
         void navigate(sanitizeNext(next))
       },
       onError(err) {
-        setServerError(err.message ?? 'Invalid credentials.')
+        setServerError(err.message ?? t('invalidCredentials'))
       },
     })
   }
@@ -49,7 +52,7 @@ export function LoginPage() {
   return (
     <Box sx={{ maxWidth: 400, mx: 'auto', mt: 4 }}>
       <Typography variant="h4" component="h1" gutterBottom>
-        Sign In
+        {t('title')}
       </Typography>
       <LoginForm onSubmit={handleSubmit} isSubmitting={isPending} serverError={serverError} />
     </Box>

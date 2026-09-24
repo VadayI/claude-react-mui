@@ -1,6 +1,5 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
-  "model": "opusplan",
   "permissions": {
     "allow": [
       "Read",
@@ -48,40 +47,5 @@
     "VITE_API_BASE_URL": "http://localhost:8000",
     "CLAUDE_CODE_DISABLE_1M_CONTEXT": "1"
   },
-  "enabledPlugins": {
-    "superpowers@superpowers-marketplace": true,
-    "playwright@claude-plugins-official": true,
-    "github@claude-plugins-official": true,
-    "context7@claude-plugins-official": true
-  },
-  "hooks": {
-    "Stop": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "npx prettier --write . 2>/dev/null || true",
-            "statusMessage": "Formatting (prettier)..."
-          },
-          {
-            "type": "command",
-            "command": "npx eslint --fix . 2>/dev/null || true",
-            "statusMessage": "Auto-fixing lint (eslint --fix)..."
-          }
-        ]
-      }
-    ],
-    "SessionStart": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash scripts/session-start.sh",
-            "statusMessage": "Detecting environment..."
-          }
-        ]
-      }
-    ]
-  },
-  "_last_reviewed": "2026-06-02"
+  "_last_reviewed": "2026-09-20"
 }

@@ -12,15 +12,18 @@
  *
  * @returns A centered, theme-driven spinner announced as a status region.
  */
+import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import CircularProgress from '@mui/material/CircularProgress'
 import Typography from '@mui/material/Typography'
 
+/** Renders translated loading status and spinner; no parameters, requests, mutations or expected exceptions. */
 export function RouteFallback() {
+  const { t } = useTranslation('common')
   return (
     <Box
       role="status"
-      aria-label="Loading"
+      aria-label={t('loading')}
       sx={{
         display: 'flex',
         flexDirection: 'column',
@@ -33,7 +36,7 @@ export function RouteFallback() {
     >
       <CircularProgress aria-hidden />
       <Typography variant="body2" color="text.secondary">
-        Loading…
+        {t('loadingText')}
       </Typography>
     </Box>
   )

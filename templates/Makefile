@@ -61,5 +61,12 @@ doctor-deps: ## Quick check that required host tools are present (node, npm, cla
 	@claude --version 2>/dev/null && echo "  claude OK" || echo "  claude MISSING"
 	@gh --version     2>/dev/null && echo "  gh     OK" || echo "  gh     MISSING"
 
-cc: ## Launch Claude Code with .env sourced (feeds MCP + gh secrets from .env).
+cc: ## Launch Claude Code with selected .env data (feeds MCP + gh secrets from .env).
 	bash scripts/claude.sh $(ARGS)
+
+.PHONY: ai-claude codex
+ai-claude: ## Launch Claude through the portable core (no dotenv execution).
+	python scripts/ai/launch.py claude $(ARGS)
+
+codex: ## Launch Codex through the portable core (no dotenv execution).
+	python scripts/ai/launch.py codex $(ARGS)

@@ -1,0 +1,40 @@
+# React shared-core development integration
+
+The Python standard-library family core is vendored from an exact contract Git
+commit. `docs/ai/core-source.json` contains the development pin and per-file
+digests. Runtime commands require no adjacent checkout, marketplace or source
+repository access. This is a dependency on an unmerged core PR; after integration,
+replace it with the actual integrated source commit and verify its digest/ancestry.
+
+```text
+python scripts/ai/core_sync.py --target . --check
+python scripts/ai/generate_adapters.py --root . --check
+python scripts/ai/generate.py --check
+python scripts/ai/install.py --target "../derived project" --apply
+python scripts/ai/launch.py codex --probe
+python scripts/ai/launch.py claude --probe
+```
+
+`generate.py` now delegates rendering to the pinned `adapters.py`, preflights
+ownership through `generate_adapters.py`, checks core drift, and builds the React
+delivery manifest. The manifest includes core Python files, PowerShell/Bash
+wrappers, JSON schemas, inert MCP template, canonical sources and generated role
+receipt. Full role packs are the default for `run_role.py`; explicit file-list
+delivery remains available. No rules or role responsibilities were removed.
+
+Fresh/repeat AI delivery is independent of application bootstrap. It preserves
+existing project-owned configuration and customized files through explicit
+conflicts. Update the canonical rules/catalog first, then run generation; do not
+edit vendored core scripts. The runtime pin validates content, not successful
+application checks or native custom-role support.
+
+`make ai-claude` and `make codex` call the new launcher. For Windows, use
+`pwsh -NoProfile -File scripts/ai/launch.ps1 codex --probe` or explicit Git Bash
+with `scripts/ai/launch.sh`. See `launchers.md` for task input and explicit optional
+environment names. Existing `make cc`/`scripts/claude.sh` retain legacy behavior
+pending the dedicated bootstrap/config migration; they still source `.env` and
+are not the portable launch path.
+
+The legacy Bash scaffold installer still needs P06 explicit CI-choice/workflow
+work and P13 full delivery acceptance. This integration does not certify that old
+installer or a complete runnable derived application. No merge/deploy is implied.

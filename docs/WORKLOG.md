@@ -1032,3 +1032,46 @@ Cross-machine work history. Updated at the end of every session (`/wrap-up`) and
   - Верифіковано: матриця `detect-env` (8 сценаріїв) PASS; усі правки через heredoc (Edit/Write обрізають на 9p).
 - Знахідка (задокументовано, follow-up): `npm ci` на нативному Windows падає `EBADPLATFORM` — lockfile містить лише `@rollup/rollup-linux-x64-gnu`; + `eslint@10` vs `jsx-a11y` peer-конфлікт (тому `--legacy-peer-deps`). Повний крос-платформний lockfile = окремий PR.
 - 9p-урок (підтверджено вживу): git із WSL2-на-`/mnt` падав на `.git/index.lock` (EPERM на unlink); усі коміти робились із нативного Windows (NTFS) — що й ілюструє цінність зміни.
+
+## 2026-09-20 — P01 portable/i18n preparation
+
+Removed the direct Linux-only Rollup dependency in a separate commit. Added
+English/Ukrainian i18next resources, translated seed UI/client validation, 15
+behavioral locale tests, and conflict-preserving seed delivery with four fixtures.
+User approved a 200 KiB initial-JS budget (ADR 0029). Node 24 Windows checks passed:
+99 tests and 8 Playwright E2E, lint/typecheck/build, API types and bundle gates.
+The dependency audit remains failed (7 high/4 moderate); separate targeted fixes
+are required before claiming the full profile passed. No merge/deploy.
+
+## 2026-09-20 — neutral React instruction pilot
+
+Moved all 28 rules to a cataloged canonical source, generated four runtime roles,
+three procedure adapters and complete role packs. Removed implicit project-wide
+repair hooks and mandatory plugin/model selection in K1/K2. Added ownership-aware
+preview/apply delivery with five passing regression tests. Generation is checked;
+runtime behavior remains pending P03. P01 Linux exact-commit checks also passed.
+
+## 2026-09-20 — safe legacy launcher checkpoint
+
+Shared compatibility source: integrated contract commit 485bb7ae64e5c09ce046ea5cae6e92fd641a7ffe.
+Contract core tests: Windows 43 PASS + 1 symlink SKIP; Linux all 44 PASS.
+Django/React pins reference merged contract PR #57 at integrated commit 485bb7ae64e5c09ce046ea5cae6e92fd641a7ffe.
+Legacy .env is parsed as selected literal data, never executed; credentials affect
+only the child, preserving blank fallback and PAT precedence. Known legacy wrappers
+migrate by exact hash; custom wrappers conflict before writes. Windows PowerShell
+and Git Bash version probes passed. These are not model-session acceptance.
+React actual main-to-candidate upgrade/generator check passed; Django old-seed
+component upgrade/repeat passed. Full bootstrap, CI-choice and P05+ remain pending.
+All PRs remain unmerged; a new explicit user command is required for merge.
+
+
+### 2026-09-20 — shared bootstrap and ownership-preserving full seed
+
+Integrated legacy install/bootstrap/update entry points with the shared runtime.
+The complete reviewed seed inventory carries both agent adapters and all existing
+legacy scaffold inputs; unknown files are not automatically packaged. Root-link
+and secret-path fixtures protect delivery boundaries. Local custom instructions,
+project language, notes and runtime overrides survive install/update. See
+`docs/ai/migration.md` for ownership, explicit old hashes and remaining P05–P13
+migration boundaries. Core pin remains integrated 485bb7a. No app/dependency/API
+changes and no merge/release/deploy.
