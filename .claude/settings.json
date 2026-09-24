@@ -47,5 +47,30 @@
     "VITE_API_BASE_URL": "http://localhost:8000",
     "CLAUDE_CODE_DISABLE_1M_CONTEXT": "1"
   },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit|NotebookEdit|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node scripts/policy/claude_edit_guard.mjs",
+            "statusMessage": "Checking vendored contract edit policy..."
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node scripts/detect-env.mjs",
+            "statusMessage": "Detecting environment..."
+          }
+        ]
+      }
+    ]
+  },
   "_last_reviewed": "2026-09-20"
 }
