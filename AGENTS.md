@@ -59,5 +59,10 @@ checks/manual guides, and `wrap-up.md` for finalization. Shared project memory i
 history/auto-memory is not synchronized. Persistent legacy paths remain in use
 until the explicit P07 migration; never create competing writable registries.
 
-This is the P02 pilot delivery. `docs/ai/compatibility.md` states measured support
-and pending probes; existence or parsing of an adapter is not runtime proof.
+Delivered so far: canonical rules and generated adapters (P02), the vendored
+family core with schemas and launchers (P04), the exact-candidate detector/runner
+(P05), explicit CI mode, owned workflow materialization and Git/tool hooks (P06).
+Not delivered yet: shared project state migration (P07), the G0–G9 Git lifecycle
+(P08), onboarding and readiness roles (P10/P11) and family acceptance (P13).
+`docs/ai/compatibility.md` and `docs/ai/pilot-report.md` record the measured
+pilot; existence or parsing of an adapter is not runtime proof.

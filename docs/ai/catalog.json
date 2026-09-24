@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "phase": "P02 pilot; not family acceptance",
+  "phase": "P06 integrated; P07 shared state pending; not family acceptance",
   "rules": [
     {
       "id": "accessibility",

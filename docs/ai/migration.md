@@ -24,7 +24,7 @@ derived targets without the upstream application's root Makefile assumptions.
 | AGENTS, CLAUDE, runtime settings, MCP config, ignore/attributes and root Makefile | Seed absent; accept equal; differing content requires a reviewed diff |
 | Legacy bootstrap/update/template-sync/install and launcher files | Exact explicit old hashes permit migration; customized variants conflict |
 | Notes, source, registries, output-language, overrides, local settings, env, arbitrary unknown files | Preserve; never import upstream project/session state |
-| Active workflows | Preserve existing files; template stays inert until P06 mode materialization |
+| Active workflows | Preserve existing files; the template stays inert until the project's explicit CI mode choice materializes it (`install.py --ci-mode local\|github`) |
 
 No directory is blanket template-owned. A conflict means no payload write,
 including no new ownership receipt. Preview does not create the target. A

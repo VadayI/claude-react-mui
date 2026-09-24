@@ -16,7 +16,9 @@ K0 uses the original settings from the prepared app commit. The K1/K2 pilot
 removes implicit formatting/repair hooks, optional plugin activation and a forced
 model selection. User/global settings remain untouched. Read-only reviewers
 cannot inherit project Stop hooks that modify code. Explicit checks remain in
-the verification procedure; executable replacement hooks are a later P06 step.
+the verification procedure; the owned Git hooks (`scripts/ai/git_hooks.py`) and
+the Claude PreToolUse parser (`scripts/policy/claude_edit_guard.mjs`) are early
+feedback, not a replacement for those checks.
 
 ## Delivery and updates
 
@@ -63,9 +65,10 @@ seed `.env`, install dependencies, or start services. There is no automatic
 Stop/SessionEnd formatter, push, or merge; close with an explicit handoff.
 An interrupted session may not run an end hook. Codex has no verified trusted
 tool-hook equivalent in this pilot. Runtime tool hooks provide early policy
-feedback only and do not cover arbitrary shell writes. This React pilot has
-no active Claude PreToolUse payload parser for patch, rename/delete, multi-file,
-Windows-path, or malformed edit events; Git/CI checks carry those gates.
+feedback only and do not cover arbitrary shell writes. The Claude PreToolUse
+parser (`scripts/policy/claude_edit_guard.mjs`) warns on direct edits of the
+vendored contract artifact, including patch, rename/delete, multi-file,
+Windows-path and malformed payloads; Git/CI checks remain the enforcing gates.
 
 This command now installs the complete manifest payload, including legacy roles,
 commands, skills and scaffold inputs, plus the derived Makefile. The Bash

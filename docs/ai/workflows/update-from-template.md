@@ -27,7 +27,9 @@ are not interchangeable. A coordinator delegates writes to the update worker.
 6. Inventory stale paths recorded by the previous manifest but absent upstream;
    list them for review, never delete automatically. Preserve live workflows and
    branch settings. Newly delivered check scripts do not establish CI coverage;
-   runner/CI materialization is P05/P06 and must use the project's chosen mode.
+   the exact-runner workflow is materialized only by the project's explicit CI
+   choice (`scripts/ai/install.py --target <project> --ci-mode local|github`);
+   never activate automatic triggers without that recorded choice.
 7. Run installed `core_sync.py --target <project> --check`,
    `generate_adapters.py --root <project> --check`, and relevant delivery tests.
    Customized mixed instructions may require a documented explicit adaptation;

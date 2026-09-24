@@ -401,7 +401,7 @@
     },
     "AGENTS.md": {
       "ownership": "mixed",
-      "sha256": "da3869154fa94086fdd1afdf6492aabf7db5a368fe1733f6b2e483edb4be49c9"
+      "sha256": "61cba4e18e1f186ed2ed4fc1ff142d107f8198cd5567aab37ea006478856269d"
     },
     "CLAUDE.md": {
       "ownership": "mixed",
@@ -414,7 +414,7 @@
     },
     "docs/ai/README.md": {
       "ownership": "template",
-      "sha256": "83c1acd164ec87448c8913ff2e7867cea1541cf43f8de251ea56e79afd98f8d0"
+      "sha256": "da3491f7856a0fe9dd032f2a0b1a7dfab17eff5d7af35087a8119f7db478b33b"
     },
     "docs/ai/adapter-generation.md": {
       "ownership": "template",
@@ -422,7 +422,7 @@
     },
     "docs/ai/catalog.json": {
       "ownership": "template",
-      "sha256": "e30a1bb033141893095e06b31816f0c08a2c54c128ab5523ed119e8ae9c3d9b3"
+      "sha256": "1051e4c5a33a01d14516c66c15785bd4087b6ef10f55a6365aa9a185cb145d69"
     },
     "docs/ai/compatibility.md": {
       "ownership": "template",
@@ -430,7 +430,7 @@
     },
     "docs/ai/core-integration.md": {
       "ownership": "template",
-      "sha256": "91e9de29a3a15195b4015a2b3f41d68f8b85f1e3b7b6dc78261c6236c6cac49b"
+      "sha256": "da549c8bf1ea57439f8dcc83ae21b522cae6e4ee2d2d157c9b0e43b67bda1d57"
     },
     "docs/ai/core-source.json": {
       "ownership": "template",
@@ -450,7 +450,7 @@
     },
     "docs/ai/generated/adapters-manifest.json": {
       "ownership": "template",
-      "sha256": "284f0404937dd896221cbca3857b99b3261f268fde6bec6c3a0f7953eba6fd8a"
+      "sha256": "b66e96a165f3d13d085ce065e43c1227c392580da566e1bcb3c3a21a3b86726c"
     },
     "docs/ai/generated/role-packs/react-developer.md": {
       "ownership": "template",
@@ -486,7 +486,7 @@
     },
     "docs/ai/migration.md": {
       "ownership": "template",
-      "sha256": "248dc951a39f295d97197aeef37d61907d9700618b72c18464fec26c04ad4612"
+      "sha256": "2c301d192d5f0564f09bb08072c271d3f9198715489eced4e4b0bcc06bcaef51"
     },
     "docs/ai/pilot-report.md": {
       "ownership": "template",
@@ -654,7 +654,7 @@
     },
     "docs/ai/workflows/update-from-template.md": {
       "ownership": "template",
-      "sha256": "9715916bd24f979bac040126fc571f7a7dc63e8f860beabc9d0d4cfd1559b1cb"
+      "sha256": "4f1d14c606846fd2e2abed369d027206b0fac51186bec9804c6f9896dcdebe84"
     },
     "docs/ai/workflows/verify.md": {
       "ownership": "template",
