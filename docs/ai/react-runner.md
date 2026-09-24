@@ -43,9 +43,10 @@ network inputs, artifacts, or exact base/context remain `NOT_VERIFIED` and produ
 a nonzero runner outcome.
 
 The vendored core receipt pins integrated contract main commit
-`2e985eeb4883ccb79151c6c5834d6f82186d46a1`. Its manifest digest and
-runtime file map match the reviewed P05 development source; the receipt records
-the integrated provenance without changing runner bytes. P06 owns CI mode
-selection and workflow materialization; it does not replace these P05 gate
-implementations. P13 owns full install/adopt/update rollback and interruption
-acceptance.
+`9db26a0c65b970c223ab034750f3019ac59c5e2e` (manifest digest
+`131f17e9a64b32f0fb1d6f7bf068790163da87e04003a4cdc9673db7ddd27b73`). This
+revision includes the directory-digest invalidation fix from contract PR #62;
+the previous receipt (`2e985eeb…`) predated it, so React ran an older
+`runner.py` than Django and Contract. P06 delivered CI mode selection and
+workflow materialization without replacing these P05 gate implementations.
+P13 owns full install/adopt/update rollback and interruption acceptance.

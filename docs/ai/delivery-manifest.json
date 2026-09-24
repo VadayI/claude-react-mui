@@ -434,7 +434,7 @@
     },
     "docs/ai/core-source.json": {
       "ownership": "template",
-      "sha256": "d1ca8542187d408b177b8bbcaa435f2258bae40e03900a03ef586d2d5ff640d8"
+      "sha256": "caf6b249c38326852ecee384c5ac56efa724e0ed95128627e7dddd2dbc493e95"
     },
     "docs/ai/decisions/0001-portable-family-core.md": {
       "ownership": "template",
@@ -498,7 +498,7 @@
     },
     "docs/ai/react-runner.md": {
       "ownership": "template",
-      "sha256": "b462e8db0fee0db9998c42f908a4b7e386916cb15b79076bf81910b47a2200a1"
+      "sha256": "bcf44a8c01a08e0b4fc2f6bfc4a90e5606f63270ed0bb4eab9d05ad001b1bbec"
     },
     "docs/ai/roles/react-developer.md": {
       "ownership": "template",
@@ -630,7 +630,7 @@
     },
     "docs/ai/runner.md": {
       "ownership": "template",
-      "sha256": "3786b47a4a0f66df249c2a1315bec893815de4b3842fe3bbea1fef6913a4b42d"
+      "sha256": "54fd4b2948eec015b8099e5e2f1d787adf3344b721bb6ecd7284900cece6fbbd"
     },
     "docs/ai/runtime-compatibility.md": {
       "ownership": "template",
@@ -742,7 +742,7 @@
     },
     "scripts/ai/runner.py": {
       "ownership": "template",
-      "sha256": "4c9caa84ee08be65a9e70dd2746b81aa570faf84ab87ef8578b8138446fa20e1"
+      "sha256": "a28a5ec59db8efc1132557a251a2149f6b19b08a483564c0ad02526ec345b2c2"
     },
     "scripts/ai/runner_caps.py": {
       "ownership": "template",
@@ -758,7 +758,7 @@
     },
     "scripts/ai/test_family_delivery.py": {
       "ownership": "template",
-      "sha256": "92b0b9a3b8365cc6595406a1719e48b3e742bed4bce11b7c2f3b002d637aa693"
+      "sha256": "818c6b8ad644e26b8cbf2e3fdc4d0660802489f684b6515e6d57e84976492923"
     },
     "scripts/ai/test_git_hooks.py": {
       "ownership": "template",
