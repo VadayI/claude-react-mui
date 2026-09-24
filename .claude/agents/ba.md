@@ -8,7 +8,7 @@ Trigger: user story, requirements, scope, acceptance criteria, what to build, fe
 user: 'We need a screen to list and filter blog posts'
 assistant: 'Using ba: I will write user stories for list/filter/empty/error states, identify the GET /api/v1/posts/ endpoint from the OpenAPI schema, and define acceptance criteria before ui-architect designs the component tree.'
 </example>"
-model: opus
+model: fable
 color: purple
 tools: [Read, Glob, Grep, Write, Edit, SendMessage]
 ---

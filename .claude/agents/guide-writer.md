@@ -8,7 +8,7 @@ Trigger: /guides, user guide, developer guide, onboarding, how to use, docs/guid
 user: '/guides after adding the auth feature'
 assistant: 'Using guide-writer: updating docs/guides/user.md (login/logout flow), docs/guides/developer.md (VITE_API_BASE_URL setup, npm run dev, first authenticated request), reconciling against OpenAPI /auth/ endpoints.'
 </example>"
-model: sonnet
+model: opus
 color: blue
 tools: [Read, Glob, Grep, Write, Edit, Bash, SendMessage]
 ---
