@@ -30,11 +30,11 @@
     },
     ".claude/agents/ba.md": {
       "ownership": "template",
-      "sha256": "0e6cbefedab860a85d7d0896c0f4e2523358d7b2d5b8acfdd54ffdadc875eb85"
+      "sha256": "4db28deb36dcbacba0d81b21e86a6ea1ee8eff3be88c686d6240dae667214244"
     },
     ".claude/agents/brief-synthesizer.md": {
       "ownership": "template",
-      "sha256": "4ad9aef51914b6ea1f7edeff791dff7ba37f4cda97958987a90567d2111f015c"
+      "sha256": "b544f3ef17e09dac7e8ea88b76ae2796da63b34711c1f1aab2d9ade5b1d8847b"
     },
     ".claude/agents/ci-cd-engineer.md": {
       "ownership": "template",
@@ -50,11 +50,11 @@
     },
     ".claude/agents/devil.md": {
       "ownership": "template",
-      "sha256": "b2b5d9851ad1168c8cf2a424dc81dc9a80486018067f6288636994f0527352a1"
+      "sha256": "e596d9da18cf7fa130cac01daea5893ccb29133639b805d3a1e07548a10e93ed"
     },
     ".claude/agents/devops.md": {
       "ownership": "template",
-      "sha256": "045131679ef8a223e3a3d70127c5a90ceec9e9a1b17a9fee4040567e1a835775"
+      "sha256": "60afd6082589090c4e1ec7d9f0b939a90d9bb9022244b81be08ad96eefc71eee"
     },
     ".claude/agents/docs-writer.md": {
       "ownership": "template",
@@ -66,7 +66,7 @@
     },
     ".claude/agents/guide-writer.md": {
       "ownership": "template",
-      "sha256": "a612483b9500e1776b065cc88c99571ddd97b4941b881298682aca2a9d9739ef"
+      "sha256": "a124078a0c47e83fba67e97c79e7293168a12f6b5d32d0eca36d480002de98ae"
     },
     ".claude/agents/integration-architect.md": {
       "ownership": "template",
@@ -74,7 +74,7 @@
     },
     ".claude/agents/qa.md": {
       "ownership": "template",
-      "sha256": "cfe5304d04bb5f1a92516fd65b5bb95cc4c3ad3d1f0cc69197adb22d2b58f6ea"
+      "sha256": "f57f675bc671cd2037a7adbb32d1c3622ffb223ca438c0992d7506edad7b54aa"
     },
     ".claude/agents/react-developer.md": {
       "ownership": "template",
@@ -90,7 +90,7 @@
     },
     ".claude/agents/security-scanner.md": {
       "ownership": "template",
-      "sha256": "3bfb3d00cde904669c61071f6caa5fe348d8693e8f3a81b7cfa420a9ff8f7b88"
+      "sha256": "3931b97f21b1362f952f96166729874418f8d3e7ee203b3747e90003eed8a636"
     },
     ".claude/agents/state-architect.md": {
       "ownership": "template",
@@ -856,7 +856,7 @@
     },
     "scripts/turbo.sh": {
       "ownership": "template",
-      "sha256": "328df36bc18e4f14924fc3b6ee7aadb482ea66abbc85f9c369b8265637bf490b"
+      "sha256": "eb9593598c8fffecc170bd716e801a2fdf9a6e36fc9cd62d3e27227aa24d2c48"
     },
     "templates/.env.example": {
       "ownership": "template",
