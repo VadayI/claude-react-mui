@@ -1,3 +1,17 @@
+## 2026-09-24 — P07 core delivered with a development pin
+
+Branch `feat/p07-shared-memory` on top of `fix/p06-react-delivery-drift`. The
+rebased P07 core (contract `feat/p07-shared-memory` head
+`1235a23f8f77d7dff4e91e039cf60877ae794ce9`, manifest digest `512798fc…`) is
+vendored with `pin_status: development`: `scripts/ai/project_state.py`,
+`docs/ai/project-state-migration.md`, updated `docs/ai/{schemas,launchers}.md`;
+both new files are enrolled in `templates/ai/seed-inputs.json` so derived
+projects receive them. Do not call this integrated. After the contract P07 PR
+merges, repin with `core_sync.py --integrated-pin`, regenerate and restore the
+integrated assertions in `scripts/ai/test_family_delivery.py`. Consumer adoption
+(routes registry resolver, env/log writers, seed/update ownership, docs) is the
+remaining P07 work; no legacy migration has been run against project data.
+
 ## 2026-09-24 — delivery hotfix, integrated core 9db26a0
 
 Branch `fix/p06-react-delivery-drift` on top of `main` `c1a1353` (P06 merged via

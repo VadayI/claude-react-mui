@@ -71,9 +71,11 @@ class FamilyDeliveryTests(unittest.TestCase):
         report = json.loads(detector.stdout)
         self.assertEqual(report["repository"]["status"], "NOT_VERIFIED")
         receipt = json.loads((self.target / "docs/ai/core-source.json").read_text(encoding="utf-8"))
-        self.assertEqual(receipt["source_commit"], "9db26a0c65b970c223ab034750f3019ac59c5e2e")
-        self.assertEqual(receipt["pin_status"], "integrated")
-        self.assertEqual(receipt["observed_upstream_main"], receipt["source_commit"])
+        # Tymczasowy pin deweloperski na rewizję P07 core (feat/p07-shared-memory);
+        # po scaleniu contract PR wrócić do integrated pin i observed_upstream_main.
+        self.assertEqual(receipt["source_commit"], "1235a23f8f77d7dff4e91e039cf60877ae794ce9")
+        self.assertEqual(receipt["pin_status"], "development")
+        self.assertNotIn("observed_upstream_main", receipt)
         for name in ("scripts/ai/launch.ps1", "scripts/ai/launch.sh", "templates/ai/schemas/catalog.schema.json",
                      "scripts/ai/detector.py", "scripts/ai/runner.py", "docs/ai/runner.md",
                      "templates/ai/schemas/check-catalog.schema.json",
