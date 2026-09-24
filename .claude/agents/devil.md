@@ -8,7 +8,7 @@ Trigger: challenge, devil's advocate, what could go wrong, risk review, assumpti
 user: 'Challenge the plan for the real-time notifications feature'
 assistant: 'Using devil: WebSocket vs SSE — have we measured the actual connection count? The current Zustand store shape will cause O(n) re-renders for 100+ notifications. What happens on reconnect — do we replay missed events?'
 </example>"
-model: opus
+model: fable
 color: red
 tools: [Read, Glob, Grep, SendMessage]
 ---

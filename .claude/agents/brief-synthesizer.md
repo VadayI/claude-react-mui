@@ -8,7 +8,7 @@ Trigger: /synthesize-brief, synthesize brief, generate PROJECT.md, consolidate d
 user: '/synthesize-brief'
 assistant: 'Using brief-synthesizer: recursive read of docs/**, structured synthesis into docs/PROJECT.md.'
 </example>"
-model: sonnet
+model: opus
 color: purple
 tools: [Read, Glob, Grep, Write, Bash, SendMessage]
 ---

@@ -8,7 +8,7 @@ Trigger: deploy, Docker, nginx, staging, VPS, environment, production build, dep
 user: 'Set up staging deployment for the frontend'
 assistant: 'Using devops: multi-stage Dockerfile (node build → nginx serve), .env.production with VITE_API_BASE_URL, nginx config proxying /api/ to the backend container, and docker compose staging profile.'
 </example>"
-model: sonnet
+model: opus
 color: orange
 tools: [Read, Glob, Grep, Write, Edit, Bash, SendMessage]
 ---

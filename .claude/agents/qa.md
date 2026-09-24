@@ -8,7 +8,7 @@ Trigger: staging test, cross-browser, visual regression, smoke test, post-deploy
 user: 'Run QA on the staging deploy'
 assistant: 'Using qa: Playwright smoke tests against https://staging.example.com — cross-browser (chromium + firefox + webkit), visual snapshot diff vs baseline, and core user journey (login → list → detail).'
 </example>"
-model: sonnet
+model: opus
 color: green
 tools: [Read, Glob, Grep, Write, Edit, Bash, SendMessage]
 ---

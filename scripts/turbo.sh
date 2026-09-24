@@ -5,7 +5,7 @@
 #            .claude/settings.local.json (gitignored, personal — NOT committed,
 #            does NOT propagate to bootstrapped projects).
 #   off    : remove those two keys → main reverts to opusplan, subagents revert
-#            to their per-agent frontmatter (13 opus / 9 sonnet).
+#            to their per-agent frontmatter (3 fable / 10 opus / 4 sonnet; generated role adapters inherit).
 #   status : show current state.
 #
 # Why this works: CLAUDE_CODE_SUBAGENT_MODEL overrides EVERY subagent's
