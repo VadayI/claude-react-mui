@@ -159,6 +159,8 @@
     "scripts/log-cmd.mjs",
     "scripts/policy/claude_edit_guard.mjs",
     "scripts/seed-i18n.py",
+    "scripts/runtime-state.mjs",
+    "scripts/session-start.mjs",
     "scripts/session-start.sh",
     "scripts/setup-wsl.sh",
     "scripts/tests/test_seed_i18n.py",

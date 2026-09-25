@@ -98,7 +98,7 @@ Every interactive feature must meet WCAG 2.1 AA. In practice:
 <!-- END SOURCE docs/ai/rules/accessibility.md -->
 
 
-<!-- SOURCE docs/ai/rules/api-contract.md SHA256 ba6e1ecd2c6c6f68e4211658eba14d4e5ed6226b6c4c1d602970429361f9efc3 -->
+<!-- SOURCE docs/ai/rules/api-contract.md SHA256 5586f567604e25f80e67726787a979126a514bff24c64fe1cb7f0c7ab9691016 -->
 
 # API contract — typed client, errors, pagination, deviations (enforced)
 
@@ -182,7 +182,7 @@ A `// STUB:` standing in for a missing or broken endpoint MUST have a matching l
 
 ## Lifecycle (per feature)
 
-1. `ui-architect` reads the contract and declares which endpoints the feature consumes (method + path / `operationId` from the schema), and records the routes in `.claude/memory/routes.json`.
+1. `ui-architect` reads the contract and declares which endpoints the feature consumes (method + path / `operationId` from the schema), and records the routes in `docs/project-state/routes.json`.
 2. `tester` writes MSW handlers whose response shapes are taken **from the schema types**, so the mock cannot drift from the real API; tests fail RED.
 3. `react-developer` implements the query/mutation against the typed client until GREEN; a missing endpoint → STOP, mark `// STUB:`, add the ledger row, flag the contract task.
 4. **Before opening the PR**: both gates green locally.
@@ -597,7 +597,7 @@ The translation mandate and the fidelity level bind **every design-touching agen
 <!-- END SOURCE docs/ai/rules/design-reference.md -->
 
 
-<!-- SOURCE docs/ai/rules/environment.md SHA256 a94308221d3aacab18ff9a0e1923aed6b77cd477acc2abf0c6a8e8a468fecbbe -->
+<!-- SOURCE docs/ai/rules/environment.md SHA256 fa199c42af36b07ec95bffd30e091235127eb76c625c90852d3a406d3bf5f9ad -->
 
 # Environment specification
 
@@ -624,10 +624,13 @@ Existing user authorization applies to separately requested remediation.
 - Do not mix Windows Node/CLI with Linux dependencies in WSL. Report mixed PATH
   evidence and select a consistent toolchain; do not change global PATH/trust.
 
-Run `node scripts/detect-env.mjs` explicitly for the legacy environment report.
-It writes `.claude/memory/env-detect.json`; this is the sole allowed doctor report
-side effect. A previous hook report can be stale. Never hand-edit detection facts
-or fabricate supported flags. The shared Python detector replaces it in P05.
+Run `node scripts/session-start.mjs` explicitly (or `node scripts/detect-env.mjs` for
+the stack probe alone). The shared detector writes `.ai-runtime/environment.json`
+(`python scripts/ai/detector.py --repository . --write`, Python 3.13+) and the stack
+probe writes `.ai-runtime/env-detect.json`; these are the only allowed doctor report
+side effects. A legacy `.claude/memory/env-detect.json` is moved to `.ai-runtime/` by
+the probe; two differing copies are reported, never merged. A previous hook report
+can be stale. Never hand-edit detection facts or fabricate supported flags.
 
 ## Access and project state
 
@@ -653,7 +656,7 @@ inspection. Distinguish available commands from commands actually executed.
 <!-- END SOURCE docs/ai/rules/environment.md -->
 
 
-<!-- SOURCE docs/ai/rules/feature-readme.md SHA256 33db4989f362f27894471302d5fd8689bf7ba8dad6bbc51d27a3fe52487cb2af -->
+<!-- SOURCE docs/ai/rules/feature-readme.md SHA256 054866b3a88c45afc540b19ee73667f851fa46c4f2a73e6743c23513109d69c9 -->
 
 # Per-feature README (mandatory, enforced)
 
@@ -675,7 +678,7 @@ Every feature under `src/features/<feature>/` MUST have a local `README.md` desc
 
 - A new feature is **born with a README** — newly scaffolded features copy `templates/FEATURE_README.md`. `/bootstrap` Mode A creates the example feature with its README from this template.
 - The README is updated **in the same PR** as component/route/endpoint changes that affect it (the _Routes_, _Consumed endpoints_, and _Components_ sections are the most volatile). `reviewer` flags PRs that change a feature's components/routes without touching its README.
-- **After GREEN, before the PR opens:** drop any RED-phase "target surface" framing, and reconcile _Routes_ and _Consumed endpoints_ against the live code, `.claude/memory/routes.json`, and the OpenAPI schema. The schema/routes registry are the source of truth.
+- **After GREEN, before the PR opens:** drop any RED-phase "target surface" framing, and reconcile _Routes_ and _Consumed endpoints_ against the live code, `docs/project-state/routes.json`, and the OpenAPI schema. The schema/routes registry are the source of truth.
 
 ## Enforcement (the gate)
 
@@ -748,7 +751,7 @@ Per form: schema unit tests (valid / each invalid case); RTL tests that submit i
 <!-- END SOURCE docs/ai/rules/forms-and-validation.md -->
 
 
-<!-- SOURCE docs/ai/rules/git-operations.md SHA256 211d2f63e1bc7b8c2696bd68c52fb7d335c66c3e2b6a2e08cee9905eacb39192 -->
+<!-- SOURCE docs/ai/rules/git-operations.md SHA256 5e8213a77ab2820f15d35ec83b0e3ea72c6ce582f6946d1dbc5f420e9fed7831 -->
 
 # Git operations
 
@@ -814,7 +817,7 @@ Edge cases, risks, next steps.
 
 ## Context sync between machines
 
-At the end of a session, update and commit: `docs/WORKLOG.md`, and if needed `.claude/memory/*` and ADRs `docs/decisions/NNNN-*.md`. This is how the work history travels between computers via a plain `git pull`.
+At the end of a session, update and commit: `docs/WORKLOG.md`, and if needed `docs/project-state/*` and ADRs `docs/decisions/NNNN-*.md`. This is how the work history travels between computers via a plain `git pull`.
 
 ## Prohibitions
 
@@ -1227,7 +1230,7 @@ workers do not adopt a coordinator-only prohibition against implementation.
 <!-- END SOURCE docs/ai/rules/preflight.md -->
 
 
-<!-- SOURCE docs/ai/rules/routing-and-data-loading.md SHA256 131bf0b5c28fd135107b4493e1637d457a441d502c297ed46c37cbea2766efed -->
+<!-- SOURCE docs/ai/rules/routing-and-data-loading.md SHA256 94b94bb3769c142d383bef419051f0312cce29141207ce78419ff0de056a71fb -->
 
 # Routing & data loading (data router, Query owns server-state)
 
@@ -1269,7 +1272,7 @@ Guards are tested for **allowed and denied** paths (user A must not reach user B
 
 ## Binds these agents (rule is auto-loaded)
 
-- `ui-architect` — declares routes, their guards, lazy boundaries, `errorElement`s, and which params are URL-state; records routes in `.claude/memory/routes.json` (docs/ai/rules/verification.md).
+- `ui-architect` — declares routes, their guards, lazy boundaries, `errorElement`s, and which params are URL-state; records routes in `docs/project-state/routes.json` (docs/ai/rules/verification.md).
 - `state-architect` — owns the Query/loader boundary and the query keys that incorporate URL params; ensures loaders warm the cache rather than bypass it.
 - `react-developer` — implements the data router, lazy routes, guards, and thin loaders; keeps server data in Query.
 - `tester` — guard allowed/denied, loader redirect, `errorElement` fallback, URL-param-driven render, Playwright nav path.
@@ -1603,7 +1606,7 @@ Keep both copy-paste runnable and **derived from what the project actually ships
 <!-- END SOURCE docs/ai/rules/user-guides.md -->
 
 
-<!-- SOURCE docs/ai/rules/verification.md SHA256 76bced84e7df5688906dc339db264e1bc6afc409484b436affdd063d4094a0f5 -->
+<!-- SOURCE docs/ai/rules/verification.md SHA256 dc890a63a7cb9619cb6ac18eeb1ce3eeccd0415f6e39103dd1685fb49164a345 -->
 
 # Feature verification handoff (mandatory, automatic block)
 
@@ -1624,9 +1627,9 @@ One markdown file per feature (slug matches the branch/feature name), written by
    - **Playwright**: the spec file + the `npm run e2e -- <file>` invocation that automates this journey.
 4. **Done when** — a short checklist the user ticks: success renders, all four states verified, keyboard-only works, axe clean, Playwright green.
 
-Keep it copy-paste runnable. Routes come from `.claude/memory/routes.json`; do not invent screens the contract does not have.
+Keep it copy-paste runnable. Routes come from `docs/project-state/routes.json`; do not invent screens the contract does not have.
 
-## Source of truth — `.claude/memory/routes.json`
+## Source of truth — `docs/project-state/routes.json`
 
 Generated from a machine-readable route registry so it always matches the real app. `ui-architect` writes/updates an entry the moment it fixes a contract (phase 2). Schema per entry:
 
@@ -1646,20 +1649,20 @@ Generated from a machine-readable route registry so it always matches the real a
 
 ### Reconciliation (enforced)
 
-After GREEN, before the PR opens, `docs-writer` reconciles routes across: `.claude/memory/routes.json` ↔ the live router (`src/app/router.tsx`) ↔ `docs/api/INDEX.md` (consumed endpoints) ↔ the OpenAPI schema. The live router + schema are the source of truth; stale registry entries are corrected/removed.
+After GREEN, before the PR opens, `docs-writer` reconciles routes across: `docs/project-state/routes.json` ↔ the live router (`src/app/router.tsx`) ↔ `docs/api/INDEX.md` (consumed endpoints) ↔ the OpenAPI schema. The live router + schema are the source of truth; stale registry entries are corrected/removed.
 
-**CI gate `scripts/check_routes_registry.sh`** enforces this on a PR: if `src/app/router.tsx` changes, both `.claude/memory/routes.json` and a `docs/verify/*.md` must be updated in the same PR, and `routes.json` must be valid JSON.
+**CI gate `scripts/check_routes_registry.sh`** enforces this on a PR: if `src/app/router.tsx` changes, both `docs/project-state/routes.json` and a `docs/verify/*.md` must be updated in the same PR, and `routes.json` must be valid JSON.
 
 ## Lifecycle (per feature)
 
-1. **Phase 2 — contract.** `ui-architect` appends/updates the feature's routes in `.claude/memory/routes.json`.
+1. **Phase 2 — contract.** `ui-architect` appends/updates the feature's routes in `docs/project-state/routes.json`.
 2. **Phases 3–4 — RED/GREEN.** No verification work; the registry entry already exists.
 3. **Phase 6 — docs.** `docs-writer` reconciles, generates/refreshes `docs/verify/<feature>.md`, includes it in the PR.
 4. **On demand.** `/verify` regenerates it; with `--run` it executes the Playwright steps against a running app and reports pass/fail.
 
 ## Binds these agents (rule is auto-loaded)
 
-- `ui-architect` — the contract is incomplete until the feature's routes are recorded in `.claude/memory/routes.json`.
+- `ui-architect` — the contract is incomplete until the feature's routes are recorded in `docs/project-state/routes.json`.
 - `docs-writer` — owns `docs/verify/<feature>.md`; runs the reconciliation and generates the guide before declaring the PR ready.
 - `reviewer` — flags a PR that adds/changes a screen without a matching `docs/verify/<feature>.md` or whose `routes.json` disagrees with the router.
 - `tester` — the states and keyboard/error paths listed in the guide must each correspond to a real test; the guide is the manual mirror of those tests.

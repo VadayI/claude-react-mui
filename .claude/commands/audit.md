@@ -3,7 +3,7 @@ model: sonnet
 argument-hint: "[git | project | workflow]"
 ---
 
-Workflow audit via `auditor`: reads `.claude/memory/command-log.jsonl` plus live git and project state, reports what has been done, and suggests the next command. Takes an optional scope as `$ARGUMENTS` (git | project | workflow).
+Workflow audit via `auditor`: reads `.ai-runtime/command-log.jsonl` plus live git and project state, reports what has been done, and suggests the next command. Takes an optional scope as `$ARGUMENTS` (git | project | workflow).
 
 ## Log
 
@@ -19,7 +19,7 @@ If `$ARGUMENTS` is one of `git`, `project`, or `workflow`, narrow the audit to t
 
 ### 2. Read command log
 
-Read `.claude/memory/command-log.jsonl` (all entries, or last 50 if large). Each entry has: timestamp, command, arguments.
+Read `.ai-runtime/command-log.jsonl` (all entries, or last 50 if large). Each entry has: timestamp, command, arguments.
 
 ### 3. Read live state
 

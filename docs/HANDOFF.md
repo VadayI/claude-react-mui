@@ -1,3 +1,31 @@
+## 2026-09-24 — P07 consumers adopted (draft PR #77, development core)
+
+Branch `feat/p07-shared-memory` on top of `fix/p06-react-delivery-drift` (PR #76).
+The vendored core is the contract `feat/p07-shared-memory` head recorded in
+`docs/ai/core-source.json` (`pin_status: development`); repin to integrated after
+the contract P07 PR merges and restore the assertions marked «Tymczasowy pin
+deweloperski» in `scripts/ai/test_family_delivery.py`.
+
+- The template's own registry migrated with the tool on real data:
+  `.claude/memory/routes.json → docs/project-state/routes.json` (preview, apply,
+  repeat apply = no changes).
+- `check_routes_registry.sh` (both copies) and `react_gate.py` resolve the
+  registry through `project_state` (`docs/project-state/` first, legacy until
+  migrated, differing copies fail closed) and accept either spelling in the
+  changed-file list; `generate.py` refuses `docs/project-state/` and
+  `.ai-runtime/` as seed inputs.
+- SessionStart hook → `node scripts/session-start.mjs` (shared detector
+  `--write` + `detect-env.mjs`); `session-start.sh` delegates to it;
+  `detect-env.mjs`/`log-cmd.mjs` write to `.ai-runtime/` via
+  `scripts/runtime-state.mjs`. New files enrolled in `templates/ai/seed-inputs.json`.
+- Rules/workflows/agents/commands/README/templates use the new paths; adapters
+  and delivery manifest regenerated.
+- Verified on Linux Python 3.13.7 / Node 22: `core_sync --check`,
+  `generate --check`, `generate_adapters --check` PASS; `scripts/ai` tests 34/34;
+  fresh install into an empty target delivers the new files and no registry.
+- Next: merge fix PR #76, contract P07, then repin here; P08. Merge only on the
+  user's command.
+
 ## 2026-09-24 — P07 core delivered with a development pin
 
 Branch `feat/p07-shared-memory` on top of `fix/p06-react-delivery-drift`. The

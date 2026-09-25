@@ -37,7 +37,8 @@ def seed_sources(root: Path) -> list[str]:
         if (any(part.startswith(".env") and part != ".env.example" for part in parts)
                 or any(part in {"credentials", "secrets", "settings.local.json", "id_rsa", "id_ed25519"} for part in parts)
                 or path.suffix.casefold() in {".pem", ".key", ".p12", ".pfx"}
-                or "memory" in parts or "overrides" in parts):
+                or "memory" in parts or "overrides" in parts
+                or "project-state" in parts or ".ai-runtime" in parts):
             raise ValueError(f"Project/secret path cannot be a seed input: {name}")
     return sources
 

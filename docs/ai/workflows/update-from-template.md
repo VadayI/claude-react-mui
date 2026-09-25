@@ -35,7 +35,9 @@ are not interchangeable. A coordinator delegates writes to the update worker.
    Customized mixed instructions may require a documented explicit adaptation;
    report drift honestly. Record commands, exact candidate/base and limitations.
 8. Record the verified source SHA, previous lineage and migration results in the
-   existing project update record (`.claude/memory/template-sync.json` until P07).
+   existing project update record (`docs/project-state/template-lineage.json`; a legacy
+   `.claude/memory/template-sync.json` is migrated first with
+   `python scripts/ai/project_state.py --root . --apply`, never written in parallel).
    Do not overwrite unrelated fields or claim untested app/DB/runtime acceptance.
 9. Commit the reviewed task paths, push the task branch and create/update a draft
    PR with changed files, conflicts, preserved paths, stale inventory and checks.

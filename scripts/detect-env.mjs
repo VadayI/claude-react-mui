@@ -1,12 +1,13 @@
 /**
  * scripts/detect-env.mjs
  *
- * Detects the local environment and writes .claude/memory/env-detect.json.
+ * Detects the local environment and writes .ai-runtime/env-detect.json
+ * (legacy .claude/memory/env-detect.json is moved there first; see runtime-state.mjs).
  *
  * Run: node scripts/detect-env.mjs
  *
  * IMPORTANT: Do NOT hand-edit the output file. It is regenerated on every
- * session start by the SessionStart hook (scripts/session-start.sh) and
+ * session start by the SessionStart hook (scripts/session-start.mjs) and
  * is used as the source of truth by /doctor and /bootstrap to gate unsafe
  * operations. Fabricated values silently bypass safety checks.
  *
@@ -15,7 +16,8 @@
  */
 
 import { execSync, spawnSync } from 'node:child_process'
-import { mkdirSync, readFileSync, writeFileSync, existsSync } from 'node:fs'
+import { readFileSync, writeFileSync, existsSync } from 'node:fs'
+import { runtimeStatePath } from './runtime-state.mjs'
 import { platform, homedir } from 'node:os'
 import { argv, cwd, env, execPath, version } from 'node:process'
 
@@ -249,14 +251,15 @@ const result = {
 // ---------------------------------------------------------------------------
 // Write output
 // ---------------------------------------------------------------------------
-const outDir = '.claude/memory'
-const outFile = `${outDir}/env-detect.json`
+// Kanoniczny plik runtime; konflikt dwóch różnych kopii jest widoczny, nie nadpisywany.
+let outFile = '.ai-runtime/env-detect.json'
 
 try {
-  mkdirSync(outDir, { recursive: true })
+  outFile = runtimeStatePath('env-detect.json')
   writeFileSync(outFile, JSON.stringify(result, null, 2) + '\n', 'utf8')
 } catch (err) {
   console.error(`[detect-env] ERROR: could not write ${outFile}: ${err.message}`)
+  process.exitCode = 1
 }
 
 // ---------------------------------------------------------------------------

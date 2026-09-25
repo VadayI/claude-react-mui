@@ -26,7 +26,7 @@ gh pr list --state open
 Also read:
 
 - `docs/WORKLOG.md` (last 20 lines).
-- `.claude/memory/command-log.jsonl` (last 10 entries).
+- `.ai-runtime/command-log.jsonl` (last 10 entries).
 - `docs/plans/` (any in-progress plans).
 
 ### 2. Generate HANDOFF.md

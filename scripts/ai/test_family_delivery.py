@@ -73,7 +73,7 @@ class FamilyDeliveryTests(unittest.TestCase):
         receipt = json.loads((self.target / "docs/ai/core-source.json").read_text(encoding="utf-8"))
         # Tymczasowy pin deweloperski na rewizję P07 core (feat/p07-shared-memory);
         # po scaleniu contract PR wrócić do integrated pin i observed_upstream_main.
-        self.assertEqual(receipt["source_commit"], "1235a23f8f77d7dff4e91e039cf60877ae794ce9")
+        self.assertEqual(receipt["source_commit"], "0e3f4cdf9e9b7cc1197636cd0fe2ba0f9dfdecba")
         self.assertEqual(receipt["pin_status"], "development")
         self.assertNotIn("observed_upstream_main", receipt)
         for name in ("scripts/ai/launch.ps1", "scripts/ai/launch.sh", "templates/ai/schemas/catalog.schema.json",
@@ -151,15 +151,19 @@ class FamilyDeliveryTests(unittest.TestCase):
         self.assertNotIn("  pull_request:", active)
         settings = json.loads((self.target / ".claude/settings.json").read_text(encoding="utf-8"))
         self.assertEqual(settings["hooks"]["SessionStart"][0]["hooks"][0]["command"],
-                         "node scripts/detect-env.mjs")
+                         "node scripts/session-start.mjs")
         self.assertEqual(settings["hooks"]["PreToolUse"][0]["hooks"][0]["command"],
                          "node scripts/policy/claude_edit_guard.mjs")
         self.assertNotIn("Stop", settings["hooks"])
         session = (self.target / "scripts/session-start.sh").read_text(encoding="utf-8")
-        self.assertIn('node "$SCRIPT_DIR/detect-env.mjs"', session)
+        self.assertIn('node "$SCRIPT_DIR/session-start.mjs"', session)
         self.assertNotIn("npm install", session)
         self.assertNotIn("rm -f", session)
-        for name in (".env", ".claude/memory", "docs/HANDOFF.md", "src", "package.json"):
+        starter = (self.target / "scripts/session-start.mjs").read_text(encoding="utf-8")
+        self.assertIn("'--write'", starter)
+        self.assertIn("detect-env.mjs", starter)
+        self.assertTrue((self.target / "scripts/runtime-state.mjs").is_file())
+        for name in (".env", ".claude/memory", "docs/project-state/routes.json", ".ai-runtime", "docs/HANDOFF.md", "src", "package.json"):
             self.assertFalse((self.target / name).exists(), name)
 
     def test_custom_entrypoint_blocks_apply_before_any_other_writes(self):

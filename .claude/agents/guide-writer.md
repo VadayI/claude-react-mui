@@ -42,6 +42,6 @@ On-demand guide maintainer. I own the two human onboarding documents: `docs/guid
 
 ## Reconciliation rule
 
-Every command in both guides must match a real `package.json` script or npm binary. Every route or endpoint named must exist in `.claude/memory/routes.json` or `src/lib/api/openapi.yml`. Invented commands or stale routes are blocked.
+Every command in both guides must match a real `package.json` script or npm binary. Every route or endpoint named must exist in `docs/project-state/routes.json` or `src/lib/api/openapi.yml`. Invented commands or stale routes are blocked.
 
 <!-- last reviewed: 2026-06-02 -->

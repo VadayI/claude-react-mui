@@ -1,6 +1,6 @@
 # Verification Guide — {FEATURE_NAME}
 
-> Manual smoke-test checklist for {FEATURE_NAME}. Derived from `.claude/memory/routes.json` and `src/lib/api/openapi.yml`. Run this after deploying or before signing off a PR to confirm the feature works end to end in a real browser session.
+> Manual smoke-test checklist for {FEATURE_NAME}. Derived from `docs/project-state/routes.json` and `src/lib/api/openapi.yml`. Run this after deploying or before signing off a PR to confirm the feature works end to end in a real browser session.
 
 ## Scope
 

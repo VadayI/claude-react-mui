@@ -62,7 +62,7 @@ Edge cases, risks, next steps.
 
 ## Context sync between machines
 
-At the end of a session, update and commit: `docs/WORKLOG.md`, and if needed `.claude/memory/*` and ADRs `docs/decisions/NNNN-*.md`. This is how the work history travels between computers via a plain `git pull`.
+At the end of a session, update and commit: `docs/WORKLOG.md`, and if needed `docs/project-state/*` and ADRs `docs/decisions/NNNN-*.md`. This is how the work history travels between computers via a plain `git pull`.
 
 ## Prohibitions
 

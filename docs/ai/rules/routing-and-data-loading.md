@@ -38,7 +38,7 @@ Guards are tested for **allowed and denied** paths (user A must not reach user B
 
 ## Binds these agents (rule is auto-loaded)
 
-- `ui-architect` — declares routes, their guards, lazy boundaries, `errorElement`s, and which params are URL-state; records routes in `.claude/memory/routes.json` (docs/ai/rules/verification.md).
+- `ui-architect` — declares routes, their guards, lazy boundaries, `errorElement`s, and which params are URL-state; records routes in `docs/project-state/routes.json` (docs/ai/rules/verification.md).
 - `state-architect` — owns the Query/loader boundary and the query keys that incorporate URL params; ensures loaders warm the cache rather than bypass it.
 - `react-developer` — implements the data router, lazy routes, guards, and thin loaders; keeps server data in Query.
 - `tester` — guard allowed/denied, loader redirect, `errorElement` fallback, URL-param-driven render, Playwright nav path.

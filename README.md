@@ -18,7 +18,7 @@ This config is designed for **Claude Code CLI** (the terminal `claude` command) 
 - **WSL2 Ubuntu** on Windows,
 - **native Windows** via **Git Bash** (Git for Windows — see `docs/decisions/0028-support-native-windows-git-bash.md`, amending `0005`).
 
-The single shell dialect is **bash** — on native Windows that bash is Git Bash, which the Claude Code CLI also uses for its Bash tool. **Not supported:** Windows PowerShell/cmd *alone* (the SessionStart hook and gate scripts are bash). The hook writes `.claude/memory/env-detect.json`; if it reports `platform_supported: false` (e.g. Windows with no Git Bash), `/doctor` hard-stops with `UNSUPPORTED_PLATFORM`. The **sandboxed** Bash tool is available on Linux/macOS/WSL2 only, not native Windows.
+The single shell dialect is **bash** — on native Windows that bash is Git Bash, which the Claude Code CLI also uses for its Bash tool. **Not supported:** Windows PowerShell/cmd *alone* (the SessionStart hook and gate scripts are bash). The hook writes `.ai-runtime/env-detect.json`; if it reports `platform_supported: false` (e.g. Windows with no Git Bash), `/doctor` hard-stops with `UNSUPPORTED_PLATFORM`. The **sandboxed** Bash tool is available on Linux/macOS/WSL2 only, not native Windows.
 
 ---
 
@@ -168,9 +168,10 @@ Defined in `.claude/commands/`.
 ├── commands/      # slash commands (/doctor, /bootstrap, /verify, ...)
 ├── rules/         # auto-loaded conventions (tdd, api-contract, accessibility, workflow, ...)
 ├── skills/        # reusable knowledge modules (react, mui, vitest-rtl-tdd, ...)
-├── memory/        # session-local state (env-detect.json, routes.json, command-log) — gitignored where noted
+├── memory/        # legacy state location — migrated to docs/project-state/ and .ai-runtime/ (python scripts/ai/project_state.py --apply)
 └── settings.json  # permissions, plugins, hooks
-scripts/           # detect-env.mjs, session-start.sh, log-cmd.mjs, setup-wsl.sh, turbo.sh
+scripts/           # session-start.mjs/.sh, detect-env.mjs, log-cmd.mjs, runtime-state.mjs, setup-wsl.sh, turbo.sh; ai/ = family core
+.ai-runtime/       # gitignored: environment.json (shared detector), env-detect.json (stack probe), command-log.jsonl, runner results
 templates/         # scaffold inputs for /bootstrap (app config, CI, docs, gate scripts, example feature)
 docs/
 ├── decisions/     # ADRs
@@ -178,6 +179,7 @@ docs/
 ├── guides/        # user.md + developer.md
 ├── verify/        # per-feature manual verification guides
 ├── plans/         # implementation plans
+├── project-state/ # project-owned registries: routes.json, project.json (CI/maturity choice)
 └── WORKLOG.md     # cross-machine work history
 src/               # the application (feature-sliced) — see .claude/rules/architecture.md
 e2e/               # Playwright specs

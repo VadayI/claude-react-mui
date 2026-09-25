@@ -190,19 +190,19 @@
     },
     "docs/ai/generated/role-packs/react-developer.md": {
       "ownership": "template",
-      "sha256": "cdb9a4c417ea99aaf9595ff065495bbf8783c9e9d2b39176c92f6fb279cbf27e"
+      "sha256": "8efd254f56c18683754f9f8aa91690a52d180306e596fa7fc0a67862539106be"
     },
     "docs/ai/generated/role-packs/reviewer.md": {
       "ownership": "template",
-      "sha256": "8dbb9d7aa9ea5c6144d70ab82751e7bc22d78c5b44413d74cfeeb7b4b97cb4f2"
+      "sha256": "f989e0380d0bbbb005f6a43624d024273d9b4c34c0e232d48fb3bc37327bb033"
     },
     "docs/ai/generated/role-packs/tester.md": {
       "ownership": "template",
-      "sha256": "23c704edafc53b29a1ec752bc3d45e796a56d8012749a35ec9c139645c429ee1"
+      "sha256": "9275875ef2758346182f49420b1a3b1817fd4ddeba8697c693c18452c13d1a6f"
     },
     "docs/ai/generated/role-packs/ui-architect.md": {
       "ownership": "template",
-      "sha256": "8f17d0526c20ebf8a701a3e5c3d639e882faae658cce8237fad5f3403c830145"
+      "sha256": "a2e86d23594a7d6a32f4b1a76295c9c3fb7299a6d34629cf97bca804488dd877"
     }
   },
   "generator": "family-core",
@@ -213,19 +213,19 @@
     "docs/ai/roles/react-developer.md": "ecc1c9e114cdeb272fc070aaa36f29b3c0dd649a9eb811c4d23cf9f07d7114a8",
     "docs/ai/roles/reviewer.md": "246dc11d06d17d7c705ff986071bdbedea92d4a9e75efc987d3d8fc28e65a25a",
     "docs/ai/roles/tester.md": "884d756c8044b39d52af2f7632a959d9e00aaf74add348c326852a230f753892",
-    "docs/ai/roles/ui-architect.md": "4cffc6b6fe8a523fd8a3cba9e72d9297ab07741db708d3efe193269df47584b5",
+    "docs/ai/roles/ui-architect.md": "c5ce20b58aad390403a31d04641afcf4c26299af8790002a816642ab40cde16e",
     "docs/ai/rules/accessibility.md": "dd266eb6d14e6cb4af22a1c7f7c88aeb484b1e551dd6cc89930df9efd55c713a",
-    "docs/ai/rules/api-contract.md": "ba6e1ecd2c6c6f68e4211658eba14d4e5ed6226b6c4c1d602970429361f9efc3",
+    "docs/ai/rules/api-contract.md": "5586f567604e25f80e67726787a979126a514bff24c64fe1cb7f0c7ab9691016",
     "docs/ai/rules/architecture.md": "c3844652f12857304c65c2c8cb9b3057e42d608489b02edce7aa8021caa74e9d",
     "docs/ai/rules/auth.md": "177cb461d0d5261d248090bece84f2f621f43d193bcce86260e8e5949b336a21",
     "docs/ai/rules/code-style.md": "0ce554099477ed96b7cf16501ab007dc106c2aba59c640208cbbe3e8f10cb09a",
     "docs/ai/rules/component-contract.md": "2cc84affee32b53ff188de0ea384b84778ff96e6e74cdd5ba101847e5d6b7a65",
     "docs/ai/rules/dependencies-and-supply-chain.md": "44057f813c35d7147e466fc56f9b52381026a782a74a6a109200546120390f5b",
     "docs/ai/rules/design-reference.md": "cb14305c945a1893b7e1d32c5b6c4eeb16c3566c93dcfa8f1e9d171d573001c9",
-    "docs/ai/rules/environment.md": "a94308221d3aacab18ff9a0e1923aed6b77cd477acc2abf0c6a8e8a468fecbbe",
-    "docs/ai/rules/feature-readme.md": "33db4989f362f27894471302d5fd8689bf7ba8dad6bbc51d27a3fe52487cb2af",
+    "docs/ai/rules/environment.md": "fa199c42af36b07ec95bffd30e091235127eb76c625c90852d3a406d3bf5f9ad",
+    "docs/ai/rules/feature-readme.md": "054866b3a88c45afc540b19ee73667f851fa46c4f2a73e6743c23513109d69c9",
     "docs/ai/rules/forms-and-validation.md": "5d82c3c9847f3840e5897969babe7d9f51dc8b364669c98dae8942090938fb7d",
-    "docs/ai/rules/git-operations.md": "211d2f63e1bc7b8c2696bd68c52fb7d335c66c3e2b6a2e08cee9905eacb39192",
+    "docs/ai/rules/git-operations.md": "5e8213a77ab2820f15d35ec83b0e3ea72c6ce582f6946d1dbc5f420e9fed7831",
     "docs/ai/rules/i18n-and-formatting.md": "25d70fc85ac2931f86995dac437eedd2544c4f13c627c52a48803a9a41b0ecf1",
     "docs/ai/rules/living-plan.md": "c3bb6e864b420e13cf3efcf5d005838711dea246cd6112b080476931e5a3a4ac",
     "docs/ai/rules/mcp-stack.md": "dae2d781bfa8b8396d246f66df63a3b2a59b93eb5d0014767ffdbb1e42c3af2a",
@@ -234,18 +234,18 @@
     "docs/ai/rules/observability-and-errors.md": "e6049a3006f569fc525a4e593cd8755d8e57b6d04f2aa041346a1d9251b84e0d",
     "docs/ai/rules/performance-budgets.md": "30236a6d55fcfb4020ab2f4291e2f8bbfadc758ceff0ae931c396b63069ae5e1",
     "docs/ai/rules/preflight.md": "d6edca439cc631e0c2be17926bf613202c07706428af97c247822e9c4a9a23d5",
-    "docs/ai/rules/routing-and-data-loading.md": "131bf0b5c28fd135107b4493e1637d457a441d502c297ed46c37cbea2766efed",
+    "docs/ai/rules/routing-and-data-loading.md": "94b94bb3769c142d383bef419051f0312cce29141207ce78419ff0de056a71fb",
     "docs/ai/rules/state-management.md": "d31d463e0edaf499a470a37e18d648b3b481edc38e1daa6a3f9ddb2aa07878ee",
     "docs/ai/rules/surgical-changes.md": "e372b7a9d4725249505803bfe3f454a34fd87f5b3dd213ca96646b1a570b8550",
     "docs/ai/rules/tdd.md": "9b471f08a7c02628112ff2ac88f70c738212dae809bc04d11e38fbec32c96e9b",
     "docs/ai/rules/upgrade-policy.md": "fb36c7f01f6b7858b16551825a6c16d41da4c1d78fecf92b7178212a11f83ead",
     "docs/ai/rules/user-guides.md": "594824c8516c77b1a94f46fa7bfac225405e24e9c8f892bc28e91e3d54a6fc6f",
-    "docs/ai/rules/verification.md": "76bced84e7df5688906dc339db264e1bc6afc409484b436affdd063d4094a0f5",
+    "docs/ai/rules/verification.md": "dc890a63a7cb9619cb6ac18eeb1ce3eeccd0415f6e39103dd1685fb49164a345",
     "docs/ai/rules/workflow.md": "6d632cc86edc678b42469d6a215a1b94e23c8406e5138c21cc17bc9b023ba0df",
-    "docs/ai/workflows/bootstrap.md": "112f3462aac559a06f9c194d0a687d3c59e2b9b79443c7944d4e09f6b4a03bbc",
+    "docs/ai/workflows/bootstrap.md": "64ec2c5f93d7e253a707e34ed487198c5a5a313598529f0a9a059e214e221d78",
     "docs/ai/workflows/doctor.md": "14d6faef3ac769fb8c2e743159b3689726fc19646841942dd9cded2f02385477",
-    "docs/ai/workflows/orchestrate.md": "c2e2a5fbd02366885eac402254deaf456788bd5e78a1d70c265a27650ea4230c",
-    "docs/ai/workflows/update-from-template.md": "4f1d14c606846fd2e2abed369d027206b0fac51186bec9804c6f9896dcdebe84",
+    "docs/ai/workflows/orchestrate.md": "df386516244702cafcb9668d01b3310e0daa0ca9f6037c65a0041a11684c410e",
+    "docs/ai/workflows/update-from-template.md": "1dbb91b83110d52bb9d8f94dbb72a80271565c58ca644c35b929ad74ea51bebe",
     "docs/ai/workflows/verify.md": "682aa5e3f5abc30fc55f38529e75970d2162397cd8fe3e693b5bd9d82a7af39b",
     "docs/ai/workflows/wrap-up.md": "995c5d116e9e18560978d36d0fdd0a7bf8bc657a67889f669dcf1280fe5b89fa"
   }

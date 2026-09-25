@@ -80,7 +80,7 @@ A `// STUB:` standing in for a missing or broken endpoint MUST have a matching l
 
 ## Lifecycle (per feature)
 
-1. `ui-architect` reads the contract and declares which endpoints the feature consumes (method + path / `operationId` from the schema), and records the routes in `.claude/memory/routes.json`.
+1. `ui-architect` reads the contract and declares which endpoints the feature consumes (method + path / `operationId` from the schema), and records the routes in `docs/project-state/routes.json`.
 2. `tester` writes MSW handlers whose response shapes are taken **from the schema types**, so the mock cannot drift from the real API; tests fail RED.
 3. `react-developer` implements the query/mutation against the typed client until GREEN; a missing endpoint → STOP, mark `// STUB:`, add the ledger row, flag the contract task.
 4. **Before opening the PR**: both gates green locally.

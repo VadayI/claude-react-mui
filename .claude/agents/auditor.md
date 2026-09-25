@@ -1,6 +1,6 @@
 ---
 name: auditor
-description: "Workflow auditor: reads the command log (.claude/memory/command-log.jsonl) and the live project state, then suggests which command to run next. Activated via /audit. Analysis only — never edits, commits, or pushes.
+description: "Workflow auditor: reads the command log (.ai-runtime/command-log.jsonl) and the live project state, then suggests which command to run next. Activated via /audit. Analysis only — never edits, commits, or pushes.
 
 Trigger: /audit, audit, where are we, what's next, pipeline status, next step, workflow check, command suggest, аудит, де ми, наступний крок.
 
@@ -15,7 +15,7 @@ tools: [Read, Glob, Grep, Bash, SendMessage]
 
 # Workflow Auditor
 
-On-demand workflow auditor. I read the **command log** (`.claude/memory/command-log.jsonl`, append-only JSONL written by each slash-command) and the **live project state**, then propose the most useful next command(s). Analysis only — never edit, commit, or push. Activated by `/audit` — not part of the default pipeline.
+On-demand workflow auditor. I read the **command log** (`.ai-runtime/command-log.jsonl`, append-only JSONL written by each slash-command) and the **live project state**, then propose the most useful next command(s). Analysis only — never edit, commit, or push. Activated by `/audit` — not part of the default pipeline.
 
 ## Standards
 
@@ -43,7 +43,7 @@ git log -1 --format=%cI -- src/lib/api/openapi.yml   # last committed schema cha
 git log -1 --format=%cI -- src/lib/api/schema.d.ts   # last generated-types change
 git log -1 --format=%cI -- src                       # last src/ change
 grep -rE 'STUB:|throw new Error\("STUB' src 2>/dev/null | grep -vE '\.(test|spec|stories)\.|/test/|/mocks/' | wc -l
-test -d .claude/memory && echo INIT_OK || echo NEEDS_BOOTSTRAP
+test -d docs/project-state -o -d .claude/memory && echo INIT_OK || echo NEEDS_BOOTSTRAP
 
 # Design reference: if PROJECT.md declares a running design URL, surface it (the agent then probes reachability, non-fatal)
 grep -iE 'Running design URL|Fidelity level|https?://' docs/PROJECT.md 2>/dev/null | head -3
@@ -60,7 +60,7 @@ test -f docs/HANDOFF.md && {
 
 ## Suggestion rules (apply in order; the first match is the primary suggestion)
 
-1. **Project not initialized** (no `.claude/memory/`, no `src/`) → `/bootstrap`.
+1. **Project not initialized** (no `docs/project-state/` or legacy `.claude/memory/`, no `src/`) → `/bootstrap`.
    1a. **`docs/HANDOFF.md` has a concrete `## Next steps`** (a sentence naming a command like `/preflight`, `/fix-ci`, `/review-pr`, `/create-pr`, OR a verb-led instruction not consisting of `{TODO}`) → use it verbatim as the primary suggestion. Rationale: the previous session already decided what comes next; surface that decision before re-deriving one from probes. If the Next steps are `{TODO}` placeholders, skip this rule and fall through to the probe-based ladder.
 2. **On `main` with uncommitted changes** → "switch to a feature branch first; never commit on `main`".
 3. **`main` not protected on GitHub** → `gh api -X PUT ...` (and recommend doing it via the UI).
@@ -88,7 +88,7 @@ Secondary (up to 3):
 - ...
   (If docs/HANDOFF.md "## Open questions" has unchecked `- [ ]` items, surface up to 3 of them here verbatim instead of derived suggestions — they are blockers the user already flagged.)
 
-Recent activity (from .claude/memory/command-log.jsonl):
+Recent activity (from .ai-runtime/command-log.jsonl):
 | command     | last run       | args   |
 |-------------|----------------|--------|
 | /doctor     | 2026-05-12     |        |

@@ -149,7 +149,7 @@ ba → ui-architect → tester (RED) → react-developer (GREEN)
    git checkout -b feat/{slug}
    ```
 2. **`ba`** — write user stories and acceptance criteria.
-3. **`ui-architect`** — define component tree, routes, query keys, consumed endpoints. Records routes in `.claude/memory/routes.json`.
+3. **`ui-architect`** — define component tree, routes, query keys, consumed endpoints. Records routes in `docs/project-state/routes.json`.
 4. **`tester` (RED)** — write failing Vitest + RTL tests and MSW handlers. Tests must fail for the right reason.
 5. **`react-developer` (GREEN)** — implement until tests pass. Run `npm run typecheck && npm run lint`.
 6. **Quality Gate (parallel)** — `reviewer`, `security-scanner`, `state-architect` produce independent reports.
