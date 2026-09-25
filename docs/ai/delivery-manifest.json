@@ -430,11 +430,11 @@
     },
     "docs/ai/core-integration.md": {
       "ownership": "template",
-      "sha256": "da549c8bf1ea57439f8dcc83ae21b522cae6e4ee2d2d157c9b0e43b67bda1d57"
+      "sha256": "6bbf85256979bd82b42439c0cb3869ba61b8b3c14fdaf15140a3a3488102f22f"
     },
     "docs/ai/core-source.json": {
       "ownership": "template",
-      "sha256": "f049e5aed3069c14a45308f339cbab21e271e8f049066d07103bfbaace55b844"
+      "sha256": "0ca96b975a7f16f636ae5c0a6564c617d447c8d4cf2387e0a3c8aecccb3dd792"
     },
     "docs/ai/decisions/0001-portable-family-core.md": {
       "ownership": "template",
@@ -502,7 +502,7 @@
     },
     "docs/ai/react-runner.md": {
       "ownership": "template",
-      "sha256": "bcf44a8c01a08e0b4fc2f6bfc4a90e5606f63270ed0bb4eab9d05ad001b1bbec"
+      "sha256": "e7c28c83df734e4b4ecccf5324cce0d09b039536f1e2ca27735d35f6bcf66c65"
     },
     "docs/ai/roles/react-developer.md": {
       "ownership": "template",
@@ -774,7 +774,7 @@
     },
     "scripts/ai/test_family_delivery.py": {
       "ownership": "template",
-      "sha256": "3ad32d9d984f9f02983b576e1f47f4619219175588db272245c3b84fceee686b"
+      "sha256": "72a78f251569da468f75a21b253eb9d040bae2d885b449314459fcef7a9b66f8"
     },
     "scripts/ai/test_git_hooks.py": {
       "ownership": "template",
