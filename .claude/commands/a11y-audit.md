@@ -19,7 +19,7 @@ If `$ARGUMENTS` names a route, feature folder, or flow, scope the audit to it. O
 
 ### 2. Gather context
 
-- `.claude/memory/routes.json` — routes, guards, and the four states for the screens in scope.
+- `docs/project-state/routes.json` — routes, guards, and the four states for the screens in scope.
 - The component tree and interactive controls in the scoped feature.
 - The a11y contract from `@.claude/rules/accessibility.md`.
 

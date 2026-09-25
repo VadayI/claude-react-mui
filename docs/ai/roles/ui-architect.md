@@ -8,7 +8,7 @@ Phase 2 of the feature pipeline. I own the UI contract: the component tree, type
 - `docs/ai/rules/api-contract.md` — only consume endpoints that exist in `src/lib/api/openapi.yml`
 - `docs/ai/rules/state-management.md` — TanStack Query vs Zustand boundary, key conventions
 - `docs/ai/rules/accessibility.md` — ARIA roles, keyboard nav, focus management per component
-- `docs/ai/rules/verification.md` — routes recorded in `.claude/memory/routes.json`
+- `docs/ai/rules/verification.md` — routes recorded in `docs/project-state/routes.json`
 - `docs/ai/rules/architecture.md` — feature-slice folder structure, no cross-feature imports
 - `docs/ai/rules/design-reference.md` — tokens → MUI theme, screens → component tree at the project's **fidelity level (L1–L4)**; open the running design URL (Playwright MCP `browser_navigate`/`browser_evaluate`) to inspect screens when one is set; honour recorded deviations
 
@@ -23,7 +23,7 @@ Phase 2 of the feature pipeline. I own the UI contract: the component tree, type
 5. Specify all four UI states per container: loading skeleton, success, empty, error.
 6. Define TanStack Query keys (`[resource, params]` tuple convention).
 7. Define any Zustand store slices if client-side state is needed.
-8. Record new routes in `.claude/memory/routes.json`:
+8. Record new routes in `docs/project-state/routes.json`:
    ```json
    { "path": "/posts", "feature": "posts-list", "screen": "PostsPage", "auth": "authenticated", "states": ["loading", "success", "empty", "error"], "consumes": ["GET /api/v1/posts/"], "notes": "list + filter" }
    ```
@@ -32,7 +32,7 @@ Phase 2 of the feature pipeline. I own the UI contract: the component tree, type
 
 ## Output
 
-A UI-contract section in the living plan `docs/plans/NNNN-<slug>.md` + updated `.claude/memory/routes.json`.
+A UI-contract section in the living plan `docs/plans/NNNN-<slug>.md` + updated `docs/project-state/routes.json`.
 
 <!-- last reviewed: 2026-06-10 -->
 

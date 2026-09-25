@@ -18,7 +18,7 @@ Every feature under `src/features/<feature>/` MUST have a local `README.md` desc
 
 - A new feature is **born with a README** — newly scaffolded features copy `templates/FEATURE_README.md`. `/bootstrap` Mode A creates the example feature with its README from this template.
 - The README is updated **in the same PR** as component/route/endpoint changes that affect it (the _Routes_, _Consumed endpoints_, and _Components_ sections are the most volatile). `reviewer` flags PRs that change a feature's components/routes without touching its README.
-- **After GREEN, before the PR opens:** drop any RED-phase "target surface" framing, and reconcile _Routes_ and _Consumed endpoints_ against the live code, `.claude/memory/routes.json`, and the OpenAPI schema. The schema/routes registry are the source of truth.
+- **After GREEN, before the PR opens:** drop any RED-phase "target surface" framing, and reconcile _Routes_ and _Consumed endpoints_ against the live code, `docs/project-state/routes.json`, and the OpenAPI schema. The schema/routes registry are the source of truth.
 
 ## Enforcement (the gate)
 

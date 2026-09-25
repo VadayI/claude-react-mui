@@ -79,7 +79,7 @@ Generated types in `src/lib/api/schema.d.ts`.
 - `src/lib/auth/authStore.ts` — in-memory Zustand store for access/refresh tokens.
 - `src/lib/api/client.ts` — `apiClient` typed client + `normaliseError` helper.
 - `src/app/guards/RequireAuth.tsx` — consumed by `src/app/router.tsx`; guards all
-  routes declared as `auth: "authenticated"` in `.claude/memory/routes.json`.
+  routes declared as `auth: "authenticated"` in `docs/project-state/routes.json`.
 
 ## Decisions
 

@@ -1,3 +1,69 @@
+## 2026-09-25 — P07 integrated: core pinned to contract main `db342b7`
+
+Branch `feat/p07-shared-memory` (PR #77): `main` merged in after fix PR #76 (`aa9f399`), then the integrated repin. Contract PR #66 is merged as `db342b7`; PR #77 merges on the user's command of 2026-09-25 (D01).
+
+- `docs/ai/core-source.json`: `pin_status: integrated`, `source_commit` = `observed_upstream_main` = `db342b78ee8d085b6f5b854cabd217d69176d99c`; the payload is unchanged from the development pin `f8e3162` (same manifest digest). `scripts/ai/test_family_delivery.py` asserts the integrated pin again.
+- This session: `docs/sessions/20260925T090423Z-claude-f1336f.md` (task, checks, limitations, next step).
+- Next: P08 (Git lifecycle G0–G9). The P07 runtime acceptance run (docs/ai/session-continuity.md) is still NOT_VERIFIED.
+
+## 2026-09-25 — P07 shared output-language preference (development core)
+
+Branch `feat/p07-shared-memory` (draft PR #77); commit `f197a31` on top of `4799db0`, development pin `f8e3162`. Nothing is merged (D01).
+
+- Output language: `python scripts/ai/project_state.py --root . --language` reports it; `--apply` moves a legacy `.claude/rules/output-language.md` to `docs/ai/overrides/output-language.md` (pointer left behind). Runtime acceptance run: docs/ai/session-continuity.md.
+- This session: `docs/sessions/20260925T081415Z-claude-d28b5b.md` (task, checks, limitations, next step).
+- Next: After contract #66 is merged on the user's command: repin to the integrated core and restore «Tymczasowy pin deweloperski»; then #76 → #77. The runtime acceptance run follows docs/ai/session-continuity.md.
+
+## 2026-09-25 — P07 session continuity (development core)
+
+Branch `feat/p07-shared-memory` (draft PR #77); commit `a8c769a` on top of `f7a41e7`, development pin `6fb703a`. Nothing is merged (D01).
+
+- Start every session with `python scripts/ai/session_context.py --root .` (branch/HEAD, settings, documentation map, latest record, snapshot diff; no `.ai-runtime` needed). End with `--new-record --agent <runtime>` and, after the commit, `--check` (docs/ai/session-continuity.md).
+- This session: `docs/sessions/20260925T075805Z-claude-debba1.md` (task, checks, limitations, next step).
+- Next: After contract #66 is merged on the user's command: repin to the integrated core, restore the assertions marked «Tymczasowy pin deweloperski» in `scripts/ai/test_family_delivery.py`, then merge #76 → #77. After that, P08.
+
+## 2026-09-24 — P07 consumers adopted (draft PR #77, development core)
+
+Branch `feat/p07-shared-memory` on top of `fix/p06-react-delivery-drift` (PR #76).
+The vendored core is the contract `feat/p07-shared-memory` head recorded in
+`docs/ai/core-source.json` (`pin_status: development`); repin to integrated after
+the contract P07 PR merges and restore the assertions marked «Tymczasowy pin
+deweloperski» in `scripts/ai/test_family_delivery.py`.
+
+- The template's own registry migrated with the tool on real data:
+  `.claude/memory/routes.json → docs/project-state/routes.json` (preview, apply,
+  repeat apply = no changes).
+- `check_routes_registry.sh` (both copies) and `react_gate.py` resolve the
+  registry through `project_state` (`docs/project-state/` first, legacy until
+  migrated, differing copies fail closed) and accept either spelling in the
+  changed-file list; `generate.py` refuses `docs/project-state/` and
+  `.ai-runtime/` as seed inputs.
+- SessionStart hook → `node scripts/session-start.mjs` (shared detector
+  `--write` + `detect-env.mjs`); `session-start.sh` delegates to it;
+  `detect-env.mjs`/`log-cmd.mjs` write to `.ai-runtime/` via
+  `scripts/runtime-state.mjs`. New files enrolled in `templates/ai/seed-inputs.json`.
+- Rules/workflows/agents/commands/README/templates use the new paths; adapters
+  and delivery manifest regenerated.
+- Verified on Linux Python 3.13.7 / Node 22: `core_sync --check`,
+  `generate --check`, `generate_adapters --check` PASS; `scripts/ai` tests 34/34;
+  fresh install into an empty target delivers the new files and no registry.
+- Next: merge fix PR #76, contract P07, then repin here; P08. Merge only on the
+  user's command.
+
+## 2026-09-24 — P07 core delivered with a development pin
+
+Branch `feat/p07-shared-memory` on top of `fix/p06-react-delivery-drift`. The
+rebased P07 core (contract `feat/p07-shared-memory` head
+`1235a23f8f77d7dff4e91e039cf60877ae794ce9`, manifest digest `512798fc…`) is
+vendored with `pin_status: development`: `scripts/ai/project_state.py`,
+`docs/ai/project-state-migration.md`, updated `docs/ai/{schemas,launchers}.md`;
+both new files are enrolled in `templates/ai/seed-inputs.json` so derived
+projects receive them. Do not call this integrated. After the contract P07 PR
+merges, repin with `core_sync.py --integrated-pin`, regenerate and restore the
+integrated assertions in `scripts/ai/test_family_delivery.py`. Consumer adoption
+(routes registry resolver, env/log writers, seed/update ownership, docs) is the
+remaining P07 work; no legacy migration has been run against project data.
+
 ## 2026-09-24 — delivery hotfix, integrated core 9db26a0
 
 Branch `fix/p06-react-delivery-drift` on top of `main` `c1a1353` (P06 merged via

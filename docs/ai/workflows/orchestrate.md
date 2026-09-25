@@ -81,16 +81,16 @@ ba → ui-architect → tester (RED) → react-developer (GREEN) → tester (REF
         → [Quality Gate: reviewer | security-scanner | state-architect] → docs-writer
 ```
 
-> Phase 6 also emits the **verification handoff** (`docs/verify/<feature>.md`) from `.claude/memory/routes.json` + the component/route contract, per docs/ai/rules/verification.md. Regenerate/run on demand with `/verify`. When a feature changes first-run, auth, a top-level route, or a data-loading flow, `guide-writer` also refreshes `docs/guides/{user,developer}.md` per docs/ai/rules/user-guides.md (regenerate on demand with `/guides`).
+> Phase 6 also emits the **verification handoff** (`docs/verify/<feature>.md`) from `docs/project-state/routes.json` + the component/route contract, per docs/ai/rules/verification.md. Regenerate/run on demand with `/verify`. When a feature changes first-run, auth, a top-level route, or a data-loading flow, `guide-writer` also refreshes `docs/guides/{user,developer}.md` per docs/ai/rules/user-guides.md (regenerate on demand with `/guides`).
 
 | Phase            | Mode         | Agent(s)                                          | Output                                                                                                                                               |
 | ---------------- | ------------ | ------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 1. Requirements  | sequential   | `ba`                                              | User stories, UX scope, screen/route description, the four UI states                                                                                 |
-| 2. UI contract   | sequential   | `ui-architect`                                    | Routes, component tree + props, UI states, consumed endpoints, query keys / store shape, a11y reqs + routes recorded in `.claude/memory/routes.json` |
+| 2. UI contract   | sequential   | `ui-architect`                                    | Routes, component tree + props, UI states, consumed endpoints, query keys / store shape, a11y reqs + routes recorded in `docs/project-state/routes.json` |
 | 3. RED           | sequential   | `tester`                                          | Failing Playwright journey + failing Vitest/RTL tests with MSW handlers                                                                              |
 | 4. GREEN         | sequential   | `react-developer`                                 | Code that greens the tests + eslint/prettier + typecheck                                                                                             |
 | 5. Quality Gate  | **parallel** | `reviewer`, `security-scanner`, `state-architect` | Independent reports                                                                                                                                  |
-| 6. Documentation | sequential   | `docs-writer` (+ `guide-writer` — optional, when the user/dev surface changed) | feature README, `docs/verify/<feature>.md`, `docs/guides/{user,developer}.md` (when surface changed), WORKLOG, PR description + `gh pr create`       |
+| 6. Documentation | sequential   | `docs-writer` (+ `guide-writer` — optional, when the user/dev surface changed) | feature README, `docs/verify/<feature>.md`, `docs/guides/{user,developer}.md` (when surface changed), PR description + `gh pr create` (the session record is written at wrap-up) |
 
 **Quality Gate resolution:** all passed → phase 6. Any 🔴 Critical / 🟡 Important → back to `react-developer` → re-run the gate. Max 2 cycles, then escalate to the user.
 

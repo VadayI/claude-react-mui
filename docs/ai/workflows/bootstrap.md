@@ -15,17 +15,19 @@ steps NOT_VERIFIED. Keep all check requirements below for the later runner.
 
 ## Step 0 — Output language (before anything else)
 
-Respect the language already selected by the user. Preserve an existing
-`.claude/rules/output-language.md`. If a new persisted preference is needed,
-prepare a project-owned `docs/ai/overrides/output-language.md` and a reviewed
-AGENTS.md reference; never reseed CLAUDE.md or restore all legacy rule imports.
-Do not create two writable language preferences; legacy migration is P07.
+Respect the language already selected by the user. Check the persisted one with
+`python scripts/ai/project_state.py --root . --language`; move a legacy
+`.claude/rules/output-language.md` with `--language --apply` (it leaves a
+pointer). If a new persisted preference is needed, write only the project-owned
+`docs/ai/overrides/output-language.md` from `templates/output-language.md`;
+AGENTS.md makes Claude and Codex read it. Never reseed CLAUDE.md or restore
+legacy rule imports, and never keep two writable language preferences.
 
 ## Pre-flight hard gates
 
 Before doing ANYTHING:
 
-1. Run `node scripts/detect-env.mjs` explicitly, then read the fresh `.claude/memory/env-detect.json`. If `platform_supported: false` → **HARD STOP: UNSUPPORTED_PLATFORM** — on native Windows install **Git for Windows** (`winget install Git.Git`) so the bash hooks/gates run, or use WSL2. If `wrong_runner_suspected: true` (a Windows runner launched from inside WSL2) → **WARN**, do not hard-stop: ask the user to pick one environment (WSL2-native `claude`, or native Windows from Git Bash), then continue.
+1. Run `node scripts/session-start.mjs` explicitly (shared detector + stack probe), then read the fresh `.ai-runtime/env-detect.json`. If `platform_supported: false` → **HARD STOP: UNSUPPORTED_PLATFORM** — on native Windows install **Git for Windows** (`winget install Git.Git`) so the bash hooks/gates run, or use WSL2. If `wrong_runner_suspected: true` (a Windows runner launched from inside WSL2) → **WARN**, do not hard-stop: ask the user to pick one environment (WSL2-native `claude`, or native Windows from Git Bash), then continue.
 2. If `node_supported: false` or Node < 24 → **HARD STOP: NO_NODE**. Instruct `nvm install --lts`.
 3. Check GitHub access only when remote work is needed. Missing hosted access does not block local scaffolding. P06 is required before the first remote push.
 
@@ -91,7 +93,7 @@ Author the project config inline (these files are **not** in `templates/` — ge
   - **Variant A:** `VITE_API_BASE_URL=http://localhost:4010`, `CONTRACT_REPO=<user value or {TODO}>`, `CONTRACT_VERSION=<user tag or {TODO}>`, `VITE_MSW_ENABLED=false`
   - **Variant B:** `VITE_API_BASE_URL=http://localhost:8000`, `VITE_OPENAPI_URL=<user URL or {TODO}>`, `VITE_MSW_ENABLED=false`
   - **Variant C:** `VITE_API_BASE_URL=`, `VITE_OPENAPI_URL=<user URL or {TODO}>`, `VITE_MSW_ENABLED=false`
-- Preserve the delivered `.gitignore`; merge missing node/build/coverage and `.ai-runtime/` exclusions. Do not ignore all `.claude/memory/`: versioned registries remain project-owned until P07.
+- Preserve the delivered `.gitignore`; merge missing node/build/coverage and `.ai-runtime/` exclusions. Do not ignore `docs/project-state/` (versioned, project-owned registries); a legacy `.claude/memory/` keeps only its runtime entries ignored until `python scripts/ai/project_state.py --root . --apply` migrates it.
 - `eslint.config.js`, `.prettierrc`.
 - `README.md` — project README seeded from `templates/PROJECT_README.md` (fill `{PROJECT_NAME}` / backend).
 

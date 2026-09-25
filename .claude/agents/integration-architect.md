@@ -31,7 +31,7 @@ Optional Phase 2.5 — sits between `ui-architect` and `react-developer` when th
 1. Choose flow: Authorization Code + PKCE (SPA best practice).
 2. Design the redirect: frontend → backend `/auth/<provider>/` → provider → backend callback → frontend `/auth/callback?code=...`.
 3. Define token storage: access AND refresh tokens in memory (Zustand `useAuthStore`); refresh arrives in the response body, not a cookie (@.claude/rules/auth.md, ADR 0021). An httpOnly-cookie / same-origin-session variant requires a superseding ADR.
-4. Document the callback route in `.claude/memory/routes.json`.
+4. Document the callback route in `docs/project-state/routes.json`.
 
 **Payment widgets (Stripe Elements)**
 

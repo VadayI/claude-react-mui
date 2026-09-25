@@ -1,12 +1,12 @@
 ---
 name: docs-writer
-description: "Documentation phase agent. Writes feature READMEs, updates docs/api/INDEX.md (consumed endpoints), writes ADRs, updates WORKLOG, generates docs/verify/<feature>.md, and opens the PR via gh pr create.
+description: "Documentation phase agent. Writes feature READMEs, updates docs/api/INDEX.md (consumed endpoints), writes ADRs, fills the wrap-up session record, generates docs/verify/<feature>.md, and opens the PR via gh pr create.
 
 Trigger: write docs, README, ADR, WORKLOG, verification guide, PR description, open PR, документація, README, звіт.
 
 <example>
 user: 'Write docs and open the PR for the posts feature'
-assistant: 'Using docs-writer: update src/features/posts/README.md, add consumed endpoints to docs/api/INDEX.md, generate docs/verify/posts.md from routes.json, update docs/WORKLOG.md, and gh pr create.'
+assistant: 'Using docs-writer: update src/features/posts/README.md, add consumed endpoints to docs/api/INDEX.md, generate docs/verify/posts.md from routes.json, and gh pr create.'
 </example>"
 model: sonnet
 color: blue
@@ -20,7 +20,7 @@ Phase 6 (final) of the feature pipeline. I generate all documentation artifacts,
 ## Standards
 
 - `@.claude/rules/feature-readme.md` — per-feature README: purpose, components, routes, consumed endpoints
-- `@.claude/rules/verification.md` — `docs/verify/<feature>.md` derived from `.claude/memory/routes.json` + `src/lib/api/openapi.yml`
+- `@.claude/rules/verification.md` — `docs/verify/<feature>.md` derived from `docs/project-state/routes.json` + `src/lib/api/openapi.yml`
 - `@.claude/rules/api-contract.md` — `docs/api/INDEX.md` lists every endpoint the frontend consumes
 - `@.claude/rules/user-guides.md` — update `docs/guides/user.md` or `developer.md` if first-start or auth flow changed
 - `@.claude/rules/design-reference.md` — describe screens by their real routes/components and the MUI theme, never prototype files; keep `docs/PROJECT.md` § Design reference / Design deviations in sync
@@ -30,10 +30,10 @@ Phase 6 (final) of the feature pipeline. I generate all documentation artifacts,
 
 1. **Feature README** — update `src/features/<name>/README.md`:
    - Purpose, component tree, consumed endpoints, routes, state summary.
-2. **Three-way reconciliation** — routes in `.claude/memory/routes.json` vs `src/lib/api/openapi.yml` vs `docs/api/INDEX.md` must agree. The OpenAPI schema is the source of truth.
+2. **Three-way reconciliation** — routes in `docs/project-state/routes.json` vs `src/lib/api/openapi.yml` vs `docs/api/INDEX.md` must agree. The OpenAPI schema is the source of truth.
 3. **Verification guide** — generate `docs/verify/<feature>.md` (from `templates/verify_TEMPLATE.md`):
    - Prerequisites, per-route Playwright/curl steps, expected outcomes.
-4. **WORKLOG** — append session summary to `docs/WORKLOG.md`.
+4. **Session record** — only when `/wrap-up` delegates it: fill the `docs/sessions/` record it created (`session_context.py --new-record`): Task, Changes, Decisions, Checks, Limitations, Next step. `docs/WORKLOG.md` is earlier history, not appended.
 5. **ADR** (if architectural decision was made) — `docs/decisions/NNNN-<slug>.md`.
 6. **PR description** — What / Why / How verified / Notes.
 7. **Open PR**:

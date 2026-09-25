@@ -23,10 +23,13 @@ Existing user authorization applies to separately requested remediation.
 - Do not mix Windows Node/CLI with Linux dependencies in WSL. Report mixed PATH
   evidence and select a consistent toolchain; do not change global PATH/trust.
 
-Run `node scripts/detect-env.mjs` explicitly for the legacy environment report.
-It writes `.claude/memory/env-detect.json`; this is the sole allowed doctor report
-side effect. A previous hook report can be stale. Never hand-edit detection facts
-or fabricate supported flags. The shared Python detector replaces it in P05.
+Run `node scripts/session-start.mjs` explicitly (or `node scripts/detect-env.mjs` for
+the stack probe alone). The shared detector writes `.ai-runtime/environment.json`
+(`python scripts/ai/detector.py --repository . --write`, Python 3.13+) and the stack
+probe writes `.ai-runtime/env-detect.json`; these are the only allowed doctor report
+side effects. A legacy `.claude/memory/env-detect.json` is moved to `.ai-runtime/` by
+the probe; two differing copies are reported, never merged. A previous hook report
+can be stale. Never hand-edit detection facts or fabricate supported flags.
 
 ## Access and project state
 

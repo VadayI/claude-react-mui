@@ -50,7 +50,7 @@ Map the log output to one of these categories:
 - **feature-readme** — `check_feature_readmes.sh` missing README.
 - **contract-sync** — `check_contract_sync.sh` failed; vendored `openapi.yml` doesn't match the pinned `CONTRACT_VERSION`.
 - **plan-sync** — `check_plan_sync.sh` failed; a non-trivial PR (>2 files under `src/`/`e2e/`) has no updated `docs/plans/*.md`.
-- **routes-registry** — `check_routes_registry.sh` failed; `src/app/router.tsx` changed without updating `.claude/memory/routes.json` + `docs/verify/*.md`.
+- **routes-registry** — `check_routes_registry.sh` failed; `src/app/router.tsx` changed without updating `docs/project-state/routes.json` + `docs/verify/*.md`.
 - **guides-sync** — `check_guides_sync.sh` failed; a top-level route or auth flow changed without updating `docs/guides/{user,developer}.md`.
 - **bundle-size** — `check_bundle_size.sh` failed; a gzipped chunk exceeds `.performance-budget.json`.
 
@@ -68,7 +68,7 @@ Map the log output to one of these categories:
 | feature-readme | `docs-writer`                | Add missing `README.md` to the feature folder                     |
 | contract-sync   | `react-developer`              | `npm run api:pull && npm run api:types`; add a `docs/api/CONTRACT_ISSUES.md` row if the contract is wrong |
 | plan-sync       | `docs-writer`                  | Update the active `docs/plans/NNNN-*.md` (Status + Execution log) in the same PR                          |
-| routes-registry | `docs-writer` + `ui-architect` | Reconcile `.claude/memory/routes.json` + `docs/verify/*.md` with `src/app/router.tsx`                     |
+| routes-registry | `docs-writer` + `ui-architect` | Reconcile `docs/project-state/routes.json` + `docs/verify/*.md` with `src/app/router.tsx`                     |
 | guides-sync     | `guide-writer`                 | Update `docs/guides/{user,developer}.md` for the changed route/auth flow                                  |
 | bundle-size     | `react-refactoring-expert`     | Code-split / trim deps to fit `.performance-budget.json`; `react-developer` executes                      |
 

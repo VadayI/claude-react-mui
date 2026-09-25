@@ -17,9 +17,9 @@ One markdown file per feature (slug matches the branch/feature name), written by
    - **Playwright**: the spec file + the `npm run e2e -- <file>` invocation that automates this journey.
 4. **Done when** — a short checklist the user ticks: success renders, all four states verified, keyboard-only works, axe clean, Playwright green.
 
-Keep it copy-paste runnable. Routes come from `.claude/memory/routes.json`; do not invent screens the contract does not have.
+Keep it copy-paste runnable. Routes come from `docs/project-state/routes.json`; do not invent screens the contract does not have.
 
-## Source of truth — `.claude/memory/routes.json`
+## Source of truth — `docs/project-state/routes.json`
 
 Generated from a machine-readable route registry so it always matches the real app. `ui-architect` writes/updates an entry the moment it fixes a contract (phase 2). Schema per entry:
 
@@ -39,20 +39,20 @@ Generated from a machine-readable route registry so it always matches the real a
 
 ### Reconciliation (enforced)
 
-After GREEN, before the PR opens, `docs-writer` reconciles routes across: `.claude/memory/routes.json` ↔ the live router (`src/app/router.tsx`) ↔ `docs/api/INDEX.md` (consumed endpoints) ↔ the OpenAPI schema. The live router + schema are the source of truth; stale registry entries are corrected/removed.
+After GREEN, before the PR opens, `docs-writer` reconciles routes across: `docs/project-state/routes.json` ↔ the live router (`src/app/router.tsx`) ↔ `docs/api/INDEX.md` (consumed endpoints) ↔ the OpenAPI schema. The live router + schema are the source of truth; stale registry entries are corrected/removed.
 
-**CI gate `scripts/check_routes_registry.sh`** enforces this on a PR: if `src/app/router.tsx` changes, both `.claude/memory/routes.json` and a `docs/verify/*.md` must be updated in the same PR, and `routes.json` must be valid JSON.
+**CI gate `scripts/check_routes_registry.sh`** enforces this on a PR: if `src/app/router.tsx` changes, both `docs/project-state/routes.json` and a `docs/verify/*.md` must be updated in the same PR, and `routes.json` must be valid JSON.
 
 ## Lifecycle (per feature)
 
-1. **Phase 2 — contract.** `ui-architect` appends/updates the feature's routes in `.claude/memory/routes.json`.
+1. **Phase 2 — contract.** `ui-architect` appends/updates the feature's routes in `docs/project-state/routes.json`.
 2. **Phases 3–4 — RED/GREEN.** No verification work; the registry entry already exists.
 3. **Phase 6 — docs.** `docs-writer` reconciles, generates/refreshes `docs/verify/<feature>.md`, includes it in the PR.
 4. **On demand.** `/verify` regenerates it; with `--run` it executes the Playwright steps against a running app and reports pass/fail.
 
 ## Binds these agents (rule is auto-loaded)
 
-- `ui-architect` — the contract is incomplete until the feature's routes are recorded in `.claude/memory/routes.json`.
+- `ui-architect` — the contract is incomplete until the feature's routes are recorded in `docs/project-state/routes.json`.
 - `docs-writer` — owns `docs/verify/<feature>.md`; runs the reconciliation and generates the guide before declaring the PR ready.
 - `reviewer` — flags a PR that adds/changes a screen without a matching `docs/verify/<feature>.md` or whose `routes.json` disagrees with the router.
 - `tester` — the states and keyboard/error paths listed in the guide must each correspond to a real test; the guide is the manual mirror of those tests.

@@ -7,7 +7,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
-from ci_mode import workflow
+from ci_mode import DOCUMENTATION, workflow
 
 ROOT = Path(__file__).resolve().parents[2]
 SPEC = importlib.util.spec_from_file_location("family_delivery", Path(__file__).with_name("install.py"))
@@ -71,7 +71,7 @@ class FamilyDeliveryTests(unittest.TestCase):
         report = json.loads(detector.stdout)
         self.assertEqual(report["repository"]["status"], "NOT_VERIFIED")
         receipt = json.loads((self.target / "docs/ai/core-source.json").read_text(encoding="utf-8"))
-        self.assertEqual(receipt["source_commit"], "9db26a0c65b970c223ab034750f3019ac59c5e2e")
+        self.assertEqual(receipt["source_commit"], "db342b78ee8d085b6f5b854cabd217d69176d99c")
         self.assertEqual(receipt["pin_status"], "integrated")
         self.assertEqual(receipt["observed_upstream_main"], receipt["source_commit"])
         for name in ("scripts/ai/launch.ps1", "scripts/ai/launch.sh", "templates/ai/schemas/catalog.schema.json",
@@ -149,15 +149,25 @@ class FamilyDeliveryTests(unittest.TestCase):
         self.assertNotIn("  pull_request:", active)
         settings = json.loads((self.target / ".claude/settings.json").read_text(encoding="utf-8"))
         self.assertEqual(settings["hooks"]["SessionStart"][0]["hooks"][0]["command"],
-                         "node scripts/detect-env.mjs")
+                         "node scripts/session-start.mjs")
         self.assertEqual(settings["hooks"]["PreToolUse"][0]["hooks"][0]["command"],
                          "node scripts/policy/claude_edit_guard.mjs")
         self.assertNotIn("Stop", settings["hooks"])
         session = (self.target / "scripts/session-start.sh").read_text(encoding="utf-8")
-        self.assertIn('node "$SCRIPT_DIR/detect-env.mjs"', session)
+        self.assertIn('node "$SCRIPT_DIR/session-start.mjs"', session)
         self.assertNotIn("npm install", session)
         self.assertNotIn("rm -f", session)
-        for name in (".env", ".claude/memory", "docs/HANDOFF.md", "src", "package.json"):
+        starter = (self.target / "scripts/session-start.mjs").read_text(encoding="utf-8")
+        self.assertIn("'--write'", starter)
+        self.assertIn("detect-env.mjs", starter)
+        self.assertIn("session_context.py", starter)
+        self.assertTrue((self.target / "scripts/runtime-state.mjs").is_file())
+        self.assertTrue((self.target / "scripts/ai/session_context.py").is_file())
+        self.assertTrue((self.target / "docs/ai/session-continuity.md").is_file())
+        project = json.loads((self.target / "docs/project-state/project.json").read_text(encoding="utf-8"))
+        self.assertEqual(project["documentation"], DOCUMENTATION)
+        for name in (".env", ".claude/memory", "docs/project-state/routes.json", ".ai-runtime", "docs/HANDOFF.md",
+                     "docs/sessions", "src", "package.json"):
             self.assertFalse((self.target / name).exists(), name)
 
     def test_custom_entrypoint_blocks_apply_before_any_other_writes(self):
