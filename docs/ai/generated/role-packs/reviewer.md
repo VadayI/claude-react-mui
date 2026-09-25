@@ -762,7 +762,7 @@ Per form: schema unit tests (valid / each invalid case); RTL tests that submit i
 <!-- END SOURCE docs/ai/rules/forms-and-validation.md -->
 
 
-<!-- SOURCE docs/ai/rules/git-operations.md SHA256 7329330603b1cfbf3c4b2c6beb4c24eae9067e3ac57317e96e10c2064806bfbb -->
+<!-- SOURCE docs/ai/rules/git-operations.md SHA256 3b026479ed126280620b106ff0db8ae6eada4839082e730a008e98bbe7c2443f -->
 
 # Git operations
 
@@ -825,6 +825,10 @@ Context / user story.
 ## Notes
 Edge cases, risks, next steps.
 ```
+
+## Session finalization
+
+Use `python scripts/ai/git_lifecycle.py` for the lifecycle (`inspect`, `commit --path`, `verify`, `share`, `merge --pr N --expect-head SHA`, `cleanup`; docs/ai/git-lifecycle.md). Commit/push/draft PR are part of an authorized task; merge requires a new explicit user command.
 
 ## Context sync between machines
 

@@ -1,8 +1,9 @@
 # React shared-core integration
 
 The Python standard-library family core is vendored from an exact contract Git
-commit. `docs/ai/core-source.json` contains the integrated pin (contract main
-`db342b78ee8d085b6f5b854cabd217d69176d99c`, `pin_status: integrated`) and per-file digests.
+commit. `docs/ai/core-source.json` contains the pin and per-file digests: on `main`
+the integrated contract main `db342b78ee8d085b6f5b854cabd217d69176d99c`; this P08
+review branch uses the development pin `7d0571de2f36fa4f7e74864f35353a199ac3d69a`.
 Runtime commands require no adjacent checkout, marketplace or source repository
 access. A development pin on an unmerged core PR is temporary; after that PR
 merges, redeliver with `core_sync.py --integrated-pin` and verify digest/ancestry.

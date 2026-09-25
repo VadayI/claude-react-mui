@@ -42,10 +42,12 @@ Loopback E2E declares `network_access: loopback`. Missing tools, browser binarie
 network inputs, artifacts, or exact base/context remain `NOT_VERIFIED` and produce
 a nonzero runner outcome.
 
-The vendored core receipt pins integrated contract main commit
+On `main` the vendored core receipt pins integrated contract main commit
 `db342b78ee8d085b6f5b854cabd217d69176d99c` (manifest digest
 `85e04141361fd77b0d7614915e8fd2366cb841fe2e78148ddcbb080d257a58bd`): the merge of contract PR #66
 (P07 project state and session continuity), which also contains the
-directory-digest invalidation fix from contract PR #62. P06 delivered CI mode selection and
+directory-digest invalidation fix from contract PR #62. This P08 review branch
+uses the development pin `7d0571de2f36fa4f7e74864f35353a199ac3d69a` until the contract
+P08 PR merges. P06 delivered CI mode selection and
 workflow materialization without replacing these P05 gate implementations.
 P13 owns full install/adopt/update rollback and interruption acceptance.

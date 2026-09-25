@@ -70,8 +70,9 @@ Never create competing writable registries.
 Delivered so far: canonical rules and generated adapters (P02), the vendored
 family core with schemas and launchers (P04), the exact-candidate detector/runner
 (P05), explicit CI mode, owned workflow materialization and Git/tool hooks (P06);
-P07 adds the project-state resolver/migration and session continuity. Not
-delivered yet: the G0–G9 Git lifecycle (P08), onboarding and readiness roles
-(P10/P11) and family acceptance (P13).
+P07 adds the project-state resolver/migration and session continuity; P08 adds
+the G0–G9 Git lifecycle CLI (`scripts/ai/git_lifecycle.py`, used by wrap-up).
+Not delivered yet: onboarding and readiness roles (P10/P11) and family
+acceptance (P13).
 `docs/ai/compatibility.md` and `docs/ai/pilot-report.md` record the measured
 pilot; existence or parsing of an adapter is not runtime proof.
