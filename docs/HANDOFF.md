@@ -1,3 +1,26 @@
+## 2026-09-24 — delivery hotfix, integrated core 9db26a0
+
+Branch `fix/p06-react-delivery-drift` on top of `main` `c1a1353` (P06 merged via
+PR #75). Integrated so far: P02 rules/adapters, P04 vendored family core, P05
+exact-candidate runner, P06 explicit CI mode + owned hooks. Not delivered: P07
+shared project state, P08 Git lifecycle, P10/P11 roles, P13 acceptance.
+
+- `docs/ai/delivery-manifest.json` regenerated: PR #73 changed seven
+  `.claude/agents/*.md` and `scripts/turbo.sh` without regeneration, so
+  `generate.py --check` failed and `install.py` refused every target with
+  `Source digest mismatch`. Hosted `Frontend CI` now runs the Python delivery
+  drift checks and `scripts/ai` tests inside `Quality Gates`.
+- Vendored core repinned to integrated contract main
+  `9db26a0c65b970c223ab034750f3019ac59c5e2e` (manifest digest `131f17e9…`,
+  includes the runner directory-digest fix from contract PR #62).
+- Verified on Linux Python 3.13.15: `core_sync --check`, `generate --check`,
+  `generate_adapters --check` PASS; `scripts/ai` tests 33/33. Hosted run for
+  this branch is pending the user's push; merge only on the user's command.
+- Next: P07 delivery of the rebased shared-state core (development pin until
+  the contract P07 PR is merged), then P08.
+
+The sections below are historical checkpoints, not current Git state.
+
 ## P02 pilot in progress — 2026-09-20
 
 App snapshot: `9581f9c`, verified Windows/Linux Node 24 with 99 tests;

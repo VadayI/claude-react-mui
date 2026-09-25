@@ -208,8 +208,8 @@
   "generator": "family-core",
   "schema_version": 1,
   "sources": {
-    "AGENTS.md": "da3869154fa94086fdd1afdf6492aabf7db5a368fe1733f6b2e483edb4be49c9",
-    "docs/ai/catalog.json": "e30a1bb033141893095e06b31816f0c08a2c54c128ab5523ed119e8ae9c3d9b3",
+    "AGENTS.md": "61cba4e18e1f186ed2ed4fc1ff142d107f8198cd5567aab37ea006478856269d",
+    "docs/ai/catalog.json": "1051e4c5a33a01d14516c66c15785bd4087b6ef10f55a6365aa9a185cb145d69",
     "docs/ai/roles/react-developer.md": "ecc1c9e114cdeb272fc070aaa36f29b3c0dd649a9eb811c4d23cf9f07d7114a8",
     "docs/ai/roles/reviewer.md": "246dc11d06d17d7c705ff986071bdbedea92d4a9e75efc987d3d8fc28e65a25a",
     "docs/ai/roles/tester.md": "884d756c8044b39d52af2f7632a959d9e00aaf74add348c326852a230f753892",
@@ -245,7 +245,7 @@
     "docs/ai/workflows/bootstrap.md": "112f3462aac559a06f9c194d0a687d3c59e2b9b79443c7944d4e09f6b4a03bbc",
     "docs/ai/workflows/doctor.md": "14d6faef3ac769fb8c2e743159b3689726fc19646841942dd9cded2f02385477",
     "docs/ai/workflows/orchestrate.md": "c2e2a5fbd02366885eac402254deaf456788bd5e78a1d70c265a27650ea4230c",
-    "docs/ai/workflows/update-from-template.md": "9715916bd24f979bac040126fc571f7a7dc63e8f860beabc9d0d4cfd1559b1cb",
+    "docs/ai/workflows/update-from-template.md": "4f1d14c606846fd2e2abed369d027206b0fac51186bec9804c6f9896dcdebe84",
     "docs/ai/workflows/verify.md": "682aa5e3f5abc30fc55f38529e75970d2162397cd8fe3e693b5bd9d82a7af39b",
     "docs/ai/workflows/wrap-up.md": "995c5d116e9e18560978d36d0fdd0a7bf8bc657a67889f669dcf1280fe5b89fa"
   }

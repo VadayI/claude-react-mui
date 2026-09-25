@@ -35,6 +35,7 @@ environment names. Existing `make cc`/`scripts/claude.sh` retain legacy behavior
 pending the dedicated bootstrap/config migration; they still source `.env` and
 are not the portable launch path.
 
-The legacy Bash scaffold installer still needs P06 explicit CI-choice/workflow
-work and P13 full delivery acceptance. This integration does not certify that old
-installer or a complete runnable derived application. No merge/deploy is implied.
+The explicit CI choice and owned workflow materialization are delivered through
+`scripts/ai/install.py --ci-mode`; P13 full delivery acceptance is still open.
+This integration does not certify the legacy installer or a complete runnable
+derived application. No merge/deploy is implied.
