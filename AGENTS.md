@@ -5,7 +5,10 @@ This React/MUI frontend consumes the external pinned OpenAPI contract. Start wit
 documentation map, latest session record with checks and next step; no
 `.ai-runtime` needed), then read `docs/HANDOFF.md` and the relevant plan;
 reconcile a stale handoff with the listed diff rather than assuming it is current.
-Respect the user's chosen language and existing authorization.
+Respect the user's chosen language — the session choice first, then the shared
+`docs/ai/overrides/output-language.md` (a legacy `.claude/rules/output-language.md`
+stays readable until `python scripts/ai/project_state.py --root . --language
+--apply`) — and existing authorization.
 
 ## Roles and rule loading
 

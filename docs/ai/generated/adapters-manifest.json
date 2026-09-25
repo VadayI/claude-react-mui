@@ -208,7 +208,7 @@
   "generator": "family-core",
   "schema_version": 1,
   "sources": {
-    "AGENTS.md": "285343ac90c387104de72eb3c99c78a865823f2240f95dddba1cb38351dc07cf",
+    "AGENTS.md": "ffde17c61ccff2445caacfc2539cac286ee63c649a7d3737ecae3731b2ba4388",
     "docs/ai/catalog.json": "1051e4c5a33a01d14516c66c15785bd4087b6ef10f55a6365aa9a185cb145d69",
     "docs/ai/roles/react-developer.md": "ecc1c9e114cdeb272fc070aaa36f29b3c0dd649a9eb811c4d23cf9f07d7114a8",
     "docs/ai/roles/reviewer.md": "246dc11d06d17d7c705ff986071bdbedea92d4a9e75efc987d3d8fc28e65a25a",
@@ -242,7 +242,7 @@
     "docs/ai/rules/user-guides.md": "594824c8516c77b1a94f46fa7bfac225405e24e9c8f892bc28e91e3d54a6fc6f",
     "docs/ai/rules/verification.md": "dc890a63a7cb9619cb6ac18eeb1ce3eeccd0415f6e39103dd1685fb49164a345",
     "docs/ai/rules/workflow.md": "6d632cc86edc678b42469d6a215a1b94e23c8406e5138c21cc17bc9b023ba0df",
-    "docs/ai/workflows/bootstrap.md": "64ec2c5f93d7e253a707e34ed487198c5a5a313598529f0a9a059e214e221d78",
+    "docs/ai/workflows/bootstrap.md": "4c752172f95cc2ec120744a6dd8fb51ec0b9f01c4dd7cf8fd75fd2157c1a0126",
     "docs/ai/workflows/doctor.md": "14d6faef3ac769fb8c2e743159b3689726fc19646841942dd9cded2f02385477",
     "docs/ai/workflows/orchestrate.md": "4a6ec1c5fc4617a214e540f4341d4ab7500881708d0afb24d18aaf3a4de30cc0",
     "docs/ai/workflows/update-from-template.md": "1dbb91b83110d52bb9d8f94dbb72a80271565c58ca644c35b929ad74ea51bebe",

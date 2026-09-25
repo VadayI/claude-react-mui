@@ -15,11 +15,13 @@ steps NOT_VERIFIED. Keep all check requirements below for the later runner.
 
 ## Step 0 — Output language (before anything else)
 
-Respect the language already selected by the user. Preserve an existing
-`.claude/rules/output-language.md`. If a new persisted preference is needed,
-prepare a project-owned `docs/ai/overrides/output-language.md` and a reviewed
-AGENTS.md reference; never reseed CLAUDE.md or restore all legacy rule imports.
-Do not create two writable language preferences; legacy migration is P07.
+Respect the language already selected by the user. Check the persisted one with
+`python scripts/ai/project_state.py --root . --language`; move a legacy
+`.claude/rules/output-language.md` with `--language --apply` (it leaves a
+pointer). If a new persisted preference is needed, write only the project-owned
+`docs/ai/overrides/output-language.md` from `templates/output-language.md`;
+AGENTS.md makes Claude and Codex read it. Never reseed CLAUDE.md or restore
+legacy rule imports, and never keep two writable language preferences.
 
 ## Pre-flight hard gates
 
