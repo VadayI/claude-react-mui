@@ -60,6 +60,10 @@ Context / user story.
 Edge cases, risks, next steps.
 ```
 
+## Session finalization
+
+Use `python scripts/ai/git_lifecycle.py` for the lifecycle (`inspect`, `commit --path`, `verify`, `share`, `merge --pr N --expect-head SHA`, `cleanup`; docs/ai/git-lifecycle.md). Commit/push/draft PR are part of an authorized task; merge requires a new explicit user command.
+
 ## Context sync between machines
 
 At the end of a session, update and commit: the session record in `docs/sessions/` (`python scripts/ai/session_context.py --root . --new-record --agent <runtime>`; one file per session, so parallel sessions merge without conflicts), `docs/HANDOFF.md` (merged by content, never `merge=union`), and if needed `docs/project-state/*` and ADRs `docs/decisions/NNNN-*.md`. `docs/WORKLOG.md` remains the earlier history. This is how the work history travels between computers and agents via a plain `git pull`; `python scripts/ai/session_context.py --root . --check` must PASS after the commit (docs/ai/session-continuity.md).

@@ -43,9 +43,9 @@ network inputs, artifacts, or exact base/context remain `NOT_VERIFIED` and produ
 a nonzero runner outcome.
 
 The vendored core receipt pins integrated contract main commit
-`db342b78ee8d085b6f5b854cabd217d69176d99c` (manifest digest
-`85e04141361fd77b0d7614915e8fd2366cb841fe2e78148ddcbb080d257a58bd`): the merge of contract PR #66
-(P07 project state and session continuity), which also contains the
+`8a7b08021bc0370582a62b0940f36a8b5b206c32` (manifest digest
+`d6ee07d8ec7037a04af840c1a5940ccab4fa916033fe137145bfebbe28215264`): the merge of contract PR #67
+(P08 Git lifecycle), on top of P07 project state and session continuity and the
 directory-digest invalidation fix from contract PR #62. P06 delivered CI mode selection and
 workflow materialization without replacing these P05 gate implementations.
 P13 owns full install/adopt/update rollback and interruption acceptance.
