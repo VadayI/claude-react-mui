@@ -1,3 +1,11 @@
+## 2026-09-25 — P07 session continuity (development core)
+
+Branch `feat/p07-shared-memory` (draft PR #77); commit `a8c769a` on top of `f7a41e7`, development pin `6fb703a`. Nothing is merged (D01).
+
+- Start every session with `python scripts/ai/session_context.py --root .` (branch/HEAD, settings, documentation map, latest record, snapshot diff; no `.ai-runtime` needed). End with `--new-record --agent <runtime>` and, after the commit, `--check` (docs/ai/session-continuity.md).
+- This session: `docs/sessions/20260925T075805Z-claude-debba1.md` (task, checks, limitations, next step).
+- Next: After contract #66 is merged on the user's command: repin to the integrated core, restore the assertions marked «Tymczasowy pin deweloperski» in `scripts/ai/test_family_delivery.py`, then merge #76 → #77. After that, P08.
+
 ## 2026-09-24 — P07 consumers adopted (draft PR #77, development core)
 
 Branch `feat/p07-shared-memory` on top of `fix/p06-react-delivery-drift` (PR #76).
