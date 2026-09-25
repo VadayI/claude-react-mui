@@ -1,3 +1,11 @@
+## 2026-09-25 — P07 shared output-language preference (development core)
+
+Branch `feat/p07-shared-memory` (draft PR #77); commit `f197a31` on top of `4799db0`, development pin `f8e3162`. Nothing is merged (D01).
+
+- Output language: `python scripts/ai/project_state.py --root . --language` reports it; `--apply` moves a legacy `.claude/rules/output-language.md` to `docs/ai/overrides/output-language.md` (pointer left behind). Runtime acceptance run: docs/ai/session-continuity.md.
+- This session: `docs/sessions/20260925T081415Z-claude-d28b5b.md` (task, checks, limitations, next step).
+- Next: After contract #66 is merged on the user's command: repin to the integrated core and restore «Tymczasowy pin deweloperski»; then #76 → #77. The runtime acceptance run follows docs/ai/session-continuity.md.
+
 ## 2026-09-25 — P07 session continuity (development core)
 
 Branch `feat/p07-shared-memory` (draft PR #77); commit `a8c769a` on top of `f7a41e7`, development pin `6fb703a`. Nothing is merged (D01).
