@@ -6,9 +6,14 @@ mutations when acting as coordinator. Preserve the initial inventory of foreign 
 
 1. Inspect repository/root/gitdir, branch, HEAD, index, worktrees, stash OIDs, remote
    and related PR. Reconcile current refs; never blindly pull/rebase over dirty work.
-2. Summarize actual changes/checks, update HANDOFF/WORKLOG and relevant plan/backlog,
-   lessons, ADRs and registries. Preserve unknown legacy memory. Record a known
-   prior commit/tree; do not create self-referential SHA churn.
+2. Summarize actual changes/checks: create this session's record with
+   `python scripts/ai/session_context.py --root . --new-record --agent <runtime>`
+   and fill every section (docs/ai/session-continuity.md); update HANDOFF by
+   content (never `merge=union`) and the relevant plan/backlog, lessons, ADRs and
+   registries. `docs/WORKLOG.md` is history, not a concurrent append target. Move
+   durable facts from runtime-private memory into these documents. Preserve unknown
+   legacy memory. The record's revision is the known prior commit; do not create
+   self-referential SHA churn.
 3. Review exact task-owned diff. Stage only explicit files/hunks, preserving partial
    staging and foreign changes in the same file. If separation is uncertain, stop
    the commit step and identify it. Do not use blanket add, automatic stash or reset.
@@ -25,7 +30,9 @@ mutations when acting as coordinator. Preserve the initial inventory of foreign 
    A network error requires state inspection before retry. In local mode do not
    dispatch Actions; in GitHub mode wait for exact-head required checks. No CI choice
    is inferred for a fresh project; bootstrap must obtain it before hosted activation.
-6. Return BRANCH_SYNCED / MERGE_PENDING only after verified push/PR; otherwise report
+6. After the commit, `python scripts/ai/session_context.py --root . --check` must
+   PASS so another agent or machine finds the record.
+   Return BRANCH_SYNCED / MERGE_PENDING only after verified push/PR; otherwise report
    the exact unfinished step. Do not merge until the user explicitly commands it.
 7. On that command, recheck head/base/checks, then merge only the verified revision.
    Cleanup requires merged-PR evidence (including squash content), no extra commits,

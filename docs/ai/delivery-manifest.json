@@ -58,7 +58,7 @@
     },
     ".claude/agents/docs-writer.md": {
       "ownership": "template",
-      "sha256": "1122830f8d69645fdbf2970f2148cf97ad16d5a24595a279b7f197a6320a82b4"
+      "sha256": "983bdb8418804fb814940ed156d8ae027ba84c80795560fbc89069e432c21f18"
     },
     ".claude/agents/domain-architect.md": {
       "ownership": "template",
@@ -115,7 +115,7 @@
     },
     ".claude/commands/audit.md": {
       "ownership": "template",
-      "sha256": "c065dbe66f6a0f63f7a8758f3dcbe136c41ab72390b0ae098b85dca62461d232"
+      "sha256": "8ec34bd731cd0e00f7fdffb810d988c7384cee16a975b215b164a299c66957b1"
     },
     ".claude/commands/bootstrap.md": {
       "legacy_sha256": "61b7f5783650828d649db43973a59b4d4ff31196ae72a77959f8e12aa74c0154",
@@ -144,7 +144,7 @@
     },
     ".claude/commands/handoff.md": {
       "ownership": "template",
-      "sha256": "de7b193debd4a1bc705486dc7d8d52b7b947a304ed50d833e39edb45fcbbbb2a"
+      "sha256": "b49e1ad2a1b0465a15e5be5e4ba64aa7acfa4c838052a814983a413439e31253"
     },
     ".claude/commands/plugins.md": {
       "ownership": "template",
@@ -401,7 +401,7 @@
     },
     "AGENTS.md": {
       "ownership": "mixed",
-      "sha256": "61cba4e18e1f186ed2ed4fc1ff142d107f8198cd5567aab37ea006478856269d"
+      "sha256": "285343ac90c387104de72eb3c99c78a865823f2240f95dddba1cb38351dc07cf"
     },
     "CLAUDE.md": {
       "ownership": "mixed",
@@ -414,7 +414,7 @@
     },
     "docs/ai/README.md": {
       "ownership": "template",
-      "sha256": "da3491f7856a0fe9dd032f2a0b1a7dfab17eff5d7af35087a8119f7db478b33b"
+      "sha256": "d7247089f5b09fbe27efc63cb86ee27574720e19db442c175aedfce4fc3e4fb4"
     },
     "docs/ai/adapter-generation.md": {
       "ownership": "template",
@@ -434,7 +434,7 @@
     },
     "docs/ai/core-source.json": {
       "ownership": "template",
-      "sha256": "be0921c7f2758b38c4d4f78b51ed51f252cee68b23882e013f952e7a9a289aab"
+      "sha256": "02eba62e4f07b192aab82e9ef29d72e851c756a38142a1a67776c64cda48e02a"
     },
     "docs/ai/decisions/0001-portable-family-core.md": {
       "ownership": "template",
@@ -450,23 +450,23 @@
     },
     "docs/ai/generated/adapters-manifest.json": {
       "ownership": "template",
-      "sha256": "a4f02d57178c77024cc4dd9a28d943d6dc3a12e2bb178aa6fc98afc21fe2ec1d"
+      "sha256": "8dd55485dade1e08d57d602b99b62e100dc23b691be9909cba9da4636dc23397"
     },
     "docs/ai/generated/role-packs/react-developer.md": {
       "ownership": "template",
-      "sha256": "8efd254f56c18683754f9f8aa91690a52d180306e596fa7fc0a67862539106be"
+      "sha256": "166c8c45fde5c943733a67dbc9645a60f5a6b16861aa0e4c7764feebc525959a"
     },
     "docs/ai/generated/role-packs/reviewer.md": {
       "ownership": "template",
-      "sha256": "f989e0380d0bbbb005f6a43624d024273d9b4c34c0e232d48fb3bc37327bb033"
+      "sha256": "5053e2da320f513cc606f50a6209519ed83ead58f18551e1bf4361a9b01f2af9"
     },
     "docs/ai/generated/role-packs/tester.md": {
       "ownership": "template",
-      "sha256": "9275875ef2758346182f49420b1a3b1817fd4ddeba8697c693c18452c13d1a6f"
+      "sha256": "adfe85ff201c031b0b754920205c81fdbc60384562166ae8c3f00aed90ff91a0"
     },
     "docs/ai/generated/role-packs/ui-architect.md": {
       "ownership": "template",
-      "sha256": "a2e86d23594a7d6a32f4b1a76295c9c3fb7299a6d34629cf97bca804488dd877"
+      "sha256": "788be7efac7b865508463a65648f29abff13b7e565a09b46da3122039e5539ee"
     },
     "docs/ai/launchers.md": {
       "ownership": "template",
@@ -498,7 +498,7 @@
     },
     "docs/ai/project-state-migration.md": {
       "ownership": "template",
-      "sha256": "85e6448775e013f5005a148369aa12c2a7a7557c81ac1bc0ebcd24b390cf846c"
+      "sha256": "1eaace66f40fa7a61cfe4cf325a66c2b36199bfd042c3e4e91fae0fed9a42b06"
     },
     "docs/ai/react-runner.md": {
       "ownership": "template",
@@ -566,7 +566,7 @@
     },
     "docs/ai/rules/git-operations.md": {
       "ownership": "template",
-      "sha256": "5e8213a77ab2820f15d35ec83b0e3ea72c6ce582f6946d1dbc5f420e9fed7831"
+      "sha256": "7329330603b1cfbf3c4b2c6beb4c24eae9067e3ac57317e96e10c2064806bfbb"
     },
     "docs/ai/rules/i18n-and-formatting.md": {
       "ownership": "template",
@@ -574,7 +574,7 @@
     },
     "docs/ai/rules/living-plan.md": {
       "ownership": "template",
-      "sha256": "c3bb6e864b420e13cf3efcf5d005838711dea246cd6112b080476931e5a3a4ac"
+      "sha256": "46b02b068cafb42ae88ea9ee48f79389901b616e43b87dd23b2e2f9d7e42d922"
     },
     "docs/ai/rules/mcp-stack.md": {
       "ownership": "template",
@@ -638,11 +638,15 @@
     },
     "docs/ai/runtime-compatibility.md": {
       "ownership": "template",
-      "sha256": "5c415860a5f9d2764b59763f9457890d426b223b0bac3e426cc3f1c90db78f07"
+      "sha256": "1731ecc8e459f8990c1ea50e1212f61d60e5b074852102e83e6d577913fe5f9f"
     },
     "docs/ai/schemas.md": {
       "ownership": "template",
-      "sha256": "0096e8d2b75422cce6cca4c00e3f96025b5eacad0204992cd47572d5f4ddc625"
+      "sha256": "586a7c7932a4b7224461141c4c2705a388ae2bbefe050e4915051f3508977019"
+    },
+    "docs/ai/session-continuity.md": {
+      "ownership": "template",
+      "sha256": "d5dc1461cb2b629a3d3d763d2a4c6c7673b6b64b39a2371dd5af43fd509e1339"
     },
     "docs/ai/workflows/bootstrap.md": {
       "ownership": "template",
@@ -654,7 +658,7 @@
     },
     "docs/ai/workflows/orchestrate.md": {
       "ownership": "template",
-      "sha256": "df386516244702cafcb9668d01b3310e0daa0ca9f6037c65a0041a11684c410e"
+      "sha256": "4a6ec1c5fc4617a214e540f4341d4ab7500881708d0afb24d18aaf3a4de30cc0"
     },
     "docs/ai/workflows/update-from-template.md": {
       "ownership": "template",
@@ -666,7 +670,7 @@
     },
     "docs/ai/workflows/wrap-up.md": {
       "ownership": "template",
-      "sha256": "995c5d116e9e18560978d36d0fdd0a7bf8bc657a67889f669dcf1280fe5b89fa"
+      "sha256": "b157850b4fc9f938f1d2b7915574aeef5b71757ab20b4eb33ea12babb51b5169"
     },
     "scripts/ai/adapters.py": {
       "ownership": "template",
@@ -674,7 +678,7 @@
     },
     "scripts/ai/ci_mode.py": {
       "ownership": "template",
-      "sha256": "7de7e1b202ac04d07228aaa97f4c88d9d81e172250e2a974dba600f1d70d535c"
+      "sha256": "9d3c95a5c51a06d79faeba9367e0e7ed0f8acee5828837bde29ed485bdafd318"
     },
     "scripts/ai/contract_policy.py": {
       "ownership": "template",
@@ -682,7 +686,7 @@
     },
     "scripts/ai/core_paths.py": {
       "ownership": "template",
-      "sha256": "4981e75a8737c49e5fd2ee26d17cd09173f374751767b4656048b792a3003773"
+      "sha256": "5a54248283648face770a5a4b12af16e55bd77baedf9add4beac8689a73e84ae"
     },
     "scripts/ai/core_sync.py": {
       "ownership": "template",
@@ -694,7 +698,7 @@
     },
     "scripts/ai/generate.py": {
       "ownership": "template",
-      "sha256": "89f2ff35cf2cce372f52db4b64eb5179687ec5615483e795894486bbd003e802"
+      "sha256": "02944520a609914e68402a818d220ebb844a05d022140cac07992ef01929e6cb"
     },
     "scripts/ai/generate_adapters.py": {
       "ownership": "template",
@@ -758,7 +762,11 @@
     },
     "scripts/ai/schema.py": {
       "ownership": "template",
-      "sha256": "067c08b0e2a69c8ea285d226be9adbc2b8150f9fb11883489a18908a82c2b046"
+      "sha256": "d95efdd34565129a77efa1c1870d2a776a657b9edcacbbbd402c75aa5fa9d075"
+    },
+    "scripts/ai/session_context.py": {
+      "ownership": "template",
+      "sha256": "100880347b1a47baca2becf8b63473f196d3549437fb465a45745b793a81ffe2"
     },
     "scripts/ai/test_delivery.py": {
       "ownership": "template",
@@ -766,7 +774,7 @@
     },
     "scripts/ai/test_family_delivery.py": {
       "ownership": "template",
-      "sha256": "f54d2c1a9f5d4b39ca84632da04aab3bbe20535cdfa2f02339f5fdf85d732f84"
+      "sha256": "f35dc516322ea45c33389fae738f14c384d93574a6b0b0656f87f97f27846297"
     },
     "scripts/ai/test_git_hooks.py": {
       "ownership": "template",
@@ -856,7 +864,7 @@
     },
     "scripts/session-start.mjs": {
       "ownership": "template",
-      "sha256": "820784c62314d4bfd644c4e643db5eb7edb677df9d8ab380e00bc26909a747b3"
+      "sha256": "973ca8cd6974d362305f137ae3e786247e638e411825e6973d983844ebd95444"
     },
     "scripts/session-start.sh": {
       "ownership": "template",
@@ -964,7 +972,7 @@
     },
     "templates/ai/seed-inputs.json": {
       "ownership": "template",
-      "sha256": "4d3dd4c8393475ef5a452fd89106c004906c16d52940e5cfcdb3833b0ad9fca8"
+      "sha256": "a4ba45f711cbef598c8fbe852dc6bd5e38a648e8191a44e582b8fdf8be3eb1a8"
     },
     "templates/api_CONTRACT_ISSUES.md": {
       "ownership": "template",

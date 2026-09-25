@@ -59,10 +59,13 @@ ref with the exact runner. New branches require a current tracking ref for
 remote `main`; release tags use a separate procedure. Local hooks are
 bypassable and do not replace remote policy.
 
-Claude `SessionStart` runs the explicit `scripts/detect-env.mjs` probe with Node
-and exposes failure. It does not remove Git locks,
+Claude `SessionStart` (`scripts/session-start.mjs`) runs the shared detector and
+the `scripts/detect-env.mjs` probe, exposes failure, and prints the session
+context (`scripts/ai/session_context.py`; Codex runs the same command from
+AGENTS.md). It does not remove Git locks,
 seed `.env`, install dependencies, or start services. There is no automatic
-Stop/SessionEnd formatter, push, or merge; close with an explicit handoff.
+Stop/SessionEnd formatter, push, or merge; close with an explicit wrap-up that
+writes a `docs/sessions/` record (session-continuity.md).
 An interrupted session may not run an end hook. Codex has no verified trusted
 tool-hook equivalent in this pilot. Runtime tool hooks provide early policy
 feedback only and do not cover arbitrary shell writes. The Claude PreToolUse

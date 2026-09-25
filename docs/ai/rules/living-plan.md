@@ -1,6 +1,6 @@
 # Living plan (agents keep `docs/plans/NNNN-*.md` current as work runs)
 
-A plan is a **living artifact**, not a frozen Plan-Mode snapshot. The orchestrator seeds `docs/plans/NNNN-<slug>.md` at the start of a non-trivial task, and the work's actual course flows back into it — confirmations of what ran, and changes of direction — instead of the plan drifting from reality and duplicating WORKLOG. This stays within Simplicity First (docs/ai/rules/code-style.md) and Surgical Changes (docs/ai/rules/surgical-changes.md): no new tooling, just discipline + one template (`templates/plan.md`) + this rule.
+A plan is a **living artifact**, not a frozen Plan-Mode snapshot. The orchestrator seeds `docs/plans/NNNN-<slug>.md` at the start of a non-trivial task, and the work's actual course flows back into it — confirmations of what ran, and changes of direction — instead of the plan drifting from reality and duplicating the session record. This stays within Simplicity First (docs/ai/rules/code-style.md) and Surgical Changes (docs/ai/rules/surgical-changes.md): no new tooling, just discipline + one template (`templates/plan.md`) + this rule.
 
 ## When a plan is seeded
 
@@ -21,9 +21,9 @@ Each `docs/plans/NNNN-*.md` carries three managed sections on top of the ordinar
 - **Executor agents** (`ba`, `ui-architect`, `react-developer`, `tester`, `docs-writer`) — after finishing their phase, **append** a one-line confirmation to the active plan's Execution log (via `Edit` append, never a full-file rewrite).
 - **Gate agents** (`reviewer`, `security-scanner`, `state-architect`) — do NOT edit the plan; they stay read-only over both code and plan. They **report the gate result to the orchestrator**, which records the Execution log entry. This preserves the "gate agents only read and report" invariant.
 
-## Boundary with WORKLOG
+## Boundary with session records
 
-**Execution log ≠ WORKLOG.** The Execution log is an in-plan journal of confirmations during one task. `docs/WORKLOG.md` is the cross-session chronicle, single owner `/wrap-up`. They do not duplicate: the plan records the course of one task, WORKLOG the session summary.
+**Execution log ≠ session record.** The Execution log is an in-plan journal of confirmations during one task. The session record (`docs/sessions/`, one file per session, single owner `/wrap-up`) is the cross-session summary; `docs/WORKLOG.md` is the earlier chronicle. They do not duplicate: the plan records the course of one task, the record the session summary.
 
 ## Binds these agents (rule is auto-loaded)
 
@@ -37,4 +37,4 @@ Each `docs/plans/NNNN-*.md` carries three managed sections on top of the ordinar
 ## Out of scope (v1)
 - A machine-readable Status format (JSON) — markdown tables suffice for now (Simplicity First).
 
-> Goal: at any point in a non-trivial task, the plan shows where we are (Status), what has actually run (Execution log), and why decisions changed (Amendments) — without drifting from reality or duplicating WORKLOG.
+> Goal: at any point in a non-trivial task, the plan shows where we are (Status), what has actually run (Execution log), and why decisions changed (Amendments) — without drifting from reality or duplicating the session record.

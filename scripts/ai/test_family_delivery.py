@@ -7,7 +7,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
-from ci_mode import workflow
+from ci_mode import DOCUMENTATION, workflow
 
 ROOT = Path(__file__).resolve().parents[2]
 SPEC = importlib.util.spec_from_file_location("family_delivery", Path(__file__).with_name("install.py"))
@@ -73,7 +73,7 @@ class FamilyDeliveryTests(unittest.TestCase):
         receipt = json.loads((self.target / "docs/ai/core-source.json").read_text(encoding="utf-8"))
         # Tymczasowy pin deweloperski na rewizję P07 core (feat/p07-shared-memory);
         # po scaleniu contract PR wrócić do integrated pin i observed_upstream_main.
-        self.assertEqual(receipt["source_commit"], "0e3f4cdf9e9b7cc1197636cd0fe2ba0f9dfdecba")
+        self.assertEqual(receipt["source_commit"], "6fb703abdced3f1f5c1f9c626e95ad924f5a2a5b")
         self.assertEqual(receipt["pin_status"], "development")
         self.assertNotIn("observed_upstream_main", receipt)
         for name in ("scripts/ai/launch.ps1", "scripts/ai/launch.sh", "templates/ai/schemas/catalog.schema.json",
@@ -162,8 +162,14 @@ class FamilyDeliveryTests(unittest.TestCase):
         starter = (self.target / "scripts/session-start.mjs").read_text(encoding="utf-8")
         self.assertIn("'--write'", starter)
         self.assertIn("detect-env.mjs", starter)
+        self.assertIn("session_context.py", starter)
         self.assertTrue((self.target / "scripts/runtime-state.mjs").is_file())
-        for name in (".env", ".claude/memory", "docs/project-state/routes.json", ".ai-runtime", "docs/HANDOFF.md", "src", "package.json"):
+        self.assertTrue((self.target / "scripts/ai/session_context.py").is_file())
+        self.assertTrue((self.target / "docs/ai/session-continuity.md").is_file())
+        project = json.loads((self.target / "docs/project-state/project.json").read_text(encoding="utf-8"))
+        self.assertEqual(project["documentation"], DOCUMENTATION)
+        for name in (".env", ".claude/memory", "docs/project-state/routes.json", ".ai-runtime", "docs/HANDOFF.md",
+                     "docs/sessions", "src", "package.json"):
             self.assertFalse((self.target / name).exists(), name)
 
     def test_custom_entrypoint_blocks_apply_before_any_other_writes(self):

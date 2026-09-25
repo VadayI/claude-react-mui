@@ -1,8 +1,10 @@
 # Shared project instructions
 
-This React/MUI frontend consumes the external pinned OpenAPI contract. Read
-`docs/HANDOFF.md`, Git status/branch/HEAD and the relevant plan before work;
-reconcile a stale handoff with Git rather than assuming it is current.
+This React/MUI frontend consumes the external pinned OpenAPI contract. Start with
+`python scripts/ai/session_context.py --root .` (branch/HEAD, project settings,
+documentation map, latest session record with checks and next step; no
+`.ai-runtime` needed), then read `docs/HANDOFF.md` and the relevant plan;
+reconcile a stale handoff with the listed diff rather than assuming it is current.
 Respect the user's chosen language and existing authorization.
 
 ## Roles and rule loading
@@ -55,14 +57,18 @@ Claude model names into Codex names.
 
 Read `docs/ai/workflows/doctor.md` for environment inspection, `verify.md` for
 checks/manual guides, and `wrap-up.md` for finalization. Shared project memory is
-`docs/HANDOFF.md`, `docs/WORKLOG.md`, plans and versioned registries; private chat
-history/auto-memory is not synchronized. Persistent legacy paths remain in use
-until the explicit P07 migration; never create competing writable registries.
+the documentation map (docs/ai/session-continuity.md): `docs/HANDOFF.md`, session
+records in `docs/sessions/` (`docs/WORKLOG.md` is earlier history), plans and
+registries in `docs/project-state/`; legacy `.claude/memory` copies are read until
+`python scripts/ai/project_state.py --root . --apply` migrates them. Private chat
+history/auto-memory is not synchronized: move durable facts into those documents.
+Never create competing writable registries.
 
 Delivered so far: canonical rules and generated adapters (P02), the vendored
 family core with schemas and launchers (P04), the exact-candidate detector/runner
-(P05), explicit CI mode, owned workflow materialization and Git/tool hooks (P06).
-Not delivered yet: shared project state migration (P07), the G0–G9 Git lifecycle
-(P08), onboarding and readiness roles (P10/P11) and family acceptance (P13).
+(P05), explicit CI mode, owned workflow materialization and Git/tool hooks (P06);
+P07 adds the project-state resolver/migration and session continuity. Not
+delivered yet: the G0–G9 Git lifecycle (P08), onboarding and readiness roles
+(P10/P11) and family acceptance (P13).
 `docs/ai/compatibility.md` and `docs/ai/pilot-report.md` record the measured
 pilot; existence or parsing of an adapter is not runtime proof.

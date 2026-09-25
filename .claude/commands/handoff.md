@@ -25,7 +25,7 @@ gh pr list --state open
 
 Also read:
 
-- `docs/WORKLOG.md` (last 20 lines).
+- `python scripts/ai/session_context.py --root .` (documentation map, latest `docs/sessions/` record, snapshot diff); `docs/WORKLOG.md` only for earlier history.
 - `.ai-runtime/command-log.jsonl` (last 10 entries).
 - `docs/plans/` (any in-progress plans).
 

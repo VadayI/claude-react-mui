@@ -751,7 +751,7 @@ Per form: schema unit tests (valid / each invalid case); RTL tests that submit i
 <!-- END SOURCE docs/ai/rules/forms-and-validation.md -->
 
 
-<!-- SOURCE docs/ai/rules/git-operations.md SHA256 5e8213a77ab2820f15d35ec83b0e3ea72c6ce582f6946d1dbc5f420e9fed7831 -->
+<!-- SOURCE docs/ai/rules/git-operations.md SHA256 7329330603b1cfbf3c4b2c6beb4c24eae9067e3ac57317e96e10c2064806bfbb -->
 
 # Git operations
 
@@ -817,7 +817,7 @@ Edge cases, risks, next steps.
 
 ## Context sync between machines
 
-At the end of a session, update and commit: `docs/WORKLOG.md`, and if needed `docs/project-state/*` and ADRs `docs/decisions/NNNN-*.md`. This is how the work history travels between computers via a plain `git pull`.
+At the end of a session, update and commit: the session record in `docs/sessions/` (`python scripts/ai/session_context.py --root . --new-record --agent <runtime>`; one file per session, so parallel sessions merge without conflicts), `docs/HANDOFF.md` (merged by content, never `merge=union`), and if needed `docs/project-state/*` and ADRs `docs/decisions/NNNN-*.md`. `docs/WORKLOG.md` remains the earlier history. This is how the work history travels between computers and agents via a plain `git pull`; `python scripts/ai/session_context.py --root . --check` must PASS after the commit (docs/ai/session-continuity.md).
 
 ## Prohibitions
 
@@ -882,11 +882,11 @@ Render a component under at least **two locales** (default + one other, ideally 
 <!-- END SOURCE docs/ai/rules/i18n-and-formatting.md -->
 
 
-<!-- SOURCE docs/ai/rules/living-plan.md SHA256 c3bb6e864b420e13cf3efcf5d005838711dea246cd6112b080476931e5a3a4ac -->
+<!-- SOURCE docs/ai/rules/living-plan.md SHA256 46b02b068cafb42ae88ea9ee48f79389901b616e43b87dd23b2e2f9d7e42d922 -->
 
 # Living plan (agents keep `docs/plans/NNNN-*.md` current as work runs)
 
-A plan is a **living artifact**, not a frozen Plan-Mode snapshot. The orchestrator seeds `docs/plans/NNNN-<slug>.md` at the start of a non-trivial task, and the work's actual course flows back into it — confirmations of what ran, and changes of direction — instead of the plan drifting from reality and duplicating WORKLOG. This stays within Simplicity First (docs/ai/rules/code-style.md) and Surgical Changes (docs/ai/rules/surgical-changes.md): no new tooling, just discipline + one template (`templates/plan.md`) + this rule.
+A plan is a **living artifact**, not a frozen Plan-Mode snapshot. The orchestrator seeds `docs/plans/NNNN-<slug>.md` at the start of a non-trivial task, and the work's actual course flows back into it — confirmations of what ran, and changes of direction — instead of the plan drifting from reality and duplicating the session record. This stays within Simplicity First (docs/ai/rules/code-style.md) and Surgical Changes (docs/ai/rules/surgical-changes.md): no new tooling, just discipline + one template (`templates/plan.md`) + this rule.
 
 ## When a plan is seeded
 
@@ -907,9 +907,9 @@ Each `docs/plans/NNNN-*.md` carries three managed sections on top of the ordinar
 - **Executor agents** (`ba`, `ui-architect`, `react-developer`, `tester`, `docs-writer`) — after finishing their phase, **append** a one-line confirmation to the active plan's Execution log (via `Edit` append, never a full-file rewrite).
 - **Gate agents** (`reviewer`, `security-scanner`, `state-architect`) — do NOT edit the plan; they stay read-only over both code and plan. They **report the gate result to the orchestrator**, which records the Execution log entry. This preserves the "gate agents only read and report" invariant.
 
-## Boundary with WORKLOG
+## Boundary with session records
 
-**Execution log ≠ WORKLOG.** The Execution log is an in-plan journal of confirmations during one task. `docs/WORKLOG.md` is the cross-session chronicle, single owner `/wrap-up`. They do not duplicate: the plan records the course of one task, WORKLOG the session summary.
+**Execution log ≠ session record.** The Execution log is an in-plan journal of confirmations during one task. The session record (`docs/sessions/`, one file per session, single owner `/wrap-up`) is the cross-session summary; `docs/WORKLOG.md` is the earlier chronicle. They do not duplicate: the plan records the course of one task, the record the session summary.
 
 ## Binds these agents (rule is auto-loaded)
 
@@ -923,7 +923,7 @@ Each `docs/plans/NNNN-*.md` carries three managed sections on top of the ordinar
 ## Out of scope (v1)
 - A machine-readable Status format (JSON) — markdown tables suffice for now (Simplicity First).
 
-> Goal: at any point in a non-trivial task, the plan shows where we are (Status), what has actually run (Execution log), and why decisions changed (Amendments) — without drifting from reality or duplicating WORKLOG.
+> Goal: at any point in a non-trivial task, the plan shows where we are (Status), what has actually run (Execution log), and why decisions changed (Amendments) — without drifting from reality or duplicating the session record.
 
 <!-- END SOURCE docs/ai/rules/living-plan.md -->
 

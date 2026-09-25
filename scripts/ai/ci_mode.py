@@ -8,6 +8,12 @@ WORKFLOW = ".github/workflows/frontend-ci.yml"
 TEMPLATE = "templates/.github/workflows/frontend-ci.yml"
 RECEIPT = "docs/ai/ci-workflow-receipt.json"
 PROJECT = "docs/project-state/project.json"
+# Jawna mapa ról dokumentacji nowego projektu React (docs/ai/session-continuity.md).
+DOCUMENTATION = {"readme": "README.md", "project": "docs/PROJECT.md",
+                 "architecture": "docs/ai/rules/architecture.md",
+                 "decisions": "docs/decisions", "handoff": "docs/HANDOFF.md",
+                 "sessions": "docs/sessions", "backlog": "docs/todo.md",
+                 "lessons": "docs/lessons.md", "worklog": "docs/WORKLOG.md"}
 
 
 def sha256(content: str) -> str:
@@ -61,6 +67,8 @@ def project_config(target: Path, mode: str) -> tuple[str, bool]:
     Raises: ValueError for malformed existing configuration or invalid mode.
     Side effects: Reads project.json if present; no writes, DB, or network.
     Business rule: An existing CI choice changes only with an explicit mode.
+        A fresh file names the actual documentation paths; an existing map,
+        even an empty one, is kept.
     """
     if mode not in {"local", "github"}:
         raise ValueError("CI mode must be local or github")
@@ -76,7 +84,7 @@ def project_config(target: Path, mode: str) -> tuple[str, bool]:
                   "orchestration": {"coordinator_read": "reported_files_only"},
                   "maturity": {"stage": "experiment"},
                   "contract": {"source": "repo_pin", "artifact": "src/lib/api/openapi.yml"},
-                  "documentation": {}, "features": [], "deployment": {}}
+                  "documentation": dict(DOCUMENTATION), "features": [], "deployment": {}}
         changed = False
     config["ci"]["execution"] = mode
     return json.dumps(config, indent=2, sort_keys=True) + "\n", changed

@@ -6,9 +6,12 @@
  *   1. wspólny detektor rodziny  — python scripts/ai/detector.py --write
  *      → .ai-runtime/environment.json (NOT_VERIFIED, gdy brak Pythona 3.13+);
  *   2. probe stacku React        — node scripts/detect-env.mjs
- *      → .ai-runtime/env-detect.json.
- * Kod wyjścia: 0 tylko gdy obie sondy się powiodły; nieudana sonda jest
- * widoczna, nigdy nie udaje zielonej sesji.
+ *      → .ai-runtime/env-detect.json;
+ *   3. kontekst sesji            — python scripts/ai/session_context.py
+ *      (Git, ustawienia, mapa dokumentacji, ostatni rekord sesji; bez .ai-runtime).
+ * Kod wyjścia: 0 tylko gdy wszystkie kroki się powiodły; nieudana sonda jest
+ * widoczna, nigdy nie udaje zielonej sesji. Ustalenia ciągłości (np. brak
+ * rekordu sesji) nie psują startu — tylko błędna mapa lub ustawienia.
  */
 
 import { spawnSync } from 'node:child_process'
@@ -18,6 +21,7 @@ import { fileURLToPath } from 'node:url'
 const scriptDir = dirname(fileURLToPath(import.meta.url))
 const root = join(scriptDir, '..')
 let status = 0
+let pythonOk = false
 
 // Wspólny detektor: AI_PYTHON albo python z PATH; wersja < 3.13 = NOT_VERIFIED.
 const python = process.env.AI_PYTHON || 'python'
@@ -30,6 +34,7 @@ if (versionProbe.error || versionProbe.status !== 0) {
   console.error('[session-start] NOT_VERIFIED: Python 3.13+ (AI_PYTHON) is required for the shared detector.')
   status = 1
 } else {
+  pythonOk = true
   const detector = spawnSync(
     python,
     [join(root, 'scripts', 'ai', 'detector.py'), '--repository', root, '--write'],
@@ -47,5 +52,18 @@ const probe = spawnSync(process.execPath, [join(scriptDir, 'detect-env.mjs')], {
   timeout: 60000,
 })
 if (probe.error || probe.status !== 0) status = 1
+
+// Kontekst sesji dla każdego agenta (Claude hook; Codex uruchamia to samo z AGENTS.md).
+if (pythonOk) {
+  const context = spawnSync(
+    python,
+    [join(root, 'scripts', 'ai', 'session_context.py'), '--root', root],
+    { stdio: 'inherit', timeout: 60000 },
+  )
+  if (context.error || context.status !== 0) {
+    console.error('[session-start] NOT_VERIFIED: session context unavailable (invalid documentation map or settings).')
+    status = 1
+  }
+}
 
 process.exit(status)
