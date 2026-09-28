@@ -115,7 +115,7 @@
     },
     ".claude/commands/audit.md": {
       "ownership": "template",
-      "sha256": "8ec34bd731cd0e00f7fdffb810d988c7384cee16a975b215b164a299c66957b1"
+      "sha256": "d519e683a8c6b0f54e7e982ebf62d874461dfd788e832450544a7463b0800783"
     },
     ".claude/commands/bootstrap.md": {
       "legacy_sha256": "61b7f5783650828d649db43973a59b4d4ff31196ae72a77959f8e12aa74c0154",

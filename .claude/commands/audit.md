@@ -5,6 +5,26 @@ argument-hint: "[git | project | workflow]"
 
 Workflow audit via `auditor`: reads `.ai-runtime/command-log.jsonl` plus live git and project state, reports what has been done, and suggests the next command. Takes an optional scope as `$ARGUMENTS` (git | project | workflow).
 
+## First: sync preflight
+
+Before anything else, check that previous changes are committed and synchronized with GitHub:
+
+```bash
+python scripts/ai/git_lifecycle.py --json inspect --fetch
+```
+
+Synchronized means: no staged, unstaged or untracked paths in `working_tree`;
+`head` equals the branch's remote-tracking tip (`remote_tracking`, or
+`base_refs.remote_tracking` on the base branch); no blockers; PR evidence
+`VERIFIED`. Anything else (for example `LOCAL_CHANGES`, `COMMITTED_UNPUSHED`,
+`BEHIND_REMOTE`, `DIVERGED`, `LOCAL_COMMITS_ON_BASE`, `PR_HEAD_MISMATCH`,
+`NOT_VERIFIED`, a pending cleanup) is reported as the first finding with the
+exact paths, commits and next step. Then ask the user whether to finalize first
+(`/wrap-up`: commit, push, PR) or audit the current state anyway. The audit
+itself never commits, pushes, pulls or cleans; the fetch only updates
+remote-tracking refs. Unavailable gh or network is `NOT_VERIFIED`, never
+synchronized.
+
 ## Log
 
 ```bash
@@ -77,4 +97,4 @@ Print a structured audit report:
 
 Suggested next commands are chosen from: `/doctor`, `/bootstrap`, `/preflight`, `/create-pr`, `/fix-ci`, `/wrap-up`, `/verify`, `/guides`, `/update-docs`, or the standard feature pipeline start (`ba` dispatch).
 
-<!-- last reviewed: 2026-06-02 -->
+<!-- last reviewed: 2026-09-28 (sync preflight via git_lifecycle.py inspect --fetch) -->
