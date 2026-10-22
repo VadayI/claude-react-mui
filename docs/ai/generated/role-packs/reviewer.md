@@ -501,7 +501,7 @@ Before adding a package, weigh and record (in the PR) the following — a heavy 
 <!-- END SOURCE docs/ai/rules/dependencies-and-supply-chain.md -->
 
 
-<!-- SOURCE docs/ai/rules/design-reference.md SHA256 cb14305c945a1893b7e1d32c5b6c4eeb16c3566c93dcfa8f1e9d171d573001c9 -->
+<!-- SOURCE docs/ai/rules/design-reference.md SHA256 9d53f473f55aa023040a9d6b52221ac4496f1bf45f5352e0bc566e124c840b00 -->
 
 # Design reference — the design is the UI source of truth, translated to our stack
 
@@ -560,6 +560,18 @@ How strictly the design is reproduced is a **per-project decision**, asked at th
 
 The level scales each agent's work: `ui-architect` maps to the theme / component tree at the chosen strictness; `react-developer` matches values to that tolerance (L1/L2 → measured/exact, L3 → close, L4 → loose); `reviewer` judges divergence against the level. A level that needs a running design (L1) but has no reachable URL is downgraded to L2 with a recorded deviation.
 
+## Screenshot comparison loop (L1/L2 — full replication of the demo)
+
+When the project chose **full replication of the demo design** (fidelity **L1** or **L2**), every agent that implements or refactors a UI block (`react-developer`, `react-refactoring-expert`, `integration-architect` for styled widgets) must **compare screenshots of the demo and of the current version** and bring the result **as close to the demo as possible** before reporting the block done. Describing the match from memory or from code is not evidence.
+
+1. **Open both sides with the Playwright MCP** (`docs/ai/rules/mcp-stack.md`): the demo — the running design URL, or the static prototype served locally (e.g. `npx --yes serve docs/design/<name>`; never edit it) — and the current app (`npm run dev`).
+2. **Same conditions on both sides:** the same screen/route, viewport (at least the desktop width used by the design, plus mobile when the design has one), data state and interaction state (hover/open/error when the block has them). Mock data via MSW to match the demo's content where possible.
+3. **Capture** `browser_take_screenshot` of the block (element screenshot when possible, otherwise full page) on both sides into `.ai-runtime/design-compare/<feature>/<block>/` as `demo-<viewport>.png` and `app-<viewport>.png` (gitignored runtime evidence, not committed).
+4. **Compare and iterate:** look at both images side by side, list every visible difference (layout, spacing, size, colour, typography, radius, shadow, icon, copy), fix them in-stack (theme / `sx` / component tree — the translation mandate still applies) and re-capture. For L1 also confirm key values with `browser_evaluate` (`getComputedStyle`). Repeat until no fixable difference remains.
+5. **Report:** the agent's report lists the compared screens/viewports, the final screenshot paths and every remaining difference with its reason. A difference that cannot be fixed (a11y, component contract, technical limit) is recorded as a deviation (section below); an unexplained remaining difference means the block is **not done**.
+
+`reviewer` treats a missing comparison (no screenshot pair or no list of remaining differences) for an L1/L2 UI block as 🟡 Important. If the demo is unreachable, the agent records `NOT_VERIFIED: design comparison` with the reason instead of claiming a match. At L3/L4 the loop is optional.
+
 ## Authority and priority order (when conflicts arise)
 
 The design reference is a **very strong source of truth**, but accessibility and the component contract outrank it:
@@ -594,13 +606,13 @@ The translation mandate and the fidelity level bind **every design-touching agen
 
 - `brief-synthesizer` — reads the static folder and/or opens the running design URL; extracts token summary, component inventory, screen list, and API assumptions **as MUI-theme / stack intent**; records the design source(s), URL, fidelity level, and the **Design reference** + **Design deviations** sections in `docs/PROJECT.md`.
 - `ui-architect` — maps tokens → MUI theme entries and screens → route/component tree at the chosen fidelity; opens the running design to inspect screens when a URL is set; records routes and any new conflict-resolution deviation.
-- `react-developer` — implements through the MUI theme + components, never copying prototype styles; at L1/L2 matches measured/exact values (opening the running design to compare), at L3/L4 reproduces close/loose; flags new deviations.
+- `react-developer` — implements through the MUI theme + components, never copying prototype styles; at L1/L2 matches measured/exact values and runs the **screenshot comparison loop** for every block, at L3/L4 reproduces close/loose; flags new deviations.
 - `domain-architect` — designs the feature-sliced structure for complex UIs from the design, in-stack.
 - `react-refactoring-expert` — keeps the design realized in-stack (theme + components) under green tests; no off-theme literals introduced by a refactor.
 - `integration-architect` — styles third-party / SSO / payment widgets to the central MUI theme so they match the design.
 - `a11y-auditor` — ensures the accessible realization (which wins over the design) stays in-stack; records the deviation.
 - `qa` — visual-regression checks run against the **built MUI app**, not the prototype; the design is the intent, the app is the artifact.
-- `reviewer` — blocks UI code that diverges from the design without a recorded deviation, ports prototype implementation verbatim, or uses magic values outside the theme. A visual gap not in the deviation list is 🟡 Important.
+- `reviewer` — blocks UI code that diverges from the design without a recorded deviation, ports prototype implementation verbatim, or uses magic values outside the theme. A visual gap not in the deviation list — or, at L1/L2, a block without screenshot-comparison evidence — is 🟡 Important.
 - `docs-writer` / `guide-writer` — describe screens in terms of real routes/components and the theme, not prototype files.
 
 > Goal: the design is a first-class input — opened (folder and/or live URL), reproduced at the agreed fidelity level, and always **translated into MUI + TypeScript + the project stack** — transparently deviated from when accessibility, contract, or user intent demands, and never silently ignored or ported verbatim.

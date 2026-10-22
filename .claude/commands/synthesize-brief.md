@@ -44,7 +44,7 @@ Options (adapt based on what was found — one option per detected candidate, pl
 - **Running design at a URL** — the design is served live (e.g. `http://localhost:8331/`); the user provides the URL so agents can open it in a browser (Playwright MCP) and inspect the real render
 - **No design reference** — proceed with MUI defaults and the written brief
 
-Whatever the source, also ask the **fidelity / transfer level** (how exactly to reproduce the design — see `@.claude/rules/design-reference.md`): **L1** browser-measured pixel-perfect (needs a running URL), **L2** pixel-perfect from tokens/spec, **L3** close MUI adaptation (**default**), **L4** inspiration.
+Whatever the source, also ask the **fidelity / transfer level** (how exactly to reproduce the design — see `@.claude/rules/design-reference.md`): **L1** browser-measured pixel-perfect (needs a running URL), **L2** pixel-perfect from tokens/spec, **L3** close MUI adaptation (**default**), **L4** inspiration. L1/L2 mean full replication of the demo: implementing agents must then compare screenshots of the demo and the current version for every block (`design-reference.md` § Screenshot comparison loop), so record a reachable demo URL or a servable prototype folder.
 
 If the user **confirms** a design reference:
 
