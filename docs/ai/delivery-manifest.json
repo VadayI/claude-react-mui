@@ -309,7 +309,7 @@
     },
     ".claude/settings.json": {
       "ownership": "mixed",
-      "sha256": "225f8999117133f2406fa9b568e2e17f3c3468c9f7487d4acd418ee94abf7427"
+      "sha256": "b13f41a028a6ef87b2a661abf8f53951858793f20198ab0cd1fc025bbd9ebed4"
     },
     ".claude/skills/accessibility-reviewer/SKILL.md": {
       "ownership": "template",
