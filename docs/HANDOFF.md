@@ -1,3 +1,11 @@
+## 2026-10-22 — P08a WSL/ext4, D12 and the D17 working-directory gate
+
+Branch `chore/p08a-wsl-tests` from `main`. Nothing is merged (D01). Core: development pin on contract `de5f0c4`.
+
+- ADR 0030 supersedes ADR 0009: the clone lives in WSL ext4; agent sessions on `/mnt` are blocked without `ALLOW_MNT_SESSION=1`. `.dockerignore`; agents run targeted Vitest/Playwright only (D12).
+- This session: `docs/sessions/20261022T203840Z-claude-8cd00b.md`.
+- Next: merge contract, repin to the integrated core, merge on command.
+
 ## 2026-10-22 — Q01 quick fixes
 
 Branch `chore/q01-quick-fixes` from `main`. Nothing is merged (D01).
