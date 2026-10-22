@@ -12,8 +12,13 @@ Existing user authorization applies to separately requested remediation.
 - Native Windows uses PowerShell and explicit Git Bash for Bash gate scripts.
   Do not accidentally invoke the WSL launcher named `bash`. Linux uses native
   tools. WSL/macOS support is NOT_VERIFIED unless actually exercised.
-- Paths may include spaces, Unicode and Windows drive mounts. Do not suggest
-  relocating a project merely because it lives on a mounted drive.
+- Paths may include spaces and Unicode. In WSL the clone lives in ext4
+  (`~/src/<repo>`, ADR 0030, supersedes 0009): a Windows drive (`/mnt/c`, `/mnt/d`,
+  9P/drvfs) blocks agent sessions without `ALLOW_MNT_SESSION=1` (D17). Doctor reports
+  such a location ⚠️ with the move checklist (`docs/ai/wsl-ext4-migration.md`) and the
+  heuristic: `time ls -R . >/dev/null` versus a clone in `~/src` (10–50×), and
+  `docker stats` during tests (CPU far below 100 % × cores = waiting for disk).
+  Native Windows (NTFS, no 9P) is a separate supported runner (ADR 0028).
 - Record Git, gh, selected agent CLI, shell and runtime versions. Claude is not
   required for Codex operation, nor Codex for Claude operation.
 - Playwright browser availability is needed for E2E. Installation is a separate

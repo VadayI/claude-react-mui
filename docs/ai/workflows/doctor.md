@@ -20,6 +20,12 @@ Run `node scripts/detect-env.mjs` explicitly for the current legacy detector;
 record its exit and limitations (PowerShell can report no MSYSTEM despite installed
 Git Bash). Do not fabricate or repair detector JSON. P05 replaces this legacy path.
 
+Working directory: `python scripts/ai/workdir.py --json` and
+`working_dir_on_windows_mount` in `.ai-runtime/env-detect.json`. ext4 or a native
+path → ✅; a Windows drive in WSL (reached only with `ALLOW_MNT_SESSION=1`) → ⚠️ with
+the move checklist from `docs/ai/wsl-ext4-migration.md` and the `time ls -R` /
+`docker stats` heuristic (ADR 0030). Never report a Windows drive in WSL as ✅.
+
 Inspect package/lock presence, types/gates, browser prerequisites, docs and selected
 contract source. Inspect GitHub authentication/repo/rules only through available
 authenticated tooling; never print credential values. Missing gh/remote means

@@ -15,7 +15,7 @@ This config is designed for **Claude Code CLI** (the terminal `claude` command) 
 
 - **Linux** native,
 - **macOS** native (bash or zsh),
-- **WSL2 Ubuntu** on Windows,
+- **WSL2 Ubuntu** on Windows — with the clone in the WSL filesystem (`~/src/<repo>`, ext4), not on a Windows drive: on `/mnt/c`/`/mnt/d` Vite, Vitest and `node_modules` go through the 9P bridge (10–50× slower) and agent sessions are blocked without `ALLOW_MNT_SESSION=1` (ADR 0030; move checklist: `docs/ai/wsl-ext4-migration.md`),
 - **native Windows** via **Git Bash** (Git for Windows — see `docs/decisions/0028-support-native-windows-git-bash.md`, amending `0005`).
 
 The single shell dialect is **bash** — on native Windows that bash is Git Bash, which the Claude Code CLI also uses for its Bash tool. **Not supported:** Windows PowerShell/cmd *alone* (the SessionStart hook and gate scripts are bash). The hook writes `.ai-runtime/env-detect.json`; if it reports `platform_supported: false` (e.g. Windows with no Git Bash), `/doctor` hard-stops with `UNSUPPORTED_PLATFORM`. The **sandboxed** Bash tool is available on Linux/macOS/WSL2 only, not native Windows.
@@ -211,7 +211,7 @@ Start a new frontend by using this repo as a GitHub template (or `/bootstrap` in
 
 ## Architecture decisions
 
-See `docs/decisions/` (ADRs 0001–0029): the frontend double-loop TDD boundary, Node-based env detection, the bootstrap/resume command, bash-only shell (native Windows via Git Bash — ADR 0028), frontend-as-separate-repo, manual repo + fine-grained PAT, `/mnt` working-dir support, the config baseline, the 800-line file-size limit, template sync, the React + MUI + TanStack Query + Zustand stack, mandatory accessibility, the server-vs-client state split, the default Bearer/JWT auth mode, the dependency upgrade policy, the external contract repo model (Variant A), and the v0.2.0 contract pin with the auth-path rename.
+See `docs/decisions/` (ADRs 0001–0030): the frontend double-loop TDD boundary, Node-based env detection, the bootstrap/resume command, bash-only shell (native Windows via Git Bash — ADR 0028), frontend-as-separate-repo, manual repo + fine-grained PAT, `/mnt` working-dir support, the config baseline, the 800-line file-size limit, template sync, the React + MUI + TanStack Query + Zustand stack, mandatory accessibility, the server-vs-client state split, the default Bearer/JWT auth mode, the dependency upgrade policy, the external contract repo model (Variant A), and the v0.2.0 contract pin with the auth-path rename.
 
 ## Portable seed and translations
 

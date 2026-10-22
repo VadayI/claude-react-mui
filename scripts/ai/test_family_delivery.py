@@ -72,7 +72,7 @@ class FamilyDeliveryTests(unittest.TestCase):
         self.assertEqual(report["repository"]["status"], "NOT_VERIFIED")
         receipt = json.loads((self.target / "docs/ai/core-source.json").read_text(encoding="utf-8"))
         # Tymczasowy pin deweloperski (P08a): po merge contract — integrated pin i pełne asercje.
-        self.assertEqual(receipt["source_commit"], "9a5bfbe2c5a3de31468a9801d389a5934b2bb1e7")
+        self.assertEqual(receipt["source_commit"], "de5f0c4702812c06046eb81a0f06ace6263f9065")
         self.assertEqual(receipt["pin_status"], "development")
         for name in ("scripts/ai/launch.ps1", "scripts/ai/launch.sh", "templates/ai/schemas/catalog.schema.json",
                      "scripts/ai/detector.py", "scripts/ai/runner.py", "docs/ai/runner.md",

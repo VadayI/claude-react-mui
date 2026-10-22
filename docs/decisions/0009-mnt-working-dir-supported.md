@@ -1,6 +1,6 @@
 # 0009. Working under /mnt is fully supported
 
-Status: accepted · 2026-06-02
+Status: superseded by [0030](0030-wsl-ext4-working-dir.md) · 2026-10-22 (accepted 2026-06-02)
 
 ## Context
 
