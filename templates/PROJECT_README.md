@@ -32,6 +32,8 @@ npm run dev                    # http://localhost:5173
 
 ## How to test
 
+On Windows keep the clone in the WSL filesystem (`~/src/<repo>`), not on a Windows drive — Vitest and Vite are 10–50× slower through `/mnt` and agent sessions there are blocked (`docs/ai/wsl-ext4-migration.md`). The full suite (`test:cov` + `e2e`) is run by you, at most twice a day; agents run targeted tests (`npx vitest run <path>`).
+
 ```bash
 npm run test          # Vitest watch mode
 npm run test:run      # single-pass (CI)

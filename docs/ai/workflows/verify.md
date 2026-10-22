@@ -9,6 +9,9 @@ Generate/update `docs/verify/<feature>.md` with scope, prerequisites, real route
 manual steps, loading/success/empty/error states, keyboard pass, actual Playwright
 specs, accessibility checks and done criteria. Do not invent UI or API behavior.
 When execution is requested, run the relevant real checks and include exit codes.
+Agents run the fast checks and targeted tests themselves; the full Vitest/Playwright
+suite and the full baseline below are started by the user at most twice a day (D12):
+give the exact commands and record the reported results.
 
 The React full baseline includes `npm ci`, `npm audit --audit-level=high`, typecheck,
 lint, format checking without writes, file-size, stubs, feature READMEs, API types,

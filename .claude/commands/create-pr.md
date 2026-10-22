@@ -29,7 +29,7 @@ Run these and report results before opening the PR. Block on failures:
 
 - `npm run typecheck` — must be clean.
 - `npm run lint` — must be clean.
-- `npm run test:run` — must pass.
+- Targeted `npx vitest run <changed areas>` — must pass; the full `npm run test:run` result comes from the user's run (D12) — if none is reported, mark it NOT_VERIFIED in the PR.
 - `bash scripts/check_types_drift.sh` — no drift.
 - `bash scripts/check_contract_sync.sh` — vendored contract matches the pin.
 - `bash scripts/check_stubs.sh` — no unlogged stubs.
@@ -56,7 +56,7 @@ Run these and report results before opening the PR. Block on failures:
 <context / user story / ticket reference if known>
 
 ## How verified
-- [ ] npm run test:run — green
+- [ ] targeted vitest green; full `npm run test:run` — green (user run, D12)
 - [ ] npm run typecheck — clean
 - [ ] npm run lint — clean
 - [ ] bash scripts/check_types_drift.sh — no drift

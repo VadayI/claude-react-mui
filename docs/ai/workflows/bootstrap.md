@@ -103,6 +103,7 @@ Author the project config inline (these files are **not** in `templates/` — ge
   - **Variant C:** `VITE_API_BASE_URL=`, `VITE_OPENAPI_URL=<user URL or {TODO}>`, `VITE_MSW_ENABLED=false`
 - Preserve the delivered `.gitignore`; merge missing node/build/coverage and `.ai-runtime/` exclusions. Do not ignore `docs/project-state/` (versioned, project-owned registries); a legacy `.claude/memory/` keeps only its runtime entries ignored until `python scripts/ai/project_state.py --root . --apply` migrates it.
 - `eslint.config.js`, `.prettierrc`.
+- `.dockerignore` — copy `templates/.dockerignore` to the project root in the first commit (ADR 0030): `node_modules`, build/test output, caches, `.git` and `.env*` never enter a Docker build context.
 - `README.md` — project README seeded from `templates/PROJECT_README.md` (fill `{PROJECT_NAME}` / backend).
 
 ### Step 2: Create src/ shell

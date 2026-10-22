@@ -84,9 +84,10 @@ Assert behavior from at least 2–3 distinct cases (different inputs → differe
 
 ```bash
 npm run test            # vitest watch (inner loop)
-npm run test:run        # vitest once (CI)
-npm run test:cov        # vitest with coverage
-npm run e2e             # playwright run (outer loop)
+npx vitest run <path>   # targeted run of the changed area (agents)
+npm run test:run        # vitest once — full suite: the user runs it (D12, node-commands.md)
+npm run test:cov        # vitest with coverage — full suite (user)
+npm run e2e             # playwright run (outer loop) — full suite (user); agents: npx playwright test <spec>
 npm run e2e:ui          # playwright UI mode (debug the journey)
 npm run lint            # eslint
 npm run typecheck       # tsc --noEmit
