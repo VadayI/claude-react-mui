@@ -176,7 +176,7 @@
     },
     ".claude/commands/synthesize-brief.md": {
       "ownership": "template",
-      "sha256": "ddc5b4e5293f01137a47a14659b725a1d9df09e2333d07620abedc38c5dc43b0"
+      "sha256": "4a77d14471aadcb58a8e7b7cd910001dafa8b11020ac664555f1d48e1ee7bb1c"
     },
     ".claude/commands/update-docs.md": {
       "ownership": "template",
@@ -450,23 +450,23 @@
     },
     "docs/ai/generated/adapters-manifest.json": {
       "ownership": "template",
-      "sha256": "bd7793e2f225c8086f2f675d068cde57f2d06fc349527c35e49561fe41d27881"
+      "sha256": "51f121a6916d9d1a9ac82faadd4002228c69a5dd0b48f2899ed7d5e616b7f704"
     },
     "docs/ai/generated/role-packs/react-developer.md": {
       "ownership": "template",
-      "sha256": "9aa65d17aed4a16aa02e787bad848086bec407b1559382c5123e049554b55033"
+      "sha256": "bbabb82d99efe2b23fdbecf59fdb7a3fa79d586355014e62f4c050fbc95ae7b0"
     },
     "docs/ai/generated/role-packs/reviewer.md": {
       "ownership": "template",
-      "sha256": "70d86975bc004a08aad988d5bb18504f7c2fe753b1325120a8f122a765fb8553"
+      "sha256": "8ade4126e4a453a39f0748b55fcaf7dd37ae4b097cf584ae9b2928b0d2ef16b5"
     },
     "docs/ai/generated/role-packs/tester.md": {
       "ownership": "template",
-      "sha256": "cf574af1f06b4fed694e817d28a15d345523f6555c73c931e884b02886fe9683"
+      "sha256": "b8fad3d7a98c1d1696d2f226e0c9c1a81b413c8741b15353bc6006eb717ddf0b"
     },
     "docs/ai/generated/role-packs/ui-architect.md": {
       "ownership": "template",
-      "sha256": "65cd1ad90f0d747db1b7100de9c0671d4632fc10481e1954e72ca6914ce172f7"
+      "sha256": "21cd8e314af2bcfc1609a0aa8d4050b903c1e44442a2c10345770c640d402ca5"
     },
     "docs/ai/git-lifecycle.md": {
       "ownership": "template",
@@ -554,7 +554,7 @@
     },
     "docs/ai/rules/design-reference.md": {
       "ownership": "template",
-      "sha256": "cb14305c945a1893b7e1d32c5b6c4eeb16c3566c93dcfa8f1e9d171d573001c9"
+      "sha256": "9d53f473f55aa023040a9d6b52221ac4496f1bf45f5352e0bc566e124c840b00"
     },
     "docs/ai/rules/environment.md": {
       "ownership": "template",
