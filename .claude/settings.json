@@ -91,6 +91,16 @@
             "statusMessage": "Checking vendored contract edit policy..."
           }
         ]
+      },
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${AI_PYTHON:-python3}\" \"$CLAUDE_PROJECT_DIR/scripts/ai/workdir.py\" --hook",
+            "statusMessage": "Checking working directory (D17)..."
+          }
+        ]
       }
     ],
     "SessionStart": [
@@ -100,6 +110,17 @@
             "type": "command",
             "command": "node scripts/session-start.mjs",
             "statusMessage": "Detecting environment..."
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"${AI_PYTHON:-python3}\" \"$CLAUDE_PROJECT_DIR/scripts/ai/workdir.py\" --hook",
+            "statusMessage": "Checking working directory (D17)..."
           }
         ]
       }

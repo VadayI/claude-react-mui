@@ -136,6 +136,7 @@
     "scripts/ai/react_gate.py",
     "scripts/ai/project_state.py",
     "scripts/ai/session_context.py",
+    "scripts/ai/workdir.py",
     "scripts/ai/git_lifecycle.py",
     "scripts/ai/runner.py",
     "scripts/ai/runner_caps.py",

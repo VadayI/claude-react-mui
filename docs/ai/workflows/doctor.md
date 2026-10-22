@@ -1,5 +1,13 @@
 # Doctor — explicit, read-only environment inspection
 
+## Step 0 — working directory (D17)
+
+Before anything else run `python scripts/ai/workdir.py`. Exit 1 means the checkout
+is on a Windows drive mounted into WSL and the user did not start this session with
+`ALLOW_MNT_SESSION=1`: show its message and move checklist to the user and STOP —
+no later step runs (docs/ai/session-continuity.md). Exit 0 continues; a printed
+allowance notice goes into the session record's Limitations.
+
 Read AGENTS.md and the environment, node-commands and mcp-stack rules. Respect an
 already chosen language. Inspect Git root, branch, HEAD, status, worktrees and
 relevant config without changing them. Classify fresh, incomplete, active or foreign
