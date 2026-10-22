@@ -434,7 +434,7 @@
     },
     "docs/ai/core-source.json": {
       "ownership": "template",
-      "sha256": "9b1fb1082e3b267522322a17417fe6537f2a55be4d190f31c19da34cfcd97285"
+      "sha256": "3cb2c8e76189f4eb9ad5333a4a5014c7d31500ee79a825e1863ba87474daca5d"
     },
     "docs/ai/decisions/0001-portable-family-core.md": {
       "ownership": "template",
@@ -786,7 +786,7 @@
     },
     "scripts/ai/test_family_delivery.py": {
       "ownership": "template",
-      "sha256": "c745445c47fac87b98e908d0b96dee2f299ec97e647558d67a90f553776fea95"
+      "sha256": "144849fdee0a0074ad8f57128eefbb599935db10f4c905ee0e5138c43b1643ef"
     },
     "scripts/ai/test_git_hooks.py": {
       "ownership": "template",
