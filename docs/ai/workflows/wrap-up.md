@@ -1,5 +1,13 @@
 # Wrap-up — shared finalize procedure
 
+## Step 0 — working directory (D17)
+
+Before anything else run `python scripts/ai/workdir.py`. Exit 1 means the checkout
+is on a Windows drive mounted into WSL and the user did not start this session with
+`ALLOW_MNT_SESSION=1`: show its message and move checklist to the user and STOP —
+no later step runs (docs/ai/session-continuity.md). Exit 0 continues; a printed
+allowance notice goes into the session record's Limitations.
+
 Read AGENTS.md, git-operations and living-plan rules. One completed logical session
 is the unit, not each intermediate answer. Use a separate executor role for Git
 mutations when acting as coordinator. Preserve the initial inventory of foreign work.
@@ -22,10 +30,12 @@ mutations when acting as coordinator. Preserve the initial inventory of foreign 
    only task paths). A refused commit changes nothing; do not fall back to blanket
    add, automatic stash or reset. Exit 3 `COMMITTED_WITH_UNEXPECTED_CHANGES` means
    a hook touched other paths: review that commit before sharing.
-4. Commits go to a task branch, never main. Validate the actual candidate and base in
-   a separate checkout with the selected full checks (runner, bound to pre-push);
+4. Commits go to a task branch, never main. Run only targeted tests of the changed
+   area yourself (D12, docs/ai/rules/node-commands.md). The full candidate check
+   (runner in a separate checkout, bound to pre-push) is the user's: give the exact
+   command, or ask before `share` when pre-push runs it in local CI mode;
    `git_lifecycle.py verify` reports the exact candidate's evidence. Dirty-tree
-   tests alone are not push evidence.
+   tests alone are not push evidence; an unseen full run is NOT_VERIFIED.
 5. `git_lifecycle.py share --title ... --body-file ...`: push without force, create or
    update the single PR and confirm remote and PR head. A network error is reported
    as incomplete; inspect before retrying. In local mode do not dispatch Actions; in

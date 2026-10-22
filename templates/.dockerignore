@@ -1,0 +1,22 @@
+# Build context hygiene (ADR 0030). Bootstrap copies this file to the project root
+# with the first commit, so a staging/production image never ships local state.
+.git
+.gitignore
+node_modules
+dist
+coverage
+playwright-report
+test-results
+blob-report
+.vite
+.vitest
+.eslintcache
+.cache
+.ai-runtime
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+.idea
+.vscode

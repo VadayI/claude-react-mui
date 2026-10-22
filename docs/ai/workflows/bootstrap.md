@@ -1,5 +1,13 @@
 Scaffold a new Vite+React+TS+MUI project from templates (Mode A) or PR each missing piece into an existing incomplete project (Mode B). Binary command — NOT part of the feature pipeline.
 
+## Step 0 — working directory (D17)
+
+Before anything else run `python scripts/ai/workdir.py`. Exit 1 means the checkout
+is on a Windows drive mounted into WSL and the user did not start this session with
+`ALLOW_MNT_SESSION=1`: show its message and move checklist to the user and STOP —
+no later step runs (docs/ai/session-continuity.md). Exit 0 continues; a printed
+allowance notice goes into the session record's Limitations.
+
 ## Execution contract
 
 This is the complete canonical bootstrap procedure for Claude and Codex. Use the
@@ -95,6 +103,7 @@ Author the project config inline (these files are **not** in `templates/` — ge
   - **Variant C:** `VITE_API_BASE_URL=`, `VITE_OPENAPI_URL=<user URL or {TODO}>`, `VITE_MSW_ENABLED=false`
 - Preserve the delivered `.gitignore`; merge missing node/build/coverage and `.ai-runtime/` exclusions. Do not ignore `docs/project-state/` (versioned, project-owned registries); a legacy `.claude/memory/` keeps only its runtime entries ignored until `python scripts/ai/project_state.py --root . --apply` migrates it.
 - `eslint.config.js`, `.prettierrc`.
+- `.dockerignore` — copy `templates/.dockerignore` to the project root in the first commit (ADR 0030): `node_modules`, build/test output, caches, `.git` and `.env*` never enter a Docker build context.
 - `README.md` — project README seeded from `templates/PROJECT_README.md` (fill `{PROJECT_NAME}` / backend).
 
 ### Step 2: Create src/ shell

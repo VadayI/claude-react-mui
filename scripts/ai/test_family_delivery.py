@@ -71,7 +71,7 @@ class FamilyDeliveryTests(unittest.TestCase):
         report = json.loads(detector.stdout)
         self.assertEqual(report["repository"]["status"], "NOT_VERIFIED")
         receipt = json.loads((self.target / "docs/ai/core-source.json").read_text(encoding="utf-8"))
-        self.assertEqual(receipt["source_commit"], "8a7b08021bc0370582a62b0940f36a8b5b206c32")
+        self.assertEqual(receipt["source_commit"], "8f6a8fb051139ef3e8efc634cc5b63b217b2480b")
         self.assertEqual(receipt["pin_status"], "integrated")
         self.assertEqual(receipt["observed_upstream_main"], receipt["source_commit"])
         for name in ("scripts/ai/launch.ps1", "scripts/ai/launch.sh", "templates/ai/schemas/catalog.schema.json",
@@ -153,6 +153,11 @@ class FamilyDeliveryTests(unittest.TestCase):
         self.assertEqual(settings["hooks"]["PreToolUse"][0]["hooks"][0]["command"],
                          "node scripts/policy/claude_edit_guard.mjs")
         self.assertNotIn("Stop", settings["hooks"])
+        gate = '"${AI_PYTHON:-python3}" "$CLAUDE_PROJECT_DIR/scripts/ai/workdir.py" --hook'
+        for event in ("UserPromptSubmit", "PreToolUse"):
+            commands = [hook["command"] for entry in settings["hooks"][event] for hook in entry["hooks"]]
+            self.assertIn(gate, commands, event)
+        self.assertTrue((self.target / "scripts/ai/workdir.py").is_file())
         session = (self.target / "scripts/session-start.sh").read_text(encoding="utf-8")
         self.assertIn('node "$SCRIPT_DIR/session-start.mjs"', session)
         self.assertNotIn("npm install", session)

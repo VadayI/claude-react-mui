@@ -120,8 +120,8 @@ let wrongRunnerSuspected = false
 try {
   const execPathLower = execPath.toLowerCase()
   // Only /mnt/c/ signals the Windows interop binary (node.exe lives under C:\).
-  // A project or a WSL2-native node on /mnt/d (or any other /mnt drive) is a
-  // fully supported setup (ADR 0009) and must NOT be flagged as the wrong runner.
+  // The *project* location on a Windows drive is a separate check below
+  // (working_dir_on_windows_mount, ADR 0030) — not a wrong-runner signal.
   const windowsPathLike =
     /^[a-z]:[\\\/]/.test(execPathLower) || // C:\ or C:/
     execPathLower.startsWith('/mnt/c/') // WSL2 interop path to Windows node.exe
@@ -136,6 +136,17 @@ try {
 } catch {
   /* ignore */
 }
+
+// ---------------------------------------------------------------------------
+// Working directory on a Windows drive (ADR 0030 supersedes 0009; D17)
+//
+// In WSL2 a project under /mnt/<drive> reads every file through the 9P bridge:
+// Vite/Vitest, node_modules and .git become 10–50x slower. Agent sessions there
+// are blocked by scripts/ai/workdir.py unless ALLOW_MNT_SESSION=1; this flag lets
+// /doctor show the warning and the move checklist (docs/ai/wsl-ext4-migration.md).
+// ---------------------------------------------------------------------------
+const workingDir = cwd().replace(/\\/g, '/')
+const workingDirOnWindowsMount = detectedPlatform !== 'windows' && /^\/mnt\/[a-z](\/|$)/i.test(workingDir)
 
 // ---------------------------------------------------------------------------
 // Shell
@@ -240,6 +251,8 @@ const result = {
   node_supported: nodeSupported,
   wrong_runner_suspected: wrongRunnerSuspected,
   cwd: cwd(),
+  working_dir_on_windows_mount: workingDirOnWindowsMount,
+  allow_mnt_session: env['ALLOW_MNT_SESSION'] === '1',
   tools,
   tool_versions: toolVersions,
   gh: {
@@ -273,6 +286,7 @@ const supportedStr = platformSupported
 const nodeStr = nodeSupported ? `Node ${version} OK` : `Node ${version} TOO OLD (need 24+)`
 const wslStr = isWsl2 ? ' [WSL2]' : ''
 const wrongStr = wrongRunnerSuspected ? ' ⚠ WRONG RUNNER SUSPECTED' : ''
+const mountStr = workingDirOnWindowsMount ? ' ⚠ PROJECT ON WINDOWS DRIVE (/mnt, ADR 0030)' : ''
 console.log(
-  `[detect-env] platform=${detectedPlatform}${wslStr} ${supportedStr} | ${nodeStr}${wrongStr} | written ${outFile}`,
+  `[detect-env] platform=${detectedPlatform}${wslStr} ${supportedStr} | ${nodeStr}${wrongStr}${mountStr} | written ${outFile}`,
 )

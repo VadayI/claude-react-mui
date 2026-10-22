@@ -609,7 +609,7 @@ The translation mandate and the fidelity level bind **every design-touching agen
 <!-- END SOURCE docs/ai/rules/design-reference.md -->
 
 
-<!-- SOURCE docs/ai/rules/environment.md SHA256 fa199c42af36b07ec95bffd30e091235127eb76c625c90852d3a406d3bf5f9ad -->
+<!-- SOURCE docs/ai/rules/environment.md SHA256 7f49aca9e7eb789bb7c63e42cdad9c0bb568f08aa335110aff3b7f643da90694 -->
 
 # Environment specification
 
@@ -625,8 +625,13 @@ Existing user authorization applies to separately requested remediation.
 - Native Windows uses PowerShell and explicit Git Bash for Bash gate scripts.
   Do not accidentally invoke the WSL launcher named `bash`. Linux uses native
   tools. WSL/macOS support is NOT_VERIFIED unless actually exercised.
-- Paths may include spaces, Unicode and Windows drive mounts. Do not suggest
-  relocating a project merely because it lives on a mounted drive.
+- Paths may include spaces and Unicode. In WSL the clone lives in ext4
+  (`~/src/<repo>`, ADR 0030, supersedes 0009): a Windows drive (`/mnt/c`, `/mnt/d`,
+  9P/drvfs) blocks agent sessions without `ALLOW_MNT_SESSION=1` (D17). Doctor reports
+  such a location ⚠️ with the move checklist (`docs/ai/wsl-ext4-migration.md`) and the
+  heuristic: `time ls -R . >/dev/null` versus a clone in `~/src` (10–50×), and
+  `docker stats` during tests (CPU far below 100 % × cores = waiting for disk).
+  Native Windows (NTFS, no 9P) is a separate supported runner (ADR 0028).
 - Record Git, gh, selected agent CLI, shell and runtime versions. Claude is not
   required for Codex operation, nor Codex for Claude operation.
 - Playwright browser availability is needed for E2E. Installation is a separate
@@ -1035,7 +1040,7 @@ Defeat naive hardcoded returns by asserting behavior from **at least 2–3 disti
 <!-- END SOURCE docs/ai/rules/no-stubs.md -->
 
 
-<!-- SOURCE docs/ai/rules/node-commands.md SHA256 cb7f9155bd4144c414b0c5df2a47e2410fe5bebaccc5be9608c4ddeae62c24b6 -->
+<!-- SOURCE docs/ai/rules/node-commands.md SHA256 0b5e61cec76aa3659729c9a3848267b8a33b8338a49f35cf69c688a0a725b8ee -->
 
 # Node / development commands
 
@@ -1044,9 +1049,11 @@ Bash scripts with the explicit Git for Windows bash executable. Linux uses its
 native Bash. Do not mix Windows and WSL toolchains. Paths with spaces/Unicode
 must be passed as arguments, not assembled into unquoted shell commands.
 
-Run environment detection explicitly; hooks are not assumed. On WSL mounted
-drives retain Vitest forks: the historical Tinypool Atomics.wait/9p limitation is
-not a reason to switch pools blindly. Record WSL/macOS as unverified without runs.
+Run environment detection explicitly; hooks are not assumed. In WSL keep the clone
+in ext4 (ADR 0030); agent sessions on a mounted Windows drive are blocked without
+`ALLOW_MNT_SESSION=1` (D17). In such an explicitly allowed session retain Vitest
+forks: the historical Tinypool Atomics.wait/9p limitation is not a reason to switch
+pools blindly. Record WSL/macOS as unverified without runs.
 
 ## Day-to-day (local)
 
@@ -1057,13 +1064,27 @@ npm run build            # production build → dist/
 npm run preview          # serve the production build locally
 ```
 
+## Full suite vs targeted runs (D12)
+
+- Agents run only targeted subsets: `npx vitest run <changed files or folder>`,
+  `npx vitest run -t "<name>"`, `npx playwright test <spec>`. They never start the
+  whole Vitest or Playwright suite on their own.
+- The full suite (`npm run test:cov` + `npm run e2e`, or the runner candidate check)
+  runs at most twice a day and the user starts it — or explicitly confirms the step
+  that triggers it (in local CI mode `git_lifecycle.py share` pushes, and pre-push
+  runs the runner). The agent gives the exact command and records the result the
+  user reports; a full run the agent did not see is NOT_VERIFIED.
+- Keep the clone in the WSL filesystem (`~/src/<repo>`, ADR 0030): on a Windows drive
+  Vite/Vitest, `node_modules` and `.git` go through the 9P bridge.
+
 ## TDD loop
 
 ```bash
 npm run test             # vitest watch (inner loop)
-npm run test:run         # vitest once (CI)
-npm run test:cov         # vitest + coverage
-npm run e2e              # playwright run (outer loop)
+npx vitest run <path>    # targeted (agents)
+npm run test:run         # vitest once — full suite (user, D12)
+npm run test:cov         # vitest + coverage — full suite (user, D12)
+npm run e2e              # playwright run — full suite (user, D12); agents: npx playwright test <spec>
 npm run e2e:ui           # playwright UI mode (debug)
 ```
 
@@ -1414,7 +1435,7 @@ code you write, surgicality governs the lines you touch.
 <!-- END SOURCE docs/ai/rules/surgical-changes.md -->
 
 
-<!-- SOURCE docs/ai/rules/tdd.md SHA256 9b471f08a7c02628112ff2ac88f70c738212dae809bc04d11e38fbec32c96e9b -->
+<!-- SOURCE docs/ai/rules/tdd.md SHA256 739c8335ea3fd0a82357039ad30f9f1e80c759aeb2e293ddc530df2948764791 -->
 
 # TDD in TypeScript / React (mandatory)
 
@@ -1502,9 +1523,10 @@ Assert behavior from at least 2–3 distinct cases (different inputs → differe
 
 ```bash
 npm run test            # vitest watch (inner loop)
-npm run test:run        # vitest once (CI)
-npm run test:cov        # vitest with coverage
-npm run e2e             # playwright run (outer loop)
+npx vitest run <path>   # targeted run of the changed area (agents)
+npm run test:run        # vitest once — full suite: the user runs it (D12, node-commands.md)
+npm run test:cov        # vitest with coverage — full suite (user)
+npm run e2e             # playwright run (outer loop) — full suite (user); agents: npx playwright test <spec>
 npm run e2e:ui          # playwright UI mode (debug the journey)
 npm run lint            # eslint
 npm run typecheck       # tsc --noEmit

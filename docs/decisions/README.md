@@ -19,7 +19,7 @@ the highest existing one.
 | 0005 | Drop Windows-native shell (WSL2 required) (amended by 0028) |
 | 0007 | Frontend as a separate repo |
 | 0008 | Manual repo + fine-grained PAT |
-| 0009 | `/mnt` working dir supported |
+| 0009 | `/mnt` working dir supported (superseded by 0030) |
 | 0011 | Config baseline (plugins / MCP) |
 | 0013 | File-size limit 400 (superseded by 0029) |
 | 0014 | Update-from-template |
@@ -38,5 +38,6 @@ the highest existing one.
 | 0027 | Design reference: fidelity levels, live-URL inspection, and the stack-translation mandate |
 | 0028 | Support native Windows via Git Bash (amends 0005) |
 | 0029 | File-size limit 800 (supersedes 0013) |
+| 0030 | WSL ext4 working clone; agent sessions on `/mnt` only with explicit permission (supersedes 0009) |
 
 > Index added in the 2026-06-16 template audit. Keep in sync when adding an ADR.

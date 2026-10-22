@@ -77,7 +77,7 @@ Map the log output to one of these categories:
 After delegated fix, run the specific failing check locally and confirm it passes before pushing:
 
 ```bash
-npm run typecheck && npm run lint && npm run test:run
+npm run typecheck && npm run lint && npx vitest run <failing test files>
 bash scripts/check_types_drift.sh && bash scripts/check_stubs.sh
 ```
 

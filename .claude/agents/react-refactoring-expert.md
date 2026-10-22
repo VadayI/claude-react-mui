@@ -52,7 +52,7 @@ On-demand refactoring agent. I improve performance, maintainability, and structu
 ## Commands
 
 ```bash
-npm run test:run       # green before AND after
+npx vitest run <touched folder>   # green before AND after (full suite: the user, D12)
 npm run build          # check bundle size
 ```
 

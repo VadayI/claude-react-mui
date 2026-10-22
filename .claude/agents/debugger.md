@@ -29,7 +29,7 @@ Bug fix pipeline: root cause → regression test (RED) → fix (GREEN) → revie
    - Network/data bug → RTL + MSW with the exact failing response shape
    - Render/interaction bug → RTL user-event flow
    - Cross-page or async routing bug → Playwright scenario
-   - Run `npm run test:run` — confirm the test FAILS for the right reason.
+   - Run `npx vitest run <the new test file>` — confirm the test FAILS for the right reason.
 3. **Root-cause analysis** — common frontend failure modes:
    - Stale closures in `useEffect` / event handlers (missing dependency array entries)
    - TanStack Query invalidation not called after mutation
@@ -38,14 +38,14 @@ Bug fix pipeline: root cause → regression test (RED) → fix (GREEN) → revie
    - React Router `loader` not handling error boundary
    - Race condition in concurrent state updates
 4. **Minimal fix** — smallest change that greens the regression test without breaking others.
-5. Run full suite: `npm run test:run && npm run e2e`.
+5. Run the tests of the affected area (`npx vitest run <folder>`, `npx playwright test <spec>`); give the user the full-suite command `npm run test:run && npm run e2e` (D12).
 6. Hand off to `reviewer` for sign-off.
 
 ## Commands
 
 ```bash
-npm run test:run           # vitest single run
-npm run e2e                # Playwright
+npx vitest run <path>      # targeted vitest run
+npx playwright test <spec> # targeted Playwright
 npm run typecheck          # catch type regressions introduced by the fix
 ```
 

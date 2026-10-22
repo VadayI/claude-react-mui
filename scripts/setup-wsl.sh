@@ -169,4 +169,11 @@ echo "  2. (optional) Authenticate gh for non-wrapped shells:  gh auth login"
 echo "  3. Start Claude:     make cc      # sources .env so the token reaches the MCPs & gh"
 echo "  4. Run doctor:       /doctor"
 echo ""
+# Projekt na dysku Windows (/mnt/<dysk>) — ADR o ext4 / D17: tylko ostrzeżenie, nic nie przenosimy.
+case "$PWD" in
+  /mnt/[a-zA-Z]|/mnt/[a-zA-Z]/*)
+    warn "this project is on a Windows drive ($PWD): Docker bind mounts, tests and node_modules"
+    warn "run 10-50x slower there, and agent sessions are blocked without ALLOW_MNT_SESSION=1."
+    warn "Move the clone to ~/src/<repo> (ext4): docs/ai/wsl-ext4-migration.md" ;;
+esac
 info "setup-wsl.sh complete."

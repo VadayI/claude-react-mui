@@ -16,7 +16,7 @@ node scripts/log-cmd.mjs /simplify "$ARGUMENTS"
 ### 1. Confirm tests are green
 
 ```bash
-npm run test:run
+npx vitest run <target folder>   # the area being simplified (full suite: the user, D12)
 ```
 
 If tests are failing → STOP: simplification must happen under a green suite. Fix failing tests first.
@@ -46,7 +46,7 @@ Delegate with the scoped file list and these goals (no behavior changes, tests m
 After `react-refactoring-expert` completes:
 
 ```bash
-npm run test:run && npm run typecheck && npm run lint
+npx vitest run <target folder> && npm run typecheck && npm run lint
 ```
 
 All must pass. If any check fails, `react-refactoring-expert` must revert or fix before declaring done.
