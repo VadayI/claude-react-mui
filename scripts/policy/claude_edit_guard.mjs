@@ -12,10 +12,18 @@ function fail(reason) {
   process.exitCode = 2;
 }
 
-function isProtected(value) {
+function matchesSuffix(normalized) {
+  return normalized === protectedSuffix || normalized.endsWith(`/${protectedSuffix}`);
+}
+
+// Ścieżka względna liczy się od bieżącego katalogu sesji (pole cwd payloadu), nie od korzenia:
+// po `cd src/lib` patch na `api/openapi.yml` to nadal chroniony plik (D18).
+function isProtected(value, cwd) {
   if (typeof value !== 'string') return false;
   const normalized = path.posix.normalize(value.trim().replace(/^['"]|['"]$/g, '').replaceAll('\\', '/'));
-  return normalized === protectedSuffix || normalized.endsWith(`/${protectedSuffix}`);
+  if (matchesSuffix(normalized)) return true;
+  if (normalized.startsWith('/') || /^[A-Za-z]:\//.test(normalized)) return false;
+  return matchesSuffix(path.posix.normalize(`${cwd}/${normalized}`));
 }
 
 function patchPaths(patch) {
@@ -61,16 +69,18 @@ try {
   if (editTools.has(name)) {
     collectPaths(input, paths);
     if (paths.length === 0) throw new Error('edit payload has no recognized file path');
-  } else if (name === 'Bash') {
+  } else if (name === 'Bash' || name === 'PowerShell') {
+    // PowerShell jak Bash: rozpoznawany jest tylko apply_patch; dowolne zapisy z powłoki pokrywają deny i sandbox.
     const command = input.command;
-    if (typeof command !== 'string') throw new Error('Bash payload has no command');
+    if (typeof command !== 'string') throw new Error(`${name} payload has no command`);
     if (!/\bapply_patch\b/.test(command)) process.exit(0);
     paths = patchPaths(command);
     if (paths.length === 0) throw new Error('apply_patch command has no recognized file path');
   } else {
     process.exit(0);
   }
-  if (paths.some(isProtected)) fail('BLOCKED direct edit of src/lib/api/openapi.yml; use npm run api:pull.');
+  const cwd = (typeof payload.cwd === 'string' && payload.cwd ? payload.cwd : process.cwd()).replaceAll('\\', '/');
+  if (paths.some((item) => isProtected(item, cwd))) fail('BLOCKED direct edit of src/lib/api/openapi.yml; use npm run api:pull.');
 } catch (error) {
   fail(`Cannot verify Claude edit payload: ${error.message}`);
 }
