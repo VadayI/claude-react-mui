@@ -1,3 +1,11 @@
+## 2026-11-17 — Q02 hook reliability (D18, D25, D26)
+
+Branch `chore/q02-hook-reliability` from `main`. Nothing is merged (D01).
+
+- Core on a development pin (contract `eb9bc47`). Hooks: node exec form with `${CLAUDE_PROJECT_DIR}`, fail-closed policies, anchored `Read` rules; the guard resolves relative paths against the session cwd; auditor is cyan.
+- This session: `docs/sessions/20261117T150322Z-claude-f2ac8b.md`.
+- Next: publish, manual acceptance in a live Claude Code session (handoff Q02 §4 p. 6), merge on command; then P08b.
+
 ## 2026-10-22 — P08a WSL/ext4, D12 and the D17 working-directory gate
 
 Branch `chore/p08a-wsl-tests` from `main`. Nothing is merged (D01). Core: integrated pin on contract `8f6a8fb` (contract #70 merged).
