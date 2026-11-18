@@ -444,7 +444,7 @@ Per component: render in each of the four states; assert by role/label; drive in
 <!-- END SOURCE docs/ai/rules/component-contract.md -->
 
 
-<!-- SOURCE docs/ai/rules/dependencies-and-supply-chain.md SHA256 44057f813c35d7147e466fc56f9b52381026a782a74a6a109200546120390f5b -->
+<!-- SOURCE docs/ai/rules/dependencies-and-supply-chain.md SHA256 fc96fddac73c5a0bd5e4d76d82a1e412fc743630afbf49e55522f7cba29095e5 -->
 
 # Dependencies & supply chain (minimal, locked, audited)
 
@@ -467,7 +467,7 @@ Before adding a package, weigh and record (in the PR) the following — a heavy 
 
 ## Audit & integrity (gated)
 
-- **`npm audit`** runs in CI; **high/critical** advisories fail the PR (resolve, upgrade, or record an accepted-risk exception with an expiry). Moderate/low are triaged, not ignored forever.
+- **`npm audit`** runs in CI; **high/critical** advisories fail the PR (resolve, upgrade, or record an accepted-risk exception with an expiry in `scripts/npm-audit-exceptions.json`: GHSA id, package, reason, `recorded`, `until`; `python scripts/ai/react_gate.py audit` accepts only unexpired entries). Moderate/low are triaged, not ignored forever.
 - **Install scripts are suspect** — avoid packages that need `postinstall` to function where possible; CI can run with `--ignore-scripts` for untrusted installs. Lockfile integrity hashes are verified by `npm ci`.
 - **Dev-only stays dev-only** — build/test tooling is in `devDependencies` and must not leak into the shipped bundle.
 - Secrets/tokens are never embedded in a dependency config or committed (docs/ai/rules/auth.md, docs/ai/rules/code-style.md).
@@ -610,7 +610,7 @@ The translation mandate and the fidelity level bind **every design-touching agen
 <!-- END SOURCE docs/ai/rules/design-reference.md -->
 
 
-<!-- SOURCE docs/ai/rules/environment.md SHA256 7f49aca9e7eb789bb7c63e42cdad9c0bb568f08aa335110aff3b7f643da90694 -->
+<!-- SOURCE docs/ai/rules/environment.md SHA256 b61a146d1730c2d54fa0b64261c7b9e781d020175b81f08c477dfa531b78cc7c -->
 
 # Environment specification
 
@@ -626,6 +626,11 @@ Existing user authorization applies to separately requested remediation.
 - Native Windows uses PowerShell and explicit Git Bash for Bash gate scripts.
   Do not accidentally invoke the WSL launcher named `bash`. Linux uses native
   tools. WSL/macOS support is NOT_VERIFIED unless actually exercised.
+- Claude hooks (D18, `docs/ai/hooks.md`) address scripts through
+  `$CLAUDE_PROJECT_DIR`, start Python as `"${AI_PYTHON:-python3}"` and the policy
+  hooks are fail-closed. On native Windows that needs Git for Windows (Git Bash)
+  and `AI_PYTHON` set to the real `python.exe` (`python3` there is usually the
+  Microsoft Store alias); otherwise every gated action is blocked.
 - Paths may include spaces and Unicode. In WSL the clone lives in ext4
   (`~/src/<repo>`, ADR 0030, supersedes 0009): a Windows drive (`/mnt/c`, `/mnt/d`,
   9P/drvfs) blocks agent sessions without `ALLOW_MNT_SESSION=1` (D17). Doctor reports

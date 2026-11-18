@@ -26,6 +26,15 @@ path → ✅; a Windows drive in WSL (reached only with `ALLOW_MNT_SESSION=1`) �
 the move checklist from `docs/ai/wsl-ext4-migration.md` and the `time ls -R` /
 `docker stats` heuristic (ADR 0030). Never report a Windows drive in WSL as ✅.
 
+Hooks (D18, D26): `python scripts/ai/hook_check.py version` and `python
+scripts/ai/hook_check.py settings`. Report the Claude Code and Codex CLI versions
+exactly as printed, never guessed. `OK` → ✅; `WARN` (Claude Code < 2.1.295) → ⚠️
+fail-closed hooks (`onFailure`) are ignored, update Claude Code; `NOT_VERIFIED` → ⚠️.
+A `settings` finding → ❌ with its location. A session where every action is blocked
+by a hook is recovered as described in `docs/ai/hooks.md` (on native Windows: Git Bash
+and `AI_PYTHON`). Project `permissions.allow` rules apply only after the folder trust
+dialog was accepted; deny rules apply regardless.
+
 Inspect package/lock presence, types/gates, browser prerequisites, docs and selected
 contract source. Inspect GitHub authentication/repo/rules only through available
 authenticated tooling; never print credential values. Missing gh/remote means

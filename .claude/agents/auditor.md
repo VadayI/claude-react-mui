@@ -9,7 +9,7 @@ user: '/audit'
 assistant: 'Using auditor: checking the command log, docs/HANDOFF.md and live state — ba and ui-architect done, tester RED not yet run. Next: dispatch tester for the posts-list RED phase.'
 </example>"
 model: sonnet
-color: gray
+color: cyan
 tools: [Read, Glob, Grep, Bash, SendMessage]
 ---
 

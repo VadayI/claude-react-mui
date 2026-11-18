@@ -71,9 +71,9 @@ class FamilyDeliveryTests(unittest.TestCase):
         report = json.loads(detector.stdout)
         self.assertEqual(report["repository"]["status"], "NOT_VERIFIED")
         receipt = json.loads((self.target / "docs/ai/core-source.json").read_text(encoding="utf-8"))
-        self.assertEqual(receipt["source_commit"], "8f6a8fb051139ef3e8efc634cc5b63b217b2480b")
-        self.assertEqual(receipt["pin_status"], "integrated")
-        self.assertEqual(receipt["observed_upstream_main"], receipt["source_commit"])
+        # Tymczasowy pin deweloperski (Q02): po merge contract — integrated pin i pełne asercje.
+        self.assertEqual(receipt["source_commit"], "eb9bc47e08603a5c0b0459b37f815ce1a476049f")
+        self.assertEqual(receipt["pin_status"], "development")
         for name in ("scripts/ai/launch.ps1", "scripts/ai/launch.sh", "templates/ai/schemas/catalog.schema.json",
                      "scripts/ai/detector.py", "scripts/ai/runner.py", "docs/ai/runner.md",
                      "templates/ai/schemas/check-catalog.schema.json",
@@ -148,10 +148,16 @@ class FamilyDeliveryTests(unittest.TestCase):
         self.assertNotIn("  push:", active)
         self.assertNotIn("  pull_request:", active)
         settings = json.loads((self.target / ".claude/settings.json").read_text(encoding="utf-8"))
-        self.assertEqual(settings["hooks"]["SessionStart"][0]["hooks"][0]["command"],
-                         "node scripts/session-start.mjs")
-        self.assertEqual(settings["hooks"]["PreToolUse"][0]["hooks"][0]["command"],
-                         "node scripts/policy/claude_edit_guard.mjs")
+        start = settings["hooks"]["SessionStart"][0]["hooks"][0]
+        self.assertEqual((start["command"], start["args"]), ("node", ["${CLAUDE_PROJECT_DIR}/scripts/session-start.mjs"]))
+        guard = settings["hooks"]["PreToolUse"][0]["hooks"][0]
+        self.assertEqual((guard["command"], guard["args"], guard["onFailure"]),
+                         ("node", ["${CLAUDE_PROJECT_DIR}/scripts/policy/claude_edit_guard.mjs"], "block"))
+        self.assertTrue((self.target / "scripts/ai/hook_check.py").is_file())
+        self.assertTrue((self.target / "docs/ai/hooks.md").is_file())
+        checked = subprocess.run([sys.executable, str(self.target / "scripts/ai/hook_check.py"), "--root",
+                                  str(self.target), "settings"], capture_output=True, text=True, check=False)
+        self.assertEqual(checked.returncode, 0, checked.stdout + checked.stderr)
         self.assertNotIn("Stop", settings["hooks"])
         gate = '"${AI_PYTHON:-python3}" "$CLAUDE_PROJECT_DIR/scripts/ai/workdir.py" --hook'
         for event in ("UserPromptSubmit", "PreToolUse"):

@@ -3,7 +3,7 @@
  *
  * SessionStart: jawna detekcja środowiska bez sprzątania locków, seedowania
  * .env, instalacji pakietów, formatowania, push ani merge.
- *   1. wspólny detektor rodziny  — python scripts/ai/detector.py --write
+ *   1. wspólny detektor rodziny  — $AI_PYTHON|python3|python scripts/ai/detector.py --write
  *      → .ai-runtime/environment.json (NOT_VERIFIED, gdy brak Pythona 3.13+);
  *   2. probe stacku React        — node scripts/detect-env.mjs
  *      → .ai-runtime/env-detect.json;
@@ -23,14 +23,18 @@ const root = join(scriptDir, '..')
 let status = 0
 let pythonOk = false
 
-// Wspólny detektor: AI_PYTHON albo python z PATH; wersja < 3.13 = NOT_VERIFIED.
-const python = process.env.AI_PYTHON || 'python'
-const versionProbe = spawnSync(
-  python,
-  ['-c', 'import sys; sys.exit(0 if sys.version_info >= (3, 13) else 2)'],
-  { stdio: 'ignore', timeout: 20000 },
-)
-if (versionProbe.error || versionProbe.status !== 0) {
+// Wspólny detektor: AI_PYTHON, inaczej python3, potem python z PATH (D18); wersja < 3.13 = NOT_VERIFIED.
+// Jawny AI_PYTHON nie jest zastępowany niczym innym.
+const candidates = process.env.AI_PYTHON ? [process.env.AI_PYTHON] : ['python3', 'python']
+const python = candidates.find((candidate) => {
+  const probe = spawnSync(
+    candidate,
+    ['-c', 'import sys; sys.exit(0 if sys.version_info >= (3, 13) else 2)'],
+    { stdio: 'ignore', timeout: 20000 },
+  )
+  return !probe.error && probe.status === 0
+})
+if (!python) {
   console.error('[session-start] NOT_VERIFIED: Python 3.13+ (AI_PYTHON) is required for the shared detector.')
   status = 1
 } else {

@@ -190,19 +190,19 @@
     },
     "docs/ai/generated/role-packs/react-developer.md": {
       "ownership": "template",
-      "sha256": "cea7cf7739df604e344faa3003190e2e4899ffefc3f83f38e308aa85a9ed2355"
+      "sha256": "a5fd7bcc9891324d80852139be6cbfcd09630f2889bf83a76c0534bd3fe0436a"
     },
     "docs/ai/generated/role-packs/reviewer.md": {
       "ownership": "template",
-      "sha256": "584a25e62f40077c102d67905cea24d3f62ffe049b4d023ff45c066bbc637084"
+      "sha256": "f1130184989b53f7359443ee3e8261de68e0873a6d55b7a58f407599696038ac"
     },
     "docs/ai/generated/role-packs/tester.md": {
       "ownership": "template",
-      "sha256": "5dabdbf8395b98c5a4f23f1448614926b33a2010abcc66576640516bcd5222bc"
+      "sha256": "1d2dc5895914cac206677dde98a1f9378c6ef5aef2fdb3276514577132bef73f"
     },
     "docs/ai/generated/role-packs/ui-architect.md": {
       "ownership": "template",
-      "sha256": "55550f6aee8ccda02b6e3308c45559333814f05e68e23c143df36279cf79d6b7"
+      "sha256": "9e6b120280b337b9e431fbfec88997a5451535231c868259f31a2bbb4763bc6e"
     }
   },
   "generator": "family-core",
@@ -220,9 +220,9 @@
     "docs/ai/rules/auth.md": "177cb461d0d5261d248090bece84f2f621f43d193bcce86260e8e5949b336a21",
     "docs/ai/rules/code-style.md": "0ce554099477ed96b7cf16501ab007dc106c2aba59c640208cbbe3e8f10cb09a",
     "docs/ai/rules/component-contract.md": "2cc84affee32b53ff188de0ea384b84778ff96e6e74cdd5ba101847e5d6b7a65",
-    "docs/ai/rules/dependencies-and-supply-chain.md": "44057f813c35d7147e466fc56f9b52381026a782a74a6a109200546120390f5b",
+    "docs/ai/rules/dependencies-and-supply-chain.md": "fc96fddac73c5a0bd5e4d76d82a1e412fc743630afbf49e55522f7cba29095e5",
     "docs/ai/rules/design-reference.md": "9d53f473f55aa023040a9d6b52221ac4496f1bf45f5352e0bc566e124c840b00",
-    "docs/ai/rules/environment.md": "7f49aca9e7eb789bb7c63e42cdad9c0bb568f08aa335110aff3b7f643da90694",
+    "docs/ai/rules/environment.md": "b61a146d1730c2d54fa0b64261c7b9e781d020175b81f08c477dfa531b78cc7c",
     "docs/ai/rules/feature-readme.md": "054866b3a88c45afc540b19ee73667f851fa46c4f2a73e6743c23513109d69c9",
     "docs/ai/rules/forms-and-validation.md": "5d82c3c9847f3840e5897969babe7d9f51dc8b364669c98dae8942090938fb7d",
     "docs/ai/rules/git-operations.md": "3b026479ed126280620b106ff0db8ae6eada4839082e730a008e98bbe7c2443f",
@@ -243,7 +243,7 @@
     "docs/ai/rules/verification.md": "dc890a63a7cb9619cb6ac18eeb1ce3eeccd0415f6e39103dd1685fb49164a345",
     "docs/ai/rules/workflow.md": "6d632cc86edc678b42469d6a215a1b94e23c8406e5138c21cc17bc9b023ba0df",
     "docs/ai/workflows/bootstrap.md": "e90590ab61a14894d51b785f8c6830087c40149a63f7250e60e487c440d6f298",
-    "docs/ai/workflows/doctor.md": "966eac7999f559348256d4dd527203b432d0b536c25cde8b92e924924972ca94",
+    "docs/ai/workflows/doctor.md": "9df1ab8606a9605f9899a7ea7fa3bc56ace84a34b43bedf94d24cb7bee6ba33d",
     "docs/ai/workflows/orchestrate.md": "4a6ec1c5fc4617a214e540f4341d4ab7500881708d0afb24d18aaf3a4de30cc0",
     "docs/ai/workflows/update-from-template.md": "1dbb91b83110d52bb9d8f94dbb72a80271565c58ca644c35b929ad74ea51bebe",
     "docs/ai/workflows/verify.md": "809eb31ca74673c0c3e0f57407acadfcbd7d6f1c0fffacf5ee715474cc623aa1",

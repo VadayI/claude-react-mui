@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+from datetime import date
 import gzip
 import hashlib
 import json
@@ -28,6 +29,8 @@ SHA40 = re.compile(r"^[0-9a-f]{40}$")
 SHA256 = re.compile(r"^[0-9a-f]{64}$")
 REPOSITORY = re.compile(r"^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$")
 VERSION = re.compile(r"^[A-Za-z0-9._-]+$")
+AUDIT_EXCEPTIONS = Path("scripts/npm-audit-exceptions.json")
+GHSA = re.compile(r"GHSA-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}")
 NETWORK_ERRORS = (
     "eai_again", "enetwork", "enetunreach", "econnrefused", "econnreset",
     "etimedout", "network request", "fetch failed", "socket hang up", "unable to get local issuer",
@@ -217,6 +220,102 @@ def emit_process(result: subprocess.CompletedProcess[str]) -> None:
         sys.stderr.buffer.flush()
 
 
+def load_audit_exceptions(root: Path) -> dict[str, dict]:
+    """Read reviewed, time-boxed npm advisory exceptions.
+
+    Args:
+        root: Candidate root; ``scripts/npm-audit-exceptions.json`` is optional.
+
+    Returns:
+        Exceptions keyed by GHSA id; empty when the file does not exist.
+
+    Raises:
+        ValueError: If the file is malformed or an entry lacks id, package,
+            reason, recorded or until (ISO dates; until not before recorded).
+
+    Side effects:
+        Reads one local file; no process, network, Git, DB or writes.
+
+    Business rule: dependencies-and-supply-chain — a high/critical advisory is
+        resolved, upgraded, or recorded as an accepted risk with an expiry.
+    """
+    path = root / AUDIT_EXCEPTIONS
+    if not path.is_file():
+        return {}
+    document = json.loads(path.read_text(encoding="utf-8"))
+    entries = document.get("exceptions") if isinstance(document, dict) else None
+    if not isinstance(entries, list):
+        raise ValueError(f"{AUDIT_EXCEPTIONS}: 'exceptions' must be a list")
+    result = {}
+    for entry in entries:
+        fields = ("id", "package", "reason", "recorded", "until")
+        if not isinstance(entry, dict) or not all(isinstance(entry.get(key), str) and entry[key].strip()
+                                                  for key in fields):
+            raise ValueError(f"{AUDIT_EXCEPTIONS}: every exception needs {', '.join(fields)}")
+        if not GHSA.fullmatch(entry["id"]) or entry["id"] in result:
+            raise ValueError(f"{AUDIT_EXCEPTIONS}: invalid or duplicate id {entry['id']!r}")
+        if date.fromisoformat(entry["until"]) < date.fromisoformat(entry["recorded"]):
+            raise ValueError(f"{AUDIT_EXCEPTIONS}: {entry['id']} expires before it was recorded")
+        result[entry["id"]] = entry
+    return result
+
+
+def blocking_advisories(payload: dict) -> dict[str, str]:
+    """Collect high/critical advisories from ``npm audit --json`` output.
+
+    Args:
+        payload: Parsed npm audit JSON (npm 7+ ``vulnerabilities`` shape).
+
+    Returns:
+        Advisory id (GHSA, or ``<package>:<source>`` without one) mapped to the
+        vulnerable package. Packages that are only affected through a dependency
+        chain carry no advisory object and are not listed separately.
+
+    Side effects:
+        None.
+    """
+    found = {}
+    vulnerabilities = payload.get("vulnerabilities", {}) if isinstance(payload, dict) else {}
+    for name, item in vulnerabilities.items() if isinstance(vulnerabilities, dict) else ():
+        for via in item.get("via", []) if isinstance(item, dict) else ():
+            if isinstance(via, dict) and via.get("severity") in ("high", "critical"):
+                match = GHSA.search(str(via.get("url", "")))
+                found[match.group(0) if match else f"{name}:{via.get('source')}"] = str(via.get("name") or name)
+    return found
+
+
+def audit_verdict(payload: dict, exceptions: dict[str, dict], today: date) -> tuple[bool, list[str]]:
+    """Decide whether every high/critical advisory is covered by a live exception.
+
+    Args:
+        payload: Parsed npm audit JSON with at least one high/critical finding.
+        exceptions: Output of :func:`load_audit_exceptions`.
+        today: Date used for expiry (injected for tests).
+
+    Returns:
+        ``(accepted, messages)``: accepted only when advisories were found and each
+        has an unexpired exception; messages explain every decision.
+
+    Side effects:
+        None.
+    """
+    advisories = blocking_advisories(payload)
+    messages, accepted = [], bool(advisories)
+    for advisory, package in sorted(advisories.items()):
+        entry = exceptions.get(advisory)
+        if entry is None:
+            accepted = False
+            messages.append(f"FAIL: {advisory} ({package}) has no recorded exception in {AUDIT_EXCEPTIONS}")
+        elif date.fromisoformat(entry["until"]) < today:
+            accepted = False
+            messages.append(f"FAIL: exception for {advisory} ({package}) expired on {entry['until']}; review it")
+        else:
+            messages.append(f"ACCEPTED_RISK: {advisory} ({package}) until {entry['until']}: {entry['reason']}")
+    for advisory in sorted(set(exceptions) - set(advisories)):
+        messages.append(f"NOTICE: exception {advisory} no longer matches an advisory; remove it")
+    return accepted, messages
+
+
 def audit(root: Path) -> int:
     """Run npm advisory audit and distinguish vulnerabilities from service outages.
 
@@ -224,8 +323,13 @@ def audit(root: Path) -> int:
         root: Exact candidate export with provisioned dependencies and lockfile.
 
     Returns:
-        0 when clean, the npm nonzero code for a real advisory/policy failure, or
-        75 when the external advisory service/transport is unavailable.
+        0 when clean or when every high/critical advisory has an unexpired
+        exception in ``scripts/npm-audit-exceptions.json``; the npm nonzero code
+        for a real advisory/policy failure; 75 when the advisory service or
+        transport is unavailable.
+
+    Raises:
+        ValueError: If the exceptions file is malformed.
 
     Side effects:
         Runs ``npm audit`` which may contact the npm advisory service. No files,
@@ -244,7 +348,10 @@ def audit(root: Path) -> int:
         isinstance(vulnerabilities.get(level), int) and vulnerabilities[level] > 0
         for level in ("high", "critical")
     ):
-        return result.returncode or 1
+        accepted, messages = audit_verdict(payload, load_audit_exceptions(root), date.today())
+        for message in messages:
+            print(message, file=sys.stderr)
+        return 0 if accepted else (result.returncode or 1)
     diagnostic = f"{result.stdout}\n{result.stderr}".lower()
     error_code = str(payload.get("error", {}).get("code", "")).lower() if isinstance(payload, dict) else ""
     if error_code or any(token in diagnostic for token in NETWORK_ERRORS):

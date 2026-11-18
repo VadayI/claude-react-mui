@@ -13,7 +13,7 @@ PROTECTED = "src/lib/api/openapi.yml"
 class ClaudeEditGuardTests(unittest.TestCase):
     """Check reviewed payload shapes without claiming arbitrary shell coverage."""
 
-    def probe(self, payload: dict | str) -> subprocess.CompletedProcess[str]:
+    def probe(self, payload: dict | str, cwd: Path | None = None) -> subprocess.CompletedProcess[str]:
         """Run the React Node hook against one synthetic Claude payload.
 
         Args: payload is a JSON object or malformed raw text.
@@ -23,7 +23,7 @@ class ClaudeEditGuardTests(unittest.TestCase):
         Business rule: Exit two blocks a recognized protected edit early.
         """
         data = payload if isinstance(payload, str) else json.dumps(payload)
-        return subprocess.run(["node", str(GUARD)], input=data, capture_output=True,
+        return subprocess.run(["node", str(GUARD)], input=data, capture_output=True, cwd=cwd,
                               text=True, encoding="utf-8", check=False)
 
     def test_write_and_windows_paths(self):
@@ -73,6 +73,37 @@ class ClaudeEditGuardTests(unittest.TestCase):
         self.assertEqual(self.probe({"tool_name": "Write", "tool_input": {}}).returncode, 2)
         shell = {"tool_name": "Bash", "tool_input": {"command": f"printf x > {PROTECTED}"}}
         self.assertEqual(self.probe(shell).returncode, 0)
+
+    def test_powershell_is_handled_like_bash(self):
+        """Q02 (D18.4): PowerShell apply_patch is checked; other PowerShell writes are out of scope.
+
+        Args: None; synthetic PowerShell payloads.
+        Returns: None after block/pass assertions.
+        Raises: AssertionError if a PowerShell patch escapes or shell writes are claimed.
+        Side effects: Local Node subprocesses only; no DB/network/writes.
+        """
+        patch = f"apply_patch <<'PATCH'\n*** Begin Patch\n*** Update File: {PROTECTED}\n*** End Patch\nPATCH"
+        self.assertEqual(self.probe({"tool_name": "PowerShell", "tool_input": {"command": patch}}).returncode, 2)
+        write = {"tool_name": "PowerShell", "tool_input": {"command": f"Set-Content {PROTECTED} x"}}
+        self.assertEqual(self.probe(write).returncode, 0)
+        self.assertEqual(self.probe({"tool_name": "PowerShell", "tool_input": {}}).returncode, 2)
+
+    def test_relative_paths_resolve_against_the_session_cwd(self):
+        """Q02 (D18): after `cd src/lib` a patch on `api/openapi.yml` is still the protected file.
+
+        Args: None; payloads with the hook's `cwd` field and a subdirectory process cwd.
+        Returns: None after block/pass assertions.
+        Raises: AssertionError if a relative path escapes after a directory change.
+        Side effects: Local Node subprocesses only; no DB/network/writes.
+        """
+        patch = "apply_patch <<'PATCH'\n*** Begin Patch\n*** Update File: api/openapi.yml\n*** End Patch\nPATCH"
+        payload = {"tool_name": "Bash", "cwd": str(ROOT / "src/lib"), "tool_input": {"command": patch}}
+        self.assertEqual(self.probe(payload).returncode, 2)
+        payload.pop("cwd")
+        self.assertEqual(self.probe(payload, cwd=ROOT / "src/lib").returncode, 2)
+        self.assertEqual(self.probe(payload, cwd=ROOT).returncode, 0)
+        relative = {"tool_name": "Edit", "cwd": str(ROOT / "src"), "tool_input": {"file_path": "lib/api/openapi.yml"}}
+        self.assertEqual(self.probe(relative).returncode, 2)
 
 
 if __name__ == "__main__":
