@@ -42,8 +42,8 @@ jobs:
       - name: Gate — AI delivery tests
         run: python -m unittest discover -s scripts/ai -p 'test_*.py'
 
-      - name: Gate — npm audit (high/critical)
-        run: npm audit --audit-level=high
+      - name: Gate — npm audit (high/critical; time-boxed exceptions)
+        run: python scripts/ai/react_gate.py audit
 
       - name: Type check
         run: npm run typecheck

@@ -19,7 +19,7 @@ Before adding a package, weigh and record (in the PR) the following — a heavy 
 
 ## Audit & integrity (gated)
 
-- **`npm audit`** runs in CI; **high/critical** advisories fail the PR (resolve, upgrade, or record an accepted-risk exception with an expiry). Moderate/low are triaged, not ignored forever.
+- **`npm audit`** runs in CI; **high/critical** advisories fail the PR (resolve, upgrade, or record an accepted-risk exception with an expiry in `scripts/npm-audit-exceptions.json`: GHSA id, package, reason, `recorded`, `until`; `python scripts/ai/react_gate.py audit` accepts only unexpired entries). Moderate/low are triaged, not ignored forever.
 - **Install scripts are suspect** — avoid packages that need `postinstall` to function where possible; CI can run with `--ignore-scripts` for untrusted installs. Lockfile integrity hashes are verified by `npm ci`.
 - **Dev-only stays dev-only** — build/test tooling is in `devDependencies` and must not leak into the shipped bundle.
 - Secrets/tokens are never embedded in a dependency config or committed (docs/ai/rules/auth.md, docs/ai/rules/code-style.md).

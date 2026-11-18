@@ -450,23 +450,23 @@
     },
     "docs/ai/generated/adapters-manifest.json": {
       "ownership": "template",
-      "sha256": "eee295edca9a503399948bf3f357f50fcad640c0ad9df4f28f23d3419274b3c1"
+      "sha256": "16d9c159b78e7d63392c08caaba96527607b14bdae4a7a10fbb28319fd57588b"
     },
     "docs/ai/generated/role-packs/react-developer.md": {
       "ownership": "template",
-      "sha256": "72d2a82ace30d5e18d0d0990da6b6e748a740ac25111af75d15ff2ddec9ef18d"
+      "sha256": "a5fd7bcc9891324d80852139be6cbfcd09630f2889bf83a76c0534bd3fe0436a"
     },
     "docs/ai/generated/role-packs/reviewer.md": {
       "ownership": "template",
-      "sha256": "d9e139d6cdd7637218526dbc4519d2318a430ed848b774722ef44d9bd4347967"
+      "sha256": "f1130184989b53f7359443ee3e8261de68e0873a6d55b7a58f407599696038ac"
     },
     "docs/ai/generated/role-packs/tester.md": {
       "ownership": "template",
-      "sha256": "264cc17f5b587ddc0a95c604edabd0ad04c072b02207aa2151b68bf2f09733bc"
+      "sha256": "1d2dc5895914cac206677dde98a1f9378c6ef5aef2fdb3276514577132bef73f"
     },
     "docs/ai/generated/role-packs/ui-architect.md": {
       "ownership": "template",
-      "sha256": "30c23b735e5305b24f6773fcafa109c59d21d8b0e584c1acfff1f21ccc466bff"
+      "sha256": "9e6b120280b337b9e431fbfec88997a5451535231c868259f31a2bbb4763bc6e"
     },
     "docs/ai/git-lifecycle.md": {
       "ownership": "template",
@@ -554,7 +554,7 @@
     },
     "docs/ai/rules/dependencies-and-supply-chain.md": {
       "ownership": "template",
-      "sha256": "44057f813c35d7147e466fc56f9b52381026a782a74a6a109200546120390f5b"
+      "sha256": "fc96fddac73c5a0bd5e4d76d82a1e412fc743630afbf49e55522f7cba29095e5"
     },
     "docs/ai/rules/design-reference.md": {
       "ownership": "template",
@@ -762,7 +762,7 @@
     },
     "scripts/ai/react_gate.py": {
       "ownership": "template",
-      "sha256": "a85fb3ac97bc8afd6542eeb2697af61be0e0d513118b279e9ddbe80efa2ae0b6"
+      "sha256": "93f068ef3811dc163eae78c7b299f96fd3c707e8e7aa75fd7f727889a625a902"
     },
     "scripts/ai/readiness.py": {
       "ownership": "template",
@@ -802,7 +802,7 @@
     },
     "scripts/ai/test_react_gate.py": {
       "ownership": "template",
-      "sha256": "3954c2fccb7c89d21493a2ee9345b5ee04dc85a57b971a3a66a4621d6b039515"
+      "sha256": "3912a64083367f86a0d83a8b554d64e8f8e82e273bf0b9ebbb95a0af142cf517"
     },
     "scripts/ai/test_seed_inventory.py": {
       "ownership": "template",

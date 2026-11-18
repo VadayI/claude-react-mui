@@ -173,6 +173,64 @@ class ReactGateTests(unittest.TestCase):
             with self.assertRaises(react_gate.NotVerified):
                 react_gate.audit(ROOT)
 
+    def test_audit_accepts_only_unexpired_recorded_exceptions(self):
+        """Time-boxed exceptions cover a listed advisory; unlisted or expired ones fail.
+
+        No arguments/return. Synthetic npm audit JSON and exception files in a
+        temporary directory; mocked npm child; no network, Git, DB or env mutation.
+        """
+        from datetime import date
+
+        def payload(*advisories):
+            vulns = {"vite": {"via": ["picomatch"]}}
+            for ghsa, package, severity in advisories:
+                vulns[package] = {"via": [{"source": 1, "name": package, "severity": severity,
+                                            "url": f"https://github.com/advisories/{ghsa}"}]}
+            return {"metadata": {"vulnerabilities": {"high": 2, "critical": 0}}, "vulnerabilities": vulns}
+
+        entry = {"id": "GHSA-fc5q-39xc-vjpf", "package": "picomatch", "reason": "no fixed release",
+                 "recorded": "2026-11-18", "until": "2026-12-18"}
+        listed = payload(("GHSA-fc5q-39xc-vjpf", "picomatch", "high"))
+        exceptions = {entry["id"]: entry}
+        self.assertTrue(react_gate.audit_verdict(listed, exceptions, date(2026, 12, 18))[0])
+        self.assertFalse(react_gate.audit_verdict(listed, exceptions, date(2026, 12, 19))[0])
+        self.assertFalse(react_gate.audit_verdict(listed, {}, date(2026, 11, 18))[0])
+        mixed = payload(("GHSA-fc5q-39xc-vjpf", "picomatch", "high"), ("GHSA-mrhx-c7xc-m3w5", "zod", "high"))
+        accepted, messages = react_gate.audit_verdict(mixed, exceptions, date(2026, 11, 18))
+        self.assertFalse(accepted)
+        self.assertTrue(any("GHSA-mrhx-c7xc-m3w5" in line and line.startswith("FAIL") for line in messages))
+        moderate_only = payload(("GHSA-aaaa-bbbb-cccc", "x", "moderate"))
+        self.assertFalse(react_gate.audit_verdict(moderate_only, exceptions, date(2026, 11, 18))[0])
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.assertEqual({}, react_gate.load_audit_exceptions(root))
+            path = root / react_gate.AUDIT_EXCEPTIONS
+            path.parent.mkdir(parents=True)
+            path.write_text(json.dumps({"exceptions": [entry]}), encoding="utf-8")
+            self.assertEqual(exceptions, react_gate.load_audit_exceptions(root))
+            completed = subprocess.CompletedProcess(["npm"], 1, json.dumps(listed), "")
+            with mock.patch.object(react_gate, "run_process", return_value=completed), \
+                    mock.patch.object(react_gate, "date", wraps=date) as clock:
+                clock.today.return_value = date(2026, 11, 18)
+                self.assertEqual(react_gate.audit(root), 0)
+                clock.today.return_value = date(2027, 1, 1)
+                self.assertEqual(react_gate.audit(root), 1)
+            for broken in ({"exceptions": [dict(entry, id="CVE-1")]}, {"exceptions": [dict(entry, reason="")]},
+                           {"exceptions": [dict(entry, until="2026-11-01")]}, {"exceptions": {}}):
+                path.write_text(json.dumps(broken), encoding="utf-8")
+                with self.assertRaises(ValueError):
+                    react_gate.load_audit_exceptions(root)
+
+    def test_committed_audit_exceptions_are_valid_and_time_boxed(self):
+        """The committed exception file parses and no entry is open-ended beyond 90 days.
+
+        No arguments/return. Reads one repository file; no network or writes.
+        """
+        from datetime import date
+        for entry in react_gate.load_audit_exceptions(ROOT).values():
+            span = date.fromisoformat(entry["until"]) - date.fromisoformat(entry["recorded"])
+            self.assertLessEqual(span.days, 90, entry["id"])
+
     def test_contract_sync_binds_remote_vendor_and_lock_bytes(self):
         """Pass only when public remote, vendor, and lock digests are identical.
 

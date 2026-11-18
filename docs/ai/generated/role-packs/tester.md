@@ -444,7 +444,7 @@ Per component: render in each of the four states; assert by role/label; drive in
 <!-- END SOURCE docs/ai/rules/component-contract.md -->
 
 
-<!-- SOURCE docs/ai/rules/dependencies-and-supply-chain.md SHA256 44057f813c35d7147e466fc56f9b52381026a782a74a6a109200546120390f5b -->
+<!-- SOURCE docs/ai/rules/dependencies-and-supply-chain.md SHA256 fc96fddac73c5a0bd5e4d76d82a1e412fc743630afbf49e55522f7cba29095e5 -->
 
 # Dependencies & supply chain (minimal, locked, audited)
 
@@ -467,7 +467,7 @@ Before adding a package, weigh and record (in the PR) the following — a heavy 
 
 ## Audit & integrity (gated)
 
-- **`npm audit`** runs in CI; **high/critical** advisories fail the PR (resolve, upgrade, or record an accepted-risk exception with an expiry). Moderate/low are triaged, not ignored forever.
+- **`npm audit`** runs in CI; **high/critical** advisories fail the PR (resolve, upgrade, or record an accepted-risk exception with an expiry in `scripts/npm-audit-exceptions.json`: GHSA id, package, reason, `recorded`, `until`; `python scripts/ai/react_gate.py audit` accepts only unexpired entries). Moderate/low are triaged, not ignored forever.
 - **Install scripts are suspect** — avoid packages that need `postinstall` to function where possible; CI can run with `--ignore-scripts` for untrusted installs. Lockfile integrity hashes are verified by `npm ci`.
 - **Dev-only stays dev-only** — build/test tooling is in `devDependencies` and must not leak into the shipped bundle.
 - Secrets/tokens are never embedded in a dependency config or committed (docs/ai/rules/auth.md, docs/ai/rules/code-style.md).

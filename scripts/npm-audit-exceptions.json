@@ -1,0 +1,12 @@
+{
+  "_note": "Accepted-risk exceptions for `python scripts/ai/react_gate.py audit` (rule dependencies-and-supply-chain). Each entry is time-boxed: after `until` the gate fails again. Remove an entry as soon as a fixed version is installable.",
+  "exceptions": [
+    {
+      "id": "GHSA-fc5q-39xc-vjpf",
+      "package": "picomatch",
+      "reason": "ReDoS through repeated extglobs; no fixed release exists (latest 4.0.7 is affected) and npm only offers downgrading vite/vitest. Reached only through dev tooling (vite, vitest, typescript-eslint, @types/jest), not shipped in the bundle; patterns are repository-controlled.",
+      "recorded": "2026-11-18",
+      "until": "2026-12-18"
+    }
+  ]
+}

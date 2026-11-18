@@ -38,7 +38,7 @@ gates: ## Run all CI gate scripts locally
 	bash scripts/check_stubs.sh
 	bash scripts/check_feature_readmes.sh
 	bash scripts/check_types_drift.sh
-	npm audit --audit-level=high
+	python scripts/ai/react_gate.py audit
 	npm run build
 	bash scripts/check_bundle_size.sh
 
